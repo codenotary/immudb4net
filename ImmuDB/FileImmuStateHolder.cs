@@ -17,46 +17,108 @@ limitations under the License.
 namespace ImmuDB;
 
 using System;
-using System.Security.Cryptography;
+using System.Diagnostics;
 
 public class FileImmuStateHolder : ImmuStateHolder
 {
     private readonly String statesFolder;
     private readonly String currentStateFile;
-    private String stateHolderFile;
+    private String stateHolderFile = "";
+
+    private readonly SerializableImmuStateHolder stateHolder;
+
 
     public FileImmuStateHolder(Builder builder)
     {
         statesFolder = builder.StatesFolder;
-        if(!File.Exists(statesFolder)) {
+        if (!File.Exists(statesFolder))
+        {
             Directory.CreateDirectory(statesFolder);
         }
-        
+
+        currentStateFile = Path.Combine(stateHolderFile, "current_state");
+        if (!File.Exists(currentStateFile))
+        {
+            using (File.Create(currentStateFile)) { }
+        }
+
+        stateHolder = new SerializableImmuStateHolder();
+        String lastStateFilename = File.ReadAllText(currentStateFile);
+
+        if (!String.IsNullOrEmpty(lastStateFilename))
+        {
+            stateHolderFile = Path.Combine(statesFolder, lastStateFilename);
+
+            if (!File.Exists(stateHolderFile))
+            {
+                throw new InvalidOperationException("Inconsistent current state file");
+            }
+
+            stateHolder.ReadFrom(stateHolderFile);
+        }
     }
 
-    public ImmuState getState(string serverUuid, string database)
+    public ImmuState GetState(string serverUuid, string database)
     {
-        throw new NotImplementedException();
+        lock (this)
+        {
+            return stateHolder.GetState(serverUuid, database);
+        }
     }
 
     public void setState(string serverUuid, ImmuState state)
     {
-        throw new NotImplementedException();
+        lock (this)
+        {
+            ImmuState currentState = stateHolder.GetState(serverUuid, state.Database);
+            if (currentState != null && currentState.TxId >= state.TxId)
+            {
+                return;
+            }
+
+            stateHolder.setState(serverUuid, state);
+            String newStateFile = Path.Combine(statesFolder, "state_" + serverUuid + "_" + state.Database + "_" + Stopwatch.GetTimestamp());
+
+            if (File.Exists(newStateFile))
+            {
+                throw new InvalidOperationException("Failed attempting to create a new state file. Please retry.");
+            }
+
+            try
+            {
+                stateHolder.WriteTo(newStateFile);
+                File.WriteAllText(currentStateFile, newStateFile);
+                if (File.Exists(stateHolderFile))
+                {
+                    File.Delete(stateHolderFile);
+                }
+                stateHolderFile = newStateFile;
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"An IOException occurred: {e.ToString()}");
+                throw new InvalidOperationException("Unexpected error " + e);
+            }
+        }
     }
 
-    public class Builder {
-        public String StatesFolder {get; private set; }
+    public class Builder
+    {
+        public String StatesFolder { get; private set; }
 
-        private Builder() {
+        private Builder()
+        {
             StatesFolder = "states";
         }
 
-        public Builder WithStatesFolder(String statesFolder) {
+        public Builder WithStatesFolder(String statesFolder)
+        {
             this.StatesFolder = statesFolder;
             return this;
         }
 
-        public FileImmuStateHolder build() {
+        public FileImmuStateHolder build()
+        {
             return new FileImmuStateHolder(this);
         }
     }

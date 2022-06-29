@@ -17,6 +17,6 @@ limitations under the License.
 namespace ImmuDB;
 
 public interface ImmuStateHolder {
-    ImmuState getState(String serverUuid, String database);
+    ImmuState GetState(String serverUuid, String database);
     void setState(String serverUuid, ImmuState state);
 }

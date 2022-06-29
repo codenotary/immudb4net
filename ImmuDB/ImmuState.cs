@@ -25,20 +25,20 @@ using Org.BouncyCastle.Security;
 public class ImmuState
 {
     private const string HASH_ENCRYPTION_ALGORITHM = "SHA256withECDSA";
-   
-    private readonly String database;
-    private readonly long txId;
-    private readonly byte[] txHash;
-    private readonly byte[] signature;
+
+    public String Database { get; set; }
+    public long TxId { get; set; }
+    public byte[] TxHash { get; set; }
+    public byte[] Signature { get; set; }
 
     public ImmuState(String database, long txId, byte[] txHash, byte[] signature)
     {
-        this.database = database;
-        this.txId = txId;
-        this.txHash = txHash;
-        this.signature = signature;
+        this.Database = database;
+        this.TxId = txId;
+        this.TxHash = txHash;
+        this.Signature = signature;
     }
-    
+
     private bool CheckSignature(AsymmetricKeyParameter publicKey)
     {
         if (publicKey == null)
@@ -46,35 +46,37 @@ public class ImmuState
             return true;
         }
 
-        if (signature != null && signature.Length > 0)
+        if (Signature != null && Signature.Length > 0)
         {
             var payload = toBytes();
             ISigner signer = SignerUtilities.GetSigner(HASH_ENCRYPTION_ALGORITHM);
             signer.Init(false, publicKey);
             signer.BlockUpdate(payload, 0, payload.Length);
-            return signer.VerifySignature(signature);
+            return signer.VerifySignature(Signature);
         }
 
         return false;
     }
 
-     private byte[] toBytes() {
-        byte[] result = new byte[4 + database.Length + 8 + Consts.SHA256_SIZE];
+    private byte[] toBytes()
+    {
+        byte[] result = new byte[4 + Database.Length + 8 + Consts.SHA256_SIZE];
         int i = 0;
-        Utils.putUint32(database.Length, result, i);
+        Utils.putUint32(Database.Length, result, i);
         i += 4;
-        var databaseBytes = Encoding.UTF8.GetBytes(database);
-        Array.Copy(databaseBytes, 0, result, i, database.Length);
-        i += database.Length;
-        Utils.putUint64(txId, result, i);
+        var databaseBytes = Encoding.UTF8.GetBytes(Database);
+        Array.Copy(databaseBytes, 0, result, i, Database.Length);
+        i += Database.Length;
+        Utils.putUint64(TxId, result, i);
         i += 8;
-        Array.Copy(txHash, 0, result, i, txHash.Length);
+        Array.Copy(TxHash, 0, result, i, TxHash.Length);
         return result;
     }
 
     // The asymmetric key parameter.
     // Pem filename.
-    internal static AsymmetricKeyParameter GetPublicKeyFromPemFile(string pemFilename) {
+    internal static AsymmetricKeyParameter GetPublicKeyFromPemFile(string pemFilename)
+    {
         StreamReader fileStream = System.IO.File.OpenText(pemFilename);
         PemReader pemReader = new PemReader(fileStream);
         AsymmetricKeyParameter keyParameter = (AsymmetricKeyParameter)pemReader.ReadObject();

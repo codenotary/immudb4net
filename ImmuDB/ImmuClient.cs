@@ -23,6 +23,7 @@ public class ImmuClient
 
     private readonly AsymmetricKeyParameter serverSigningKey;
     private readonly bool withAuth;
+    private readonly ImmuStateHolder stateHolder;
 
     public static Builder NewBuilder()
     {
@@ -31,23 +32,40 @@ public class ImmuClient
 
     public ImmuClient(Builder builder)
     {
-        this.withAuth = builder.WithAuth;
+        this.withAuth = builder.Auth;
         this.serverSigningKey = builder.ServerSigningKey;
-        
+        this.stateHolder = builder.StateHolder;
     }
 
     public class Builder
     {
-        public String ServerUrl { get; }
-        public int ServerPort { get; }
+        public String ServerUrl { get; private set; }
+        public int ServerPort { get; private set; }
         public AsymmetricKeyParameter ServerSigningKey { get; private set; }
-        public bool WithAuth { get; }
+        public bool Auth { get; private set; }
+        public ImmuStateHolder StateHolder {get; private set; }
 
         public Builder()
         {
             ServerUrl = "localhost";
             ServerPort = 3322;
-            WithAuth = true;
+            StateHolder = new SerializableImmuStateHolder();
+            Auth = true;
+        }
+
+        public Builder WithAuth(bool withAuth) {
+            this.Auth = withAuth;
+            return this;
+        }
+        
+        public Builder WithServerPort(int serverPort) {
+            this.ServerPort = serverPort;
+            return this;
+        }
+        
+        public Builder WithServerUrl(String serverUrl) {
+            this.ServerUrl = serverUrl;
+            return this;
         }
 
         public Builder WithServerSigningKey(String publicKeyFileName)
