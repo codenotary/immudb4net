@@ -16,6 +16,8 @@ limitations under the License.
 
 namespace ImmuDB;
 
+using Grpc.Core.Interceptors;
+using Grpc.Net.Client;
 using Org.BouncyCastle.Crypto;
 
 public class ImmuClient
@@ -24,6 +26,10 @@ public class ImmuClient
     private readonly AsymmetricKeyParameter serverSigningKey;
     private readonly bool withAuth;
     private readonly ImmuStateHolder stateHolder;
+    private GrpcChannel channel;
+    public String CurrentServerUuid {get; set; }
+    private String currentDb = "defaultdb";
+
 
     public static Builder NewBuilder()
     {
@@ -37,6 +43,15 @@ public class ImmuClient
         this.stateHolder = builder.StateHolder;
     }
 
+    private Object CreateStubFrom(Builder builder) {
+        String schema = builder.ServerUrl.StartsWith("http") ? "" : "http://";
+        var grpcAddress = $"{schema}{builder.ServerUrl}:${builder.ServerPort}";
+        channel = GrpcChannel.ForAddress(grpcAddress);
+        var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
+        return null;
+        // var client = 
+    }
+
     public class Builder
     {
         public String ServerUrl { get; private set; }
@@ -44,6 +59,7 @@ public class ImmuClient
         public AsymmetricKeyParameter ServerSigningKey { get; private set; }
         public bool Auth { get; private set; }
         public ImmuStateHolder StateHolder {get; private set; }
+        
 
         public Builder()
         {

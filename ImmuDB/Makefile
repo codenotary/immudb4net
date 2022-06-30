@@ -23,12 +23,10 @@ GOPATH ?= $(shell go env GOPATH)
 .PHONY: codegen
 codegen:
 	$(PROTOC) -I proto/ \
-	-I$(GOPATH)/pkg/mod \
 	-I$(GOPATH)/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@v1.16.0/third_party/googleapis \
-	-I$(GOPATH)/pkg/mod/github.com/grpc-ecosystem/grpc-gateway@v1.16.0 \
-	--csharp_out=./ \
+	--csharp_out=./ --grpc_out=./ \
 	--csharp_opt=file_extension=.g.cs \
-	proto/schema.proto
+	schema.proto
 
 
 ########################## releases scripts end ########################################################################
