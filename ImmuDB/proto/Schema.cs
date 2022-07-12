@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Immudb.Schema {
+namespace ImmudbProxy {
 
   /// <summary>Holder for reflection information generated from proto/schema.proto</summary>
   public static partial class SchemaReflection {
@@ -24,548 +24,538 @@ namespace Immudb.Schema {
     static SchemaReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChJwcm90by9zY2hlbWEucHJvdG8SDWltbXVkYi5zY2hlbWEaHGdvb2dsZS9h",
-            "cGkvYW5ub3RhdGlvbnMucHJvdG8aG2dvb2dsZS9wcm90b2J1Zi9lbXB0eS5w",
-            "cm90bxocZ29vZ2xlL3Byb3RvYnVmL3N0cnVjdC5wcm90byISCgNLZXkSCwoD",
-            "a2V5GAEgASgMIjIKClBlcm1pc3Npb24SEAoIZGF0YWJhc2UYASABKAkSEgoK",
-            "cGVybWlzc2lvbhgCIAEoDSJ6CgRVc2VyEgwKBHVzZXIYASABKAwSLgoLcGVy",
-            "bWlzc2lvbnMYAyADKAsyGS5pbW11ZGIuc2NoZW1hLlBlcm1pc3Npb24SEQoJ",
-            "Y3JlYXRlZGJ5GAQgASgJEhEKCWNyZWF0ZWRhdBgFIAEoCRIOCgZhY3RpdmUY",
-            "BiABKAgiLgoIVXNlckxpc3QSIgoFdXNlcnMYASADKAsyEy5pbW11ZGIuc2No",
-            "ZW1hLlVzZXIiWQoRQ3JlYXRlVXNlclJlcXVlc3QSDAoEdXNlchgBIAEoDBIQ",
-            "CghwYXNzd29yZBgCIAEoDBISCgpwZXJtaXNzaW9uGAMgASgNEhAKCGRhdGFi",
-            "YXNlGAQgASgJIhsKC1VzZXJSZXF1ZXN0EgwKBHVzZXIYASABKAwiTwoVQ2hh",
-            "bmdlUGFzc3dvcmRSZXF1ZXN0EgwKBHVzZXIYASABKAwSEwoLb2xkUGFzc3dv",
-            "cmQYAiABKAwSEwoLbmV3UGFzc3dvcmQYAyABKAwiLgoMTG9naW5SZXF1ZXN0",
-            "EgwKBHVzZXIYASABKAwSEAoIcGFzc3dvcmQYAiABKAwiLwoNTG9naW5SZXNw",
-            "b25zZRINCgV0b2tlbhgBIAEoCRIPCgd3YXJuaW5nGAIgASgMIhoKCkF1dGhD",
-            "b25maWcSDAoEa2luZBgBIAEoDSIdCgpNVExTQ29uZmlnEg8KB2VuYWJsZWQY",
-            "ASABKAgiTgoST3BlblNlc3Npb25SZXF1ZXN0EhAKCHVzZXJuYW1lGAEgASgM",
-            "EhAKCHBhc3N3b3JkGAIgASgMEhQKDGRhdGFiYXNlTmFtZRgDIAEoCSI8ChNP",
-            "cGVuU2Vzc2lvblJlc3BvbnNlEhEKCXNlc3Npb25JRBgBIAEoCRISCgpzZXJ2",
-            "ZXJVVUlEGAIgASgJIrUDCgxQcmVjb25kaXRpb24STAoMa2V5TXVzdEV4aXN0",
-            "GAEgASgLMjQuaW1tdWRiLnNjaGVtYS5QcmVjb25kaXRpb24uS2V5TXVzdEV4",
-            "aXN0UHJlY29uZGl0aW9uSAASUgoPa2V5TXVzdE5vdEV4aXN0GAIgASgLMjcu",
-            "aW1tdWRiLnNjaGVtYS5QcmVjb25kaXRpb24uS2V5TXVzdE5vdEV4aXN0UHJl",
-            "Y29uZGl0aW9uSAASXgoVa2V5Tm90TW9kaWZpZWRBZnRlclRYGAMgASgLMj0u",
-            "aW1tdWRiLnNjaGVtYS5QcmVjb25kaXRpb24uS2V5Tm90TW9kaWZpZWRBZnRl",
-            "clRYUHJlY29uZGl0aW9uSAAaJwoYS2V5TXVzdEV4aXN0UHJlY29uZGl0aW9u",
-            "EgsKA2tleRgBIAEoDBoqChtLZXlNdXN0Tm90RXhpc3RQcmVjb25kaXRpb24S",
-            "CwoDa2V5GAEgASgMGj4KIUtleU5vdE1vZGlmaWVkQWZ0ZXJUWFByZWNvbmRp",
-            "dGlvbhILCgNrZXkYASABKAwSDAoEdHhJRBgCIAEoBEIOCgxwcmVjb25kaXRp",
-            "b24iUwoIS2V5VmFsdWUSCwoDa2V5GAEgASgMEg0KBXZhbHVlGAIgASgMEisK",
-            "CG1ldGFkYXRhGAMgASgLMhkuaW1tdWRiLnNjaGVtYS5LVk1ldGFkYXRhIq8B",
-            "CgVFbnRyeRIKCgJ0eBgBIAEoBBILCgNrZXkYAiABKAwSDQoFdmFsdWUYAyAB",
-            "KAwSLgoMcmVmZXJlbmNlZEJ5GAQgASgLMhguaW1tdWRiLnNjaGVtYS5SZWZl",
-            "cmVuY2USKwoIbWV0YWRhdGEYBSABKAsyGS5pbW11ZGIuc2NoZW1hLktWTWV0",
-            "YWRhdGESDwoHZXhwaXJlZBgGIAEoCBIQCghyZXZpc2lvbhgHIAEoBCJxCglS",
-            "ZWZlcmVuY2USCgoCdHgYASABKAQSCwoDa2V5GAIgASgMEgwKBGF0VHgYAyAB",
-            "KAQSKwoIbWV0YWRhdGEYBCABKAsyGS5pbW11ZGIuc2NoZW1hLktWTWV0YWRh",
-            "dGESEAoIcmV2aXNpb24YBSABKAQilAEKAk9wEiUKAmt2GAEgASgLMhcuaW1t",
-            "dWRiLnNjaGVtYS5LZXlWYWx1ZUgAEioKBHpBZGQYAiABKAsyGi5pbW11ZGIu",
-            "c2NoZW1hLlpBZGRSZXF1ZXN0SAASLgoDcmVmGAMgASgLMh8uaW1tdWRiLnNj",
-            "aGVtYS5SZWZlcmVuY2VSZXF1ZXN0SABCCwoJb3BlcmF0aW9uInsKDkV4ZWNB",
-            "bGxSZXF1ZXN0EiUKCk9wZXJhdGlvbnMYASADKAsyES5pbW11ZGIuc2NoZW1h",
-            "Lk9wEg4KBm5vV2FpdBgCIAEoCBIyCg1wcmVjb25kaXRpb25zGAMgAygLMhsu",
-            "aW1tdWRiLnNjaGVtYS5QcmVjb25kaXRpb24iMAoHRW50cmllcxIlCgdlbnRy",
-            "aWVzGAEgAygLMhQuaW1tdWRiLnNjaGVtYS5FbnRyeSJkCgZaRW50cnkSCwoD",
-            "c2V0GAEgASgMEgsKA2tleRgCIAEoDBIjCgVlbnRyeRgDIAEoCzIULmltbXVk",
-            "Yi5zY2hlbWEuRW50cnkSDQoFc2NvcmUYBCABKAESDAoEYXRUeBgFIAEoBCIy",
-            "CghaRW50cmllcxImCgdlbnRyaWVzGAEgAygLMhUuaW1tdWRiLnNjaGVtYS5a",
-            "RW50cnkiqQEKC1NjYW5SZXF1ZXN0Eg8KB3NlZWtLZXkYASABKAwSDgoGZW5k",
-            "S2V5GAcgASgMEg4KBnByZWZpeBgCIAEoDBIMCgRkZXNjGAMgASgIEg0KBWxp",
-            "bWl0GAQgASgEEg8KB3NpbmNlVHgYBSABKAQSDgoGbm9XYWl0GAYgASgIEhUK",
-            "DWluY2x1c2l2ZVNlZWsYCCABKAgSFAoMaW5jbHVzaXZlRW5kGAkgASgIIhsK",
-            "CUtleVByZWZpeBIOCgZwcmVmaXgYASABKAwiGwoKRW50cnlDb3VudBINCgVj",
-            "b3VudBgBIAEoBCIxCglTaWduYXR1cmUSEQoJcHVibGljS2V5GAEgASgMEhEK",
-            "CXNpZ25hdHVyZRgCIAEoDCKvAQoIVHhIZWFkZXISCgoCaWQYASABKAQSDwoH",
-            "cHJldkFsaBgCIAEoDBIKCgJ0cxgDIAEoAxIQCghuZW50cmllcxgEIAEoBRIK",
-            "CgJlSBgFIAEoDBIOCgZibFR4SWQYBiABKAQSDgoGYmxSb290GAcgASgMEg8K",
-            "B3ZlcnNpb24YCCABKAUSKwoIbWV0YWRhdGEYCSABKAsyGS5pbW11ZGIuc2No",
-            "ZW1hLlR4TWV0YWRhdGEiDAoKVHhNZXRhZGF0YSJECgtMaW5lYXJQcm9vZhIS",
-            "Cgpzb3VyY2VUeElkGAEgASgEEhIKClRhcmdldFR4SWQYAiABKAQSDQoFdGVy",
-            "bXMYAyADKAwigwIKCUR1YWxQcm9vZhIvCg5zb3VyY2VUeEhlYWRlchgBIAEo",
-            "CzIXLmltbXVkYi5zY2hlbWEuVHhIZWFkZXISLwoOdGFyZ2V0VHhIZWFkZXIY",
-            "AiABKAsyFy5pbW11ZGIuc2NoZW1hLlR4SGVhZGVyEhYKDmluY2x1c2lvblBy",
-            "b29mGAMgAygMEhgKEGNvbnNpc3RlbmN5UHJvb2YYBCADKAwSFQoNdGFyZ2V0",
-            "QmxUeEFsaBgFIAEoDBIaChJsYXN0SW5jbHVzaW9uUHJvb2YYBiADKAwSLwoL",
-            "bGluZWFyUHJvb2YYByABKAsyGi5pbW11ZGIuc2NoZW1hLkxpbmVhclByb29m",
-            "IqgBCgJUeBInCgZoZWFkZXIYASABKAsyFy5pbW11ZGIuc2NoZW1hLlR4SGVh",
-            "ZGVyEicKB2VudHJpZXMYAiADKAsyFi5pbW11ZGIuc2NoZW1hLlR4RW50cnkS",
-            "JwoJa3ZFbnRyaWVzGAMgAygLMhQuaW1tdWRiLnNjaGVtYS5FbnRyeRInCgh6",
-            "RW50cmllcxgEIAMoCzIVLmltbXVkYi5zY2hlbWEuWkVudHJ5InAKB1R4RW50",
-            "cnkSCwoDa2V5GAEgASgMEg4KBmhWYWx1ZRgCIAEoDBIMCgR2TGVuGAMgASgF",
-            "EisKCG1ldGFkYXRhGAQgASgLMhkuaW1tdWRiLnNjaGVtYS5LVk1ldGFkYXRh",
-            "Eg0KBXZhbHVlGAUgASgMImIKCktWTWV0YWRhdGESDwoHZGVsZXRlZBgBIAEo",
-            "CBItCgpleHBpcmF0aW9uGAIgASgLMhkuaW1tdWRiLnNjaGVtYS5FeHBpcmF0",
-            "aW9uEhQKDG5vbkluZGV4YWJsZRgDIAEoCCIfCgpFeHBpcmF0aW9uEhEKCWV4",
-            "cGlyZXNBdBgBIAEoAyKHAQoMVmVyaWZpYWJsZVR4Eh0KAnR4GAEgASgLMhEu",
-            "aW1tdWRiLnNjaGVtYS5UeBIrCglkdWFsUHJvb2YYAiABKAsyGC5pbW11ZGIu",
-            "c2NoZW1hLkR1YWxQcm9vZhIrCglzaWduYXR1cmUYAyABKAsyGC5pbW11ZGIu",
-            "c2NoZW1hLlNpZ25hdHVyZSKgAQoPVmVyaWZpYWJsZUVudHJ5EiMKBWVudHJ5",
-            "GAEgASgLMhQuaW1tdWRiLnNjaGVtYS5FbnRyeRIxCgx2ZXJpZmlhYmxlVHgY",
-            "AiABKAsyGy5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVUeBI1Cg5pbmNsdXNp",
-            "b25Qcm9vZhgDIAEoCzIdLmltbXVkYi5zY2hlbWEuSW5jbHVzaW9uUHJvb2Yi",
-            "PAoOSW5jbHVzaW9uUHJvb2YSDAoEbGVhZhgBIAEoBRINCgV3aWR0aBgCIAEo",
-            "BRINCgV0ZXJtcxgDIAMoDCJ2CgpTZXRSZXF1ZXN0EiQKA0tWcxgBIAMoCzIX",
-            "LmltbXVkYi5zY2hlbWEuS2V5VmFsdWUSDgoGbm9XYWl0GAIgASgIEjIKDXBy",
-            "ZWNvbmRpdGlvbnMYAyADKAsyGy5pbW11ZGIuc2NoZW1hLlByZWNvbmRpdGlv",
-            "biJcCgpLZXlSZXF1ZXN0EgsKA2tleRgBIAEoDBIMCgRhdFR4GAIgASgEEg8K",
-            "B3NpbmNlVHgYAyABKAQSDgoGbm9XYWl0GAQgASgIEhIKCmF0UmV2aXNpb24Y",
-            "BSABKAMiLwoOS2V5TGlzdFJlcXVlc3QSDAoEa2V5cxgBIAMoDBIPCgdzaW5j",
-            "ZVR4GAIgASgEIkIKEURlbGV0ZUtleXNSZXF1ZXN0EgwKBGtleXMYASADKAwS",
-            "DwoHc2luY2VUeBgCIAEoBBIOCgZub1dhaXQYAyABKAgiWwoUVmVyaWZpYWJs",
-            "ZVNldFJlcXVlc3QSLQoKc2V0UmVxdWVzdBgBIAEoCzIZLmltbXVkYi5zY2hl",
-            "bWEuU2V0UmVxdWVzdBIUCgxwcm92ZVNpbmNlVHgYAiABKAQiWwoUVmVyaWZp",
-            "YWJsZUdldFJlcXVlc3QSLQoKa2V5UmVxdWVzdBgBIAEoCzIZLmltbXVkYi5z",
-            "Y2hlbWEuS2V5UmVxdWVzdBIUCgxwcm92ZVNpbmNlVHgYAiABKAQiMQoOSGVh",
-            "bHRoUmVzcG9uc2USDgoGc3RhdHVzGAEgASgIEg8KB3ZlcnNpb24YAiABKAki",
-            "UQoWRGF0YWJhc2VIZWFsdGhSZXNwb25zZRIXCg9wZW5kaW5nUmVxdWVzdHMY",
-            "ASABKA0SHgoWbGFzdFJlcXVlc3RDb21wbGV0ZWRBdBgCIAEoAyJnCg5JbW11",
-            "dGFibGVTdGF0ZRIKCgJkYhgBIAEoCRIMCgR0eElkGAIgASgEEg4KBnR4SGFz",
-            "aBgDIAEoDBIrCglzaWduYXR1cmUYBCABKAsyGC5pbW11ZGIuc2NoZW1hLlNp",
-            "Z25hdHVyZSKaAQoQUmVmZXJlbmNlUmVxdWVzdBILCgNrZXkYASABKAwSFQoN",
-            "cmVmZXJlbmNlZEtleRgCIAEoDBIMCgRhdFR4GAMgASgEEhAKCGJvdW5kUmVm",
-            "GAQgASgIEg4KBm5vV2FpdBgFIAEoCBIyCg1wcmVjb25kaXRpb25zGAYgAygL",
-            "MhsuaW1tdWRiLnNjaGVtYS5QcmVjb25kaXRpb24ibQoaVmVyaWZpYWJsZVJl",
-            "ZmVyZW5jZVJlcXVlc3QSOQoQcmVmZXJlbmNlUmVxdWVzdBgBIAEoCzIfLmlt",
-            "bXVkYi5zY2hlbWEuUmVmZXJlbmNlUmVxdWVzdBIUCgxwcm92ZVNpbmNlVHgY",
-            "AiABKAQiZgoLWkFkZFJlcXVlc3QSCwoDc2V0GAEgASgMEg0KBXNjb3JlGAIg",
-            "ASgBEgsKA2tleRgDIAEoDBIMCgRhdFR4GAQgASgEEhAKCGJvdW5kUmVmGAUg",
-            "ASgIEg4KBm5vV2FpdBgGIAEoCCIWCgVTY29yZRINCgVzY29yZRgBIAEoASL2",
-            "AQoMWlNjYW5SZXF1ZXN0EgsKA3NldBgBIAEoDBIPCgdzZWVrS2V5GAIgASgM",
-            "EhEKCXNlZWtTY29yZRgDIAEoARIQCghzZWVrQXRUeBgEIAEoBBIVCg1pbmNs",
-            "dXNpdmVTZWVrGAUgASgIEg0KBWxpbWl0GAYgASgEEgwKBGRlc2MYByABKAgS",
-            "JgoIbWluU2NvcmUYCCABKAsyFC5pbW11ZGIuc2NoZW1hLlNjb3JlEiYKCG1h",
-            "eFNjb3JlGAkgASgLMhQuaW1tdWRiLnNjaGVtYS5TY29yZRIPCgdzaW5jZVR4",
-            "GAogASgEEg4KBm5vV2FpdBgLIAEoCCJbCg5IaXN0b3J5UmVxdWVzdBILCgNr",
-            "ZXkYASABKAwSDgoGb2Zmc2V0GAIgASgEEg0KBWxpbWl0GAMgASgFEgwKBGRl",
-            "c2MYBCABKAgSDwoHc2luY2VUeBgFIAEoBCJeChVWZXJpZmlhYmxlWkFkZFJl",
-            "cXVlc3QSLwoLekFkZFJlcXVlc3QYASABKAsyGi5pbW11ZGIuc2NoZW1hLlpB",
-            "ZGRSZXF1ZXN0EhQKDHByb3ZlU2luY2VUeBgCIAEoBCKLAQoJVHhSZXF1ZXN0",
-            "EgoKAnR4GAEgASgEEi8KC2VudHJpZXNTcGVjGAIgASgLMhouaW1tdWRiLnNj",
-            "aGVtYS5FbnRyaWVzU3BlYxIPCgdzaW5jZVR4GAMgASgEEg4KBm5vV2FpdBgE",
-            "IAEoCBIgChhrZWVwUmVmZXJlbmNlc1VucmVzb2x2ZWQYBSABKAgirAEKC0Vu",
-            "dHJpZXNTcGVjEjMKDWt2RW50cmllc1NwZWMYASABKAsyHC5pbW11ZGIuc2No",
-            "ZW1hLkVudHJ5VHlwZVNwZWMSMgoMekVudHJpZXNTcGVjGAIgASgLMhwuaW1t",
-            "dWRiLnNjaGVtYS5FbnRyeVR5cGVTcGVjEjQKDnNxbEVudHJpZXNTcGVjGAMg",
-            "ASgLMhwuaW1tdWRiLnNjaGVtYS5FbnRyeVR5cGVTcGVjIj8KDUVudHJ5VHlw",
-            "ZVNwZWMSLgoGYWN0aW9uGAEgASgOMh4uaW1tdWRiLnNjaGVtYS5FbnRyeVR5",
-            "cGVBY3Rpb24iqwEKE1ZlcmlmaWFibGVUeFJlcXVlc3QSCgoCdHgYASABKAQS",
-            "FAoMcHJvdmVTaW5jZVR4GAIgASgEEi8KC2VudHJpZXNTcGVjGAMgASgLMhou",
-            "aW1tdWRiLnNjaGVtYS5FbnRyaWVzU3BlYxIPCgdzaW5jZVR4GAQgASgEEg4K",
-            "Bm5vV2FpdBgFIAEoCBIgChhrZWVwUmVmZXJlbmNlc1VucmVzb2x2ZWQYBiAB",
-            "KAgikQEKDVR4U2NhblJlcXVlc3QSEQoJaW5pdGlhbFR4GAEgASgEEg0KBWxp",
-            "bWl0GAIgASgNEgwKBGRlc2MYAyABKAgSLwoLZW50cmllc1NwZWMYBCABKAsy",
-            "Gi5pbW11ZGIuc2NoZW1hLkVudHJpZXNTcGVjEg8KB3NpbmNlVHgYBSABKAQS",
-            "DgoGbm9XYWl0GAYgASgIIigKBlR4TGlzdBIeCgN0eHMYASADKAsyES5pbW11",
-            "ZGIuc2NoZW1hLlR4Ih0KD0V4cG9ydFR4UmVxdWVzdBIKCgJ0eBgBIAEoBCIg",
-            "CghEYXRhYmFzZRIUCgxkYXRhYmFzZU5hbWUYASABKAkimwIKEERhdGFiYXNl",
-            "U2V0dGluZ3MSFAoMZGF0YWJhc2VOYW1lGAEgASgJEg8KB3JlcGxpY2EYAiAB",
-            "KAgSFgoObWFzdGVyRGF0YWJhc2UYAyABKAkSFQoNbWFzdGVyQWRkcmVzcxgE",
-            "IAEoCRISCgptYXN0ZXJQb3J0GAUgASgNEhgKEGZvbGxvd2VyVXNlcm5hbWUY",
-            "BiABKAkSGAoQZm9sbG93ZXJQYXNzd29yZBgHIAEoCRIQCghmaWxlU2l6ZRgI",
-            "IAEoDRIRCgltYXhLZXlMZW4YCSABKA0SEwoLbWF4VmFsdWVMZW4YCiABKA0S",
-            "FAoMbWF4VHhFbnRyaWVzGAsgASgNEhkKEWV4Y2x1ZGVDb21taXRUaW1lGAwg",
-            "ASgIInUKFUNyZWF0ZURhdGFiYXNlUmVxdWVzdBIMCgRuYW1lGAEgASgJEjkK",
-            "CHNldHRpbmdzGAIgASgLMicuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZU51bGxh",
-            "YmxlU2V0dGluZ3MSEwoLaWZOb3RFeGlzdHMYAyABKAgieQoWQ3JlYXRlRGF0",
-            "YWJhc2VSZXNwb25zZRIMCgRuYW1lGAEgASgJEjkKCHNldHRpbmdzGAIgASgL",
-            "MicuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZU51bGxhYmxlU2V0dGluZ3MSFgoO",
-            "YWxyZWFkeUV4aXN0ZWQYAyABKAgiZAoVVXBkYXRlRGF0YWJhc2VSZXF1ZXN0",
-            "EhAKCGRhdGFiYXNlGAEgASgJEjkKCHNldHRpbmdzGAIgASgLMicuaW1tdWRi",
-            "LnNjaGVtYS5EYXRhYmFzZU51bGxhYmxlU2V0dGluZ3MiZQoWVXBkYXRlRGF0",
-            "YWJhc2VSZXNwb25zZRIQCghkYXRhYmFzZRgBIAEoCRI5CghzZXR0aW5ncxgC",
-            "IAEoCzInLmltbXVkYi5zY2hlbWEuRGF0YWJhc2VOdWxsYWJsZVNldHRpbmdz",
-            "IhkKF0RhdGFiYXNlU2V0dGluZ3NSZXF1ZXN0ImcKGERhdGFiYXNlU2V0dGlu",
-            "Z3NSZXNwb25zZRIQCghkYXRhYmFzZRgBIAEoCRI5CghzZXR0aW5ncxgCIAEo",
-            "CzInLmltbXVkYi5zY2hlbWEuRGF0YWJhc2VOdWxsYWJsZVNldHRpbmdzIh8K",
-            "Dk51bGxhYmxlVWludDMyEg0KBXZhbHVlGAEgASgNIh8KDk51bGxhYmxlVWlu",
-            "dDY0Eg0KBXZhbHVlGAEgASgEIh4KDU51bGxhYmxlRmxvYXQSDQoFdmFsdWUY",
-            "ASABKAIiHQoMTnVsbGFibGVCb29sEg0KBXZhbHVlGAEgASgIIh8KDk51bGxh",
-            "YmxlU3RyaW5nEg0KBXZhbHVlGAEgASgJIu4GChhEYXRhYmFzZU51bGxhYmxl",
-            "U2V0dGluZ3MSRwoTcmVwbGljYXRpb25TZXR0aW5ncxgCIAEoCzIqLmltbXVk",
-            "Yi5zY2hlbWEuUmVwbGljYXRpb25OdWxsYWJsZVNldHRpbmdzEi8KCGZpbGVT",
-            "aXplGAggASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQzMhIwCglt",
-            "YXhLZXlMZW4YCSABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMy",
-            "EjIKC21heFZhbHVlTGVuGAogASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJs",
-            "ZVVpbnQzMhIzCgxtYXhUeEVudHJpZXMYCyABKAsyHS5pbW11ZGIuc2NoZW1h",
-            "Lk51bGxhYmxlVWludDMyEjYKEWV4Y2x1ZGVDb21taXRUaW1lGAwgASgLMhsu",
-            "aW1tdWRiLnNjaGVtYS5OdWxsYWJsZUJvb2wSNQoObWF4Q29uY3VycmVuY3kY",
-            "DSABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjcKEG1heElP",
-            "Q29uY3VycmVuY3kYDiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWlu",
-            "dDMyEjUKDnR4TG9nQ2FjaGVTaXplGA8gASgLMh0uaW1tdWRiLnNjaGVtYS5O",
-            "dWxsYWJsZVVpbnQzMhI5ChJ2TG9nTWF4T3BlbmVkRmlsZXMYECABKAsyHS5p",
-            "bW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjoKE3R4TG9nTWF4T3BlbmVk",
-            "RmlsZXMYESABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEj4K",
-            "F2NvbW1pdExvZ01heE9wZW5lZEZpbGVzGBIgASgLMh0uaW1tdWRiLnNjaGVt",
-            "YS5OdWxsYWJsZVVpbnQzMhI7Cg1pbmRleFNldHRpbmdzGBMgASgLMiQuaW1t",
-            "dWRiLnNjaGVtYS5JbmRleE51bGxhYmxlU2V0dGluZ3MSOwoUd3JpdGVUeEhl",
-            "YWRlclZlcnNpb24YFCABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWlu",
-            "dDMyEi0KCGF1dG9sb2FkGBUgASgLMhsuaW1tdWRiLnNjaGVtYS5OdWxsYWJs",
-            "ZUJvb2wi3QIKG1JlcGxpY2F0aW9uTnVsbGFibGVTZXR0aW5ncxIsCgdyZXBs",
-            "aWNhGAEgASgLMhsuaW1tdWRiLnNjaGVtYS5OdWxsYWJsZUJvb2wSNQoObWFz",
-            "dGVyRGF0YWJhc2UYAiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlU3Ry",
-            "aW5nEjQKDW1hc3RlckFkZHJlc3MYAyABKAsyHS5pbW11ZGIuc2NoZW1hLk51",
-            "bGxhYmxlU3RyaW5nEjEKCm1hc3RlclBvcnQYBCABKAsyHS5pbW11ZGIuc2No",
-            "ZW1hLk51bGxhYmxlVWludDMyEjcKEGZvbGxvd2VyVXNlcm5hbWUYBSABKAsy",
-            "HS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlU3RyaW5nEjcKEGZvbGxvd2VyUGFz",
-            "c3dvcmQYBiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlU3RyaW5nIoYG",
-            "ChVJbmRleE51bGxhYmxlU2V0dGluZ3MSNQoOZmx1c2hUaHJlc2hvbGQYASAB",
-            "KAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjQKDXN5bmNUaHJl",
-            "c2hvbGQYAiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjAK",
-            "CWNhY2hlU2l6ZRgDIAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50",
-            "MzISMgoLbWF4Tm9kZVNpemUYBCABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxh",
-            "YmxlVWludDMyEjkKEm1heEFjdGl2ZVNuYXBzaG90cxgFIAEoCzIdLmltbXVk",
-            "Yi5zY2hlbWEuTnVsbGFibGVVaW50MzISOQoScmVuZXdTbmFwUm9vdEFmdGVy",
-            "GAYgASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQ2NBI1Cg5jb21w",
-            "YWN0aW9uVGhsZBgHIAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50",
-            "MzISPAoVZGVsYXlEdXJpbmdDb21wYWN0aW9uGAggASgLMh0uaW1tdWRiLnNj",
-            "aGVtYS5OdWxsYWJsZVVpbnQzMhI9ChZub2Rlc0xvZ01heE9wZW5lZEZpbGVz",
-            "GAkgASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQzMhI/ChhoaXN0",
-            "b3J5TG9nTWF4T3BlbmVkRmlsZXMYCiABKAsyHS5pbW11ZGIuc2NoZW1hLk51",
-            "bGxhYmxlVWludDMyEj4KF2NvbW1pdExvZ01heE9wZW5lZEZpbGVzGAsgASgL",
-            "Mh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQzMhI2Cg9mbHVzaEJ1ZmZl",
-            "clNpemUYDCABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjcK",
-            "EWNsZWFudXBQZXJjZW50YWdlGA0gASgLMhwuaW1tdWRiLnNjaGVtYS5OdWxs",
-            "YWJsZUZsb2F0IicKE0xvYWREYXRhYmFzZVJlcXVlc3QSEAoIZGF0YWJhc2UY",
-            "ASABKAkiKAoUTG9hZERhdGFiYXNlUmVzcG9uc2USEAoIZGF0YWJhc2UYASAB",
-            "KAkiKQoVVW5sb2FkRGF0YWJhc2VSZXF1ZXN0EhAKCGRhdGFiYXNlGAEgASgJ",
-            "IioKFlVubG9hZERhdGFiYXNlUmVzcG9uc2USEAoIZGF0YWJhc2UYASABKAki",
-            "KQoVRGVsZXRlRGF0YWJhc2VSZXF1ZXN0EhAKCGRhdGFiYXNlGAEgASgJIioK",
-            "FkRlbGV0ZURhdGFiYXNlUmVzcG9uc2USEAoIZGF0YWJhc2UYASABKAkiPgoR",
-            "Rmx1c2hJbmRleFJlcXVlc3QSGQoRY2xlYW51cFBlcmNlbnRhZ2UYASABKAIS",
-            "DgoGc3luY2VkGAIgASgIIiYKEkZsdXNoSW5kZXhSZXNwb25zZRIQCghkYXRh",
-            "YmFzZRgBIAEoCSIaCgVUYWJsZRIRCgl0YWJsZU5hbWUYASABKAkiaAoNU1FM",
-            "R2V0UmVxdWVzdBINCgV0YWJsZRgBIAEoCRIpCghwa1ZhbHVlcxgCIAMoCzIX",
-            "LmltbXVkYi5zY2hlbWEuU1FMVmFsdWUSDAoEYXRUeBgDIAEoBBIPCgdzaW5j",
-            "ZVR4GAQgASgEImQKF1ZlcmlmaWFibGVTUUxHZXRSZXF1ZXN0EjMKDXNxbEdl",
-            "dFJlcXVlc3QYASABKAsyHC5pbW11ZGIuc2NoZW1hLlNRTEdldFJlcXVlc3QS",
-            "FAoMcHJvdmVTaW5jZVR4GAIgASgEIl8KCFNRTEVudHJ5EgoKAnR4GAEgASgE",
-            "EgsKA2tleRgCIAEoDBINCgV2YWx1ZRgDIAEoDBIrCghtZXRhZGF0YRgEIAEo",
-            "CzIZLmltbXVkYi5zY2hlbWEuS1ZNZXRhZGF0YSLdBQoSVmVyaWZpYWJsZVNR",
-            "TEVudHJ5EikKCHNxbEVudHJ5GAEgASgLMhcuaW1tdWRiLnNjaGVtYS5TUUxF",
-            "bnRyeRIxCgx2ZXJpZmlhYmxlVHgYAiABKAsyGy5pbW11ZGIuc2NoZW1hLlZl",
-            "cmlmaWFibGVUeBI1Cg5pbmNsdXNpb25Qcm9vZhgDIAEoCzIdLmltbXVkYi5z",
-            "Y2hlbWEuSW5jbHVzaW9uUHJvb2YSEgoKRGF0YWJhc2VJZBgEIAEoDRIPCgdU",
-            "YWJsZUlkGAUgASgNEg0KBVBLSURzGBAgAygNEkkKDENvbE5hbWVzQnlJZBgI",
-            "IAMoCzIzLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJsZVNRTEVudHJ5LkNvbE5h",
-            "bWVzQnlJZEVudHJ5EkkKDENvbElkc0J5TmFtZRgJIAMoCzIzLmltbXVkYi5z",
-            "Y2hlbWEuVmVyaWZpYWJsZVNRTEVudHJ5LkNvbElkc0J5TmFtZUVudHJ5EkkK",
-            "DENvbFR5cGVzQnlJZBgKIAMoCzIzLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJs",
-            "ZVNRTEVudHJ5LkNvbFR5cGVzQnlJZEVudHJ5EkUKCkNvbExlbkJ5SWQYCyAD",
-            "KAsyMS5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVTUUxFbnRyeS5Db2xMZW5C",
-            "eUlkRW50cnkaMwoRQ29sTmFtZXNCeUlkRW50cnkSCwoDa2V5GAEgASgNEg0K",
-            "BXZhbHVlGAIgASgJOgI4ARozChFDb2xJZHNCeU5hbWVFbnRyeRILCgNrZXkY",
-            "ASABKAkSDQoFdmFsdWUYAiABKA06AjgBGjMKEUNvbFR5cGVzQnlJZEVudHJ5",
-            "EgsKA2tleRgBIAEoDRINCgV2YWx1ZRgCIAEoCToCOAEaMQoPQ29sTGVuQnlJ",
-            "ZEVudHJ5EgsKA2tleRgBIAEoDRINCgV2YWx1ZRgCIAEoBToCOAFKBAgGEAci",
-            "IQoQVXNlRGF0YWJhc2VSZXBseRINCgV0b2tlbhgBIAEoCSKCAQoXQ2hhbmdl",
-            "UGVybWlzc2lvblJlcXVlc3QSLwoGYWN0aW9uGAEgASgOMh8uaW1tdWRiLnNj",
-            "aGVtYS5QZXJtaXNzaW9uQWN0aW9uEhAKCHVzZXJuYW1lGAIgASgJEhAKCGRh",
-            "dGFiYXNlGAMgASgJEhIKCnBlcm1pc3Npb24YBCABKA0iOAoUU2V0QWN0aXZl",
-            "VXNlclJlcXVlc3QSDgoGYWN0aXZlGAEgASgIEhAKCHVzZXJuYW1lGAIgASgJ",
-            "IkIKFERhdGFiYXNlTGlzdFJlc3BvbnNlEioKCWRhdGFiYXNlcxgBIAMoCzIX",
-            "LmltbXVkYi5zY2hlbWEuRGF0YWJhc2UiFwoVRGF0YWJhc2VMaXN0UmVxdWVz",
-            "dFYyIlAKFkRhdGFiYXNlTGlzdFJlc3BvbnNlVjISNgoJZGF0YWJhc2VzGAEg",
-            "AygLMiMuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZVdpdGhTZXR0aW5ncyJvChRE",
-            "YXRhYmFzZVdpdGhTZXR0aW5ncxIMCgRuYW1lGAEgASgJEjkKCHNldHRpbmdz",
-            "GAIgASgLMicuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZU51bGxhYmxlU2V0dGlu",
-            "Z3MSDgoGbG9hZGVkGAMgASgIIhgKBUNodW5rEg8KB2NvbnRlbnQYASABKAwi",
-            "OQoSVXNlU25hcHNob3RSZXF1ZXN0Eg8KB3NpbmNlVHgYASABKAQSEgoKYXNC",
-            "ZWZvcmVUeBgCIAEoBCJYCg5TUUxFeGVjUmVxdWVzdBILCgNzcWwYASABKAkS",
-            "KQoGcGFyYW1zGAIgAygLMhkuaW1tdWRiLnNjaGVtYS5OYW1lZFBhcmFtEg4K",
-            "Bm5vV2FpdBgDIAEoCCJgCg9TUUxRdWVyeVJlcXVlc3QSCwoDc3FsGAEgASgJ",
-            "EikKBnBhcmFtcxgCIAMoCzIZLmltbXVkYi5zY2hlbWEuTmFtZWRQYXJhbRIV",
-            "Cg1yZXVzZVNuYXBzaG90GAMgASgIIkIKCk5hbWVkUGFyYW0SDAoEbmFtZRgB",
-            "IAEoCRImCgV2YWx1ZRgCIAEoCzIXLmltbXVkYi5zY2hlbWEuU1FMVmFsdWUi",
-            "TgoNU1FMRXhlY1Jlc3VsdBIqCgN0eHMYBSADKAsyHS5pbW11ZGIuc2NoZW1h",
-            "LkNvbW1pdHRlZFNRTFR4EhEKCW9uZ29pbmdUeBgGIAEoCCKNAwoOQ29tbWl0",
-            "dGVkU1FMVHgSJwoGaGVhZGVyGAEgASgLMhcuaW1tdWRiLnNjaGVtYS5UeEhl",
-            "YWRlchITCgt1cGRhdGVkUm93cxgCIAEoDRJLCg9sYXN0SW5zZXJ0ZWRQS3MY",
-            "AyADKAsyMi5pbW11ZGIuc2NoZW1hLkNvbW1pdHRlZFNRTFR4Lkxhc3RJbnNl",
-            "cnRlZFBLc0VudHJ5Ek0KEGZpcnN0SW5zZXJ0ZWRQS3MYBCADKAsyMy5pbW11",
-            "ZGIuc2NoZW1hLkNvbW1pdHRlZFNRTFR4LkZpcnN0SW5zZXJ0ZWRQS3NFbnRy",
-            "eRpPChRMYXN0SW5zZXJ0ZWRQS3NFbnRyeRILCgNrZXkYASABKAkSJgoFdmFs",
-            "dWUYAiABKAsyFy5pbW11ZGIuc2NoZW1hLlNRTFZhbHVlOgI4ARpQChVGaXJz",
-            "dEluc2VydGVkUEtzRW50cnkSCwoDa2V5GAEgASgJEiYKBXZhbHVlGAIgASgL",
-            "MhcuaW1tdWRiLnNjaGVtYS5TUUxWYWx1ZToCOAEiWgoOU1FMUXVlcnlSZXN1",
-            "bHQSJgoHY29sdW1ucxgCIAMoCzIVLmltbXVkYi5zY2hlbWEuQ29sdW1uEiAK",
-            "BHJvd3MYASADKAsyEi5pbW11ZGIuc2NoZW1hLlJvdyIkCgZDb2x1bW4SDAoE",
-            "bmFtZRgBIAEoCRIMCgR0eXBlGAIgASgJIj8KA1JvdxIPCgdjb2x1bW5zGAEg",
-            "AygJEicKBnZhbHVlcxgCIAMoCzIXLmltbXVkYi5zY2hlbWEuU1FMVmFsdWUi",
-            "ggEKCFNRTFZhbHVlEioKBG51bGwYASABKA4yGi5nb29nbGUucHJvdG9idWYu",
-            "TnVsbFZhbHVlSAASCwoBbhgCIAEoA0gAEgsKAXMYAyABKAlIABILCgFiGAQg",
-            "ASgISAASDAoCYnMYBSABKAxIABIMCgJ0cxgGIAEoA0gAQgcKBXZhbHVlIjMK",
-            "DE5ld1R4UmVxdWVzdBIjCgRtb2RlGAEgASgOMhUuaW1tdWRiLnNjaGVtYS5U",
-            "eE1vZGUiJgoNTmV3VHhSZXNwb25zZRIVCg10cmFuc2FjdGlvbklEGAEgASgJ",
-            "IigKCUVycm9ySW5mbxIMCgRjb2RlGAEgASgJEg0KBWNhdXNlGAIgASgJIhoK",
-            "CURlYnVnSW5mbxINCgVzdGFjaxgBIAEoCSIgCglSZXRyeUluZm8SEwoLcmV0",
-            "cnlfZGVsYXkYASABKAUqSwoPRW50cnlUeXBlQWN0aW9uEgsKB0VYQ0xVREUQ",
-            "ABIPCgtPTkxZX0RJR0VTVBABEg0KCVJBV19WQUxVRRACEgsKB1JFU09MVkUQ",
-            "AyopChBQZXJtaXNzaW9uQWN0aW9uEgkKBUdSQU5UEAASCgoGUkVWT0tFEAEq",
-            "NAoGVHhNb2RlEgwKCFJlYWRPbmx5EAASDQoJV3JpdGVPbmx5EAESDQoJUmVh",
-            "ZFdyaXRlEAIy6TEKC0ltbXVTZXJ2aWNlElAKCUxpc3RVc2VycxIWLmdvb2ds",
-            "ZS5wcm90b2J1Zi5FbXB0eRoXLmltbXVkYi5zY2hlbWEuVXNlckxpc3QiEoLT",
-            "5JMCDBIKL3VzZXIvbGlzdBJYCgpDcmVhdGVVc2VyEiAuaW1tdWRiLnNjaGVt",
-            "YS5DcmVhdGVVc2VyUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIQ",
-            "gtPkkwIKIgUvdXNlcjoBKhJwCg5DaGFuZ2VQYXNzd29yZBIkLmltbXVkYi5z",
-            "Y2hlbWEuQ2hhbmdlUGFzc3dvcmRSZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVm",
-            "LkVtcHR5IiCC0+STAhoiFS91c2VyL3Bhc3N3b3JkL2NoYW5nZToBKhJ1ChBD",
-            "aGFuZ2VQZXJtaXNzaW9uEiYuaW1tdWRiLnNjaGVtYS5DaGFuZ2VQZXJtaXNz",
-            "aW9uUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIhgtPkkwIbIhYv",
-            "dXNlci9jaGFuZ2VwZXJtaXNzaW9uOgEqEmwKDVNldEFjdGl2ZVVzZXISIy5p",
-            "bW11ZGIuc2NoZW1hLlNldEFjdGl2ZVVzZXJSZXF1ZXN0GhYuZ29vZ2xlLnBy",
-            "b3RvYnVmLkVtcHR5Ih6C0+STAhgiEy91c2VyL3NldGFjdGl2ZVVzZXI6ASoS",
-            "SgoQVXBkYXRlQXV0aENvbmZpZxIZLmltbXVkYi5zY2hlbWEuQXV0aENvbmZp",
-            "ZxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIDiAIBEkoKEFVwZGF0ZU1UTFND",
-            "b25maWcSGS5pbW11ZGIuc2NoZW1hLk1UTFNDb25maWcaFi5nb29nbGUucHJv",
-            "dG9idWYuRW1wdHkiA4gCARJWCgtPcGVuU2Vzc2lvbhIhLmltbXVkYi5zY2hl",
-            "bWEuT3BlblNlc3Npb25SZXF1ZXN0GiIuaW1tdWRiLnNjaGVtYS5PcGVuU2Vz",
-            "c2lvblJlc3BvbnNlIgASQAoMQ2xvc2VTZXNzaW9uEhYuZ29vZ2xlLnByb3Rv",
-            "YnVmLkVtcHR5GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASPQoJS2VlcEFs",
-            "aXZlEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhYuZ29vZ2xlLnByb3RvYnVm",
-            "LkVtcHR5IgASRAoFTmV3VHgSGy5pbW11ZGIuc2NoZW1hLk5ld1R4UmVxdWVz",
-            "dBocLmltbXVkYi5zY2hlbWEuTmV3VHhSZXNwb25zZSIAEkEKBkNvbW1pdBIW",
-            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eRodLmltbXVkYi5zY2hlbWEuQ29tbWl0",
-            "dGVkU1FMVHgiABI8CghSb2xsYmFjaxIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0",
-            "eRoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkQKCVR4U1FMRXhlYxIdLmlt",
-            "bXVkYi5zY2hlbWEuU1FMRXhlY1JlcXVlc3QaFi5nb29nbGUucHJvdG9idWYu",
-            "RW1wdHkiABJNCgpUeFNRTFF1ZXJ5Eh4uaW1tdWRiLnNjaGVtYS5TUUxRdWVy",
-            "eVJlcXVlc3QaHS5pbW11ZGIuc2NoZW1hLlNRTFF1ZXJ5UmVzdWx0IgASWAoF",
-            "TG9naW4SGy5pbW11ZGIuc2NoZW1hLkxvZ2luUmVxdWVzdBocLmltbXVkYi5z",
-            "Y2hlbWEuTG9naW5SZXNwb25zZSIUiAIBgtPkkwILIgYvbG9naW46ASoSTwoG",
+            "ChJwcm90by9zY2hlbWEucHJvdG8SC0ltbXVkYlByb3h5Ghxnb29nbGUvYXBp",
+            "L2Fubm90YXRpb25zLnByb3RvGhtnb29nbGUvcHJvdG9idWYvZW1wdHkucHJv",
+            "dG8aHGdvb2dsZS9wcm90b2J1Zi9zdHJ1Y3QucHJvdG8iEgoDS2V5EgsKA2tl",
+            "eRgBIAEoDCIyCgpQZXJtaXNzaW9uEhAKCGRhdGFiYXNlGAEgASgJEhIKCnBl",
+            "cm1pc3Npb24YAiABKA0ieAoEVXNlchIMCgR1c2VyGAEgASgMEiwKC3Blcm1p",
+            "c3Npb25zGAMgAygLMhcuSW1tdWRiUHJveHkuUGVybWlzc2lvbhIRCgljcmVh",
+            "dGVkYnkYBCABKAkSEQoJY3JlYXRlZGF0GAUgASgJEg4KBmFjdGl2ZRgGIAEo",
+            "CCIsCghVc2VyTGlzdBIgCgV1c2VycxgBIAMoCzIRLkltbXVkYlByb3h5LlVz",
+            "ZXIiWQoRQ3JlYXRlVXNlclJlcXVlc3QSDAoEdXNlchgBIAEoDBIQCghwYXNz",
+            "d29yZBgCIAEoDBISCgpwZXJtaXNzaW9uGAMgASgNEhAKCGRhdGFiYXNlGAQg",
+            "ASgJIhsKC1VzZXJSZXF1ZXN0EgwKBHVzZXIYASABKAwiTwoVQ2hhbmdlUGFz",
+            "c3dvcmRSZXF1ZXN0EgwKBHVzZXIYASABKAwSEwoLb2xkUGFzc3dvcmQYAiAB",
+            "KAwSEwoLbmV3UGFzc3dvcmQYAyABKAwiLgoMTG9naW5SZXF1ZXN0EgwKBHVz",
+            "ZXIYASABKAwSEAoIcGFzc3dvcmQYAiABKAwiLwoNTG9naW5SZXNwb25zZRIN",
+            "CgV0b2tlbhgBIAEoCRIPCgd3YXJuaW5nGAIgASgMIhoKCkF1dGhDb25maWcS",
+            "DAoEa2luZBgBIAEoDSIdCgpNVExTQ29uZmlnEg8KB2VuYWJsZWQYASABKAgi",
+            "TgoST3BlblNlc3Npb25SZXF1ZXN0EhAKCHVzZXJuYW1lGAEgASgMEhAKCHBh",
+            "c3N3b3JkGAIgASgMEhQKDGRhdGFiYXNlTmFtZRgDIAEoCSI8ChNPcGVuU2Vz",
+            "c2lvblJlc3BvbnNlEhEKCXNlc3Npb25JRBgBIAEoCRISCgpzZXJ2ZXJVVUlE",
+            "GAIgASgJIq8DCgxQcmVjb25kaXRpb24SSgoMa2V5TXVzdEV4aXN0GAEgASgL",
+            "MjIuSW1tdWRiUHJveHkuUHJlY29uZGl0aW9uLktleU11c3RFeGlzdFByZWNv",
+            "bmRpdGlvbkgAElAKD2tleU11c3ROb3RFeGlzdBgCIAEoCzI1LkltbXVkYlBy",
+            "b3h5LlByZWNvbmRpdGlvbi5LZXlNdXN0Tm90RXhpc3RQcmVjb25kaXRpb25I",
+            "ABJcChVrZXlOb3RNb2RpZmllZEFmdGVyVFgYAyABKAsyOy5JbW11ZGJQcm94",
+            "eS5QcmVjb25kaXRpb24uS2V5Tm90TW9kaWZpZWRBZnRlclRYUHJlY29uZGl0",
+            "aW9uSAAaJwoYS2V5TXVzdEV4aXN0UHJlY29uZGl0aW9uEgsKA2tleRgBIAEo",
+            "DBoqChtLZXlNdXN0Tm90RXhpc3RQcmVjb25kaXRpb24SCwoDa2V5GAEgASgM",
+            "Gj4KIUtleU5vdE1vZGlmaWVkQWZ0ZXJUWFByZWNvbmRpdGlvbhILCgNrZXkY",
+            "ASABKAwSDAoEdHhJRBgCIAEoBEIOCgxwcmVjb25kaXRpb24iUQoIS2V5VmFs",
+            "dWUSCwoDa2V5GAEgASgMEg0KBXZhbHVlGAIgASgMEikKCG1ldGFkYXRhGAMg",
+            "ASgLMhcuSW1tdWRiUHJveHkuS1ZNZXRhZGF0YSKrAQoFRW50cnkSCgoCdHgY",
+            "ASABKAQSCwoDa2V5GAIgASgMEg0KBXZhbHVlGAMgASgMEiwKDHJlZmVyZW5j",
+            "ZWRCeRgEIAEoCzIWLkltbXVkYlByb3h5LlJlZmVyZW5jZRIpCghtZXRhZGF0",
+            "YRgFIAEoCzIXLkltbXVkYlByb3h5LktWTWV0YWRhdGESDwoHZXhwaXJlZBgG",
+            "IAEoCBIQCghyZXZpc2lvbhgHIAEoBCJvCglSZWZlcmVuY2USCgoCdHgYASAB",
+            "KAQSCwoDa2V5GAIgASgMEgwKBGF0VHgYAyABKAQSKQoIbWV0YWRhdGEYBCAB",
+            "KAsyFy5JbW11ZGJQcm94eS5LVk1ldGFkYXRhEhAKCHJldmlzaW9uGAUgASgE",
+            "Io4BCgJPcBIjCgJrdhgBIAEoCzIVLkltbXVkYlByb3h5LktleVZhbHVlSAAS",
+            "KAoEekFkZBgCIAEoCzIYLkltbXVkYlByb3h5LlpBZGRSZXF1ZXN0SAASLAoD",
+            "cmVmGAMgASgLMh0uSW1tdWRiUHJveHkuUmVmZXJlbmNlUmVxdWVzdEgAQgsK",
+            "CW9wZXJhdGlvbiJ3Cg5FeGVjQWxsUmVxdWVzdBIjCgpPcGVyYXRpb25zGAEg",
+            "AygLMg8uSW1tdWRiUHJveHkuT3ASDgoGbm9XYWl0GAIgASgIEjAKDXByZWNv",
+            "bmRpdGlvbnMYAyADKAsyGS5JbW11ZGJQcm94eS5QcmVjb25kaXRpb24iLgoH",
+            "RW50cmllcxIjCgdlbnRyaWVzGAEgAygLMhIuSW1tdWRiUHJveHkuRW50cnki",
+            "YgoGWkVudHJ5EgsKA3NldBgBIAEoDBILCgNrZXkYAiABKAwSIQoFZW50cnkY",
+            "AyABKAsyEi5JbW11ZGJQcm94eS5FbnRyeRINCgVzY29yZRgEIAEoARIMCgRh",
+            "dFR4GAUgASgEIjAKCFpFbnRyaWVzEiQKB2VudHJpZXMYASADKAsyEy5JbW11",
+            "ZGJQcm94eS5aRW50cnkiqQEKC1NjYW5SZXF1ZXN0Eg8KB3NlZWtLZXkYASAB",
+            "KAwSDgoGZW5kS2V5GAcgASgMEg4KBnByZWZpeBgCIAEoDBIMCgRkZXNjGAMg",
+            "ASgIEg0KBWxpbWl0GAQgASgEEg8KB3NpbmNlVHgYBSABKAQSDgoGbm9XYWl0",
+            "GAYgASgIEhUKDWluY2x1c2l2ZVNlZWsYCCABKAgSFAoMaW5jbHVzaXZlRW5k",
+            "GAkgASgIIhsKCUtleVByZWZpeBIOCgZwcmVmaXgYASABKAwiGwoKRW50cnlD",
+            "b3VudBINCgVjb3VudBgBIAEoBCIxCglTaWduYXR1cmUSEQoJcHVibGljS2V5",
+            "GAEgASgMEhEKCXNpZ25hdHVyZRgCIAEoDCKtAQoIVHhIZWFkZXISCgoCaWQY",
+            "ASABKAQSDwoHcHJldkFsaBgCIAEoDBIKCgJ0cxgDIAEoAxIQCghuZW50cmll",
+            "cxgEIAEoBRIKCgJlSBgFIAEoDBIOCgZibFR4SWQYBiABKAQSDgoGYmxSb290",
+            "GAcgASgMEg8KB3ZlcnNpb24YCCABKAUSKQoIbWV0YWRhdGEYCSABKAsyFy5J",
+            "bW11ZGJQcm94eS5UeE1ldGFkYXRhIgwKClR4TWV0YWRhdGEiRAoLTGluZWFy",
+            "UHJvb2YSEgoKc291cmNlVHhJZBgBIAEoBBISCgpUYXJnZXRUeElkGAIgASgE",
+            "Eg0KBXRlcm1zGAMgAygMIv0BCglEdWFsUHJvb2YSLQoOc291cmNlVHhIZWFk",
+            "ZXIYASABKAsyFS5JbW11ZGJQcm94eS5UeEhlYWRlchItCg50YXJnZXRUeEhl",
+            "YWRlchgCIAEoCzIVLkltbXVkYlByb3h5LlR4SGVhZGVyEhYKDmluY2x1c2lv",
+            "blByb29mGAMgAygMEhgKEGNvbnNpc3RlbmN5UHJvb2YYBCADKAwSFQoNdGFy",
+            "Z2V0QmxUeEFsaBgFIAEoDBIaChJsYXN0SW5jbHVzaW9uUHJvb2YYBiADKAwS",
+            "LQoLbGluZWFyUHJvb2YYByABKAsyGC5JbW11ZGJQcm94eS5MaW5lYXJQcm9v",
+            "ZiKgAQoCVHgSJQoGaGVhZGVyGAEgASgLMhUuSW1tdWRiUHJveHkuVHhIZWFk",
+            "ZXISJQoHZW50cmllcxgCIAMoCzIULkltbXVkYlByb3h5LlR4RW50cnkSJQoJ",
+            "a3ZFbnRyaWVzGAMgAygLMhIuSW1tdWRiUHJveHkuRW50cnkSJQoIekVudHJp",
+            "ZXMYBCADKAsyEy5JbW11ZGJQcm94eS5aRW50cnkibgoHVHhFbnRyeRILCgNr",
+            "ZXkYASABKAwSDgoGaFZhbHVlGAIgASgMEgwKBHZMZW4YAyABKAUSKQoIbWV0",
+            "YWRhdGEYBCABKAsyFy5JbW11ZGJQcm94eS5LVk1ldGFkYXRhEg0KBXZhbHVl",
+            "GAUgASgMImAKCktWTWV0YWRhdGESDwoHZGVsZXRlZBgBIAEoCBIrCgpleHBp",
+            "cmF0aW9uGAIgASgLMhcuSW1tdWRiUHJveHkuRXhwaXJhdGlvbhIUCgxub25J",
+            "bmRleGFibGUYAyABKAgiHwoKRXhwaXJhdGlvbhIRCglleHBpcmVzQXQYASAB",
+            "KAMigQEKDFZlcmlmaWFibGVUeBIbCgJ0eBgBIAEoCzIPLkltbXVkYlByb3h5",
+            "LlR4EikKCWR1YWxQcm9vZhgCIAEoCzIWLkltbXVkYlByb3h5LkR1YWxQcm9v",
+            "ZhIpCglzaWduYXR1cmUYAyABKAsyFi5JbW11ZGJQcm94eS5TaWduYXR1cmUi",
+            "mgEKD1ZlcmlmaWFibGVFbnRyeRIhCgVlbnRyeRgBIAEoCzISLkltbXVkYlBy",
+            "b3h5LkVudHJ5Ei8KDHZlcmlmaWFibGVUeBgCIAEoCzIZLkltbXVkYlByb3h5",
+            "LlZlcmlmaWFibGVUeBIzCg5pbmNsdXNpb25Qcm9vZhgDIAEoCzIbLkltbXVk",
+            "YlByb3h5LkluY2x1c2lvblByb29mIjwKDkluY2x1c2lvblByb29mEgwKBGxl",
+            "YWYYASABKAUSDQoFd2lkdGgYAiABKAUSDQoFdGVybXMYAyADKAwicgoKU2V0",
+            "UmVxdWVzdBIiCgNLVnMYASADKAsyFS5JbW11ZGJQcm94eS5LZXlWYWx1ZRIO",
+            "CgZub1dhaXQYAiABKAgSMAoNcHJlY29uZGl0aW9ucxgDIAMoCzIZLkltbXVk",
+            "YlByb3h5LlByZWNvbmRpdGlvbiJcCgpLZXlSZXF1ZXN0EgsKA2tleRgBIAEo",
+            "DBIMCgRhdFR4GAIgASgEEg8KB3NpbmNlVHgYAyABKAQSDgoGbm9XYWl0GAQg",
+            "ASgIEhIKCmF0UmV2aXNpb24YBSABKAMiLwoOS2V5TGlzdFJlcXVlc3QSDAoE",
+            "a2V5cxgBIAMoDBIPCgdzaW5jZVR4GAIgASgEIkIKEURlbGV0ZUtleXNSZXF1",
+            "ZXN0EgwKBGtleXMYASADKAwSDwoHc2luY2VUeBgCIAEoBBIOCgZub1dhaXQY",
+            "AyABKAgiWQoUVmVyaWZpYWJsZVNldFJlcXVlc3QSKwoKc2V0UmVxdWVzdBgB",
+            "IAEoCzIXLkltbXVkYlByb3h5LlNldFJlcXVlc3QSFAoMcHJvdmVTaW5jZVR4",
+            "GAIgASgEIlkKFFZlcmlmaWFibGVHZXRSZXF1ZXN0EisKCmtleVJlcXVlc3QY",
+            "ASABKAsyFy5JbW11ZGJQcm94eS5LZXlSZXF1ZXN0EhQKDHByb3ZlU2luY2VU",
+            "eBgCIAEoBCIxCg5IZWFsdGhSZXNwb25zZRIOCgZzdGF0dXMYASABKAgSDwoH",
+            "dmVyc2lvbhgCIAEoCSJRChZEYXRhYmFzZUhlYWx0aFJlc3BvbnNlEhcKD3Bl",
+            "bmRpbmdSZXF1ZXN0cxgBIAEoDRIeChZsYXN0UmVxdWVzdENvbXBsZXRlZEF0",
+            "GAIgASgDImUKDkltbXV0YWJsZVN0YXRlEgoKAmRiGAEgASgJEgwKBHR4SWQY",
+            "AiABKAQSDgoGdHhIYXNoGAMgASgMEikKCXNpZ25hdHVyZRgEIAEoCzIWLklt",
+            "bXVkYlByb3h5LlNpZ25hdHVyZSKYAQoQUmVmZXJlbmNlUmVxdWVzdBILCgNr",
+            "ZXkYASABKAwSFQoNcmVmZXJlbmNlZEtleRgCIAEoDBIMCgRhdFR4GAMgASgE",
+            "EhAKCGJvdW5kUmVmGAQgASgIEg4KBm5vV2FpdBgFIAEoCBIwCg1wcmVjb25k",
+            "aXRpb25zGAYgAygLMhkuSW1tdWRiUHJveHkuUHJlY29uZGl0aW9uImsKGlZl",
+            "cmlmaWFibGVSZWZlcmVuY2VSZXF1ZXN0EjcKEHJlZmVyZW5jZVJlcXVlc3QY",
+            "ASABKAsyHS5JbW11ZGJQcm94eS5SZWZlcmVuY2VSZXF1ZXN0EhQKDHByb3Zl",
+            "U2luY2VUeBgCIAEoBCJmCgtaQWRkUmVxdWVzdBILCgNzZXQYASABKAwSDQoF",
+            "c2NvcmUYAiABKAESCwoDa2V5GAMgASgMEgwKBGF0VHgYBCABKAQSEAoIYm91",
+            "bmRSZWYYBSABKAgSDgoGbm9XYWl0GAYgASgIIhYKBVNjb3JlEg0KBXNjb3Jl",
+            "GAEgASgBIvIBCgxaU2NhblJlcXVlc3QSCwoDc2V0GAEgASgMEg8KB3NlZWtL",
+            "ZXkYAiABKAwSEQoJc2Vla1Njb3JlGAMgASgBEhAKCHNlZWtBdFR4GAQgASgE",
+            "EhUKDWluY2x1c2l2ZVNlZWsYBSABKAgSDQoFbGltaXQYBiABKAQSDAoEZGVz",
+            "YxgHIAEoCBIkCghtaW5TY29yZRgIIAEoCzISLkltbXVkYlByb3h5LlNjb3Jl",
+            "EiQKCG1heFNjb3JlGAkgASgLMhIuSW1tdWRiUHJveHkuU2NvcmUSDwoHc2lu",
+            "Y2VUeBgKIAEoBBIOCgZub1dhaXQYCyABKAgiWwoOSGlzdG9yeVJlcXVlc3QS",
+            "CwoDa2V5GAEgASgMEg4KBm9mZnNldBgCIAEoBBINCgVsaW1pdBgDIAEoBRIM",
+            "CgRkZXNjGAQgASgIEg8KB3NpbmNlVHgYBSABKAQiXAoVVmVyaWZpYWJsZVpB",
+            "ZGRSZXF1ZXN0Ei0KC3pBZGRSZXF1ZXN0GAEgASgLMhguSW1tdWRiUHJveHku",
+            "WkFkZFJlcXVlc3QSFAoMcHJvdmVTaW5jZVR4GAIgASgEIokBCglUeFJlcXVl",
+            "c3QSCgoCdHgYASABKAQSLQoLZW50cmllc1NwZWMYAiABKAsyGC5JbW11ZGJQ",
+            "cm94eS5FbnRyaWVzU3BlYxIPCgdzaW5jZVR4GAMgASgEEg4KBm5vV2FpdBgE",
+            "IAEoCBIgChhrZWVwUmVmZXJlbmNlc1VucmVzb2x2ZWQYBSABKAgipgEKC0Vu",
+            "dHJpZXNTcGVjEjEKDWt2RW50cmllc1NwZWMYASABKAsyGi5JbW11ZGJQcm94",
+            "eS5FbnRyeVR5cGVTcGVjEjAKDHpFbnRyaWVzU3BlYxgCIAEoCzIaLkltbXVk",
+            "YlByb3h5LkVudHJ5VHlwZVNwZWMSMgoOc3FsRW50cmllc1NwZWMYAyABKAsy",
+            "Gi5JbW11ZGJQcm94eS5FbnRyeVR5cGVTcGVjIj0KDUVudHJ5VHlwZVNwZWMS",
+            "LAoGYWN0aW9uGAEgASgOMhwuSW1tdWRiUHJveHkuRW50cnlUeXBlQWN0aW9u",
+            "IqkBChNWZXJpZmlhYmxlVHhSZXF1ZXN0EgoKAnR4GAEgASgEEhQKDHByb3Zl",
+            "U2luY2VUeBgCIAEoBBItCgtlbnRyaWVzU3BlYxgDIAEoCzIYLkltbXVkYlBy",
+            "b3h5LkVudHJpZXNTcGVjEg8KB3NpbmNlVHgYBCABKAQSDgoGbm9XYWl0GAUg",
+            "ASgIEiAKGGtlZXBSZWZlcmVuY2VzVW5yZXNvbHZlZBgGIAEoCCKPAQoNVHhT",
+            "Y2FuUmVxdWVzdBIRCglpbml0aWFsVHgYASABKAQSDQoFbGltaXQYAiABKA0S",
+            "DAoEZGVzYxgDIAEoCBItCgtlbnRyaWVzU3BlYxgEIAEoCzIYLkltbXVkYlBy",
+            "b3h5LkVudHJpZXNTcGVjEg8KB3NpbmNlVHgYBSABKAQSDgoGbm9XYWl0GAYg",
+            "ASgIIiYKBlR4TGlzdBIcCgN0eHMYASADKAsyDy5JbW11ZGJQcm94eS5UeCId",
+            "Cg9FeHBvcnRUeFJlcXVlc3QSCgoCdHgYASABKAQiIAoIRGF0YWJhc2USFAoM",
+            "ZGF0YWJhc2VOYW1lGAEgASgJIpsCChBEYXRhYmFzZVNldHRpbmdzEhQKDGRh",
+            "dGFiYXNlTmFtZRgBIAEoCRIPCgdyZXBsaWNhGAIgASgIEhYKDm1hc3RlckRh",
+            "dGFiYXNlGAMgASgJEhUKDW1hc3RlckFkZHJlc3MYBCABKAkSEgoKbWFzdGVy",
+            "UG9ydBgFIAEoDRIYChBmb2xsb3dlclVzZXJuYW1lGAYgASgJEhgKEGZvbGxv",
+            "d2VyUGFzc3dvcmQYByABKAkSEAoIZmlsZVNpemUYCCABKA0SEQoJbWF4S2V5",
+            "TGVuGAkgASgNEhMKC21heFZhbHVlTGVuGAogASgNEhQKDG1heFR4RW50cmll",
+            "cxgLIAEoDRIZChFleGNsdWRlQ29tbWl0VGltZRgMIAEoCCJzChVDcmVhdGVE",
+            "YXRhYmFzZVJlcXVlc3QSDAoEbmFtZRgBIAEoCRI3CghzZXR0aW5ncxgCIAEo",
+            "CzIlLkltbXVkYlByb3h5LkRhdGFiYXNlTnVsbGFibGVTZXR0aW5ncxITCgtp",
+            "Zk5vdEV4aXN0cxgDIAEoCCJ3ChZDcmVhdGVEYXRhYmFzZVJlc3BvbnNlEgwK",
+            "BG5hbWUYASABKAkSNwoIc2V0dGluZ3MYAiABKAsyJS5JbW11ZGJQcm94eS5E",
+            "YXRhYmFzZU51bGxhYmxlU2V0dGluZ3MSFgoOYWxyZWFkeUV4aXN0ZWQYAyAB",
+            "KAgiYgoVVXBkYXRlRGF0YWJhc2VSZXF1ZXN0EhAKCGRhdGFiYXNlGAEgASgJ",
+            "EjcKCHNldHRpbmdzGAIgASgLMiUuSW1tdWRiUHJveHkuRGF0YWJhc2VOdWxs",
+            "YWJsZVNldHRpbmdzImMKFlVwZGF0ZURhdGFiYXNlUmVzcG9uc2USEAoIZGF0",
+            "YWJhc2UYASABKAkSNwoIc2V0dGluZ3MYAiABKAsyJS5JbW11ZGJQcm94eS5E",
+            "YXRhYmFzZU51bGxhYmxlU2V0dGluZ3MiGQoXRGF0YWJhc2VTZXR0aW5nc1Jl",
+            "cXVlc3QiZQoYRGF0YWJhc2VTZXR0aW5nc1Jlc3BvbnNlEhAKCGRhdGFiYXNl",
+            "GAEgASgJEjcKCHNldHRpbmdzGAIgASgLMiUuSW1tdWRiUHJveHkuRGF0YWJh",
+            "c2VOdWxsYWJsZVNldHRpbmdzIh8KDk51bGxhYmxlVWludDMyEg0KBXZhbHVl",
+            "GAEgASgNIh8KDk51bGxhYmxlVWludDY0Eg0KBXZhbHVlGAEgASgEIh4KDU51",
+            "bGxhYmxlRmxvYXQSDQoFdmFsdWUYASABKAIiHQoMTnVsbGFibGVCb29sEg0K",
+            "BXZhbHVlGAEgASgIIh8KDk51bGxhYmxlU3RyaW5nEg0KBXZhbHVlGAEgASgJ",
+            "ItAGChhEYXRhYmFzZU51bGxhYmxlU2V0dGluZ3MSRQoTcmVwbGljYXRpb25T",
+            "ZXR0aW5ncxgCIAEoCzIoLkltbXVkYlByb3h5LlJlcGxpY2F0aW9uTnVsbGFi",
+            "bGVTZXR0aW5ncxItCghmaWxlU2l6ZRgIIAEoCzIbLkltbXVkYlByb3h5Lk51",
+            "bGxhYmxlVWludDMyEi4KCW1heEtleUxlbhgJIAEoCzIbLkltbXVkYlByb3h5",
+            "Lk51bGxhYmxlVWludDMyEjAKC21heFZhbHVlTGVuGAogASgLMhsuSW1tdWRi",
+            "UHJveHkuTnVsbGFibGVVaW50MzISMQoMbWF4VHhFbnRyaWVzGAsgASgLMhsu",
+            "SW1tdWRiUHJveHkuTnVsbGFibGVVaW50MzISNAoRZXhjbHVkZUNvbW1pdFRp",
+            "bWUYDCABKAsyGS5JbW11ZGJQcm94eS5OdWxsYWJsZUJvb2wSMwoObWF4Q29u",
+            "Y3VycmVuY3kYDSABKAsyGy5JbW11ZGJQcm94eS5OdWxsYWJsZVVpbnQzMhI1",
+            "ChBtYXhJT0NvbmN1cnJlbmN5GA4gASgLMhsuSW1tdWRiUHJveHkuTnVsbGFi",
+            "bGVVaW50MzISMwoOdHhMb2dDYWNoZVNpemUYDyABKAsyGy5JbW11ZGJQcm94",
+            "eS5OdWxsYWJsZVVpbnQzMhI3ChJ2TG9nTWF4T3BlbmVkRmlsZXMYECABKAsy",
+            "Gy5JbW11ZGJQcm94eS5OdWxsYWJsZVVpbnQzMhI4ChN0eExvZ01heE9wZW5l",
+            "ZEZpbGVzGBEgASgLMhsuSW1tdWRiUHJveHkuTnVsbGFibGVVaW50MzISPAoX",
+            "Y29tbWl0TG9nTWF4T3BlbmVkRmlsZXMYEiABKAsyGy5JbW11ZGJQcm94eS5O",
+            "dWxsYWJsZVVpbnQzMhI5Cg1pbmRleFNldHRpbmdzGBMgASgLMiIuSW1tdWRi",
+            "UHJveHkuSW5kZXhOdWxsYWJsZVNldHRpbmdzEjkKFHdyaXRlVHhIZWFkZXJW",
+            "ZXJzaW9uGBQgASgLMhsuSW1tdWRiUHJveHkuTnVsbGFibGVVaW50MzISKwoI",
+            "YXV0b2xvYWQYFSABKAsyGS5JbW11ZGJQcm94eS5OdWxsYWJsZUJvb2wi0QIK",
+            "G1JlcGxpY2F0aW9uTnVsbGFibGVTZXR0aW5ncxIqCgdyZXBsaWNhGAEgASgL",
+            "MhkuSW1tdWRiUHJveHkuTnVsbGFibGVCb29sEjMKDm1hc3RlckRhdGFiYXNl",
+            "GAIgASgLMhsuSW1tdWRiUHJveHkuTnVsbGFibGVTdHJpbmcSMgoNbWFzdGVy",
+            "QWRkcmVzcxgDIAEoCzIbLkltbXVkYlByb3h5Lk51bGxhYmxlU3RyaW5nEi8K",
+            "Cm1hc3RlclBvcnQYBCABKAsyGy5JbW11ZGJQcm94eS5OdWxsYWJsZVVpbnQz",
+            "MhI1ChBmb2xsb3dlclVzZXJuYW1lGAUgASgLMhsuSW1tdWRiUHJveHkuTnVs",
+            "bGFibGVTdHJpbmcSNQoQZm9sbG93ZXJQYXNzd29yZBgGIAEoCzIbLkltbXVk",
+            "YlByb3h5Lk51bGxhYmxlU3RyaW5nIuwFChVJbmRleE51bGxhYmxlU2V0dGlu",
+            "Z3MSMwoOZmx1c2hUaHJlc2hvbGQYASABKAsyGy5JbW11ZGJQcm94eS5OdWxs",
+            "YWJsZVVpbnQzMhIyCg1zeW5jVGhyZXNob2xkGAIgASgLMhsuSW1tdWRiUHJv",
+            "eHkuTnVsbGFibGVVaW50MzISLgoJY2FjaGVTaXplGAMgASgLMhsuSW1tdWRi",
+            "UHJveHkuTnVsbGFibGVVaW50MzISMAoLbWF4Tm9kZVNpemUYBCABKAsyGy5J",
+            "bW11ZGJQcm94eS5OdWxsYWJsZVVpbnQzMhI3ChJtYXhBY3RpdmVTbmFwc2hv",
+            "dHMYBSABKAsyGy5JbW11ZGJQcm94eS5OdWxsYWJsZVVpbnQzMhI3ChJyZW5l",
+            "d1NuYXBSb290QWZ0ZXIYBiABKAsyGy5JbW11ZGJQcm94eS5OdWxsYWJsZVVp",
+            "bnQ2NBIzCg5jb21wYWN0aW9uVGhsZBgHIAEoCzIbLkltbXVkYlByb3h5Lk51",
+            "bGxhYmxlVWludDMyEjoKFWRlbGF5RHVyaW5nQ29tcGFjdGlvbhgIIAEoCzIb",
+            "LkltbXVkYlByb3h5Lk51bGxhYmxlVWludDMyEjsKFm5vZGVzTG9nTWF4T3Bl",
+            "bmVkRmlsZXMYCSABKAsyGy5JbW11ZGJQcm94eS5OdWxsYWJsZVVpbnQzMhI9",
+            "ChhoaXN0b3J5TG9nTWF4T3BlbmVkRmlsZXMYCiABKAsyGy5JbW11ZGJQcm94",
+            "eS5OdWxsYWJsZVVpbnQzMhI8Chdjb21taXRMb2dNYXhPcGVuZWRGaWxlcxgL",
+            "IAEoCzIbLkltbXVkYlByb3h5Lk51bGxhYmxlVWludDMyEjQKD2ZsdXNoQnVm",
+            "ZmVyU2l6ZRgMIAEoCzIbLkltbXVkYlByb3h5Lk51bGxhYmxlVWludDMyEjUK",
+            "EWNsZWFudXBQZXJjZW50YWdlGA0gASgLMhouSW1tdWRiUHJveHkuTnVsbGFi",
+            "bGVGbG9hdCInChNMb2FkRGF0YWJhc2VSZXF1ZXN0EhAKCGRhdGFiYXNlGAEg",
+            "ASgJIigKFExvYWREYXRhYmFzZVJlc3BvbnNlEhAKCGRhdGFiYXNlGAEgASgJ",
+            "IikKFVVubG9hZERhdGFiYXNlUmVxdWVzdBIQCghkYXRhYmFzZRgBIAEoCSIq",
+            "ChZVbmxvYWREYXRhYmFzZVJlc3BvbnNlEhAKCGRhdGFiYXNlGAEgASgJIikK",
+            "FURlbGV0ZURhdGFiYXNlUmVxdWVzdBIQCghkYXRhYmFzZRgBIAEoCSIqChZE",
+            "ZWxldGVEYXRhYmFzZVJlc3BvbnNlEhAKCGRhdGFiYXNlGAEgASgJIj4KEUZs",
+            "dXNoSW5kZXhSZXF1ZXN0EhkKEWNsZWFudXBQZXJjZW50YWdlGAEgASgCEg4K",
+            "BnN5bmNlZBgCIAEoCCImChJGbHVzaEluZGV4UmVzcG9uc2USEAoIZGF0YWJh",
+            "c2UYASABKAkiGgoFVGFibGUSEQoJdGFibGVOYW1lGAEgASgJImYKDVNRTEdl",
+            "dFJlcXVlc3QSDQoFdGFibGUYASABKAkSJwoIcGtWYWx1ZXMYAiADKAsyFS5J",
+            "bW11ZGJQcm94eS5TUUxWYWx1ZRIMCgRhdFR4GAMgASgEEg8KB3NpbmNlVHgY",
+            "BCABKAQiYgoXVmVyaWZpYWJsZVNRTEdldFJlcXVlc3QSMQoNc3FsR2V0UmVx",
+            "dWVzdBgBIAEoCzIaLkltbXVkYlByb3h5LlNRTEdldFJlcXVlc3QSFAoMcHJv",
+            "dmVTaW5jZVR4GAIgASgEIl0KCFNRTEVudHJ5EgoKAnR4GAEgASgEEgsKA2tl",
+            "eRgCIAEoDBINCgV2YWx1ZRgDIAEoDBIpCghtZXRhZGF0YRgEIAEoCzIXLklt",
+            "bXVkYlByb3h5LktWTWV0YWRhdGEizwUKElZlcmlmaWFibGVTUUxFbnRyeRIn",
+            "CghzcWxFbnRyeRgBIAEoCzIVLkltbXVkYlByb3h5LlNRTEVudHJ5Ei8KDHZl",
+            "cmlmaWFibGVUeBgCIAEoCzIZLkltbXVkYlByb3h5LlZlcmlmaWFibGVUeBIz",
+            "Cg5pbmNsdXNpb25Qcm9vZhgDIAEoCzIbLkltbXVkYlByb3h5LkluY2x1c2lv",
+            "blByb29mEhIKCkRhdGFiYXNlSWQYBCABKA0SDwoHVGFibGVJZBgFIAEoDRIN",
+            "CgVQS0lEcxgQIAMoDRJHCgxDb2xOYW1lc0J5SWQYCCADKAsyMS5JbW11ZGJQ",
+            "cm94eS5WZXJpZmlhYmxlU1FMRW50cnkuQ29sTmFtZXNCeUlkRW50cnkSRwoM",
+            "Q29sSWRzQnlOYW1lGAkgAygLMjEuSW1tdWRiUHJveHkuVmVyaWZpYWJsZVNR",
+            "TEVudHJ5LkNvbElkc0J5TmFtZUVudHJ5EkcKDENvbFR5cGVzQnlJZBgKIAMo",
+            "CzIxLkltbXVkYlByb3h5LlZlcmlmaWFibGVTUUxFbnRyeS5Db2xUeXBlc0J5",
+            "SWRFbnRyeRJDCgpDb2xMZW5CeUlkGAsgAygLMi8uSW1tdWRiUHJveHkuVmVy",
+            "aWZpYWJsZVNRTEVudHJ5LkNvbExlbkJ5SWRFbnRyeRozChFDb2xOYW1lc0J5",
+            "SWRFbnRyeRILCgNrZXkYASABKA0SDQoFdmFsdWUYAiABKAk6AjgBGjMKEUNv",
+            "bElkc0J5TmFtZUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoDToC",
+            "OAEaMwoRQ29sVHlwZXNCeUlkRW50cnkSCwoDa2V5GAEgASgNEg0KBXZhbHVl",
+            "GAIgASgJOgI4ARoxCg9Db2xMZW5CeUlkRW50cnkSCwoDa2V5GAEgASgNEg0K",
+            "BXZhbHVlGAIgASgFOgI4AUoECAYQByIhChBVc2VEYXRhYmFzZVJlcGx5Eg0K",
+            "BXRva2VuGAEgASgJIoABChdDaGFuZ2VQZXJtaXNzaW9uUmVxdWVzdBItCgZh",
+            "Y3Rpb24YASABKA4yHS5JbW11ZGJQcm94eS5QZXJtaXNzaW9uQWN0aW9uEhAK",
+            "CHVzZXJuYW1lGAIgASgJEhAKCGRhdGFiYXNlGAMgASgJEhIKCnBlcm1pc3Np",
+            "b24YBCABKA0iOAoUU2V0QWN0aXZlVXNlclJlcXVlc3QSDgoGYWN0aXZlGAEg",
+            "ASgIEhAKCHVzZXJuYW1lGAIgASgJIkAKFERhdGFiYXNlTGlzdFJlc3BvbnNl",
+            "EigKCWRhdGFiYXNlcxgBIAMoCzIVLkltbXVkYlByb3h5LkRhdGFiYXNlIhcK",
+            "FURhdGFiYXNlTGlzdFJlcXVlc3RWMiJOChZEYXRhYmFzZUxpc3RSZXNwb25z",
+            "ZVYyEjQKCWRhdGFiYXNlcxgBIAMoCzIhLkltbXVkYlByb3h5LkRhdGFiYXNl",
+            "V2l0aFNldHRpbmdzIm0KFERhdGFiYXNlV2l0aFNldHRpbmdzEgwKBG5hbWUY",
+            "ASABKAkSNwoIc2V0dGluZ3MYAiABKAsyJS5JbW11ZGJQcm94eS5EYXRhYmFz",
+            "ZU51bGxhYmxlU2V0dGluZ3MSDgoGbG9hZGVkGAMgASgIIhgKBUNodW5rEg8K",
+            "B2NvbnRlbnQYASABKAwiOQoSVXNlU25hcHNob3RSZXF1ZXN0Eg8KB3NpbmNl",
+            "VHgYASABKAQSEgoKYXNCZWZvcmVUeBgCIAEoBCJWCg5TUUxFeGVjUmVxdWVz",
+            "dBILCgNzcWwYASABKAkSJwoGcGFyYW1zGAIgAygLMhcuSW1tdWRiUHJveHku",
+            "TmFtZWRQYXJhbRIOCgZub1dhaXQYAyABKAgiXgoPU1FMUXVlcnlSZXF1ZXN0",
+            "EgsKA3NxbBgBIAEoCRInCgZwYXJhbXMYAiADKAsyFy5JbW11ZGJQcm94eS5O",
+            "YW1lZFBhcmFtEhUKDXJldXNlU25hcHNob3QYAyABKAgiQAoKTmFtZWRQYXJh",
+            "bRIMCgRuYW1lGAEgASgJEiQKBXZhbHVlGAIgASgLMhUuSW1tdWRiUHJveHku",
+            "U1FMVmFsdWUiTAoNU1FMRXhlY1Jlc3VsdBIoCgN0eHMYBSADKAsyGy5JbW11",
+            "ZGJQcm94eS5Db21taXR0ZWRTUUxUeBIRCglvbmdvaW5nVHgYBiABKAgigwMK",
+            "DkNvbW1pdHRlZFNRTFR4EiUKBmhlYWRlchgBIAEoCzIVLkltbXVkYlByb3h5",
+            "LlR4SGVhZGVyEhMKC3VwZGF0ZWRSb3dzGAIgASgNEkkKD2xhc3RJbnNlcnRl",
+            "ZFBLcxgDIAMoCzIwLkltbXVkYlByb3h5LkNvbW1pdHRlZFNRTFR4Lkxhc3RJ",
+            "bnNlcnRlZFBLc0VudHJ5EksKEGZpcnN0SW5zZXJ0ZWRQS3MYBCADKAsyMS5J",
+            "bW11ZGJQcm94eS5Db21taXR0ZWRTUUxUeC5GaXJzdEluc2VydGVkUEtzRW50",
+            "cnkaTQoUTGFzdEluc2VydGVkUEtzRW50cnkSCwoDa2V5GAEgASgJEiQKBXZh",
+            "bHVlGAIgASgLMhUuSW1tdWRiUHJveHkuU1FMVmFsdWU6AjgBGk4KFUZpcnN0",
+            "SW5zZXJ0ZWRQS3NFbnRyeRILCgNrZXkYASABKAkSJAoFdmFsdWUYAiABKAsy",
+            "FS5JbW11ZGJQcm94eS5TUUxWYWx1ZToCOAEiVgoOU1FMUXVlcnlSZXN1bHQS",
+            "JAoHY29sdW1ucxgCIAMoCzITLkltbXVkYlByb3h5LkNvbHVtbhIeCgRyb3dz",
+            "GAEgAygLMhAuSW1tdWRiUHJveHkuUm93IiQKBkNvbHVtbhIMCgRuYW1lGAEg",
+            "ASgJEgwKBHR5cGUYAiABKAkiPQoDUm93Eg8KB2NvbHVtbnMYASADKAkSJQoG",
+            "dmFsdWVzGAIgAygLMhUuSW1tdWRiUHJveHkuU1FMVmFsdWUiggEKCFNRTFZh",
+            "bHVlEioKBG51bGwYASABKA4yGi5nb29nbGUucHJvdG9idWYuTnVsbFZhbHVl",
+            "SAASCwoBbhgCIAEoA0gAEgsKAXMYAyABKAlIABILCgFiGAQgASgISAASDAoC",
+            "YnMYBSABKAxIABIMCgJ0cxgGIAEoA0gAQgcKBXZhbHVlIjEKDE5ld1R4UmVx",
+            "dWVzdBIhCgRtb2RlGAEgASgOMhMuSW1tdWRiUHJveHkuVHhNb2RlIiYKDU5l",
+            "d1R4UmVzcG9uc2USFQoNdHJhbnNhY3Rpb25JRBgBIAEoCSIoCglFcnJvcklu",
+            "Zm8SDAoEY29kZRgBIAEoCRINCgVjYXVzZRgCIAEoCSIaCglEZWJ1Z0luZm8S",
+            "DQoFc3RhY2sYASABKAkiIAoJUmV0cnlJbmZvEhMKC3JldHJ5X2RlbGF5GAEg",
+            "ASgFKksKD0VudHJ5VHlwZUFjdGlvbhILCgdFWENMVURFEAASDwoLT05MWV9E",
+            "SUdFU1QQARINCglSQVdfVkFMVUUQAhILCgdSRVNPTFZFEAMqKQoQUGVybWlz",
+            "c2lvbkFjdGlvbhIJCgVHUkFOVBAAEgoKBlJFVk9LRRABKjQKBlR4TW9kZRIM",
+            "CghSZWFkT25seRAAEg0KCVdyaXRlT25seRABEg0KCVJlYWRXcml0ZRACMo8w",
+            "CgtJbW11U2VydmljZRJOCglMaXN0VXNlcnMSFi5nb29nbGUucHJvdG9idWYu",
+            "RW1wdHkaFS5JbW11ZGJQcm94eS5Vc2VyTGlzdCISgtPkkwIMEgovdXNlci9s",
+            "aXN0ElYKCkNyZWF0ZVVzZXISHi5JbW11ZGJQcm94eS5DcmVhdGVVc2VyUmVx",
+            "dWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIQgtPkkwIKIgUvdXNlcjoB",
+            "KhJuCg5DaGFuZ2VQYXNzd29yZBIiLkltbXVkYlByb3h5LkNoYW5nZVBhc3N3",
+            "b3JkUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIggtPkkwIaIhUv",
+            "dXNlci9wYXNzd29yZC9jaGFuZ2U6ASoScwoQQ2hhbmdlUGVybWlzc2lvbhIk",
+            "LkltbXVkYlByb3h5LkNoYW5nZVBlcm1pc3Npb25SZXF1ZXN0GhYuZ29vZ2xl",
+            "LnByb3RvYnVmLkVtcHR5IiGC0+STAhsiFi91c2VyL2NoYW5nZXBlcm1pc3Np",
+            "b246ASoSagoNU2V0QWN0aXZlVXNlchIhLkltbXVkYlByb3h5LlNldEFjdGl2",
+            "ZVVzZXJSZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Ih6C0+STAhgi",
+            "Ey91c2VyL3NldGFjdGl2ZVVzZXI6ASoSSAoQVXBkYXRlQXV0aENvbmZpZxIX",
+            "LkltbXVkYlByb3h5LkF1dGhDb25maWcaFi5nb29nbGUucHJvdG9idWYuRW1w",
+            "dHkiA4gCARJIChBVcGRhdGVNVExTQ29uZmlnEhcuSW1tdWRiUHJveHkuTVRM",
+            "U0NvbmZpZxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIDiAIBElIKC09wZW5T",
+            "ZXNzaW9uEh8uSW1tdWRiUHJveHkuT3BlblNlc3Npb25SZXF1ZXN0GiAuSW1t",
+            "dWRiUHJveHkuT3BlblNlc3Npb25SZXNwb25zZSIAEkAKDENsb3NlU2Vzc2lv",
+            "bhIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoWLmdvb2dsZS5wcm90b2J1Zi5F",
+            "bXB0eSIAEj0KCUtlZXBBbGl2ZRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoW",
+            "Lmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEkAKBU5ld1R4EhkuSW1tdWRiUHJv",
+            "eHkuTmV3VHhSZXF1ZXN0GhouSW1tdWRiUHJveHkuTmV3VHhSZXNwb25zZSIA",
+            "Ej8KBkNvbW1pdBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRobLkltbXVkYlBy",
+            "b3h5LkNvbW1pdHRlZFNRTFR4IgASPAoIUm9sbGJhY2sSFi5nb29nbGUucHJv",
+            "dG9idWYuRW1wdHkaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJCCglUeFNR",
+            "TEV4ZWMSGy5JbW11ZGJQcm94eS5TUUxFeGVjUmVxdWVzdBoWLmdvb2dsZS5w",
+            "cm90b2J1Zi5FbXB0eSIAEkkKClR4U1FMUXVlcnkSHC5JbW11ZGJQcm94eS5T",
+            "UUxRdWVyeVJlcXVlc3QaGy5JbW11ZGJQcm94eS5TUUxRdWVyeVJlc3VsdCIA",
+            "ElQKBUxvZ2luEhkuSW1tdWRiUHJveHkuTG9naW5SZXF1ZXN0GhouSW1tdWRi",
+            "UHJveHkuTG9naW5SZXNwb25zZSIUiAIBgtPkkwILIgYvbG9naW46ASoSTwoG",
             "TG9nb3V0EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhYuZ29vZ2xlLnByb3Rv",
-            "YnVmLkVtcHR5IhWIAgGC0+STAgwiBy9sb2dvdXQ6ASoSTQoDU2V0EhkuaW1t",
-            "dWRiLnNjaGVtYS5TZXRSZXF1ZXN0GhcuaW1tdWRiLnNjaGVtYS5UeEhlYWRl",
-            "ciISgtPkkwIMIgcvZGIvc2V0OgEqEnAKDVZlcmlmaWFibGVTZXQSIy5pbW11",
-            "ZGIuc2NoZW1hLlZlcmlmaWFibGVTZXRSZXF1ZXN0GhsuaW1tdWRiLnNjaGVt",
-            "YS5WZXJpZmlhYmxlVHgiHYLT5JMCFyISL2RiL3ZlcmlmaWFibGUvc2V0OgEq",
-            "Ek0KA0dldBIZLmltbXVkYi5zY2hlbWEuS2V5UmVxdWVzdBoULmltbXVkYi5z",
-            "Y2hlbWEuRW50cnkiFYLT5JMCDxINL2RiL2dldC97a2V5fRJzCg1WZXJpZmlh",
-            "YmxlR2V0EiMuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlR2V0UmVxdWVzdBoe",
-            "LmltbXVkYi5zY2hlbWEuVmVyaWZpYWJsZUVudHJ5Ih2C0+STAhciEi9kYi92",
-            "ZXJpZmlhYmxlL2dldDoBKhJaCgZEZWxldGUSIC5pbW11ZGIuc2NoZW1hLkRl",
-            "bGV0ZUtleXNSZXF1ZXN0GhcuaW1tdWRiLnNjaGVtYS5UeEhlYWRlciIVgtPk",
-            "kwIPIgovZGIvZGVsZXRlOgEqElYKBkdldEFsbBIdLmltbXVkYi5zY2hlbWEu",
-            "S2V5TGlzdFJlcXVlc3QaFi5pbW11ZGIuc2NoZW1hLkVudHJpZXMiFYLT5JMC",
-            "DyIKL2RiL2dldGFsbDoBKhJZCgdFeGVjQWxsEh0uaW1tdWRiLnNjaGVtYS5F",
-            "eGVjQWxsUmVxdWVzdBoXLmltbXVkYi5zY2hlbWEuVHhIZWFkZXIiFoLT5JMC",
-            "ECILL2RiL2V4ZWNhbGw6ASoSTwoEU2NhbhIaLmltbXVkYi5zY2hlbWEuU2Nh",
-            "blJlcXVlc3QaFi5pbW11ZGIuc2NoZW1hLkVudHJpZXMiE4LT5JMCDSIIL2Ri",
-            "L3NjYW46ASoSWAoFQ291bnQSGC5pbW11ZGIuc2NoZW1hLktleVByZWZpeBoZ",
-            "LmltbXVkYi5zY2hlbWEuRW50cnlDb3VudCIagtPkkwIUEhIvZGIvY291bnQv",
-            "e3ByZWZpeH0SUwoIQ291bnRBbGwSFi5nb29nbGUucHJvdG9idWYuRW1wdHka",
-            "GS5pbW11ZGIuc2NoZW1hLkVudHJ5Q291bnQiFILT5JMCDhIML2RiL2NvdW50",
-            "YWxsEkoKBlR4QnlJZBIYLmltbXVkYi5zY2hlbWEuVHhSZXF1ZXN0GhEuaW1t",
-            "dWRiLnNjaGVtYS5UeCITgtPkkwINEgsvZGIvdHgve3R4fRJzChBWZXJpZmlh",
-            "YmxlVHhCeUlkEiIuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlVHhSZXF1ZXN0",
-            "GhsuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlVHgiHoLT5JMCGBIWL2RiL3Zl",
-            "cmlmaWFibGUvdHgve3R4fRJQCgZUeFNjYW4SHC5pbW11ZGIuc2NoZW1hLlR4",
-            "U2NhblJlcXVlc3QaFS5pbW11ZGIuc2NoZW1hLlR4TGlzdCIRgtPkkwILIgYv",
-            "ZGIvdHg6ASoSWAoHSGlzdG9yeRIdLmltbXVkYi5zY2hlbWEuSGlzdG9yeVJl",
-            "cXVlc3QaFi5pbW11ZGIuc2NoZW1hLkVudHJpZXMiFoLT5JMCECILL2RiL2hp",
-            "c3Rvcnk6ASoSUAoGSGVhbHRoEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh0u",
-            "aW1tdWRiLnNjaGVtYS5IZWFsdGhSZXNwb25zZSIPgtPkkwIJEgcvaGVhbHRo",
-            "EmMKDkRhdGFiYXNlSGVhbHRoEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GiUu",
-            "aW1tdWRiLnNjaGVtYS5EYXRhYmFzZUhlYWx0aFJlc3BvbnNlIhKC0+STAgwS",
-            "Ci9kYi9oZWFsdGgSWAoMQ3VycmVudFN0YXRlEhYuZ29vZ2xlLnByb3RvYnVm",
-            "LkVtcHR5Gh0uaW1tdWRiLnNjaGVtYS5JbW11dGFibGVTdGF0ZSIRgtPkkwIL",
-            "EgkvZGIvc3RhdGUSZQoMU2V0UmVmZXJlbmNlEh8uaW1tdWRiLnNjaGVtYS5S",
-            "ZWZlcmVuY2VSZXF1ZXN0GhcuaW1tdWRiLnNjaGVtYS5UeEhlYWRlciIbgtPk",
-            "kwIVIhAvZGIvc2V0cmVmZXJlbmNlOgEqEogBChZWZXJpZmlhYmxlU2V0UmVm",
-            "ZXJlbmNlEikuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlUmVmZXJlbmNlUmVx",
-            "dWVzdBobLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJsZVR4IiaC0+STAiAiGy9k",
-            "Yi92ZXJpZmlhYmxlL3NldHJlZmVyZW5jZToBKhJQCgRaQWRkEhouaW1tdWRi",
-            "LnNjaGVtYS5aQWRkUmVxdWVzdBoXLmltbXVkYi5zY2hlbWEuVHhIZWFkZXIi",
-            "E4LT5JMCDSIIL2RiL3phZGQ6ASoScwoOVmVyaWZpYWJsZVpBZGQSJC5pbW11",
-            "ZGIuc2NoZW1hLlZlcmlmaWFibGVaQWRkUmVxdWVzdBobLmltbXVkYi5zY2hl",
-            "bWEuVmVyaWZpYWJsZVR4Ih6C0+STAhgiEy9kYi92ZXJpZmlhYmxlL3phZGQ6",
-            "ASoSUwoFWlNjYW4SGy5pbW11ZGIuc2NoZW1hLlpTY2FuUmVxdWVzdBoXLmlt",
-            "bXVkYi5zY2hlbWEuWkVudHJpZXMiFILT5JMCDiIJL2RiL3pzY2FuOgEqElsK",
-            "DkNyZWF0ZURhdGFiYXNlEhcuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZRoWLmdv",
-            "b2dsZS5wcm90b2J1Zi5FbXB0eSIYiAIBgtPkkwIPIgovZGIvY3JlYXRlOgEq",
-            "EmsKEkNyZWF0ZURhdGFiYXNlV2l0aBIfLmltbXVkYi5zY2hlbWEuRGF0YWJh",
-            "c2VTZXR0aW5ncxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIciAIBgtPkkwIT",
-            "Ig4vZGIvY3JlYXRld2l0aDoBKhJ5ChBDcmVhdGVEYXRhYmFzZVYyEiQuaW1t",
-            "dWRiLnNjaGVtYS5DcmVhdGVEYXRhYmFzZVJlcXVlc3QaJS5pbW11ZGIuc2No",
-            "ZW1hLkNyZWF0ZURhdGFiYXNlUmVzcG9uc2UiGILT5JMCEiINL2RiL2NyZWF0",
-            "ZS92MjoBKhJsCgxMb2FkRGF0YWJhc2USIi5pbW11ZGIuc2NoZW1hLkxvYWRE",
-            "YXRhYmFzZVJlcXVlc3QaIy5pbW11ZGIuc2NoZW1hLkxvYWREYXRhYmFzZVJl",
-            "c3BvbnNlIhOC0+STAg0iCC9kYi9sb2FkOgEqEnQKDlVubG9hZERhdGFiYXNl",
-            "EiQuaW1tdWRiLnNjaGVtYS5VbmxvYWREYXRhYmFzZVJlcXVlc3QaJS5pbW11",
-            "ZGIuc2NoZW1hLlVubG9hZERhdGFiYXNlUmVzcG9uc2UiFYLT5JMCDyIKL2Ri",
-            "L3VubG9hZDoBKhJ0Cg5EZWxldGVEYXRhYmFzZRIkLmltbXVkYi5zY2hlbWEu",
-            "RGVsZXRlRGF0YWJhc2VSZXF1ZXN0GiUuaW1tdWRiLnNjaGVtYS5EZWxldGVE",
-            "YXRhYmFzZVJlc3BvbnNlIhWC0+STAg8iCi9kYi9kZWxldGU6ASoSYwoMRGF0",
-            "YWJhc2VMaXN0EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GiMuaW1tdWRiLnNj",
-            "aGVtYS5EYXRhYmFzZUxpc3RSZXNwb25zZSIWiAIBgtPkkwINIggvZGIvbGlz",
-            "dDoBKhJ1Cg5EYXRhYmFzZUxpc3RWMhIkLmltbXVkYi5zY2hlbWEuRGF0YWJh",
-            "c2VMaXN0UmVxdWVzdFYyGiUuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZUxpc3RS",
-            "ZXNwb25zZVYyIhaC0+STAhAiCy9kYi9saXN0L3YyOgEqEmcKC1VzZURhdGFi",
-            "YXNlEhcuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZRofLmltbXVkYi5zY2hlbWEu",
-            "VXNlRGF0YWJhc2VSZXBseSIegtPkkwIYEhYvZGIvdXNlL3tkYXRhYmFzZU5h",
-            "bWV9EmMKDlVwZGF0ZURhdGFiYXNlEh8uaW1tdWRiLnNjaGVtYS5EYXRhYmFz",
-            "ZVNldHRpbmdzGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IhiIAgGC0+STAg8i",
-            "Ci9kYi91cGRhdGU6ASoSeQoQVXBkYXRlRGF0YWJhc2VWMhIkLmltbXVkYi5z",
-            "Y2hlbWEuVXBkYXRlRGF0YWJhc2VSZXF1ZXN0GiUuaW1tdWRiLnNjaGVtYS5V",
-            "cGRhdGVEYXRhYmFzZVJlc3BvbnNlIhiC0+STAhIiDS9kYi91cGRhdGUvdjI6",
-            "ASoSagoTR2V0RGF0YWJhc2VTZXR0aW5ncxIWLmdvb2dsZS5wcm90b2J1Zi5F",
-            "bXB0eRofLmltbXVkYi5zY2hlbWEuRGF0YWJhc2VTZXR0aW5ncyIaiAIBgtPk",
-            "kwIRIgwvZGIvc2V0dGluZ3M6ASoShAEKFUdldERhdGFiYXNlU2V0dGluZ3NW",
-            "MhImLmltbXVkYi5zY2hlbWEuRGF0YWJhc2VTZXR0aW5nc1JlcXVlc3QaJy5p",
-            "bW11ZGIuc2NoZW1hLkRhdGFiYXNlU2V0dGluZ3NSZXNwb25zZSIagtPkkwIU",
-            "Ig8vZGIvc2V0dGluZ3MvdjI6ASoSaQoKRmx1c2hJbmRleBIgLmltbXVkYi5z",
-            "Y2hlbWEuRmx1c2hJbmRleFJlcXVlc3QaIS5pbW11ZGIuc2NoZW1hLkZsdXNo",
-            "SW5kZXhSZXNwb25zZSIWgtPkkwIQEg4vZGIvZmx1c2hpbmRleBJYCgxDb21w",
-            "YWN0SW5kZXgSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFi5nb29nbGUucHJv",
-            "dG9idWYuRW1wdHkiGILT5JMCEhIQL2RiL2NvbXBhY3RpbmRleBJACglzdHJl",
-            "YW1HZXQSGS5pbW11ZGIuc2NoZW1hLktleVJlcXVlc3QaFC5pbW11ZGIuc2No",
-            "ZW1hLkNodW5rIgAwARI+CglzdHJlYW1TZXQSFC5pbW11ZGIuc2NoZW1hLkNo",
-            "dW5rGhcuaW1tdWRiLnNjaGVtYS5UeEhlYWRlciIAKAESVAoTc3RyZWFtVmVy",
-            "aWZpYWJsZUdldBIjLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJsZUdldFJlcXVl",
-            "c3QaFC5pbW11ZGIuc2NoZW1hLkNodW5rIgAwARJMChNzdHJlYW1WZXJpZmlh",
-            "YmxlU2V0EhQuaW1tdWRiLnNjaGVtYS5DaHVuaxobLmltbXVkYi5zY2hlbWEu",
-            "VmVyaWZpYWJsZVR4IgAoARJCCgpzdHJlYW1TY2FuEhouaW1tdWRiLnNjaGVt",
-            "YS5TY2FuUmVxdWVzdBoULmltbXVkYi5zY2hlbWEuQ2h1bmsiADABEkQKC3N0",
-            "cmVhbVpTY2FuEhsuaW1tdWRiLnNjaGVtYS5aU2NhblJlcXVlc3QaFC5pbW11",
-            "ZGIuc2NoZW1hLkNodW5rIgAwARJICg1zdHJlYW1IaXN0b3J5Eh0uaW1tdWRi",
-            "LnNjaGVtYS5IaXN0b3J5UmVxdWVzdBoULmltbXVkYi5zY2hlbWEuQ2h1bmsi",
-            "ADABEkIKDXN0cmVhbUV4ZWNBbGwSFC5pbW11ZGIuc2NoZW1hLkNodW5rGhcu",
-            "aW1tdWRiLnNjaGVtYS5UeEhlYWRlciIAKAESRAoIZXhwb3J0VHgSHi5pbW11",
-            "ZGIuc2NoZW1hLkV4cG9ydFR4UmVxdWVzdBoULmltbXVkYi5zY2hlbWEuQ2h1",
-            "bmsiADABEkAKC3JlcGxpY2F0ZVR4EhQuaW1tdWRiLnNjaGVtYS5DaHVuaxoX",
-            "LmltbXVkYi5zY2hlbWEuVHhIZWFkZXIiACgBEl4KB1NRTEV4ZWMSHS5pbW11",
-            "ZGIuc2NoZW1hLlNRTEV4ZWNSZXF1ZXN0GhwuaW1tdWRiLnNjaGVtYS5TUUxF",
-            "eGVjUmVzdWx0IhaC0+STAhAiCy9kYi9zcWxleGVjOgEqEmIKCFNRTFF1ZXJ5",
-            "Eh4uaW1tdWRiLnNjaGVtYS5TUUxRdWVyeVJlcXVlc3QaHS5pbW11ZGIuc2No",
-            "ZW1hLlNRTFF1ZXJ5UmVzdWx0IheC0+STAhEiDC9kYi9zcWxxdWVyeToBKhJb",
-            "CgpMaXN0VGFibGVzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh0uaW1tdWRi",
-            "LnNjaGVtYS5TUUxRdWVyeVJlc3VsdCIWgtPkkwIQEg4vZGIvdGFibGUvbGlz",
-            "dBJbCg1EZXNjcmliZVRhYmxlEhQuaW1tdWRiLnNjaGVtYS5UYWJsZRodLmlt",
-            "bXVkYi5zY2hlbWEuU1FMUXVlcnlSZXN1bHQiFYLT5JMCDyIKL2RiL3RhYmxl",
-            "czoBKhJ/ChBWZXJpZmlhYmxlU1FMR2V0EiYuaW1tdWRiLnNjaGVtYS5WZXJp",
-            "ZmlhYmxlU1FMR2V0UmVxdWVzdBohLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJs",
-            "ZVNRTEVudHJ5IiCC0+STAhoiFS9kYi92ZXJpZmlhYmxlL3NxbGdldDoBKkIt",
-            "WitnaXRodWIuY29tL2NvZGVub3RhcnkvaW1tdWRiL3BrZy9hcGkvc2NoZW1h",
-            "YgZwcm90bzM="));
+            "YnVmLkVtcHR5IhWIAgGC0+STAgwiBy9sb2dvdXQ6ASoSSQoDU2V0EhcuSW1t",
+            "dWRiUHJveHkuU2V0UmVxdWVzdBoVLkltbXVkYlByb3h5LlR4SGVhZGVyIhKC",
+            "0+STAgwiBy9kYi9zZXQ6ASoSbAoNVmVyaWZpYWJsZVNldBIhLkltbXVkYlBy",
+            "b3h5LlZlcmlmaWFibGVTZXRSZXF1ZXN0GhkuSW1tdWRiUHJveHkuVmVyaWZp",
+            "YWJsZVR4Ih2C0+STAhciEi9kYi92ZXJpZmlhYmxlL3NldDoBKhJJCgNHZXQS",
+            "Fy5JbW11ZGJQcm94eS5LZXlSZXF1ZXN0GhIuSW1tdWRiUHJveHkuRW50cnki",
+            "FYLT5JMCDxINL2RiL2dldC97a2V5fRJvCg1WZXJpZmlhYmxlR2V0EiEuSW1t",
+            "dWRiUHJveHkuVmVyaWZpYWJsZUdldFJlcXVlc3QaHC5JbW11ZGJQcm94eS5W",
+            "ZXJpZmlhYmxlRW50cnkiHYLT5JMCFyISL2RiL3ZlcmlmaWFibGUvZ2V0OgEq",
+            "ElYKBkRlbGV0ZRIeLkltbXVkYlByb3h5LkRlbGV0ZUtleXNSZXF1ZXN0GhUu",
+            "SW1tdWRiUHJveHkuVHhIZWFkZXIiFYLT5JMCDyIKL2RiL2RlbGV0ZToBKhJS",
+            "CgZHZXRBbGwSGy5JbW11ZGJQcm94eS5LZXlMaXN0UmVxdWVzdBoULkltbXVk",
+            "YlByb3h5LkVudHJpZXMiFYLT5JMCDyIKL2RiL2dldGFsbDoBKhJVCgdFeGVj",
+            "QWxsEhsuSW1tdWRiUHJveHkuRXhlY0FsbFJlcXVlc3QaFS5JbW11ZGJQcm94",
+            "eS5UeEhlYWRlciIWgtPkkwIQIgsvZGIvZXhlY2FsbDoBKhJLCgRTY2FuEhgu",
+            "SW1tdWRiUHJveHkuU2NhblJlcXVlc3QaFC5JbW11ZGJQcm94eS5FbnRyaWVz",
+            "IhOC0+STAg0iCC9kYi9zY2FuOgEqElQKBUNvdW50EhYuSW1tdWRiUHJveHku",
+            "S2V5UHJlZml4GhcuSW1tdWRiUHJveHkuRW50cnlDb3VudCIagtPkkwIUEhIv",
+            "ZGIvY291bnQve3ByZWZpeH0SUQoIQ291bnRBbGwSFi5nb29nbGUucHJvdG9i",
+            "dWYuRW1wdHkaFy5JbW11ZGJQcm94eS5FbnRyeUNvdW50IhSC0+STAg4SDC9k",
+            "Yi9jb3VudGFsbBJGCgZUeEJ5SWQSFi5JbW11ZGJQcm94eS5UeFJlcXVlc3Qa",
+            "Dy5JbW11ZGJQcm94eS5UeCITgtPkkwINEgsvZGIvdHgve3R4fRJvChBWZXJp",
+            "ZmlhYmxlVHhCeUlkEiAuSW1tdWRiUHJveHkuVmVyaWZpYWJsZVR4UmVxdWVz",
+            "dBoZLkltbXVkYlByb3h5LlZlcmlmaWFibGVUeCIegtPkkwIYEhYvZGIvdmVy",
+            "aWZpYWJsZS90eC97dHh9EkwKBlR4U2NhbhIaLkltbXVkYlByb3h5LlR4U2Nh",
+            "blJlcXVlc3QaEy5JbW11ZGJQcm94eS5UeExpc3QiEYLT5JMCCyIGL2RiL3R4",
+            "OgEqElQKB0hpc3RvcnkSGy5JbW11ZGJQcm94eS5IaXN0b3J5UmVxdWVzdBoU",
+            "LkltbXVkYlByb3h5LkVudHJpZXMiFoLT5JMCECILL2RiL2hpc3Rvcnk6ASoS",
+            "TgoGSGVhbHRoEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhsuSW1tdWRiUHJv",
+            "eHkuSGVhbHRoUmVzcG9uc2UiD4LT5JMCCRIHL2hlYWx0aBJhCg5EYXRhYmFz",
+            "ZUhlYWx0aBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRojLkltbXVkYlByb3h5",
+            "LkRhdGFiYXNlSGVhbHRoUmVzcG9uc2UiEoLT5JMCDBIKL2RiL2hlYWx0aBJW",
+            "CgxDdXJyZW50U3RhdGUSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaGy5JbW11",
+            "ZGJQcm94eS5JbW11dGFibGVTdGF0ZSIRgtPkkwILEgkvZGIvc3RhdGUSYQoM",
+            "U2V0UmVmZXJlbmNlEh0uSW1tdWRiUHJveHkuUmVmZXJlbmNlUmVxdWVzdBoV",
+            "LkltbXVkYlByb3h5LlR4SGVhZGVyIhuC0+STAhUiEC9kYi9zZXRyZWZlcmVu",
+            "Y2U6ASoShAEKFlZlcmlmaWFibGVTZXRSZWZlcmVuY2USJy5JbW11ZGJQcm94",
+            "eS5WZXJpZmlhYmxlUmVmZXJlbmNlUmVxdWVzdBoZLkltbXVkYlByb3h5LlZl",
+            "cmlmaWFibGVUeCImgtPkkwIgIhsvZGIvdmVyaWZpYWJsZS9zZXRyZWZlcmVu",
+            "Y2U6ASoSTAoEWkFkZBIYLkltbXVkYlByb3h5LlpBZGRSZXF1ZXN0GhUuSW1t",
+            "dWRiUHJveHkuVHhIZWFkZXIiE4LT5JMCDSIIL2RiL3phZGQ6ASoSbwoOVmVy",
+            "aWZpYWJsZVpBZGQSIi5JbW11ZGJQcm94eS5WZXJpZmlhYmxlWkFkZFJlcXVl",
+            "c3QaGS5JbW11ZGJQcm94eS5WZXJpZmlhYmxlVHgiHoLT5JMCGCITL2RiL3Zl",
+            "cmlmaWFibGUvemFkZDoBKhJPCgVaU2NhbhIZLkltbXVkYlByb3h5LlpTY2Fu",
+            "UmVxdWVzdBoVLkltbXVkYlByb3h5LlpFbnRyaWVzIhSC0+STAg4iCS9kYi96",
+            "c2NhbjoBKhJZCg5DcmVhdGVEYXRhYmFzZRIVLkltbXVkYlByb3h5LkRhdGFi",
+            "YXNlGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IhiIAgGC0+STAg8iCi9kYi9j",
+            "cmVhdGU6ASoSaQoSQ3JlYXRlRGF0YWJhc2VXaXRoEh0uSW1tdWRiUHJveHku",
+            "RGF0YWJhc2VTZXR0aW5ncxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIciAIB",
+            "gtPkkwITIg4vZGIvY3JlYXRld2l0aDoBKhJ1ChBDcmVhdGVEYXRhYmFzZVYy",
+            "EiIuSW1tdWRiUHJveHkuQ3JlYXRlRGF0YWJhc2VSZXF1ZXN0GiMuSW1tdWRi",
+            "UHJveHkuQ3JlYXRlRGF0YWJhc2VSZXNwb25zZSIYgtPkkwISIg0vZGIvY3Jl",
+            "YXRlL3YyOgEqEmgKDExvYWREYXRhYmFzZRIgLkltbXVkYlByb3h5LkxvYWRE",
+            "YXRhYmFzZVJlcXVlc3QaIS5JbW11ZGJQcm94eS5Mb2FkRGF0YWJhc2VSZXNw",
+            "b25zZSITgtPkkwINIggvZGIvbG9hZDoBKhJwCg5VbmxvYWREYXRhYmFzZRIi",
+            "LkltbXVkYlByb3h5LlVubG9hZERhdGFiYXNlUmVxdWVzdBojLkltbXVkYlBy",
+            "b3h5LlVubG9hZERhdGFiYXNlUmVzcG9uc2UiFYLT5JMCDyIKL2RiL3VubG9h",
+            "ZDoBKhJwCg5EZWxldGVEYXRhYmFzZRIiLkltbXVkYlByb3h5LkRlbGV0ZURh",
+            "dGFiYXNlUmVxdWVzdBojLkltbXVkYlByb3h5LkRlbGV0ZURhdGFiYXNlUmVz",
+            "cG9uc2UiFYLT5JMCDyIKL2RiL2RlbGV0ZToBKhJhCgxEYXRhYmFzZUxpc3QS",
+            "Fi5nb29nbGUucHJvdG9idWYuRW1wdHkaIS5JbW11ZGJQcm94eS5EYXRhYmFz",
+            "ZUxpc3RSZXNwb25zZSIWiAIBgtPkkwINIggvZGIvbGlzdDoBKhJxCg5EYXRh",
+            "YmFzZUxpc3RWMhIiLkltbXVkYlByb3h5LkRhdGFiYXNlTGlzdFJlcXVlc3RW",
+            "MhojLkltbXVkYlByb3h5LkRhdGFiYXNlTGlzdFJlc3BvbnNlVjIiFoLT5JMC",
+            "ECILL2RiL2xpc3QvdjI6ASoSYwoLVXNlRGF0YWJhc2USFS5JbW11ZGJQcm94",
+            "eS5EYXRhYmFzZRodLkltbXVkYlByb3h5LlVzZURhdGFiYXNlUmVwbHkiHoLT",
+            "5JMCGBIWL2RiL3VzZS97ZGF0YWJhc2VOYW1lfRJhCg5VcGRhdGVEYXRhYmFz",
+            "ZRIdLkltbXVkYlByb3h5LkRhdGFiYXNlU2V0dGluZ3MaFi5nb29nbGUucHJv",
+            "dG9idWYuRW1wdHkiGIgCAYLT5JMCDyIKL2RiL3VwZGF0ZToBKhJ1ChBVcGRh",
+            "dGVEYXRhYmFzZVYyEiIuSW1tdWRiUHJveHkuVXBkYXRlRGF0YWJhc2VSZXF1",
+            "ZXN0GiMuSW1tdWRiUHJveHkuVXBkYXRlRGF0YWJhc2VSZXNwb25zZSIYgtPk",
+            "kwISIg0vZGIvdXBkYXRlL3YyOgEqEmgKE0dldERhdGFiYXNlU2V0dGluZ3MS",
+            "Fi5nb29nbGUucHJvdG9idWYuRW1wdHkaHS5JbW11ZGJQcm94eS5EYXRhYmFz",
+            "ZVNldHRpbmdzIhqIAgGC0+STAhEiDC9kYi9zZXR0aW5nczoBKhKAAQoVR2V0",
+            "RGF0YWJhc2VTZXR0aW5nc1YyEiQuSW1tdWRiUHJveHkuRGF0YWJhc2VTZXR0",
+            "aW5nc1JlcXVlc3QaJS5JbW11ZGJQcm94eS5EYXRhYmFzZVNldHRpbmdzUmVz",
+            "cG9uc2UiGoLT5JMCFCIPL2RiL3NldHRpbmdzL3YyOgEqEmUKCkZsdXNoSW5k",
+            "ZXgSHi5JbW11ZGJQcm94eS5GbHVzaEluZGV4UmVxdWVzdBofLkltbXVkYlBy",
+            "b3h5LkZsdXNoSW5kZXhSZXNwb25zZSIWgtPkkwIQEg4vZGIvZmx1c2hpbmRl",
+            "eBJYCgxDb21wYWN0SW5kZXgSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFi5n",
+            "b29nbGUucHJvdG9idWYuRW1wdHkiGILT5JMCEhIQL2RiL2NvbXBhY3RpbmRl",
+            "eBI8CglzdHJlYW1HZXQSFy5JbW11ZGJQcm94eS5LZXlSZXF1ZXN0GhIuSW1t",
+            "dWRiUHJveHkuQ2h1bmsiADABEjoKCXN0cmVhbVNldBISLkltbXVkYlByb3h5",
+            "LkNodW5rGhUuSW1tdWRiUHJveHkuVHhIZWFkZXIiACgBElAKE3N0cmVhbVZl",
+            "cmlmaWFibGVHZXQSIS5JbW11ZGJQcm94eS5WZXJpZmlhYmxlR2V0UmVxdWVz",
+            "dBoSLkltbXVkYlByb3h5LkNodW5rIgAwARJIChNzdHJlYW1WZXJpZmlhYmxl",
+            "U2V0EhIuSW1tdWRiUHJveHkuQ2h1bmsaGS5JbW11ZGJQcm94eS5WZXJpZmlh",
+            "YmxlVHgiACgBEj4KCnN0cmVhbVNjYW4SGC5JbW11ZGJQcm94eS5TY2FuUmVx",
+            "dWVzdBoSLkltbXVkYlByb3h5LkNodW5rIgAwARJACgtzdHJlYW1aU2NhbhIZ",
+            "LkltbXVkYlByb3h5LlpTY2FuUmVxdWVzdBoSLkltbXVkYlByb3h5LkNodW5r",
+            "IgAwARJECg1zdHJlYW1IaXN0b3J5EhsuSW1tdWRiUHJveHkuSGlzdG9yeVJl",
+            "cXVlc3QaEi5JbW11ZGJQcm94eS5DaHVuayIAMAESPgoNc3RyZWFtRXhlY0Fs",
+            "bBISLkltbXVkYlByb3h5LkNodW5rGhUuSW1tdWRiUHJveHkuVHhIZWFkZXIi",
+            "ACgBEkAKCGV4cG9ydFR4EhwuSW1tdWRiUHJveHkuRXhwb3J0VHhSZXF1ZXN0",
+            "GhIuSW1tdWRiUHJveHkuQ2h1bmsiADABEjwKC3JlcGxpY2F0ZVR4EhIuSW1t",
+            "dWRiUHJveHkuQ2h1bmsaFS5JbW11ZGJQcm94eS5UeEhlYWRlciIAKAESWgoH",
+            "U1FMRXhlYxIbLkltbXVkYlByb3h5LlNRTEV4ZWNSZXF1ZXN0GhouSW1tdWRi",
+            "UHJveHkuU1FMRXhlY1Jlc3VsdCIWgtPkkwIQIgsvZGIvc3FsZXhlYzoBKhJe",
+            "CghTUUxRdWVyeRIcLkltbXVkYlByb3h5LlNRTFF1ZXJ5UmVxdWVzdBobLklt",
+            "bXVkYlByb3h5LlNRTFF1ZXJ5UmVzdWx0IheC0+STAhEiDC9kYi9zcWxxdWVy",
+            "eToBKhJZCgpMaXN0VGFibGVzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Ghsu",
+            "SW1tdWRiUHJveHkuU1FMUXVlcnlSZXN1bHQiFoLT5JMCEBIOL2RiL3RhYmxl",
+            "L2xpc3QSVwoNRGVzY3JpYmVUYWJsZRISLkltbXVkYlByb3h5LlRhYmxlGhsu",
+            "SW1tdWRiUHJveHkuU1FMUXVlcnlSZXN1bHQiFYLT5JMCDyIKL2RiL3RhYmxl",
+            "czoBKhJ7ChBWZXJpZmlhYmxlU1FMR2V0EiQuSW1tdWRiUHJveHkuVmVyaWZp",
+            "YWJsZVNRTEdldFJlcXVlc3QaHy5JbW11ZGJQcm94eS5WZXJpZmlhYmxlU1FM",
+            "RW50cnkiIILT5JMCGiIVL2RiL3ZlcmlmaWFibGUvc3FsZ2V0OgEqQi1aK2dp",
+            "dGh1Yi5jb20vY29kZW5vdGFyeS9pbW11ZGIvcGtnL2FwaS9zY2hlbWFiBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Api.AnnotationsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.StructReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Immudb.Schema.EntryTypeAction), typeof(global::Immudb.Schema.PermissionAction), typeof(global::Immudb.Schema.TxMode), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Key), global::Immudb.Schema.Key.Parser, new[]{ "Key_" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Permission), global::Immudb.Schema.Permission.Parser, new[]{ "Database", "Permission_" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.User), global::Immudb.Schema.User.Parser, new[]{ "User_", "Permissions", "Createdby", "Createdat", "Active" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.UserList), global::Immudb.Schema.UserList.Parser, new[]{ "Users" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.CreateUserRequest), global::Immudb.Schema.CreateUserRequest.Parser, new[]{ "User", "Password", "Permission", "Database" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.UserRequest), global::Immudb.Schema.UserRequest.Parser, new[]{ "User" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ChangePasswordRequest), global::Immudb.Schema.ChangePasswordRequest.Parser, new[]{ "User", "OldPassword", "NewPassword" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.LoginRequest), global::Immudb.Schema.LoginRequest.Parser, new[]{ "User", "Password" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.LoginResponse), global::Immudb.Schema.LoginResponse.Parser, new[]{ "Token", "Warning" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.AuthConfig), global::Immudb.Schema.AuthConfig.Parser, new[]{ "Kind" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.MTLSConfig), global::Immudb.Schema.MTLSConfig.Parser, new[]{ "Enabled" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.OpenSessionRequest), global::Immudb.Schema.OpenSessionRequest.Parser, new[]{ "Username", "Password", "DatabaseName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.OpenSessionResponse), global::Immudb.Schema.OpenSessionResponse.Parser, new[]{ "SessionID", "ServerUUID" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Precondition), global::Immudb.Schema.Precondition.Parser, new[]{ "KeyMustExist", "KeyMustNotExist", "KeyNotModifiedAfterTX" }, new[]{ "Precondition" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition), global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition.Parser, new[]{ "Key" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition), global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition.Parser, new[]{ "Key" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition), global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition.Parser, new[]{ "Key", "TxID" }, null, null, null, null)}),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.KeyValue), global::Immudb.Schema.KeyValue.Parser, new[]{ "Key", "Value", "Metadata" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Entry), global::Immudb.Schema.Entry.Parser, new[]{ "Tx", "Key", "Value", "ReferencedBy", "Metadata", "Expired", "Revision" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Reference), global::Immudb.Schema.Reference.Parser, new[]{ "Tx", "Key", "AtTx", "Metadata", "Revision" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Op), global::Immudb.Schema.Op.Parser, new[]{ "Kv", "ZAdd", "Ref" }, new[]{ "Operation" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ExecAllRequest), global::Immudb.Schema.ExecAllRequest.Parser, new[]{ "Operations", "NoWait", "Preconditions" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Entries), global::Immudb.Schema.Entries.Parser, new[]{ "Entries_" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ZEntry), global::Immudb.Schema.ZEntry.Parser, new[]{ "Set", "Key", "Entry", "Score", "AtTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ZEntries), global::Immudb.Schema.ZEntries.Parser, new[]{ "Entries" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ScanRequest), global::Immudb.Schema.ScanRequest.Parser, new[]{ "SeekKey", "EndKey", "Prefix", "Desc", "Limit", "SinceTx", "NoWait", "InclusiveSeek", "InclusiveEnd" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.KeyPrefix), global::Immudb.Schema.KeyPrefix.Parser, new[]{ "Prefix" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.EntryCount), global::Immudb.Schema.EntryCount.Parser, new[]{ "Count" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Signature), global::Immudb.Schema.Signature.Parser, new[]{ "PublicKey", "Signature_" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.TxHeader), global::Immudb.Schema.TxHeader.Parser, new[]{ "Id", "PrevAlh", "Ts", "Nentries", "EH", "BlTxId", "BlRoot", "Version", "Metadata" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.TxMetadata), global::Immudb.Schema.TxMetadata.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.LinearProof), global::Immudb.Schema.LinearProof.Parser, new[]{ "SourceTxId", "TargetTxId", "Terms" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DualProof), global::Immudb.Schema.DualProof.Parser, new[]{ "SourceTxHeader", "TargetTxHeader", "InclusionProof", "ConsistencyProof", "TargetBlTxAlh", "LastInclusionProof", "LinearProof" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Tx), global::Immudb.Schema.Tx.Parser, new[]{ "Header", "Entries", "KvEntries", "ZEntries" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.TxEntry), global::Immudb.Schema.TxEntry.Parser, new[]{ "Key", "HValue", "VLen", "Metadata", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.KVMetadata), global::Immudb.Schema.KVMetadata.Parser, new[]{ "Deleted", "Expiration", "NonIndexable" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Expiration), global::Immudb.Schema.Expiration.Parser, new[]{ "ExpiresAt" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableTx), global::Immudb.Schema.VerifiableTx.Parser, new[]{ "Tx", "DualProof", "Signature" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableEntry), global::Immudb.Schema.VerifiableEntry.Parser, new[]{ "Entry", "VerifiableTx", "InclusionProof" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.InclusionProof), global::Immudb.Schema.InclusionProof.Parser, new[]{ "Leaf", "Width", "Terms" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SetRequest), global::Immudb.Schema.SetRequest.Parser, new[]{ "KVs", "NoWait", "Preconditions" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.KeyRequest), global::Immudb.Schema.KeyRequest.Parser, new[]{ "Key", "AtTx", "SinceTx", "NoWait", "AtRevision" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.KeyListRequest), global::Immudb.Schema.KeyListRequest.Parser, new[]{ "Keys", "SinceTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DeleteKeysRequest), global::Immudb.Schema.DeleteKeysRequest.Parser, new[]{ "Keys", "SinceTx", "NoWait" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableSetRequest), global::Immudb.Schema.VerifiableSetRequest.Parser, new[]{ "SetRequest", "ProveSinceTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableGetRequest), global::Immudb.Schema.VerifiableGetRequest.Parser, new[]{ "KeyRequest", "ProveSinceTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.HealthResponse), global::Immudb.Schema.HealthResponse.Parser, new[]{ "Status", "Version" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseHealthResponse), global::Immudb.Schema.DatabaseHealthResponse.Parser, new[]{ "PendingRequests", "LastRequestCompletedAt" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ImmutableState), global::Immudb.Schema.ImmutableState.Parser, new[]{ "Db", "TxId", "TxHash", "Signature" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ReferenceRequest), global::Immudb.Schema.ReferenceRequest.Parser, new[]{ "Key", "ReferencedKey", "AtTx", "BoundRef", "NoWait", "Preconditions" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableReferenceRequest), global::Immudb.Schema.VerifiableReferenceRequest.Parser, new[]{ "ReferenceRequest", "ProveSinceTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ZAddRequest), global::Immudb.Schema.ZAddRequest.Parser, new[]{ "Set", "Score", "Key", "AtTx", "BoundRef", "NoWait" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Score), global::Immudb.Schema.Score.Parser, new[]{ "Score_" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ZScanRequest), global::Immudb.Schema.ZScanRequest.Parser, new[]{ "Set", "SeekKey", "SeekScore", "SeekAtTx", "InclusiveSeek", "Limit", "Desc", "MinScore", "MaxScore", "SinceTx", "NoWait" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.HistoryRequest), global::Immudb.Schema.HistoryRequest.Parser, new[]{ "Key", "Offset", "Limit", "Desc", "SinceTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableZAddRequest), global::Immudb.Schema.VerifiableZAddRequest.Parser, new[]{ "ZAddRequest", "ProveSinceTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.TxRequest), global::Immudb.Schema.TxRequest.Parser, new[]{ "Tx", "EntriesSpec", "SinceTx", "NoWait", "KeepReferencesUnresolved" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.EntriesSpec), global::Immudb.Schema.EntriesSpec.Parser, new[]{ "KvEntriesSpec", "ZEntriesSpec", "SqlEntriesSpec" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.EntryTypeSpec), global::Immudb.Schema.EntryTypeSpec.Parser, new[]{ "Action" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableTxRequest), global::Immudb.Schema.VerifiableTxRequest.Parser, new[]{ "Tx", "ProveSinceTx", "EntriesSpec", "SinceTx", "NoWait", "KeepReferencesUnresolved" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.TxScanRequest), global::Immudb.Schema.TxScanRequest.Parser, new[]{ "InitialTx", "Limit", "Desc", "EntriesSpec", "SinceTx", "NoWait" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.TxList), global::Immudb.Schema.TxList.Parser, new[]{ "Txs" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ExportTxRequest), global::Immudb.Schema.ExportTxRequest.Parser, new[]{ "Tx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Database), global::Immudb.Schema.Database.Parser, new[]{ "DatabaseName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseSettings), global::Immudb.Schema.DatabaseSettings.Parser, new[]{ "DatabaseName", "Replica", "MasterDatabase", "MasterAddress", "MasterPort", "FollowerUsername", "FollowerPassword", "FileSize", "MaxKeyLen", "MaxValueLen", "MaxTxEntries", "ExcludeCommitTime" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.CreateDatabaseRequest), global::Immudb.Schema.CreateDatabaseRequest.Parser, new[]{ "Name", "Settings", "IfNotExists" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.CreateDatabaseResponse), global::Immudb.Schema.CreateDatabaseResponse.Parser, new[]{ "Name", "Settings", "AlreadyExisted" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.UpdateDatabaseRequest), global::Immudb.Schema.UpdateDatabaseRequest.Parser, new[]{ "Database", "Settings" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.UpdateDatabaseResponse), global::Immudb.Schema.UpdateDatabaseResponse.Parser, new[]{ "Database", "Settings" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseSettingsRequest), global::Immudb.Schema.DatabaseSettingsRequest.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseSettingsResponse), global::Immudb.Schema.DatabaseSettingsResponse.Parser, new[]{ "Database", "Settings" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.NullableUint32), global::Immudb.Schema.NullableUint32.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.NullableUint64), global::Immudb.Schema.NullableUint64.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.NullableFloat), global::Immudb.Schema.NullableFloat.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.NullableBool), global::Immudb.Schema.NullableBool.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.NullableString), global::Immudb.Schema.NullableString.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseNullableSettings), global::Immudb.Schema.DatabaseNullableSettings.Parser, new[]{ "ReplicationSettings", "FileSize", "MaxKeyLen", "MaxValueLen", "MaxTxEntries", "ExcludeCommitTime", "MaxConcurrency", "MaxIOConcurrency", "TxLogCacheSize", "VLogMaxOpenedFiles", "TxLogMaxOpenedFiles", "CommitLogMaxOpenedFiles", "IndexSettings", "WriteTxHeaderVersion", "Autoload" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ReplicationNullableSettings), global::Immudb.Schema.ReplicationNullableSettings.Parser, new[]{ "Replica", "MasterDatabase", "MasterAddress", "MasterPort", "FollowerUsername", "FollowerPassword" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.IndexNullableSettings), global::Immudb.Schema.IndexNullableSettings.Parser, new[]{ "FlushThreshold", "SyncThreshold", "CacheSize", "MaxNodeSize", "MaxActiveSnapshots", "RenewSnapRootAfter", "CompactionThld", "DelayDuringCompaction", "NodesLogMaxOpenedFiles", "HistoryLogMaxOpenedFiles", "CommitLogMaxOpenedFiles", "FlushBufferSize", "CleanupPercentage" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.LoadDatabaseRequest), global::Immudb.Schema.LoadDatabaseRequest.Parser, new[]{ "Database" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.LoadDatabaseResponse), global::Immudb.Schema.LoadDatabaseResponse.Parser, new[]{ "Database" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.UnloadDatabaseRequest), global::Immudb.Schema.UnloadDatabaseRequest.Parser, new[]{ "Database" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.UnloadDatabaseResponse), global::Immudb.Schema.UnloadDatabaseResponse.Parser, new[]{ "Database" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DeleteDatabaseRequest), global::Immudb.Schema.DeleteDatabaseRequest.Parser, new[]{ "Database" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DeleteDatabaseResponse), global::Immudb.Schema.DeleteDatabaseResponse.Parser, new[]{ "Database" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.FlushIndexRequest), global::Immudb.Schema.FlushIndexRequest.Parser, new[]{ "CleanupPercentage", "Synced" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.FlushIndexResponse), global::Immudb.Schema.FlushIndexResponse.Parser, new[]{ "Database" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Table), global::Immudb.Schema.Table.Parser, new[]{ "TableName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SQLGetRequest), global::Immudb.Schema.SQLGetRequest.Parser, new[]{ "Table", "PkValues", "AtTx", "SinceTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableSQLGetRequest), global::Immudb.Schema.VerifiableSQLGetRequest.Parser, new[]{ "SqlGetRequest", "ProveSinceTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SQLEntry), global::Immudb.Schema.SQLEntry.Parser, new[]{ "Tx", "Key", "Value", "Metadata" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.VerifiableSQLEntry), global::Immudb.Schema.VerifiableSQLEntry.Parser, new[]{ "SqlEntry", "VerifiableTx", "InclusionProof", "DatabaseId", "TableId", "PKIDs", "ColNamesById", "ColIdsByName", "ColTypesById", "ColLenById" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.UseDatabaseReply), global::Immudb.Schema.UseDatabaseReply.Parser, new[]{ "Token" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ChangePermissionRequest), global::Immudb.Schema.ChangePermissionRequest.Parser, new[]{ "Action", "Username", "Database", "Permission" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SetActiveUserRequest), global::Immudb.Schema.SetActiveUserRequest.Parser, new[]{ "Active", "Username" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseListResponse), global::Immudb.Schema.DatabaseListResponse.Parser, new[]{ "Databases" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseListRequestV2), global::Immudb.Schema.DatabaseListRequestV2.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseListResponseV2), global::Immudb.Schema.DatabaseListResponseV2.Parser, new[]{ "Databases" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DatabaseWithSettings), global::Immudb.Schema.DatabaseWithSettings.Parser, new[]{ "Name", "Settings", "Loaded" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Chunk), global::Immudb.Schema.Chunk.Parser, new[]{ "Content" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.UseSnapshotRequest), global::Immudb.Schema.UseSnapshotRequest.Parser, new[]{ "SinceTx", "AsBeforeTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SQLExecRequest), global::Immudb.Schema.SQLExecRequest.Parser, new[]{ "Sql", "Params", "NoWait" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SQLQueryRequest), global::Immudb.Schema.SQLQueryRequest.Parser, new[]{ "Sql", "Params", "ReuseSnapshot" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.NamedParam), global::Immudb.Schema.NamedParam.Parser, new[]{ "Name", "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SQLExecResult), global::Immudb.Schema.SQLExecResult.Parser, new[]{ "Txs", "OngoingTx" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.CommittedSQLTx), global::Immudb.Schema.CommittedSQLTx.Parser, new[]{ "Header", "UpdatedRows", "LastInsertedPKs", "FirstInsertedPKs" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SQLQueryResult), global::Immudb.Schema.SQLQueryResult.Parser, new[]{ "Columns", "Rows" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Column), global::Immudb.Schema.Column.Parser, new[]{ "Name", "Type" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.Row), global::Immudb.Schema.Row.Parser, new[]{ "Columns", "Values" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.SQLValue), global::Immudb.Schema.SQLValue.Parser, new[]{ "Null", "N", "S", "B", "Bs", "Ts" }, new[]{ "Value" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.NewTxRequest), global::Immudb.Schema.NewTxRequest.Parser, new[]{ "Mode" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.NewTxResponse), global::Immudb.Schema.NewTxResponse.Parser, new[]{ "TransactionID" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.ErrorInfo), global::Immudb.Schema.ErrorInfo.Parser, new[]{ "Code", "Cause" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.DebugInfo), global::Immudb.Schema.DebugInfo.Parser, new[]{ "Stack" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Immudb.Schema.RetryInfo), global::Immudb.Schema.RetryInfo.Parser, new[]{ "RetryDelay" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ImmudbProxy.EntryTypeAction), typeof(global::ImmudbProxy.PermissionAction), typeof(global::ImmudbProxy.TxMode), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Key), global::ImmudbProxy.Key.Parser, new[]{ "Key_" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Permission), global::ImmudbProxy.Permission.Parser, new[]{ "Database", "Permission_" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.User), global::ImmudbProxy.User.Parser, new[]{ "User_", "Permissions", "Createdby", "Createdat", "Active" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UserList), global::ImmudbProxy.UserList.Parser, new[]{ "Users" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.CreateUserRequest), global::ImmudbProxy.CreateUserRequest.Parser, new[]{ "User", "Password", "Permission", "Database" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UserRequest), global::ImmudbProxy.UserRequest.Parser, new[]{ "User" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ChangePasswordRequest), global::ImmudbProxy.ChangePasswordRequest.Parser, new[]{ "User", "OldPassword", "NewPassword" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.LoginRequest), global::ImmudbProxy.LoginRequest.Parser, new[]{ "User", "Password" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.LoginResponse), global::ImmudbProxy.LoginResponse.Parser, new[]{ "Token", "Warning" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.AuthConfig), global::ImmudbProxy.AuthConfig.Parser, new[]{ "Kind" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.MTLSConfig), global::ImmudbProxy.MTLSConfig.Parser, new[]{ "Enabled" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.OpenSessionRequest), global::ImmudbProxy.OpenSessionRequest.Parser, new[]{ "Username", "Password", "DatabaseName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.OpenSessionResponse), global::ImmudbProxy.OpenSessionResponse.Parser, new[]{ "SessionID", "ServerUUID" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Precondition), global::ImmudbProxy.Precondition.Parser, new[]{ "KeyMustExist", "KeyMustNotExist", "KeyNotModifiedAfterTX" }, new[]{ "Precondition" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition), global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition.Parser, new[]{ "Key" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition), global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition.Parser, new[]{ "Key" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition), global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition.Parser, new[]{ "Key", "TxID" }, null, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.KeyValue), global::ImmudbProxy.KeyValue.Parser, new[]{ "Key", "Value", "Metadata" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Entry), global::ImmudbProxy.Entry.Parser, new[]{ "Tx", "Key", "Value", "ReferencedBy", "Metadata", "Expired", "Revision" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Reference), global::ImmudbProxy.Reference.Parser, new[]{ "Tx", "Key", "AtTx", "Metadata", "Revision" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Op), global::ImmudbProxy.Op.Parser, new[]{ "Kv", "ZAdd", "Ref" }, new[]{ "Operation" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ExecAllRequest), global::ImmudbProxy.ExecAllRequest.Parser, new[]{ "Operations", "NoWait", "Preconditions" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Entries), global::ImmudbProxy.Entries.Parser, new[]{ "Entries_" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ZEntry), global::ImmudbProxy.ZEntry.Parser, new[]{ "Set", "Key", "Entry", "Score", "AtTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ZEntries), global::ImmudbProxy.ZEntries.Parser, new[]{ "Entries" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ScanRequest), global::ImmudbProxy.ScanRequest.Parser, new[]{ "SeekKey", "EndKey", "Prefix", "Desc", "Limit", "SinceTx", "NoWait", "InclusiveSeek", "InclusiveEnd" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.KeyPrefix), global::ImmudbProxy.KeyPrefix.Parser, new[]{ "Prefix" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.EntryCount), global::ImmudbProxy.EntryCount.Parser, new[]{ "Count" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Signature), global::ImmudbProxy.Signature.Parser, new[]{ "PublicKey", "Signature_" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.TxHeader), global::ImmudbProxy.TxHeader.Parser, new[]{ "Id", "PrevAlh", "Ts", "Nentries", "EH", "BlTxId", "BlRoot", "Version", "Metadata" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.TxMetadata), global::ImmudbProxy.TxMetadata.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.LinearProof), global::ImmudbProxy.LinearProof.Parser, new[]{ "SourceTxId", "TargetTxId", "Terms" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DualProof), global::ImmudbProxy.DualProof.Parser, new[]{ "SourceTxHeader", "TargetTxHeader", "InclusionProof", "ConsistencyProof", "TargetBlTxAlh", "LastInclusionProof", "LinearProof" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Tx), global::ImmudbProxy.Tx.Parser, new[]{ "Header", "Entries", "KvEntries", "ZEntries" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.TxEntry), global::ImmudbProxy.TxEntry.Parser, new[]{ "Key", "HValue", "VLen", "Metadata", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.KVMetadata), global::ImmudbProxy.KVMetadata.Parser, new[]{ "Deleted", "Expiration", "NonIndexable" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Expiration), global::ImmudbProxy.Expiration.Parser, new[]{ "ExpiresAt" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableTx), global::ImmudbProxy.VerifiableTx.Parser, new[]{ "Tx", "DualProof", "Signature" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableEntry), global::ImmudbProxy.VerifiableEntry.Parser, new[]{ "Entry", "VerifiableTx", "InclusionProof" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.InclusionProof), global::ImmudbProxy.InclusionProof.Parser, new[]{ "Leaf", "Width", "Terms" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SetRequest), global::ImmudbProxy.SetRequest.Parser, new[]{ "KVs", "NoWait", "Preconditions" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.KeyRequest), global::ImmudbProxy.KeyRequest.Parser, new[]{ "Key", "AtTx", "SinceTx", "NoWait", "AtRevision" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.KeyListRequest), global::ImmudbProxy.KeyListRequest.Parser, new[]{ "Keys", "SinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DeleteKeysRequest), global::ImmudbProxy.DeleteKeysRequest.Parser, new[]{ "Keys", "SinceTx", "NoWait" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableSetRequest), global::ImmudbProxy.VerifiableSetRequest.Parser, new[]{ "SetRequest", "ProveSinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableGetRequest), global::ImmudbProxy.VerifiableGetRequest.Parser, new[]{ "KeyRequest", "ProveSinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.HealthResponse), global::ImmudbProxy.HealthResponse.Parser, new[]{ "Status", "Version" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseHealthResponse), global::ImmudbProxy.DatabaseHealthResponse.Parser, new[]{ "PendingRequests", "LastRequestCompletedAt" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ImmutableState), global::ImmudbProxy.ImmutableState.Parser, new[]{ "Db", "TxId", "TxHash", "Signature" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ReferenceRequest), global::ImmudbProxy.ReferenceRequest.Parser, new[]{ "Key", "ReferencedKey", "AtTx", "BoundRef", "NoWait", "Preconditions" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableReferenceRequest), global::ImmudbProxy.VerifiableReferenceRequest.Parser, new[]{ "ReferenceRequest", "ProveSinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ZAddRequest), global::ImmudbProxy.ZAddRequest.Parser, new[]{ "Set", "Score", "Key", "AtTx", "BoundRef", "NoWait" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Score), global::ImmudbProxy.Score.Parser, new[]{ "Score_" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ZScanRequest), global::ImmudbProxy.ZScanRequest.Parser, new[]{ "Set", "SeekKey", "SeekScore", "SeekAtTx", "InclusiveSeek", "Limit", "Desc", "MinScore", "MaxScore", "SinceTx", "NoWait" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.HistoryRequest), global::ImmudbProxy.HistoryRequest.Parser, new[]{ "Key", "Offset", "Limit", "Desc", "SinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableZAddRequest), global::ImmudbProxy.VerifiableZAddRequest.Parser, new[]{ "ZAddRequest", "ProveSinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.TxRequest), global::ImmudbProxy.TxRequest.Parser, new[]{ "Tx", "EntriesSpec", "SinceTx", "NoWait", "KeepReferencesUnresolved" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.EntriesSpec), global::ImmudbProxy.EntriesSpec.Parser, new[]{ "KvEntriesSpec", "ZEntriesSpec", "SqlEntriesSpec" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.EntryTypeSpec), global::ImmudbProxy.EntryTypeSpec.Parser, new[]{ "Action" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableTxRequest), global::ImmudbProxy.VerifiableTxRequest.Parser, new[]{ "Tx", "ProveSinceTx", "EntriesSpec", "SinceTx", "NoWait", "KeepReferencesUnresolved" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.TxScanRequest), global::ImmudbProxy.TxScanRequest.Parser, new[]{ "InitialTx", "Limit", "Desc", "EntriesSpec", "SinceTx", "NoWait" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.TxList), global::ImmudbProxy.TxList.Parser, new[]{ "Txs" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ExportTxRequest), global::ImmudbProxy.ExportTxRequest.Parser, new[]{ "Tx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Database), global::ImmudbProxy.Database.Parser, new[]{ "DatabaseName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseSettings), global::ImmudbProxy.DatabaseSettings.Parser, new[]{ "DatabaseName", "Replica", "MasterDatabase", "MasterAddress", "MasterPort", "FollowerUsername", "FollowerPassword", "FileSize", "MaxKeyLen", "MaxValueLen", "MaxTxEntries", "ExcludeCommitTime" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.CreateDatabaseRequest), global::ImmudbProxy.CreateDatabaseRequest.Parser, new[]{ "Name", "Settings", "IfNotExists" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.CreateDatabaseResponse), global::ImmudbProxy.CreateDatabaseResponse.Parser, new[]{ "Name", "Settings", "AlreadyExisted" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UpdateDatabaseRequest), global::ImmudbProxy.UpdateDatabaseRequest.Parser, new[]{ "Database", "Settings" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UpdateDatabaseResponse), global::ImmudbProxy.UpdateDatabaseResponse.Parser, new[]{ "Database", "Settings" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseSettingsRequest), global::ImmudbProxy.DatabaseSettingsRequest.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseSettingsResponse), global::ImmudbProxy.DatabaseSettingsResponse.Parser, new[]{ "Database", "Settings" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableUint32), global::ImmudbProxy.NullableUint32.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableUint64), global::ImmudbProxy.NullableUint64.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableFloat), global::ImmudbProxy.NullableFloat.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableBool), global::ImmudbProxy.NullableBool.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableString), global::ImmudbProxy.NullableString.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseNullableSettings), global::ImmudbProxy.DatabaseNullableSettings.Parser, new[]{ "ReplicationSettings", "FileSize", "MaxKeyLen", "MaxValueLen", "MaxTxEntries", "ExcludeCommitTime", "MaxConcurrency", "MaxIOConcurrency", "TxLogCacheSize", "VLogMaxOpenedFiles", "TxLogMaxOpenedFiles", "CommitLogMaxOpenedFiles", "IndexSettings", "WriteTxHeaderVersion", "Autoload" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ReplicationNullableSettings), global::ImmudbProxy.ReplicationNullableSettings.Parser, new[]{ "Replica", "MasterDatabase", "MasterAddress", "MasterPort", "FollowerUsername", "FollowerPassword" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.IndexNullableSettings), global::ImmudbProxy.IndexNullableSettings.Parser, new[]{ "FlushThreshold", "SyncThreshold", "CacheSize", "MaxNodeSize", "MaxActiveSnapshots", "RenewSnapRootAfter", "CompactionThld", "DelayDuringCompaction", "NodesLogMaxOpenedFiles", "HistoryLogMaxOpenedFiles", "CommitLogMaxOpenedFiles", "FlushBufferSize", "CleanupPercentage" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.LoadDatabaseRequest), global::ImmudbProxy.LoadDatabaseRequest.Parser, new[]{ "Database" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.LoadDatabaseResponse), global::ImmudbProxy.LoadDatabaseResponse.Parser, new[]{ "Database" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UnloadDatabaseRequest), global::ImmudbProxy.UnloadDatabaseRequest.Parser, new[]{ "Database" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UnloadDatabaseResponse), global::ImmudbProxy.UnloadDatabaseResponse.Parser, new[]{ "Database" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DeleteDatabaseRequest), global::ImmudbProxy.DeleteDatabaseRequest.Parser, new[]{ "Database" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DeleteDatabaseResponse), global::ImmudbProxy.DeleteDatabaseResponse.Parser, new[]{ "Database" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.FlushIndexRequest), global::ImmudbProxy.FlushIndexRequest.Parser, new[]{ "CleanupPercentage", "Synced" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.FlushIndexResponse), global::ImmudbProxy.FlushIndexResponse.Parser, new[]{ "Database" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Table), global::ImmudbProxy.Table.Parser, new[]{ "TableName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SQLGetRequest), global::ImmudbProxy.SQLGetRequest.Parser, new[]{ "Table", "PkValues", "AtTx", "SinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableSQLGetRequest), global::ImmudbProxy.VerifiableSQLGetRequest.Parser, new[]{ "SqlGetRequest", "ProveSinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SQLEntry), global::ImmudbProxy.SQLEntry.Parser, new[]{ "Tx", "Key", "Value", "Metadata" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableSQLEntry), global::ImmudbProxy.VerifiableSQLEntry.Parser, new[]{ "SqlEntry", "VerifiableTx", "InclusionProof", "DatabaseId", "TableId", "PKIDs", "ColNamesById", "ColIdsByName", "ColTypesById", "ColLenById" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UseDatabaseReply), global::ImmudbProxy.UseDatabaseReply.Parser, new[]{ "Token" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ChangePermissionRequest), global::ImmudbProxy.ChangePermissionRequest.Parser, new[]{ "Action", "Username", "Database", "Permission" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SetActiveUserRequest), global::ImmudbProxy.SetActiveUserRequest.Parser, new[]{ "Active", "Username" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseListResponse), global::ImmudbProxy.DatabaseListResponse.Parser, new[]{ "Databases" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseListRequestV2), global::ImmudbProxy.DatabaseListRequestV2.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseListResponseV2), global::ImmudbProxy.DatabaseListResponseV2.Parser, new[]{ "Databases" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseWithSettings), global::ImmudbProxy.DatabaseWithSettings.Parser, new[]{ "Name", "Settings", "Loaded" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Chunk), global::ImmudbProxy.Chunk.Parser, new[]{ "Content" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UseSnapshotRequest), global::ImmudbProxy.UseSnapshotRequest.Parser, new[]{ "SinceTx", "AsBeforeTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SQLExecRequest), global::ImmudbProxy.SQLExecRequest.Parser, new[]{ "Sql", "Params", "NoWait" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SQLQueryRequest), global::ImmudbProxy.SQLQueryRequest.Parser, new[]{ "Sql", "Params", "ReuseSnapshot" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NamedParam), global::ImmudbProxy.NamedParam.Parser, new[]{ "Name", "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SQLExecResult), global::ImmudbProxy.SQLExecResult.Parser, new[]{ "Txs", "OngoingTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.CommittedSQLTx), global::ImmudbProxy.CommittedSQLTx.Parser, new[]{ "Header", "UpdatedRows", "LastInsertedPKs", "FirstInsertedPKs" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SQLQueryResult), global::ImmudbProxy.SQLQueryResult.Parser, new[]{ "Columns", "Rows" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Column), global::ImmudbProxy.Column.Parser, new[]{ "Name", "Type" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Row), global::ImmudbProxy.Row.Parser, new[]{ "Columns", "Values" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.SQLValue), global::ImmudbProxy.SQLValue.Parser, new[]{ "Null", "N", "S", "B", "Bs", "Ts" }, new[]{ "Value" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NewTxRequest), global::ImmudbProxy.NewTxRequest.Parser, new[]{ "Mode" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NewTxResponse), global::ImmudbProxy.NewTxResponse.Parser, new[]{ "TransactionID" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ErrorInfo), global::ImmudbProxy.ErrorInfo.Parser, new[]{ "Code", "Cause" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DebugInfo), global::ImmudbProxy.DebugInfo.Parser, new[]{ "Stack" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.RetryInfo), global::ImmudbProxy.RetryInfo.Parser, new[]{ "RetryDelay" }, null, null, null, null)
           }));
     }
     #endregion
@@ -607,7 +597,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[0]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -796,7 +786,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[1]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1022,7 +1012,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[2]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1070,12 +1060,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "permissions" field.</summary>
     public const int PermissionsFieldNumber = 3;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Permission> _repeated_permissions_codec
-        = pb::FieldCodec.ForMessage(26, global::Immudb.Schema.Permission.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Permission> permissions_ = new pbc::RepeatedField<global::Immudb.Schema.Permission>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Permission> _repeated_permissions_codec
+        = pb::FieldCodec.ForMessage(26, global::ImmudbProxy.Permission.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Permission> permissions_ = new pbc::RepeatedField<global::ImmudbProxy.Permission>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Permission> Permissions {
+    public pbc::RepeatedField<global::ImmudbProxy.Permission> Permissions {
       get { return permissions_; }
     }
 
@@ -1348,7 +1338,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[3]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1380,12 +1370,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "users" field.</summary>
     public const int UsersFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.User> _repeated_users_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.User.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.User> users_ = new pbc::RepeatedField<global::Immudb.Schema.User>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.User> _repeated_users_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.User.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.User> users_ = new pbc::RepeatedField<global::ImmudbProxy.User>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.User> Users {
+    public pbc::RepeatedField<global::ImmudbProxy.User> Users {
       get { return users_; }
     }
 
@@ -1526,7 +1516,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[4]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1826,7 +1816,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[5]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2015,7 +2005,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[6]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2278,7 +2268,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[7]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2504,7 +2494,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[8]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2730,7 +2720,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[9]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2919,7 +2909,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[10]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3108,7 +3098,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[11]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3371,7 +3361,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[12]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3597,7 +3587,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[13]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3642,8 +3632,8 @@ namespace Immudb.Schema {
     public const int KeyMustExistFieldNumber = 1;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition KeyMustExist {
-      get { return preconditionCase_ == PreconditionOneofCase.KeyMustExist ? (global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition) precondition_ : null; }
+    public global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition KeyMustExist {
+      get { return preconditionCase_ == PreconditionOneofCase.KeyMustExist ? (global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition) precondition_ : null; }
       set {
         precondition_ = value;
         preconditionCase_ = value == null ? PreconditionOneofCase.None : PreconditionOneofCase.KeyMustExist;
@@ -3654,8 +3644,8 @@ namespace Immudb.Schema {
     public const int KeyMustNotExistFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition KeyMustNotExist {
-      get { return preconditionCase_ == PreconditionOneofCase.KeyMustNotExist ? (global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition) precondition_ : null; }
+    public global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition KeyMustNotExist {
+      get { return preconditionCase_ == PreconditionOneofCase.KeyMustNotExist ? (global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition) precondition_ : null; }
       set {
         precondition_ = value;
         preconditionCase_ = value == null ? PreconditionOneofCase.None : PreconditionOneofCase.KeyMustNotExist;
@@ -3666,8 +3656,8 @@ namespace Immudb.Schema {
     public const int KeyNotModifiedAfterTXFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition KeyNotModifiedAfterTX {
-      get { return preconditionCase_ == PreconditionOneofCase.KeyNotModifiedAfterTX ? (global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition) precondition_ : null; }
+    public global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition KeyNotModifiedAfterTX {
+      get { return preconditionCase_ == PreconditionOneofCase.KeyNotModifiedAfterTX ? (global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition) precondition_ : null; }
       set {
         precondition_ = value;
         preconditionCase_ = value == null ? PreconditionOneofCase.None : PreconditionOneofCase.KeyNotModifiedAfterTX;
@@ -3812,19 +3802,19 @@ namespace Immudb.Schema {
       switch (other.PreconditionCase) {
         case PreconditionOneofCase.KeyMustExist:
           if (KeyMustExist == null) {
-            KeyMustExist = new global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition();
+            KeyMustExist = new global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition();
           }
           KeyMustExist.MergeFrom(other.KeyMustExist);
           break;
         case PreconditionOneofCase.KeyMustNotExist:
           if (KeyMustNotExist == null) {
-            KeyMustNotExist = new global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition();
+            KeyMustNotExist = new global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition();
           }
           KeyMustNotExist.MergeFrom(other.KeyMustNotExist);
           break;
         case PreconditionOneofCase.KeyNotModifiedAfterTX:
           if (KeyNotModifiedAfterTX == null) {
-            KeyNotModifiedAfterTX = new global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition();
+            KeyNotModifiedAfterTX = new global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition();
           }
           KeyNotModifiedAfterTX.MergeFrom(other.KeyNotModifiedAfterTX);
           break;
@@ -3846,7 +3836,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition subBuilder = new global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition();
+            global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition subBuilder = new global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition();
             if (preconditionCase_ == PreconditionOneofCase.KeyMustExist) {
               subBuilder.MergeFrom(KeyMustExist);
             }
@@ -3855,7 +3845,7 @@ namespace Immudb.Schema {
             break;
           }
           case 18: {
-            global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition subBuilder = new global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition();
+            global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition subBuilder = new global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition();
             if (preconditionCase_ == PreconditionOneofCase.KeyMustNotExist) {
               subBuilder.MergeFrom(KeyMustNotExist);
             }
@@ -3864,7 +3854,7 @@ namespace Immudb.Schema {
             break;
           }
           case 26: {
-            global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition subBuilder = new global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition();
+            global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition subBuilder = new global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition();
             if (preconditionCase_ == PreconditionOneofCase.KeyNotModifiedAfterTX) {
               subBuilder.MergeFrom(KeyNotModifiedAfterTX);
             }
@@ -3888,7 +3878,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition subBuilder = new global::Immudb.Schema.Precondition.Types.KeyMustExistPrecondition();
+            global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition subBuilder = new global::ImmudbProxy.Precondition.Types.KeyMustExistPrecondition();
             if (preconditionCase_ == PreconditionOneofCase.KeyMustExist) {
               subBuilder.MergeFrom(KeyMustExist);
             }
@@ -3897,7 +3887,7 @@ namespace Immudb.Schema {
             break;
           }
           case 18: {
-            global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition subBuilder = new global::Immudb.Schema.Precondition.Types.KeyMustNotExistPrecondition();
+            global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition subBuilder = new global::ImmudbProxy.Precondition.Types.KeyMustNotExistPrecondition();
             if (preconditionCase_ == PreconditionOneofCase.KeyMustNotExist) {
               subBuilder.MergeFrom(KeyMustNotExist);
             }
@@ -3906,7 +3896,7 @@ namespace Immudb.Schema {
             break;
           }
           case 26: {
-            global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition subBuilder = new global::Immudb.Schema.Precondition.Types.KeyNotModifiedAfterTXPrecondition();
+            global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition subBuilder = new global::ImmudbProxy.Precondition.Types.KeyNotModifiedAfterTXPrecondition();
             if (preconditionCase_ == PreconditionOneofCase.KeyNotModifiedAfterTX) {
               subBuilder.MergeFrom(KeyNotModifiedAfterTX);
             }
@@ -3938,7 +3928,7 @@ namespace Immudb.Schema {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::Immudb.Schema.Precondition.Descriptor.NestedTypes[0]; }
+          get { return global::ImmudbProxy.Precondition.Descriptor.NestedTypes[0]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4127,7 +4117,7 @@ namespace Immudb.Schema {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::Immudb.Schema.Precondition.Descriptor.NestedTypes[1]; }
+          get { return global::ImmudbProxy.Precondition.Descriptor.NestedTypes[1]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4316,7 +4306,7 @@ namespace Immudb.Schema {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::Immudb.Schema.Precondition.Descriptor.NestedTypes[2]; }
+          get { return global::ImmudbProxy.Precondition.Descriptor.NestedTypes[2]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4547,7 +4537,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[14]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4605,10 +4595,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 3;
-    private global::Immudb.Schema.KVMetadata metadata_;
+    private global::ImmudbProxy.KVMetadata metadata_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.KVMetadata Metadata {
+    public global::ImmudbProxy.KVMetadata Metadata {
       get { return metadata_; }
       set {
         metadata_ = value;
@@ -4734,7 +4724,7 @@ namespace Immudb.Schema {
       }
       if (other.metadata_ != null) {
         if (metadata_ == null) {
-          Metadata = new global::Immudb.Schema.KVMetadata();
+          Metadata = new global::ImmudbProxy.KVMetadata();
         }
         Metadata.MergeFrom(other.Metadata);
       }
@@ -4763,7 +4753,7 @@ namespace Immudb.Schema {
           }
           case 26: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -4793,7 +4783,7 @@ namespace Immudb.Schema {
           }
           case 26: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -4819,7 +4809,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[15]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4893,10 +4883,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "referencedBy" field.</summary>
     public const int ReferencedByFieldNumber = 4;
-    private global::Immudb.Schema.Reference referencedBy_;
+    private global::ImmudbProxy.Reference referencedBy_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Reference ReferencedBy {
+    public global::ImmudbProxy.Reference ReferencedBy {
       get { return referencedBy_; }
       set {
         referencedBy_ = value;
@@ -4905,10 +4895,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 5;
-    private global::Immudb.Schema.KVMetadata metadata_;
+    private global::ImmudbProxy.KVMetadata metadata_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.KVMetadata Metadata {
+    public global::ImmudbProxy.KVMetadata Metadata {
       get { return metadata_; }
       set {
         metadata_ = value;
@@ -5113,13 +5103,13 @@ namespace Immudb.Schema {
       }
       if (other.referencedBy_ != null) {
         if (referencedBy_ == null) {
-          ReferencedBy = new global::Immudb.Schema.Reference();
+          ReferencedBy = new global::ImmudbProxy.Reference();
         }
         ReferencedBy.MergeFrom(other.ReferencedBy);
       }
       if (other.metadata_ != null) {
         if (metadata_ == null) {
-          Metadata = new global::Immudb.Schema.KVMetadata();
+          Metadata = new global::ImmudbProxy.KVMetadata();
         }
         Metadata.MergeFrom(other.Metadata);
       }
@@ -5158,14 +5148,14 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (referencedBy_ == null) {
-              ReferencedBy = new global::Immudb.Schema.Reference();
+              ReferencedBy = new global::ImmudbProxy.Reference();
             }
             input.ReadMessage(ReferencedBy);
             break;
           }
           case 42: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -5207,14 +5197,14 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (referencedBy_ == null) {
-              ReferencedBy = new global::Immudb.Schema.Reference();
+              ReferencedBy = new global::ImmudbProxy.Reference();
             }
             input.ReadMessage(ReferencedBy);
             break;
           }
           case 42: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -5248,7 +5238,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[16]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5320,10 +5310,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 4;
-    private global::Immudb.Schema.KVMetadata metadata_;
+    private global::ImmudbProxy.KVMetadata metadata_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.KVMetadata Metadata {
+    public global::ImmudbProxy.KVMetadata Metadata {
       get { return metadata_; }
       set {
         metadata_ = value;
@@ -5490,7 +5480,7 @@ namespace Immudb.Schema {
       }
       if (other.metadata_ != null) {
         if (metadata_ == null) {
-          Metadata = new global::Immudb.Schema.KVMetadata();
+          Metadata = new global::ImmudbProxy.KVMetadata();
         }
         Metadata.MergeFrom(other.Metadata);
       }
@@ -5526,7 +5516,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -5564,7 +5554,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -5594,7 +5584,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[17]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5639,8 +5629,8 @@ namespace Immudb.Schema {
     public const int KvFieldNumber = 1;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.KeyValue Kv {
-      get { return operationCase_ == OperationOneofCase.Kv ? (global::Immudb.Schema.KeyValue) operation_ : null; }
+    public global::ImmudbProxy.KeyValue Kv {
+      get { return operationCase_ == OperationOneofCase.Kv ? (global::ImmudbProxy.KeyValue) operation_ : null; }
       set {
         operation_ = value;
         operationCase_ = value == null ? OperationOneofCase.None : OperationOneofCase.Kv;
@@ -5651,8 +5641,8 @@ namespace Immudb.Schema {
     public const int ZAddFieldNumber = 2;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.ZAddRequest ZAdd {
-      get { return operationCase_ == OperationOneofCase.ZAdd ? (global::Immudb.Schema.ZAddRequest) operation_ : null; }
+    public global::ImmudbProxy.ZAddRequest ZAdd {
+      get { return operationCase_ == OperationOneofCase.ZAdd ? (global::ImmudbProxy.ZAddRequest) operation_ : null; }
       set {
         operation_ = value;
         operationCase_ = value == null ? OperationOneofCase.None : OperationOneofCase.ZAdd;
@@ -5663,8 +5653,8 @@ namespace Immudb.Schema {
     public const int RefFieldNumber = 3;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.ReferenceRequest Ref {
-      get { return operationCase_ == OperationOneofCase.Ref ? (global::Immudb.Schema.ReferenceRequest) operation_ : null; }
+    public global::ImmudbProxy.ReferenceRequest Ref {
+      get { return operationCase_ == OperationOneofCase.Ref ? (global::ImmudbProxy.ReferenceRequest) operation_ : null; }
       set {
         operation_ = value;
         operationCase_ = value == null ? OperationOneofCase.None : OperationOneofCase.Ref;
@@ -5809,19 +5799,19 @@ namespace Immudb.Schema {
       switch (other.OperationCase) {
         case OperationOneofCase.Kv:
           if (Kv == null) {
-            Kv = new global::Immudb.Schema.KeyValue();
+            Kv = new global::ImmudbProxy.KeyValue();
           }
           Kv.MergeFrom(other.Kv);
           break;
         case OperationOneofCase.ZAdd:
           if (ZAdd == null) {
-            ZAdd = new global::Immudb.Schema.ZAddRequest();
+            ZAdd = new global::ImmudbProxy.ZAddRequest();
           }
           ZAdd.MergeFrom(other.ZAdd);
           break;
         case OperationOneofCase.Ref:
           if (Ref == null) {
-            Ref = new global::Immudb.Schema.ReferenceRequest();
+            Ref = new global::ImmudbProxy.ReferenceRequest();
           }
           Ref.MergeFrom(other.Ref);
           break;
@@ -5843,7 +5833,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            global::Immudb.Schema.KeyValue subBuilder = new global::Immudb.Schema.KeyValue();
+            global::ImmudbProxy.KeyValue subBuilder = new global::ImmudbProxy.KeyValue();
             if (operationCase_ == OperationOneofCase.Kv) {
               subBuilder.MergeFrom(Kv);
             }
@@ -5852,7 +5842,7 @@ namespace Immudb.Schema {
             break;
           }
           case 18: {
-            global::Immudb.Schema.ZAddRequest subBuilder = new global::Immudb.Schema.ZAddRequest();
+            global::ImmudbProxy.ZAddRequest subBuilder = new global::ImmudbProxy.ZAddRequest();
             if (operationCase_ == OperationOneofCase.ZAdd) {
               subBuilder.MergeFrom(ZAdd);
             }
@@ -5861,7 +5851,7 @@ namespace Immudb.Schema {
             break;
           }
           case 26: {
-            global::Immudb.Schema.ReferenceRequest subBuilder = new global::Immudb.Schema.ReferenceRequest();
+            global::ImmudbProxy.ReferenceRequest subBuilder = new global::ImmudbProxy.ReferenceRequest();
             if (operationCase_ == OperationOneofCase.Ref) {
               subBuilder.MergeFrom(Ref);
             }
@@ -5885,7 +5875,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            global::Immudb.Schema.KeyValue subBuilder = new global::Immudb.Schema.KeyValue();
+            global::ImmudbProxy.KeyValue subBuilder = new global::ImmudbProxy.KeyValue();
             if (operationCase_ == OperationOneofCase.Kv) {
               subBuilder.MergeFrom(Kv);
             }
@@ -5894,7 +5884,7 @@ namespace Immudb.Schema {
             break;
           }
           case 18: {
-            global::Immudb.Schema.ZAddRequest subBuilder = new global::Immudb.Schema.ZAddRequest();
+            global::ImmudbProxy.ZAddRequest subBuilder = new global::ImmudbProxy.ZAddRequest();
             if (operationCase_ == OperationOneofCase.ZAdd) {
               subBuilder.MergeFrom(ZAdd);
             }
@@ -5903,7 +5893,7 @@ namespace Immudb.Schema {
             break;
           }
           case 26: {
-            global::Immudb.Schema.ReferenceRequest subBuilder = new global::Immudb.Schema.ReferenceRequest();
+            global::ImmudbProxy.ReferenceRequest subBuilder = new global::ImmudbProxy.ReferenceRequest();
             if (operationCase_ == OperationOneofCase.Ref) {
               subBuilder.MergeFrom(Ref);
             }
@@ -5932,7 +5922,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[18]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5966,12 +5956,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "Operations" field.</summary>
     public const int OperationsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Op> _repeated_operations_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.Op.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Op> operations_ = new pbc::RepeatedField<global::Immudb.Schema.Op>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Op> _repeated_operations_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Op.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Op> operations_ = new pbc::RepeatedField<global::ImmudbProxy.Op>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Op> Operations {
+    public pbc::RepeatedField<global::ImmudbProxy.Op> Operations {
       get { return operations_; }
     }
 
@@ -5989,12 +5979,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "preconditions" field.</summary>
     public const int PreconditionsFieldNumber = 3;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Precondition> _repeated_preconditions_codec
-        = pb::FieldCodec.ForMessage(26, global::Immudb.Schema.Precondition.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Precondition> preconditions_ = new pbc::RepeatedField<global::Immudb.Schema.Precondition>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Precondition> _repeated_preconditions_codec
+        = pb::FieldCodec.ForMessage(26, global::ImmudbProxy.Precondition.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Precondition> preconditions_ = new pbc::RepeatedField<global::ImmudbProxy.Precondition>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Precondition> Preconditions {
+    public pbc::RepeatedField<global::ImmudbProxy.Precondition> Preconditions {
       get { return preconditions_; }
     }
 
@@ -6173,7 +6163,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[19]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6205,12 +6195,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "entries" field.</summary>
     public const int Entries_FieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Entry> _repeated_entries_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.Entry.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Entry> entries_ = new pbc::RepeatedField<global::Immudb.Schema.Entry>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Entry> _repeated_entries_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Entry.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Entry> entries_ = new pbc::RepeatedField<global::ImmudbProxy.Entry>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Entry> Entries_ {
+    public pbc::RepeatedField<global::ImmudbProxy.Entry> Entries_ {
       get { return entries_; }
     }
 
@@ -6351,7 +6341,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[20]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6411,10 +6401,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "entry" field.</summary>
     public const int EntryFieldNumber = 3;
-    private global::Immudb.Schema.Entry entry_;
+    private global::ImmudbProxy.Entry entry_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Entry Entry {
+    public global::ImmudbProxy.Entry Entry {
       get { return entry_; }
       set {
         entry_ = value;
@@ -6590,7 +6580,7 @@ namespace Immudb.Schema {
       }
       if (other.entry_ != null) {
         if (entry_ == null) {
-          Entry = new global::Immudb.Schema.Entry();
+          Entry = new global::ImmudbProxy.Entry();
         }
         Entry.MergeFrom(other.Entry);
       }
@@ -6625,7 +6615,7 @@ namespace Immudb.Schema {
           }
           case 26: {
             if (entry_ == null) {
-              Entry = new global::Immudb.Schema.Entry();
+              Entry = new global::ImmudbProxy.Entry();
             }
             input.ReadMessage(Entry);
             break;
@@ -6663,7 +6653,7 @@ namespace Immudb.Schema {
           }
           case 26: {
             if (entry_ == null) {
-              Entry = new global::Immudb.Schema.Entry();
+              Entry = new global::ImmudbProxy.Entry();
             }
             input.ReadMessage(Entry);
             break;
@@ -6697,7 +6687,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[21]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6729,12 +6719,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "entries" field.</summary>
     public const int EntriesFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.ZEntry> _repeated_entries_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.ZEntry.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.ZEntry> entries_ = new pbc::RepeatedField<global::Immudb.Schema.ZEntry>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.ZEntry> _repeated_entries_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.ZEntry.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.ZEntry> entries_ = new pbc::RepeatedField<global::ImmudbProxy.ZEntry>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.ZEntry> Entries {
+    public pbc::RepeatedField<global::ImmudbProxy.ZEntry> Entries {
       get { return entries_; }
     }
 
@@ -6875,7 +6865,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[22]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7366,7 +7356,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[23]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7555,7 +7545,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[24]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7744,7 +7734,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[25]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7970,7 +7960,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[26]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8106,10 +8096,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 9;
-    private global::Immudb.Schema.TxMetadata metadata_;
+    private global::ImmudbProxy.TxMetadata metadata_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.TxMetadata Metadata {
+    public global::ImmudbProxy.TxMetadata Metadata {
       get { return metadata_; }
       set {
         metadata_ = value;
@@ -8331,7 +8321,7 @@ namespace Immudb.Schema {
       }
       if (other.metadata_ != null) {
         if (metadata_ == null) {
-          Metadata = new global::Immudb.Schema.TxMetadata();
+          Metadata = new global::ImmudbProxy.TxMetadata();
         }
         Metadata.MergeFrom(other.Metadata);
       }
@@ -8384,7 +8374,7 @@ namespace Immudb.Schema {
           }
           case 74: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.TxMetadata();
+              Metadata = new global::ImmudbProxy.TxMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -8438,7 +8428,7 @@ namespace Immudb.Schema {
           }
           case 74: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.TxMetadata();
+              Metadata = new global::ImmudbProxy.TxMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -8464,7 +8454,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[27]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8616,7 +8606,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[28]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8868,7 +8858,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[29]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8906,10 +8896,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "sourceTxHeader" field.</summary>
     public const int SourceTxHeaderFieldNumber = 1;
-    private global::Immudb.Schema.TxHeader sourceTxHeader_;
+    private global::ImmudbProxy.TxHeader sourceTxHeader_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.TxHeader SourceTxHeader {
+    public global::ImmudbProxy.TxHeader SourceTxHeader {
       get { return sourceTxHeader_; }
       set {
         sourceTxHeader_ = value;
@@ -8918,10 +8908,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "targetTxHeader" field.</summary>
     public const int TargetTxHeaderFieldNumber = 2;
-    private global::Immudb.Schema.TxHeader targetTxHeader_;
+    private global::ImmudbProxy.TxHeader targetTxHeader_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.TxHeader TargetTxHeader {
+    public global::ImmudbProxy.TxHeader TargetTxHeader {
       get { return targetTxHeader_; }
       set {
         targetTxHeader_ = value;
@@ -8975,10 +8965,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "linearProof" field.</summary>
     public const int LinearProofFieldNumber = 7;
-    private global::Immudb.Schema.LinearProof linearProof_;
+    private global::ImmudbProxy.LinearProof linearProof_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.LinearProof LinearProof {
+    public global::ImmudbProxy.LinearProof LinearProof {
       get { return linearProof_; }
       set {
         linearProof_ = value;
@@ -9126,13 +9116,13 @@ namespace Immudb.Schema {
       }
       if (other.sourceTxHeader_ != null) {
         if (sourceTxHeader_ == null) {
-          SourceTxHeader = new global::Immudb.Schema.TxHeader();
+          SourceTxHeader = new global::ImmudbProxy.TxHeader();
         }
         SourceTxHeader.MergeFrom(other.SourceTxHeader);
       }
       if (other.targetTxHeader_ != null) {
         if (targetTxHeader_ == null) {
-          TargetTxHeader = new global::Immudb.Schema.TxHeader();
+          TargetTxHeader = new global::ImmudbProxy.TxHeader();
         }
         TargetTxHeader.MergeFrom(other.TargetTxHeader);
       }
@@ -9144,7 +9134,7 @@ namespace Immudb.Schema {
       lastInclusionProof_.Add(other.lastInclusionProof_);
       if (other.linearProof_ != null) {
         if (linearProof_ == null) {
-          LinearProof = new global::Immudb.Schema.LinearProof();
+          LinearProof = new global::ImmudbProxy.LinearProof();
         }
         LinearProof.MergeFrom(other.LinearProof);
       }
@@ -9165,14 +9155,14 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (sourceTxHeader_ == null) {
-              SourceTxHeader = new global::Immudb.Schema.TxHeader();
+              SourceTxHeader = new global::ImmudbProxy.TxHeader();
             }
             input.ReadMessage(SourceTxHeader);
             break;
           }
           case 18: {
             if (targetTxHeader_ == null) {
-              TargetTxHeader = new global::Immudb.Schema.TxHeader();
+              TargetTxHeader = new global::ImmudbProxy.TxHeader();
             }
             input.ReadMessage(TargetTxHeader);
             break;
@@ -9195,7 +9185,7 @@ namespace Immudb.Schema {
           }
           case 58: {
             if (linearProof_ == null) {
-              LinearProof = new global::Immudb.Schema.LinearProof();
+              LinearProof = new global::ImmudbProxy.LinearProof();
             }
             input.ReadMessage(LinearProof);
             break;
@@ -9217,14 +9207,14 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (sourceTxHeader_ == null) {
-              SourceTxHeader = new global::Immudb.Schema.TxHeader();
+              SourceTxHeader = new global::ImmudbProxy.TxHeader();
             }
             input.ReadMessage(SourceTxHeader);
             break;
           }
           case 18: {
             if (targetTxHeader_ == null) {
-              TargetTxHeader = new global::Immudb.Schema.TxHeader();
+              TargetTxHeader = new global::ImmudbProxy.TxHeader();
             }
             input.ReadMessage(TargetTxHeader);
             break;
@@ -9247,7 +9237,7 @@ namespace Immudb.Schema {
           }
           case 58: {
             if (linearProof_ == null) {
-              LinearProof = new global::Immudb.Schema.LinearProof();
+              LinearProof = new global::ImmudbProxy.LinearProof();
             }
             input.ReadMessage(LinearProof);
             break;
@@ -9273,7 +9263,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[30]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9308,10 +9298,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "header" field.</summary>
     public const int HeaderFieldNumber = 1;
-    private global::Immudb.Schema.TxHeader header_;
+    private global::ImmudbProxy.TxHeader header_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.TxHeader Header {
+    public global::ImmudbProxy.TxHeader Header {
       get { return header_; }
       set {
         header_ = value;
@@ -9320,34 +9310,34 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "entries" field.</summary>
     public const int EntriesFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.TxEntry> _repeated_entries_codec
-        = pb::FieldCodec.ForMessage(18, global::Immudb.Schema.TxEntry.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.TxEntry> entries_ = new pbc::RepeatedField<global::Immudb.Schema.TxEntry>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.TxEntry> _repeated_entries_codec
+        = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.TxEntry.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.TxEntry> entries_ = new pbc::RepeatedField<global::ImmudbProxy.TxEntry>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.TxEntry> Entries {
+    public pbc::RepeatedField<global::ImmudbProxy.TxEntry> Entries {
       get { return entries_; }
     }
 
     /// <summary>Field number for the "kvEntries" field.</summary>
     public const int KvEntriesFieldNumber = 3;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Entry> _repeated_kvEntries_codec
-        = pb::FieldCodec.ForMessage(26, global::Immudb.Schema.Entry.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Entry> kvEntries_ = new pbc::RepeatedField<global::Immudb.Schema.Entry>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Entry> _repeated_kvEntries_codec
+        = pb::FieldCodec.ForMessage(26, global::ImmudbProxy.Entry.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Entry> kvEntries_ = new pbc::RepeatedField<global::ImmudbProxy.Entry>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Entry> KvEntries {
+    public pbc::RepeatedField<global::ImmudbProxy.Entry> KvEntries {
       get { return kvEntries_; }
     }
 
     /// <summary>Field number for the "zEntries" field.</summary>
     public const int ZEntriesFieldNumber = 4;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.ZEntry> _repeated_zEntries_codec
-        = pb::FieldCodec.ForMessage(34, global::Immudb.Schema.ZEntry.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.ZEntry> zEntries_ = new pbc::RepeatedField<global::Immudb.Schema.ZEntry>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.ZEntry> _repeated_zEntries_codec
+        = pb::FieldCodec.ForMessage(34, global::ImmudbProxy.ZEntry.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.ZEntry> zEntries_ = new pbc::RepeatedField<global::ImmudbProxy.ZEntry>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.ZEntry> ZEntries {
+    public pbc::RepeatedField<global::ImmudbProxy.ZEntry> ZEntries {
       get { return zEntries_; }
     }
 
@@ -9453,7 +9443,7 @@ namespace Immudb.Schema {
       }
       if (other.header_ != null) {
         if (header_ == null) {
-          Header = new global::Immudb.Schema.TxHeader();
+          Header = new global::ImmudbProxy.TxHeader();
         }
         Header.MergeFrom(other.Header);
       }
@@ -9477,7 +9467,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (header_ == null) {
-              Header = new global::Immudb.Schema.TxHeader();
+              Header = new global::ImmudbProxy.TxHeader();
             }
             input.ReadMessage(Header);
             break;
@@ -9511,7 +9501,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (header_ == null) {
-              Header = new global::Immudb.Schema.TxHeader();
+              Header = new global::ImmudbProxy.TxHeader();
             }
             input.ReadMessage(Header);
             break;
@@ -9549,7 +9539,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[31]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9621,10 +9611,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 4;
-    private global::Immudb.Schema.KVMetadata metadata_;
+    private global::ImmudbProxy.KVMetadata metadata_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.KVMetadata Metadata {
+    public global::ImmudbProxy.KVMetadata Metadata {
       get { return metadata_; }
       set {
         metadata_ = value;
@@ -9794,7 +9784,7 @@ namespace Immudb.Schema {
       }
       if (other.metadata_ != null) {
         if (metadata_ == null) {
-          Metadata = new global::Immudb.Schema.KVMetadata();
+          Metadata = new global::ImmudbProxy.KVMetadata();
         }
         Metadata.MergeFrom(other.Metadata);
       }
@@ -9830,7 +9820,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -9868,7 +9858,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -9898,7 +9888,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[32]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9944,10 +9934,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "expiration" field.</summary>
     public const int ExpirationFieldNumber = 2;
-    private global::Immudb.Schema.Expiration expiration_;
+    private global::ImmudbProxy.Expiration expiration_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Expiration Expiration {
+    public global::ImmudbProxy.Expiration Expiration {
       get { return expiration_; }
       set {
         expiration_ = value;
@@ -10082,7 +10072,7 @@ namespace Immudb.Schema {
       }
       if (other.expiration_ != null) {
         if (expiration_ == null) {
-          Expiration = new global::Immudb.Schema.Expiration();
+          Expiration = new global::ImmudbProxy.Expiration();
         }
         Expiration.MergeFrom(other.Expiration);
       }
@@ -10110,7 +10100,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (expiration_ == null) {
-              Expiration = new global::Immudb.Schema.Expiration();
+              Expiration = new global::ImmudbProxy.Expiration();
             }
             input.ReadMessage(Expiration);
             break;
@@ -10140,7 +10130,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (expiration_ == null) {
-              Expiration = new global::Immudb.Schema.Expiration();
+              Expiration = new global::ImmudbProxy.Expiration();
             }
             input.ReadMessage(Expiration);
             break;
@@ -10170,7 +10160,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[33]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[33]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10359,7 +10349,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[34]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[34]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10393,10 +10383,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "tx" field.</summary>
     public const int TxFieldNumber = 1;
-    private global::Immudb.Schema.Tx tx_;
+    private global::ImmudbProxy.Tx tx_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Tx Tx {
+    public global::ImmudbProxy.Tx Tx {
       get { return tx_; }
       set {
         tx_ = value;
@@ -10405,10 +10395,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "dualProof" field.</summary>
     public const int DualProofFieldNumber = 2;
-    private global::Immudb.Schema.DualProof dualProof_;
+    private global::ImmudbProxy.DualProof dualProof_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.DualProof DualProof {
+    public global::ImmudbProxy.DualProof DualProof {
       get { return dualProof_; }
       set {
         dualProof_ = value;
@@ -10417,10 +10407,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "signature" field.</summary>
     public const int SignatureFieldNumber = 3;
-    private global::Immudb.Schema.Signature signature_;
+    private global::ImmudbProxy.Signature signature_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Signature Signature {
+    public global::ImmudbProxy.Signature Signature {
       get { return signature_; }
       set {
         signature_ = value;
@@ -10540,19 +10530,19 @@ namespace Immudb.Schema {
       }
       if (other.tx_ != null) {
         if (tx_ == null) {
-          Tx = new global::Immudb.Schema.Tx();
+          Tx = new global::ImmudbProxy.Tx();
         }
         Tx.MergeFrom(other.Tx);
       }
       if (other.dualProof_ != null) {
         if (dualProof_ == null) {
-          DualProof = new global::Immudb.Schema.DualProof();
+          DualProof = new global::ImmudbProxy.DualProof();
         }
         DualProof.MergeFrom(other.DualProof);
       }
       if (other.signature_ != null) {
         if (signature_ == null) {
-          Signature = new global::Immudb.Schema.Signature();
+          Signature = new global::ImmudbProxy.Signature();
         }
         Signature.MergeFrom(other.Signature);
       }
@@ -10573,21 +10563,21 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (tx_ == null) {
-              Tx = new global::Immudb.Schema.Tx();
+              Tx = new global::ImmudbProxy.Tx();
             }
             input.ReadMessage(Tx);
             break;
           }
           case 18: {
             if (dualProof_ == null) {
-              DualProof = new global::Immudb.Schema.DualProof();
+              DualProof = new global::ImmudbProxy.DualProof();
             }
             input.ReadMessage(DualProof);
             break;
           }
           case 26: {
             if (signature_ == null) {
-              Signature = new global::Immudb.Schema.Signature();
+              Signature = new global::ImmudbProxy.Signature();
             }
             input.ReadMessage(Signature);
             break;
@@ -10609,21 +10599,21 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (tx_ == null) {
-              Tx = new global::Immudb.Schema.Tx();
+              Tx = new global::ImmudbProxy.Tx();
             }
             input.ReadMessage(Tx);
             break;
           }
           case 18: {
             if (dualProof_ == null) {
-              DualProof = new global::Immudb.Schema.DualProof();
+              DualProof = new global::ImmudbProxy.DualProof();
             }
             input.ReadMessage(DualProof);
             break;
           }
           case 26: {
             if (signature_ == null) {
-              Signature = new global::Immudb.Schema.Signature();
+              Signature = new global::ImmudbProxy.Signature();
             }
             input.ReadMessage(Signature);
             break;
@@ -10649,7 +10639,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[35]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[35]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10683,10 +10673,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "entry" field.</summary>
     public const int EntryFieldNumber = 1;
-    private global::Immudb.Schema.Entry entry_;
+    private global::ImmudbProxy.Entry entry_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Entry Entry {
+    public global::ImmudbProxy.Entry Entry {
       get { return entry_; }
       set {
         entry_ = value;
@@ -10695,10 +10685,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "verifiableTx" field.</summary>
     public const int VerifiableTxFieldNumber = 2;
-    private global::Immudb.Schema.VerifiableTx verifiableTx_;
+    private global::ImmudbProxy.VerifiableTx verifiableTx_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.VerifiableTx VerifiableTx {
+    public global::ImmudbProxy.VerifiableTx VerifiableTx {
       get { return verifiableTx_; }
       set {
         verifiableTx_ = value;
@@ -10707,10 +10697,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "inclusionProof" field.</summary>
     public const int InclusionProofFieldNumber = 3;
-    private global::Immudb.Schema.InclusionProof inclusionProof_;
+    private global::ImmudbProxy.InclusionProof inclusionProof_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.InclusionProof InclusionProof {
+    public global::ImmudbProxy.InclusionProof InclusionProof {
       get { return inclusionProof_; }
       set {
         inclusionProof_ = value;
@@ -10830,19 +10820,19 @@ namespace Immudb.Schema {
       }
       if (other.entry_ != null) {
         if (entry_ == null) {
-          Entry = new global::Immudb.Schema.Entry();
+          Entry = new global::ImmudbProxy.Entry();
         }
         Entry.MergeFrom(other.Entry);
       }
       if (other.verifiableTx_ != null) {
         if (verifiableTx_ == null) {
-          VerifiableTx = new global::Immudb.Schema.VerifiableTx();
+          VerifiableTx = new global::ImmudbProxy.VerifiableTx();
         }
         VerifiableTx.MergeFrom(other.VerifiableTx);
       }
       if (other.inclusionProof_ != null) {
         if (inclusionProof_ == null) {
-          InclusionProof = new global::Immudb.Schema.InclusionProof();
+          InclusionProof = new global::ImmudbProxy.InclusionProof();
         }
         InclusionProof.MergeFrom(other.InclusionProof);
       }
@@ -10863,21 +10853,21 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (entry_ == null) {
-              Entry = new global::Immudb.Schema.Entry();
+              Entry = new global::ImmudbProxy.Entry();
             }
             input.ReadMessage(Entry);
             break;
           }
           case 18: {
             if (verifiableTx_ == null) {
-              VerifiableTx = new global::Immudb.Schema.VerifiableTx();
+              VerifiableTx = new global::ImmudbProxy.VerifiableTx();
             }
             input.ReadMessage(VerifiableTx);
             break;
           }
           case 26: {
             if (inclusionProof_ == null) {
-              InclusionProof = new global::Immudb.Schema.InclusionProof();
+              InclusionProof = new global::ImmudbProxy.InclusionProof();
             }
             input.ReadMessage(InclusionProof);
             break;
@@ -10899,21 +10889,21 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (entry_ == null) {
-              Entry = new global::Immudb.Schema.Entry();
+              Entry = new global::ImmudbProxy.Entry();
             }
             input.ReadMessage(Entry);
             break;
           }
           case 18: {
             if (verifiableTx_ == null) {
-              VerifiableTx = new global::Immudb.Schema.VerifiableTx();
+              VerifiableTx = new global::ImmudbProxy.VerifiableTx();
             }
             input.ReadMessage(VerifiableTx);
             break;
           }
           case 26: {
             if (inclusionProof_ == null) {
-              InclusionProof = new global::Immudb.Schema.InclusionProof();
+              InclusionProof = new global::ImmudbProxy.InclusionProof();
             }
             input.ReadMessage(InclusionProof);
             break;
@@ -10939,7 +10929,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[36]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[36]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11191,7 +11181,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[37]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[37]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11225,12 +11215,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "KVs" field.</summary>
     public const int KVsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.KeyValue> _repeated_kVs_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.KeyValue.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.KeyValue> kVs_ = new pbc::RepeatedField<global::Immudb.Schema.KeyValue>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.KeyValue> _repeated_kVs_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.KeyValue.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.KeyValue> kVs_ = new pbc::RepeatedField<global::ImmudbProxy.KeyValue>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.KeyValue> KVs {
+    public pbc::RepeatedField<global::ImmudbProxy.KeyValue> KVs {
       get { return kVs_; }
     }
 
@@ -11248,12 +11238,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "preconditions" field.</summary>
     public const int PreconditionsFieldNumber = 3;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Precondition> _repeated_preconditions_codec
-        = pb::FieldCodec.ForMessage(26, global::Immudb.Schema.Precondition.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Precondition> preconditions_ = new pbc::RepeatedField<global::Immudb.Schema.Precondition>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Precondition> _repeated_preconditions_codec
+        = pb::FieldCodec.ForMessage(26, global::ImmudbProxy.Precondition.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Precondition> preconditions_ = new pbc::RepeatedField<global::ImmudbProxy.Precondition>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Precondition> Preconditions {
+    public pbc::RepeatedField<global::ImmudbProxy.Precondition> Preconditions {
       get { return preconditions_; }
     }
 
@@ -11432,7 +11422,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[38]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[38]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11782,7 +11772,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[39]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[39]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11997,7 +11987,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[40]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[40]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12249,7 +12239,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[41]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[41]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12282,10 +12272,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "setRequest" field.</summary>
     public const int SetRequestFieldNumber = 1;
-    private global::Immudb.Schema.SetRequest setRequest_;
+    private global::ImmudbProxy.SetRequest setRequest_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.SetRequest SetRequest {
+    public global::ImmudbProxy.SetRequest SetRequest {
       get { return setRequest_; }
       set {
         setRequest_ = value;
@@ -12404,7 +12394,7 @@ namespace Immudb.Schema {
       }
       if (other.setRequest_ != null) {
         if (setRequest_ == null) {
-          SetRequest = new global::Immudb.Schema.SetRequest();
+          SetRequest = new global::ImmudbProxy.SetRequest();
         }
         SetRequest.MergeFrom(other.SetRequest);
       }
@@ -12428,7 +12418,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (setRequest_ == null) {
-              SetRequest = new global::Immudb.Schema.SetRequest();
+              SetRequest = new global::ImmudbProxy.SetRequest();
             }
             input.ReadMessage(SetRequest);
             break;
@@ -12454,7 +12444,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (setRequest_ == null) {
-              SetRequest = new global::Immudb.Schema.SetRequest();
+              SetRequest = new global::ImmudbProxy.SetRequest();
             }
             input.ReadMessage(SetRequest);
             break;
@@ -12484,7 +12474,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[42]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[42]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12517,10 +12507,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "keyRequest" field.</summary>
     public const int KeyRequestFieldNumber = 1;
-    private global::Immudb.Schema.KeyRequest keyRequest_;
+    private global::ImmudbProxy.KeyRequest keyRequest_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.KeyRequest KeyRequest {
+    public global::ImmudbProxy.KeyRequest KeyRequest {
       get { return keyRequest_; }
       set {
         keyRequest_ = value;
@@ -12639,7 +12629,7 @@ namespace Immudb.Schema {
       }
       if (other.keyRequest_ != null) {
         if (keyRequest_ == null) {
-          KeyRequest = new global::Immudb.Schema.KeyRequest();
+          KeyRequest = new global::ImmudbProxy.KeyRequest();
         }
         KeyRequest.MergeFrom(other.KeyRequest);
       }
@@ -12663,7 +12653,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (keyRequest_ == null) {
-              KeyRequest = new global::Immudb.Schema.KeyRequest();
+              KeyRequest = new global::ImmudbProxy.KeyRequest();
             }
             input.ReadMessage(KeyRequest);
             break;
@@ -12689,7 +12679,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (keyRequest_ == null) {
-              KeyRequest = new global::Immudb.Schema.KeyRequest();
+              KeyRequest = new global::ImmudbProxy.KeyRequest();
             }
             input.ReadMessage(KeyRequest);
             break;
@@ -12719,7 +12709,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[43]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[43]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12945,7 +12935,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[44]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[44]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13171,7 +13161,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[45]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[45]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13242,10 +13232,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "signature" field.</summary>
     public const int SignatureFieldNumber = 4;
-    private global::Immudb.Schema.Signature signature_;
+    private global::ImmudbProxy.Signature signature_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Signature Signature {
+    public global::ImmudbProxy.Signature Signature {
       get { return signature_; }
       set {
         signature_ = value;
@@ -13387,7 +13377,7 @@ namespace Immudb.Schema {
       }
       if (other.signature_ != null) {
         if (signature_ == null) {
-          Signature = new global::Immudb.Schema.Signature();
+          Signature = new global::ImmudbProxy.Signature();
         }
         Signature.MergeFrom(other.Signature);
       }
@@ -13420,7 +13410,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (signature_ == null) {
-              Signature = new global::Immudb.Schema.Signature();
+              Signature = new global::ImmudbProxy.Signature();
             }
             input.ReadMessage(Signature);
             break;
@@ -13454,7 +13444,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (signature_ == null) {
-              Signature = new global::Immudb.Schema.Signature();
+              Signature = new global::ImmudbProxy.Signature();
             }
             input.ReadMessage(Signature);
             break;
@@ -13480,7 +13470,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[46]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[46]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13577,12 +13567,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "preconditions" field.</summary>
     public const int PreconditionsFieldNumber = 6;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Precondition> _repeated_preconditions_codec
-        = pb::FieldCodec.ForMessage(50, global::Immudb.Schema.Precondition.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Precondition> preconditions_ = new pbc::RepeatedField<global::Immudb.Schema.Precondition>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Precondition> _repeated_preconditions_codec
+        = pb::FieldCodec.ForMessage(50, global::ImmudbProxy.Precondition.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Precondition> preconditions_ = new pbc::RepeatedField<global::ImmudbProxy.Precondition>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Precondition> Preconditions {
+    public pbc::RepeatedField<global::ImmudbProxy.Precondition> Preconditions {
       get { return preconditions_; }
     }
 
@@ -13843,7 +13833,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[47]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[47]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13876,10 +13866,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "referenceRequest" field.</summary>
     public const int ReferenceRequestFieldNumber = 1;
-    private global::Immudb.Schema.ReferenceRequest referenceRequest_;
+    private global::ImmudbProxy.ReferenceRequest referenceRequest_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.ReferenceRequest ReferenceRequest {
+    public global::ImmudbProxy.ReferenceRequest ReferenceRequest {
       get { return referenceRequest_; }
       set {
         referenceRequest_ = value;
@@ -13998,7 +13988,7 @@ namespace Immudb.Schema {
       }
       if (other.referenceRequest_ != null) {
         if (referenceRequest_ == null) {
-          ReferenceRequest = new global::Immudb.Schema.ReferenceRequest();
+          ReferenceRequest = new global::ImmudbProxy.ReferenceRequest();
         }
         ReferenceRequest.MergeFrom(other.ReferenceRequest);
       }
@@ -14022,7 +14012,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (referenceRequest_ == null) {
-              ReferenceRequest = new global::Immudb.Schema.ReferenceRequest();
+              ReferenceRequest = new global::ImmudbProxy.ReferenceRequest();
             }
             input.ReadMessage(ReferenceRequest);
             break;
@@ -14048,7 +14038,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (referenceRequest_ == null) {
-              ReferenceRequest = new global::Immudb.Schema.ReferenceRequest();
+              ReferenceRequest = new global::ImmudbProxy.ReferenceRequest();
             }
             input.ReadMessage(ReferenceRequest);
             break;
@@ -14078,7 +14068,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[48]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[48]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14452,7 +14442,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[49]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[49]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14641,7 +14631,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[50]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[50]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14767,10 +14757,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "minScore" field.</summary>
     public const int MinScoreFieldNumber = 8;
-    private global::Immudb.Schema.Score minScore_;
+    private global::ImmudbProxy.Score minScore_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Score MinScore {
+    public global::ImmudbProxy.Score MinScore {
       get { return minScore_; }
       set {
         minScore_ = value;
@@ -14779,10 +14769,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "maxScore" field.</summary>
     public const int MaxScoreFieldNumber = 9;
-    private global::Immudb.Schema.Score maxScore_;
+    private global::ImmudbProxy.Score maxScore_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.Score MaxScore {
+    public global::ImmudbProxy.Score MaxScore {
       get { return maxScore_; }
       set {
         maxScore_ = value;
@@ -15051,13 +15041,13 @@ namespace Immudb.Schema {
       }
       if (other.minScore_ != null) {
         if (minScore_ == null) {
-          MinScore = new global::Immudb.Schema.Score();
+          MinScore = new global::ImmudbProxy.Score();
         }
         MinScore.MergeFrom(other.MinScore);
       }
       if (other.maxScore_ != null) {
         if (maxScore_ == null) {
-          MaxScore = new global::Immudb.Schema.Score();
+          MaxScore = new global::ImmudbProxy.Score();
         }
         MaxScore.MergeFrom(other.MaxScore);
       }
@@ -15112,14 +15102,14 @@ namespace Immudb.Schema {
           }
           case 66: {
             if (minScore_ == null) {
-              MinScore = new global::Immudb.Schema.Score();
+              MinScore = new global::ImmudbProxy.Score();
             }
             input.ReadMessage(MinScore);
             break;
           }
           case 74: {
             if (maxScore_ == null) {
-              MaxScore = new global::Immudb.Schema.Score();
+              MaxScore = new global::ImmudbProxy.Score();
             }
             input.ReadMessage(MaxScore);
             break;
@@ -15177,14 +15167,14 @@ namespace Immudb.Schema {
           }
           case 66: {
             if (minScore_ == null) {
-              MinScore = new global::Immudb.Schema.Score();
+              MinScore = new global::ImmudbProxy.Score();
             }
             input.ReadMessage(MinScore);
             break;
           }
           case 74: {
             if (maxScore_ == null) {
-              MaxScore = new global::Immudb.Schema.Score();
+              MaxScore = new global::ImmudbProxy.Score();
             }
             input.ReadMessage(MaxScore);
             break;
@@ -15218,7 +15208,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[51]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[51]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15555,7 +15545,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[52]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[52]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15588,10 +15578,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "zAddRequest" field.</summary>
     public const int ZAddRequestFieldNumber = 1;
-    private global::Immudb.Schema.ZAddRequest zAddRequest_;
+    private global::ImmudbProxy.ZAddRequest zAddRequest_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.ZAddRequest ZAddRequest {
+    public global::ImmudbProxy.ZAddRequest ZAddRequest {
       get { return zAddRequest_; }
       set {
         zAddRequest_ = value;
@@ -15710,7 +15700,7 @@ namespace Immudb.Schema {
       }
       if (other.zAddRequest_ != null) {
         if (zAddRequest_ == null) {
-          ZAddRequest = new global::Immudb.Schema.ZAddRequest();
+          ZAddRequest = new global::ImmudbProxy.ZAddRequest();
         }
         ZAddRequest.MergeFrom(other.ZAddRequest);
       }
@@ -15734,7 +15724,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (zAddRequest_ == null) {
-              ZAddRequest = new global::Immudb.Schema.ZAddRequest();
+              ZAddRequest = new global::ImmudbProxy.ZAddRequest();
             }
             input.ReadMessage(ZAddRequest);
             break;
@@ -15760,7 +15750,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (zAddRequest_ == null) {
-              ZAddRequest = new global::Immudb.Schema.ZAddRequest();
+              ZAddRequest = new global::ImmudbProxy.ZAddRequest();
             }
             input.ReadMessage(ZAddRequest);
             break;
@@ -15790,7 +15780,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[53]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[53]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15838,10 +15828,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "entriesSpec" field.</summary>
     public const int EntriesSpecFieldNumber = 2;
-    private global::Immudb.Schema.EntriesSpec entriesSpec_;
+    private global::ImmudbProxy.EntriesSpec entriesSpec_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.EntriesSpec EntriesSpec {
+    public global::ImmudbProxy.EntriesSpec EntriesSpec {
       get { return entriesSpec_; }
       set {
         entriesSpec_ = value;
@@ -16026,7 +16016,7 @@ namespace Immudb.Schema {
       }
       if (other.entriesSpec_ != null) {
         if (entriesSpec_ == null) {
-          EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+          EntriesSpec = new global::ImmudbProxy.EntriesSpec();
         }
         EntriesSpec.MergeFrom(other.EntriesSpec);
       }
@@ -16060,7 +16050,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (entriesSpec_ == null) {
-              EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+              EntriesSpec = new global::ImmudbProxy.EntriesSpec();
             }
             input.ReadMessage(EntriesSpec);
             break;
@@ -16098,7 +16088,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (entriesSpec_ == null) {
-              EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+              EntriesSpec = new global::ImmudbProxy.EntriesSpec();
             }
             input.ReadMessage(EntriesSpec);
             break;
@@ -16136,7 +16126,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[54]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[54]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16170,10 +16160,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "kvEntriesSpec" field.</summary>
     public const int KvEntriesSpecFieldNumber = 1;
-    private global::Immudb.Schema.EntryTypeSpec kvEntriesSpec_;
+    private global::ImmudbProxy.EntryTypeSpec kvEntriesSpec_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.EntryTypeSpec KvEntriesSpec {
+    public global::ImmudbProxy.EntryTypeSpec KvEntriesSpec {
       get { return kvEntriesSpec_; }
       set {
         kvEntriesSpec_ = value;
@@ -16182,10 +16172,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "zEntriesSpec" field.</summary>
     public const int ZEntriesSpecFieldNumber = 2;
-    private global::Immudb.Schema.EntryTypeSpec zEntriesSpec_;
+    private global::ImmudbProxy.EntryTypeSpec zEntriesSpec_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.EntryTypeSpec ZEntriesSpec {
+    public global::ImmudbProxy.EntryTypeSpec ZEntriesSpec {
       get { return zEntriesSpec_; }
       set {
         zEntriesSpec_ = value;
@@ -16194,10 +16184,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "sqlEntriesSpec" field.</summary>
     public const int SqlEntriesSpecFieldNumber = 3;
-    private global::Immudb.Schema.EntryTypeSpec sqlEntriesSpec_;
+    private global::ImmudbProxy.EntryTypeSpec sqlEntriesSpec_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.EntryTypeSpec SqlEntriesSpec {
+    public global::ImmudbProxy.EntryTypeSpec SqlEntriesSpec {
       get { return sqlEntriesSpec_; }
       set {
         sqlEntriesSpec_ = value;
@@ -16317,19 +16307,19 @@ namespace Immudb.Schema {
       }
       if (other.kvEntriesSpec_ != null) {
         if (kvEntriesSpec_ == null) {
-          KvEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+          KvEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
         }
         KvEntriesSpec.MergeFrom(other.KvEntriesSpec);
       }
       if (other.zEntriesSpec_ != null) {
         if (zEntriesSpec_ == null) {
-          ZEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+          ZEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
         }
         ZEntriesSpec.MergeFrom(other.ZEntriesSpec);
       }
       if (other.sqlEntriesSpec_ != null) {
         if (sqlEntriesSpec_ == null) {
-          SqlEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+          SqlEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
         }
         SqlEntriesSpec.MergeFrom(other.SqlEntriesSpec);
       }
@@ -16350,21 +16340,21 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (kvEntriesSpec_ == null) {
-              KvEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+              KvEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
             }
             input.ReadMessage(KvEntriesSpec);
             break;
           }
           case 18: {
             if (zEntriesSpec_ == null) {
-              ZEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+              ZEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
             }
             input.ReadMessage(ZEntriesSpec);
             break;
           }
           case 26: {
             if (sqlEntriesSpec_ == null) {
-              SqlEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+              SqlEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
             }
             input.ReadMessage(SqlEntriesSpec);
             break;
@@ -16386,21 +16376,21 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (kvEntriesSpec_ == null) {
-              KvEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+              KvEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
             }
             input.ReadMessage(KvEntriesSpec);
             break;
           }
           case 18: {
             if (zEntriesSpec_ == null) {
-              ZEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+              ZEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
             }
             input.ReadMessage(ZEntriesSpec);
             break;
           }
           case 26: {
             if (sqlEntriesSpec_ == null) {
-              SqlEntriesSpec = new global::Immudb.Schema.EntryTypeSpec();
+              SqlEntriesSpec = new global::ImmudbProxy.EntryTypeSpec();
             }
             input.ReadMessage(SqlEntriesSpec);
             break;
@@ -16426,7 +16416,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[55]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[55]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16458,10 +16448,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "action" field.</summary>
     public const int ActionFieldNumber = 1;
-    private global::Immudb.Schema.EntryTypeAction action_ = global::Immudb.Schema.EntryTypeAction.Exclude;
+    private global::ImmudbProxy.EntryTypeAction action_ = global::ImmudbProxy.EntryTypeAction.Exclude;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.EntryTypeAction Action {
+    public global::ImmudbProxy.EntryTypeAction Action {
       get { return action_; }
       set {
         action_ = value;
@@ -16491,7 +16481,7 @@ namespace Immudb.Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Action != global::Immudb.Schema.EntryTypeAction.Exclude) hash ^= Action.GetHashCode();
+      if (Action != global::ImmudbProxy.EntryTypeAction.Exclude) hash ^= Action.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -16510,7 +16500,7 @@ namespace Immudb.Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Action != global::Immudb.Schema.EntryTypeAction.Exclude) {
+      if (Action != global::ImmudbProxy.EntryTypeAction.Exclude) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Action);
       }
@@ -16524,7 +16514,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Action != global::Immudb.Schema.EntryTypeAction.Exclude) {
+      if (Action != global::ImmudbProxy.EntryTypeAction.Exclude) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Action);
       }
@@ -16538,7 +16528,7 @@ namespace Immudb.Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Action != global::Immudb.Schema.EntryTypeAction.Exclude) {
+      if (Action != global::ImmudbProxy.EntryTypeAction.Exclude) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Action);
       }
       if (_unknownFields != null) {
@@ -16553,7 +16543,7 @@ namespace Immudb.Schema {
       if (other == null) {
         return;
       }
-      if (other.Action != global::Immudb.Schema.EntryTypeAction.Exclude) {
+      if (other.Action != global::ImmudbProxy.EntryTypeAction.Exclude) {
         Action = other.Action;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -16572,7 +16562,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Action = (global::Immudb.Schema.EntryTypeAction) input.ReadEnum();
+            Action = (global::ImmudbProxy.EntryTypeAction) input.ReadEnum();
             break;
           }
         }
@@ -16591,7 +16581,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Action = (global::Immudb.Schema.EntryTypeAction) input.ReadEnum();
+            Action = (global::ImmudbProxy.EntryTypeAction) input.ReadEnum();
             break;
           }
         }
@@ -16615,7 +16605,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[56]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[56]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16676,10 +16666,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "entriesSpec" field.</summary>
     public const int EntriesSpecFieldNumber = 3;
-    private global::Immudb.Schema.EntriesSpec entriesSpec_;
+    private global::ImmudbProxy.EntriesSpec entriesSpec_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.EntriesSpec EntriesSpec {
+    public global::ImmudbProxy.EntriesSpec EntriesSpec {
       get { return entriesSpec_; }
       set {
         entriesSpec_ = value;
@@ -16880,7 +16870,7 @@ namespace Immudb.Schema {
       }
       if (other.entriesSpec_ != null) {
         if (entriesSpec_ == null) {
-          EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+          EntriesSpec = new global::ImmudbProxy.EntriesSpec();
         }
         EntriesSpec.MergeFrom(other.EntriesSpec);
       }
@@ -16918,7 +16908,7 @@ namespace Immudb.Schema {
           }
           case 26: {
             if (entriesSpec_ == null) {
-              EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+              EntriesSpec = new global::ImmudbProxy.EntriesSpec();
             }
             input.ReadMessage(EntriesSpec);
             break;
@@ -16960,7 +16950,7 @@ namespace Immudb.Schema {
           }
           case 26: {
             if (entriesSpec_ == null) {
-              EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+              EntriesSpec = new global::ImmudbProxy.EntriesSpec();
             }
             input.ReadMessage(EntriesSpec);
             break;
@@ -16998,7 +16988,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[57]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[57]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17071,10 +17061,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "entriesSpec" field.</summary>
     public const int EntriesSpecFieldNumber = 4;
-    private global::Immudb.Schema.EntriesSpec entriesSpec_;
+    private global::ImmudbProxy.EntriesSpec entriesSpec_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.EntriesSpec EntriesSpec {
+    public global::ImmudbProxy.EntriesSpec EntriesSpec {
       get { return entriesSpec_; }
       set {
         entriesSpec_ = value;
@@ -17266,7 +17256,7 @@ namespace Immudb.Schema {
       }
       if (other.entriesSpec_ != null) {
         if (entriesSpec_ == null) {
-          EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+          EntriesSpec = new global::ImmudbProxy.EntriesSpec();
         }
         EntriesSpec.MergeFrom(other.EntriesSpec);
       }
@@ -17305,7 +17295,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (entriesSpec_ == null) {
-              EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+              EntriesSpec = new global::ImmudbProxy.EntriesSpec();
             }
             input.ReadMessage(EntriesSpec);
             break;
@@ -17347,7 +17337,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (entriesSpec_ == null) {
-              EntriesSpec = new global::Immudb.Schema.EntriesSpec();
+              EntriesSpec = new global::ImmudbProxy.EntriesSpec();
             }
             input.ReadMessage(EntriesSpec);
             break;
@@ -17381,7 +17371,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[58]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[58]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17413,12 +17403,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "txs" field.</summary>
     public const int TxsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Tx> _repeated_txs_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.Tx.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Tx> txs_ = new pbc::RepeatedField<global::Immudb.Schema.Tx>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Tx> _repeated_txs_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Tx.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Tx> txs_ = new pbc::RepeatedField<global::ImmudbProxy.Tx>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Tx> Txs {
+    public pbc::RepeatedField<global::ImmudbProxy.Tx> Txs {
       get { return txs_; }
     }
 
@@ -17559,7 +17549,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[59]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[59]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17748,7 +17738,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[60]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[60]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17937,7 +17927,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[61]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[61]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -18533,7 +18523,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[62]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[62]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -18579,10 +18569,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
-    private global::Immudb.Schema.DatabaseNullableSettings settings_;
+    private global::ImmudbProxy.DatabaseNullableSettings settings_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.DatabaseNullableSettings Settings {
+    public global::ImmudbProxy.DatabaseNullableSettings Settings {
       get { return settings_; }
       set {
         settings_ = value;
@@ -18717,7 +18707,7 @@ namespace Immudb.Schema {
       }
       if (other.settings_ != null) {
         if (settings_ == null) {
-          Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+          Settings = new global::ImmudbProxy.DatabaseNullableSettings();
         }
         Settings.MergeFrom(other.Settings);
       }
@@ -18745,7 +18735,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -18775,7 +18765,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -18805,7 +18795,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[63]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[63]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -18851,10 +18841,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
-    private global::Immudb.Schema.DatabaseNullableSettings settings_;
+    private global::ImmudbProxy.DatabaseNullableSettings settings_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.DatabaseNullableSettings Settings {
+    public global::ImmudbProxy.DatabaseNullableSettings Settings {
       get { return settings_; }
       set {
         settings_ = value;
@@ -18989,7 +18979,7 @@ namespace Immudb.Schema {
       }
       if (other.settings_ != null) {
         if (settings_ == null) {
-          Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+          Settings = new global::ImmudbProxy.DatabaseNullableSettings();
         }
         Settings.MergeFrom(other.Settings);
       }
@@ -19017,7 +19007,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -19047,7 +19037,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -19077,7 +19067,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[64]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[64]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19122,10 +19112,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
-    private global::Immudb.Schema.DatabaseNullableSettings settings_;
+    private global::ImmudbProxy.DatabaseNullableSettings settings_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.DatabaseNullableSettings Settings {
+    public global::ImmudbProxy.DatabaseNullableSettings Settings {
       get { return settings_; }
       set {
         settings_ = value;
@@ -19235,7 +19225,7 @@ namespace Immudb.Schema {
       }
       if (other.settings_ != null) {
         if (settings_ == null) {
-          Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+          Settings = new global::ImmudbProxy.DatabaseNullableSettings();
         }
         Settings.MergeFrom(other.Settings);
       }
@@ -19260,7 +19250,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -19286,7 +19276,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -19315,7 +19305,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[65]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[65]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19360,10 +19350,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
-    private global::Immudb.Schema.DatabaseNullableSettings settings_;
+    private global::ImmudbProxy.DatabaseNullableSettings settings_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.DatabaseNullableSettings Settings {
+    public global::ImmudbProxy.DatabaseNullableSettings Settings {
       get { return settings_; }
       set {
         settings_ = value;
@@ -19473,7 +19463,7 @@ namespace Immudb.Schema {
       }
       if (other.settings_ != null) {
         if (settings_ == null) {
-          Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+          Settings = new global::ImmudbProxy.DatabaseNullableSettings();
         }
         Settings.MergeFrom(other.Settings);
       }
@@ -19498,7 +19488,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -19524,7 +19514,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -19550,7 +19540,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[66]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[66]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19702,7 +19692,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[67]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[67]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19747,10 +19737,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
-    private global::Immudb.Schema.DatabaseNullableSettings settings_;
+    private global::ImmudbProxy.DatabaseNullableSettings settings_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.DatabaseNullableSettings Settings {
+    public global::ImmudbProxy.DatabaseNullableSettings Settings {
       get { return settings_; }
       set {
         settings_ = value;
@@ -19860,7 +19850,7 @@ namespace Immudb.Schema {
       }
       if (other.settings_ != null) {
         if (settings_ == null) {
-          Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+          Settings = new global::ImmudbProxy.DatabaseNullableSettings();
         }
         Settings.MergeFrom(other.Settings);
       }
@@ -19885,7 +19875,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -19911,7 +19901,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -19937,7 +19927,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[68]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[68]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20126,7 +20116,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[69]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[69]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20315,7 +20305,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[70]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[70]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20504,7 +20494,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[71]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[71]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20693,7 +20683,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[72]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[72]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20882,7 +20872,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[73]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[73]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20928,10 +20918,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "replicationSettings" field.</summary>
     public const int ReplicationSettingsFieldNumber = 2;
-    private global::Immudb.Schema.ReplicationNullableSettings replicationSettings_;
+    private global::ImmudbProxy.ReplicationNullableSettings replicationSettings_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.ReplicationNullableSettings ReplicationSettings {
+    public global::ImmudbProxy.ReplicationNullableSettings ReplicationSettings {
       get { return replicationSettings_; }
       set {
         replicationSettings_ = value;
@@ -20940,10 +20930,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "fileSize" field.</summary>
     public const int FileSizeFieldNumber = 8;
-    private global::Immudb.Schema.NullableUint32 fileSize_;
+    private global::ImmudbProxy.NullableUint32 fileSize_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 FileSize {
+    public global::ImmudbProxy.NullableUint32 FileSize {
       get { return fileSize_; }
       set {
         fileSize_ = value;
@@ -20952,10 +20942,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "maxKeyLen" field.</summary>
     public const int MaxKeyLenFieldNumber = 9;
-    private global::Immudb.Schema.NullableUint32 maxKeyLen_;
+    private global::ImmudbProxy.NullableUint32 maxKeyLen_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 MaxKeyLen {
+    public global::ImmudbProxy.NullableUint32 MaxKeyLen {
       get { return maxKeyLen_; }
       set {
         maxKeyLen_ = value;
@@ -20964,10 +20954,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "maxValueLen" field.</summary>
     public const int MaxValueLenFieldNumber = 10;
-    private global::Immudb.Schema.NullableUint32 maxValueLen_;
+    private global::ImmudbProxy.NullableUint32 maxValueLen_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 MaxValueLen {
+    public global::ImmudbProxy.NullableUint32 MaxValueLen {
       get { return maxValueLen_; }
       set {
         maxValueLen_ = value;
@@ -20976,10 +20966,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "maxTxEntries" field.</summary>
     public const int MaxTxEntriesFieldNumber = 11;
-    private global::Immudb.Schema.NullableUint32 maxTxEntries_;
+    private global::ImmudbProxy.NullableUint32 maxTxEntries_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 MaxTxEntries {
+    public global::ImmudbProxy.NullableUint32 MaxTxEntries {
       get { return maxTxEntries_; }
       set {
         maxTxEntries_ = value;
@@ -20988,10 +20978,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "excludeCommitTime" field.</summary>
     public const int ExcludeCommitTimeFieldNumber = 12;
-    private global::Immudb.Schema.NullableBool excludeCommitTime_;
+    private global::ImmudbProxy.NullableBool excludeCommitTime_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableBool ExcludeCommitTime {
+    public global::ImmudbProxy.NullableBool ExcludeCommitTime {
       get { return excludeCommitTime_; }
       set {
         excludeCommitTime_ = value;
@@ -21000,10 +20990,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "maxConcurrency" field.</summary>
     public const int MaxConcurrencyFieldNumber = 13;
-    private global::Immudb.Schema.NullableUint32 maxConcurrency_;
+    private global::ImmudbProxy.NullableUint32 maxConcurrency_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 MaxConcurrency {
+    public global::ImmudbProxy.NullableUint32 MaxConcurrency {
       get { return maxConcurrency_; }
       set {
         maxConcurrency_ = value;
@@ -21012,10 +21002,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "maxIOConcurrency" field.</summary>
     public const int MaxIOConcurrencyFieldNumber = 14;
-    private global::Immudb.Schema.NullableUint32 maxIOConcurrency_;
+    private global::ImmudbProxy.NullableUint32 maxIOConcurrency_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 MaxIOConcurrency {
+    public global::ImmudbProxy.NullableUint32 MaxIOConcurrency {
       get { return maxIOConcurrency_; }
       set {
         maxIOConcurrency_ = value;
@@ -21024,10 +21014,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "txLogCacheSize" field.</summary>
     public const int TxLogCacheSizeFieldNumber = 15;
-    private global::Immudb.Schema.NullableUint32 txLogCacheSize_;
+    private global::ImmudbProxy.NullableUint32 txLogCacheSize_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 TxLogCacheSize {
+    public global::ImmudbProxy.NullableUint32 TxLogCacheSize {
       get { return txLogCacheSize_; }
       set {
         txLogCacheSize_ = value;
@@ -21036,10 +21026,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "vLogMaxOpenedFiles" field.</summary>
     public const int VLogMaxOpenedFilesFieldNumber = 16;
-    private global::Immudb.Schema.NullableUint32 vLogMaxOpenedFiles_;
+    private global::ImmudbProxy.NullableUint32 vLogMaxOpenedFiles_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 VLogMaxOpenedFiles {
+    public global::ImmudbProxy.NullableUint32 VLogMaxOpenedFiles {
       get { return vLogMaxOpenedFiles_; }
       set {
         vLogMaxOpenedFiles_ = value;
@@ -21048,10 +21038,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "txLogMaxOpenedFiles" field.</summary>
     public const int TxLogMaxOpenedFilesFieldNumber = 17;
-    private global::Immudb.Schema.NullableUint32 txLogMaxOpenedFiles_;
+    private global::ImmudbProxy.NullableUint32 txLogMaxOpenedFiles_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 TxLogMaxOpenedFiles {
+    public global::ImmudbProxy.NullableUint32 TxLogMaxOpenedFiles {
       get { return txLogMaxOpenedFiles_; }
       set {
         txLogMaxOpenedFiles_ = value;
@@ -21060,10 +21050,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "commitLogMaxOpenedFiles" field.</summary>
     public const int CommitLogMaxOpenedFilesFieldNumber = 18;
-    private global::Immudb.Schema.NullableUint32 commitLogMaxOpenedFiles_;
+    private global::ImmudbProxy.NullableUint32 commitLogMaxOpenedFiles_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 CommitLogMaxOpenedFiles {
+    public global::ImmudbProxy.NullableUint32 CommitLogMaxOpenedFiles {
       get { return commitLogMaxOpenedFiles_; }
       set {
         commitLogMaxOpenedFiles_ = value;
@@ -21072,10 +21062,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "indexSettings" field.</summary>
     public const int IndexSettingsFieldNumber = 19;
-    private global::Immudb.Schema.IndexNullableSettings indexSettings_;
+    private global::ImmudbProxy.IndexNullableSettings indexSettings_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.IndexNullableSettings IndexSettings {
+    public global::ImmudbProxy.IndexNullableSettings IndexSettings {
       get { return indexSettings_; }
       set {
         indexSettings_ = value;
@@ -21084,10 +21074,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "writeTxHeaderVersion" field.</summary>
     public const int WriteTxHeaderVersionFieldNumber = 20;
-    private global::Immudb.Schema.NullableUint32 writeTxHeaderVersion_;
+    private global::ImmudbProxy.NullableUint32 writeTxHeaderVersion_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 WriteTxHeaderVersion {
+    public global::ImmudbProxy.NullableUint32 WriteTxHeaderVersion {
       get { return writeTxHeaderVersion_; }
       set {
         writeTxHeaderVersion_ = value;
@@ -21096,10 +21086,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "autoload" field.</summary>
     public const int AutoloadFieldNumber = 21;
-    private global::Immudb.Schema.NullableBool autoload_;
+    private global::ImmudbProxy.NullableBool autoload_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableBool Autoload {
+    public global::ImmudbProxy.NullableBool Autoload {
       get { return autoload_; }
       set {
         autoload_ = value;
@@ -21375,91 +21365,91 @@ namespace Immudb.Schema {
       }
       if (other.replicationSettings_ != null) {
         if (replicationSettings_ == null) {
-          ReplicationSettings = new global::Immudb.Schema.ReplicationNullableSettings();
+          ReplicationSettings = new global::ImmudbProxy.ReplicationNullableSettings();
         }
         ReplicationSettings.MergeFrom(other.ReplicationSettings);
       }
       if (other.fileSize_ != null) {
         if (fileSize_ == null) {
-          FileSize = new global::Immudb.Schema.NullableUint32();
+          FileSize = new global::ImmudbProxy.NullableUint32();
         }
         FileSize.MergeFrom(other.FileSize);
       }
       if (other.maxKeyLen_ != null) {
         if (maxKeyLen_ == null) {
-          MaxKeyLen = new global::Immudb.Schema.NullableUint32();
+          MaxKeyLen = new global::ImmudbProxy.NullableUint32();
         }
         MaxKeyLen.MergeFrom(other.MaxKeyLen);
       }
       if (other.maxValueLen_ != null) {
         if (maxValueLen_ == null) {
-          MaxValueLen = new global::Immudb.Schema.NullableUint32();
+          MaxValueLen = new global::ImmudbProxy.NullableUint32();
         }
         MaxValueLen.MergeFrom(other.MaxValueLen);
       }
       if (other.maxTxEntries_ != null) {
         if (maxTxEntries_ == null) {
-          MaxTxEntries = new global::Immudb.Schema.NullableUint32();
+          MaxTxEntries = new global::ImmudbProxy.NullableUint32();
         }
         MaxTxEntries.MergeFrom(other.MaxTxEntries);
       }
       if (other.excludeCommitTime_ != null) {
         if (excludeCommitTime_ == null) {
-          ExcludeCommitTime = new global::Immudb.Schema.NullableBool();
+          ExcludeCommitTime = new global::ImmudbProxy.NullableBool();
         }
         ExcludeCommitTime.MergeFrom(other.ExcludeCommitTime);
       }
       if (other.maxConcurrency_ != null) {
         if (maxConcurrency_ == null) {
-          MaxConcurrency = new global::Immudb.Schema.NullableUint32();
+          MaxConcurrency = new global::ImmudbProxy.NullableUint32();
         }
         MaxConcurrency.MergeFrom(other.MaxConcurrency);
       }
       if (other.maxIOConcurrency_ != null) {
         if (maxIOConcurrency_ == null) {
-          MaxIOConcurrency = new global::Immudb.Schema.NullableUint32();
+          MaxIOConcurrency = new global::ImmudbProxy.NullableUint32();
         }
         MaxIOConcurrency.MergeFrom(other.MaxIOConcurrency);
       }
       if (other.txLogCacheSize_ != null) {
         if (txLogCacheSize_ == null) {
-          TxLogCacheSize = new global::Immudb.Schema.NullableUint32();
+          TxLogCacheSize = new global::ImmudbProxy.NullableUint32();
         }
         TxLogCacheSize.MergeFrom(other.TxLogCacheSize);
       }
       if (other.vLogMaxOpenedFiles_ != null) {
         if (vLogMaxOpenedFiles_ == null) {
-          VLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+          VLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
         }
         VLogMaxOpenedFiles.MergeFrom(other.VLogMaxOpenedFiles);
       }
       if (other.txLogMaxOpenedFiles_ != null) {
         if (txLogMaxOpenedFiles_ == null) {
-          TxLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+          TxLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
         }
         TxLogMaxOpenedFiles.MergeFrom(other.TxLogMaxOpenedFiles);
       }
       if (other.commitLogMaxOpenedFiles_ != null) {
         if (commitLogMaxOpenedFiles_ == null) {
-          CommitLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+          CommitLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
         }
         CommitLogMaxOpenedFiles.MergeFrom(other.CommitLogMaxOpenedFiles);
       }
       if (other.indexSettings_ != null) {
         if (indexSettings_ == null) {
-          IndexSettings = new global::Immudb.Schema.IndexNullableSettings();
+          IndexSettings = new global::ImmudbProxy.IndexNullableSettings();
         }
         IndexSettings.MergeFrom(other.IndexSettings);
       }
       if (other.writeTxHeaderVersion_ != null) {
         if (writeTxHeaderVersion_ == null) {
-          WriteTxHeaderVersion = new global::Immudb.Schema.NullableUint32();
+          WriteTxHeaderVersion = new global::ImmudbProxy.NullableUint32();
         }
         WriteTxHeaderVersion.MergeFrom(other.WriteTxHeaderVersion);
       }
       if (other.autoload_ != null) {
         if (autoload_ == null) {
-          Autoload = new global::Immudb.Schema.NullableBool();
+          Autoload = new global::ImmudbProxy.NullableBool();
         }
         Autoload.MergeFrom(other.Autoload);
       }
@@ -21480,105 +21470,105 @@ namespace Immudb.Schema {
             break;
           case 18: {
             if (replicationSettings_ == null) {
-              ReplicationSettings = new global::Immudb.Schema.ReplicationNullableSettings();
+              ReplicationSettings = new global::ImmudbProxy.ReplicationNullableSettings();
             }
             input.ReadMessage(ReplicationSettings);
             break;
           }
           case 66: {
             if (fileSize_ == null) {
-              FileSize = new global::Immudb.Schema.NullableUint32();
+              FileSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(FileSize);
             break;
           }
           case 74: {
             if (maxKeyLen_ == null) {
-              MaxKeyLen = new global::Immudb.Schema.NullableUint32();
+              MaxKeyLen = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxKeyLen);
             break;
           }
           case 82: {
             if (maxValueLen_ == null) {
-              MaxValueLen = new global::Immudb.Schema.NullableUint32();
+              MaxValueLen = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxValueLen);
             break;
           }
           case 90: {
             if (maxTxEntries_ == null) {
-              MaxTxEntries = new global::Immudb.Schema.NullableUint32();
+              MaxTxEntries = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxTxEntries);
             break;
           }
           case 98: {
             if (excludeCommitTime_ == null) {
-              ExcludeCommitTime = new global::Immudb.Schema.NullableBool();
+              ExcludeCommitTime = new global::ImmudbProxy.NullableBool();
             }
             input.ReadMessage(ExcludeCommitTime);
             break;
           }
           case 106: {
             if (maxConcurrency_ == null) {
-              MaxConcurrency = new global::Immudb.Schema.NullableUint32();
+              MaxConcurrency = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxConcurrency);
             break;
           }
           case 114: {
             if (maxIOConcurrency_ == null) {
-              MaxIOConcurrency = new global::Immudb.Schema.NullableUint32();
+              MaxIOConcurrency = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxIOConcurrency);
             break;
           }
           case 122: {
             if (txLogCacheSize_ == null) {
-              TxLogCacheSize = new global::Immudb.Schema.NullableUint32();
+              TxLogCacheSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(TxLogCacheSize);
             break;
           }
           case 130: {
             if (vLogMaxOpenedFiles_ == null) {
-              VLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              VLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(VLogMaxOpenedFiles);
             break;
           }
           case 138: {
             if (txLogMaxOpenedFiles_ == null) {
-              TxLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              TxLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(TxLogMaxOpenedFiles);
             break;
           }
           case 146: {
             if (commitLogMaxOpenedFiles_ == null) {
-              CommitLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              CommitLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(CommitLogMaxOpenedFiles);
             break;
           }
           case 154: {
             if (indexSettings_ == null) {
-              IndexSettings = new global::Immudb.Schema.IndexNullableSettings();
+              IndexSettings = new global::ImmudbProxy.IndexNullableSettings();
             }
             input.ReadMessage(IndexSettings);
             break;
           }
           case 162: {
             if (writeTxHeaderVersion_ == null) {
-              WriteTxHeaderVersion = new global::Immudb.Schema.NullableUint32();
+              WriteTxHeaderVersion = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(WriteTxHeaderVersion);
             break;
           }
           case 170: {
             if (autoload_ == null) {
-              Autoload = new global::Immudb.Schema.NullableBool();
+              Autoload = new global::ImmudbProxy.NullableBool();
             }
             input.ReadMessage(Autoload);
             break;
@@ -21600,105 +21590,105 @@ namespace Immudb.Schema {
             break;
           case 18: {
             if (replicationSettings_ == null) {
-              ReplicationSettings = new global::Immudb.Schema.ReplicationNullableSettings();
+              ReplicationSettings = new global::ImmudbProxy.ReplicationNullableSettings();
             }
             input.ReadMessage(ReplicationSettings);
             break;
           }
           case 66: {
             if (fileSize_ == null) {
-              FileSize = new global::Immudb.Schema.NullableUint32();
+              FileSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(FileSize);
             break;
           }
           case 74: {
             if (maxKeyLen_ == null) {
-              MaxKeyLen = new global::Immudb.Schema.NullableUint32();
+              MaxKeyLen = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxKeyLen);
             break;
           }
           case 82: {
             if (maxValueLen_ == null) {
-              MaxValueLen = new global::Immudb.Schema.NullableUint32();
+              MaxValueLen = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxValueLen);
             break;
           }
           case 90: {
             if (maxTxEntries_ == null) {
-              MaxTxEntries = new global::Immudb.Schema.NullableUint32();
+              MaxTxEntries = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxTxEntries);
             break;
           }
           case 98: {
             if (excludeCommitTime_ == null) {
-              ExcludeCommitTime = new global::Immudb.Schema.NullableBool();
+              ExcludeCommitTime = new global::ImmudbProxy.NullableBool();
             }
             input.ReadMessage(ExcludeCommitTime);
             break;
           }
           case 106: {
             if (maxConcurrency_ == null) {
-              MaxConcurrency = new global::Immudb.Schema.NullableUint32();
+              MaxConcurrency = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxConcurrency);
             break;
           }
           case 114: {
             if (maxIOConcurrency_ == null) {
-              MaxIOConcurrency = new global::Immudb.Schema.NullableUint32();
+              MaxIOConcurrency = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxIOConcurrency);
             break;
           }
           case 122: {
             if (txLogCacheSize_ == null) {
-              TxLogCacheSize = new global::Immudb.Schema.NullableUint32();
+              TxLogCacheSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(TxLogCacheSize);
             break;
           }
           case 130: {
             if (vLogMaxOpenedFiles_ == null) {
-              VLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              VLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(VLogMaxOpenedFiles);
             break;
           }
           case 138: {
             if (txLogMaxOpenedFiles_ == null) {
-              TxLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              TxLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(TxLogMaxOpenedFiles);
             break;
           }
           case 146: {
             if (commitLogMaxOpenedFiles_ == null) {
-              CommitLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              CommitLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(CommitLogMaxOpenedFiles);
             break;
           }
           case 154: {
             if (indexSettings_ == null) {
-              IndexSettings = new global::Immudb.Schema.IndexNullableSettings();
+              IndexSettings = new global::ImmudbProxy.IndexNullableSettings();
             }
             input.ReadMessage(IndexSettings);
             break;
           }
           case 162: {
             if (writeTxHeaderVersion_ == null) {
-              WriteTxHeaderVersion = new global::Immudb.Schema.NullableUint32();
+              WriteTxHeaderVersion = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(WriteTxHeaderVersion);
             break;
           }
           case 170: {
             if (autoload_ == null) {
-              Autoload = new global::Immudb.Schema.NullableBool();
+              Autoload = new global::ImmudbProxy.NullableBool();
             }
             input.ReadMessage(Autoload);
             break;
@@ -21724,7 +21714,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[74]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[74]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -21761,10 +21751,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "replica" field.</summary>
     public const int ReplicaFieldNumber = 1;
-    private global::Immudb.Schema.NullableBool replica_;
+    private global::ImmudbProxy.NullableBool replica_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableBool Replica {
+    public global::ImmudbProxy.NullableBool Replica {
       get { return replica_; }
       set {
         replica_ = value;
@@ -21773,10 +21763,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "masterDatabase" field.</summary>
     public const int MasterDatabaseFieldNumber = 2;
-    private global::Immudb.Schema.NullableString masterDatabase_;
+    private global::ImmudbProxy.NullableString masterDatabase_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableString MasterDatabase {
+    public global::ImmudbProxy.NullableString MasterDatabase {
       get { return masterDatabase_; }
       set {
         masterDatabase_ = value;
@@ -21785,10 +21775,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "masterAddress" field.</summary>
     public const int MasterAddressFieldNumber = 3;
-    private global::Immudb.Schema.NullableString masterAddress_;
+    private global::ImmudbProxy.NullableString masterAddress_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableString MasterAddress {
+    public global::ImmudbProxy.NullableString MasterAddress {
       get { return masterAddress_; }
       set {
         masterAddress_ = value;
@@ -21797,10 +21787,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "masterPort" field.</summary>
     public const int MasterPortFieldNumber = 4;
-    private global::Immudb.Schema.NullableUint32 masterPort_;
+    private global::ImmudbProxy.NullableUint32 masterPort_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 MasterPort {
+    public global::ImmudbProxy.NullableUint32 MasterPort {
       get { return masterPort_; }
       set {
         masterPort_ = value;
@@ -21809,10 +21799,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "followerUsername" field.</summary>
     public const int FollowerUsernameFieldNumber = 5;
-    private global::Immudb.Schema.NullableString followerUsername_;
+    private global::ImmudbProxy.NullableString followerUsername_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableString FollowerUsername {
+    public global::ImmudbProxy.NullableString FollowerUsername {
       get { return followerUsername_; }
       set {
         followerUsername_ = value;
@@ -21821,10 +21811,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "followerPassword" field.</summary>
     public const int FollowerPasswordFieldNumber = 6;
-    private global::Immudb.Schema.NullableString followerPassword_;
+    private global::ImmudbProxy.NullableString followerPassword_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableString FollowerPassword {
+    public global::ImmudbProxy.NullableString FollowerPassword {
       get { return followerPassword_; }
       set {
         followerPassword_ = value;
@@ -21983,37 +21973,37 @@ namespace Immudb.Schema {
       }
       if (other.replica_ != null) {
         if (replica_ == null) {
-          Replica = new global::Immudb.Schema.NullableBool();
+          Replica = new global::ImmudbProxy.NullableBool();
         }
         Replica.MergeFrom(other.Replica);
       }
       if (other.masterDatabase_ != null) {
         if (masterDatabase_ == null) {
-          MasterDatabase = new global::Immudb.Schema.NullableString();
+          MasterDatabase = new global::ImmudbProxy.NullableString();
         }
         MasterDatabase.MergeFrom(other.MasterDatabase);
       }
       if (other.masterAddress_ != null) {
         if (masterAddress_ == null) {
-          MasterAddress = new global::Immudb.Schema.NullableString();
+          MasterAddress = new global::ImmudbProxy.NullableString();
         }
         MasterAddress.MergeFrom(other.MasterAddress);
       }
       if (other.masterPort_ != null) {
         if (masterPort_ == null) {
-          MasterPort = new global::Immudb.Schema.NullableUint32();
+          MasterPort = new global::ImmudbProxy.NullableUint32();
         }
         MasterPort.MergeFrom(other.MasterPort);
       }
       if (other.followerUsername_ != null) {
         if (followerUsername_ == null) {
-          FollowerUsername = new global::Immudb.Schema.NullableString();
+          FollowerUsername = new global::ImmudbProxy.NullableString();
         }
         FollowerUsername.MergeFrom(other.FollowerUsername);
       }
       if (other.followerPassword_ != null) {
         if (followerPassword_ == null) {
-          FollowerPassword = new global::Immudb.Schema.NullableString();
+          FollowerPassword = new global::ImmudbProxy.NullableString();
         }
         FollowerPassword.MergeFrom(other.FollowerPassword);
       }
@@ -22034,42 +22024,42 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (replica_ == null) {
-              Replica = new global::Immudb.Schema.NullableBool();
+              Replica = new global::ImmudbProxy.NullableBool();
             }
             input.ReadMessage(Replica);
             break;
           }
           case 18: {
             if (masterDatabase_ == null) {
-              MasterDatabase = new global::Immudb.Schema.NullableString();
+              MasterDatabase = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(MasterDatabase);
             break;
           }
           case 26: {
             if (masterAddress_ == null) {
-              MasterAddress = new global::Immudb.Schema.NullableString();
+              MasterAddress = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(MasterAddress);
             break;
           }
           case 34: {
             if (masterPort_ == null) {
-              MasterPort = new global::Immudb.Schema.NullableUint32();
+              MasterPort = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MasterPort);
             break;
           }
           case 42: {
             if (followerUsername_ == null) {
-              FollowerUsername = new global::Immudb.Schema.NullableString();
+              FollowerUsername = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(FollowerUsername);
             break;
           }
           case 50: {
             if (followerPassword_ == null) {
-              FollowerPassword = new global::Immudb.Schema.NullableString();
+              FollowerPassword = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(FollowerPassword);
             break;
@@ -22091,42 +22081,42 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (replica_ == null) {
-              Replica = new global::Immudb.Schema.NullableBool();
+              Replica = new global::ImmudbProxy.NullableBool();
             }
             input.ReadMessage(Replica);
             break;
           }
           case 18: {
             if (masterDatabase_ == null) {
-              MasterDatabase = new global::Immudb.Schema.NullableString();
+              MasterDatabase = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(MasterDatabase);
             break;
           }
           case 26: {
             if (masterAddress_ == null) {
-              MasterAddress = new global::Immudb.Schema.NullableString();
+              MasterAddress = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(MasterAddress);
             break;
           }
           case 34: {
             if (masterPort_ == null) {
-              MasterPort = new global::Immudb.Schema.NullableUint32();
+              MasterPort = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MasterPort);
             break;
           }
           case 42: {
             if (followerUsername_ == null) {
-              FollowerUsername = new global::Immudb.Schema.NullableString();
+              FollowerUsername = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(FollowerUsername);
             break;
           }
           case 50: {
             if (followerPassword_ == null) {
-              FollowerPassword = new global::Immudb.Schema.NullableString();
+              FollowerPassword = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(FollowerPassword);
             break;
@@ -22152,7 +22142,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[75]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[75]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -22196,10 +22186,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "flushThreshold" field.</summary>
     public const int FlushThresholdFieldNumber = 1;
-    private global::Immudb.Schema.NullableUint32 flushThreshold_;
+    private global::ImmudbProxy.NullableUint32 flushThreshold_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 FlushThreshold {
+    public global::ImmudbProxy.NullableUint32 FlushThreshold {
       get { return flushThreshold_; }
       set {
         flushThreshold_ = value;
@@ -22208,10 +22198,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "syncThreshold" field.</summary>
     public const int SyncThresholdFieldNumber = 2;
-    private global::Immudb.Schema.NullableUint32 syncThreshold_;
+    private global::ImmudbProxy.NullableUint32 syncThreshold_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 SyncThreshold {
+    public global::ImmudbProxy.NullableUint32 SyncThreshold {
       get { return syncThreshold_; }
       set {
         syncThreshold_ = value;
@@ -22220,10 +22210,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "cacheSize" field.</summary>
     public const int CacheSizeFieldNumber = 3;
-    private global::Immudb.Schema.NullableUint32 cacheSize_;
+    private global::ImmudbProxy.NullableUint32 cacheSize_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 CacheSize {
+    public global::ImmudbProxy.NullableUint32 CacheSize {
       get { return cacheSize_; }
       set {
         cacheSize_ = value;
@@ -22232,10 +22222,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "maxNodeSize" field.</summary>
     public const int MaxNodeSizeFieldNumber = 4;
-    private global::Immudb.Schema.NullableUint32 maxNodeSize_;
+    private global::ImmudbProxy.NullableUint32 maxNodeSize_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 MaxNodeSize {
+    public global::ImmudbProxy.NullableUint32 MaxNodeSize {
       get { return maxNodeSize_; }
       set {
         maxNodeSize_ = value;
@@ -22244,10 +22234,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "maxActiveSnapshots" field.</summary>
     public const int MaxActiveSnapshotsFieldNumber = 5;
-    private global::Immudb.Schema.NullableUint32 maxActiveSnapshots_;
+    private global::ImmudbProxy.NullableUint32 maxActiveSnapshots_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 MaxActiveSnapshots {
+    public global::ImmudbProxy.NullableUint32 MaxActiveSnapshots {
       get { return maxActiveSnapshots_; }
       set {
         maxActiveSnapshots_ = value;
@@ -22256,10 +22246,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "renewSnapRootAfter" field.</summary>
     public const int RenewSnapRootAfterFieldNumber = 6;
-    private global::Immudb.Schema.NullableUint64 renewSnapRootAfter_;
+    private global::ImmudbProxy.NullableUint64 renewSnapRootAfter_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint64 RenewSnapRootAfter {
+    public global::ImmudbProxy.NullableUint64 RenewSnapRootAfter {
       get { return renewSnapRootAfter_; }
       set {
         renewSnapRootAfter_ = value;
@@ -22268,10 +22258,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "compactionThld" field.</summary>
     public const int CompactionThldFieldNumber = 7;
-    private global::Immudb.Schema.NullableUint32 compactionThld_;
+    private global::ImmudbProxy.NullableUint32 compactionThld_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 CompactionThld {
+    public global::ImmudbProxy.NullableUint32 CompactionThld {
       get { return compactionThld_; }
       set {
         compactionThld_ = value;
@@ -22280,10 +22270,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "delayDuringCompaction" field.</summary>
     public const int DelayDuringCompactionFieldNumber = 8;
-    private global::Immudb.Schema.NullableUint32 delayDuringCompaction_;
+    private global::ImmudbProxy.NullableUint32 delayDuringCompaction_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 DelayDuringCompaction {
+    public global::ImmudbProxy.NullableUint32 DelayDuringCompaction {
       get { return delayDuringCompaction_; }
       set {
         delayDuringCompaction_ = value;
@@ -22292,10 +22282,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "nodesLogMaxOpenedFiles" field.</summary>
     public const int NodesLogMaxOpenedFilesFieldNumber = 9;
-    private global::Immudb.Schema.NullableUint32 nodesLogMaxOpenedFiles_;
+    private global::ImmudbProxy.NullableUint32 nodesLogMaxOpenedFiles_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 NodesLogMaxOpenedFiles {
+    public global::ImmudbProxy.NullableUint32 NodesLogMaxOpenedFiles {
       get { return nodesLogMaxOpenedFiles_; }
       set {
         nodesLogMaxOpenedFiles_ = value;
@@ -22304,10 +22294,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "historyLogMaxOpenedFiles" field.</summary>
     public const int HistoryLogMaxOpenedFilesFieldNumber = 10;
-    private global::Immudb.Schema.NullableUint32 historyLogMaxOpenedFiles_;
+    private global::ImmudbProxy.NullableUint32 historyLogMaxOpenedFiles_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 HistoryLogMaxOpenedFiles {
+    public global::ImmudbProxy.NullableUint32 HistoryLogMaxOpenedFiles {
       get { return historyLogMaxOpenedFiles_; }
       set {
         historyLogMaxOpenedFiles_ = value;
@@ -22316,10 +22306,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "commitLogMaxOpenedFiles" field.</summary>
     public const int CommitLogMaxOpenedFilesFieldNumber = 11;
-    private global::Immudb.Schema.NullableUint32 commitLogMaxOpenedFiles_;
+    private global::ImmudbProxy.NullableUint32 commitLogMaxOpenedFiles_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 CommitLogMaxOpenedFiles {
+    public global::ImmudbProxy.NullableUint32 CommitLogMaxOpenedFiles {
       get { return commitLogMaxOpenedFiles_; }
       set {
         commitLogMaxOpenedFiles_ = value;
@@ -22328,10 +22318,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "flushBufferSize" field.</summary>
     public const int FlushBufferSizeFieldNumber = 12;
-    private global::Immudb.Schema.NullableUint32 flushBufferSize_;
+    private global::ImmudbProxy.NullableUint32 flushBufferSize_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableUint32 FlushBufferSize {
+    public global::ImmudbProxy.NullableUint32 FlushBufferSize {
       get { return flushBufferSize_; }
       set {
         flushBufferSize_ = value;
@@ -22340,10 +22330,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "cleanupPercentage" field.</summary>
     public const int CleanupPercentageFieldNumber = 13;
-    private global::Immudb.Schema.NullableFloat cleanupPercentage_;
+    private global::ImmudbProxy.NullableFloat cleanupPercentage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.NullableFloat CleanupPercentage {
+    public global::ImmudbProxy.NullableFloat CleanupPercentage {
       get { return cleanupPercentage_; }
       set {
         cleanupPercentage_ = value;
@@ -22593,79 +22583,79 @@ namespace Immudb.Schema {
       }
       if (other.flushThreshold_ != null) {
         if (flushThreshold_ == null) {
-          FlushThreshold = new global::Immudb.Schema.NullableUint32();
+          FlushThreshold = new global::ImmudbProxy.NullableUint32();
         }
         FlushThreshold.MergeFrom(other.FlushThreshold);
       }
       if (other.syncThreshold_ != null) {
         if (syncThreshold_ == null) {
-          SyncThreshold = new global::Immudb.Schema.NullableUint32();
+          SyncThreshold = new global::ImmudbProxy.NullableUint32();
         }
         SyncThreshold.MergeFrom(other.SyncThreshold);
       }
       if (other.cacheSize_ != null) {
         if (cacheSize_ == null) {
-          CacheSize = new global::Immudb.Schema.NullableUint32();
+          CacheSize = new global::ImmudbProxy.NullableUint32();
         }
         CacheSize.MergeFrom(other.CacheSize);
       }
       if (other.maxNodeSize_ != null) {
         if (maxNodeSize_ == null) {
-          MaxNodeSize = new global::Immudb.Schema.NullableUint32();
+          MaxNodeSize = new global::ImmudbProxy.NullableUint32();
         }
         MaxNodeSize.MergeFrom(other.MaxNodeSize);
       }
       if (other.maxActiveSnapshots_ != null) {
         if (maxActiveSnapshots_ == null) {
-          MaxActiveSnapshots = new global::Immudb.Schema.NullableUint32();
+          MaxActiveSnapshots = new global::ImmudbProxy.NullableUint32();
         }
         MaxActiveSnapshots.MergeFrom(other.MaxActiveSnapshots);
       }
       if (other.renewSnapRootAfter_ != null) {
         if (renewSnapRootAfter_ == null) {
-          RenewSnapRootAfter = new global::Immudb.Schema.NullableUint64();
+          RenewSnapRootAfter = new global::ImmudbProxy.NullableUint64();
         }
         RenewSnapRootAfter.MergeFrom(other.RenewSnapRootAfter);
       }
       if (other.compactionThld_ != null) {
         if (compactionThld_ == null) {
-          CompactionThld = new global::Immudb.Schema.NullableUint32();
+          CompactionThld = new global::ImmudbProxy.NullableUint32();
         }
         CompactionThld.MergeFrom(other.CompactionThld);
       }
       if (other.delayDuringCompaction_ != null) {
         if (delayDuringCompaction_ == null) {
-          DelayDuringCompaction = new global::Immudb.Schema.NullableUint32();
+          DelayDuringCompaction = new global::ImmudbProxy.NullableUint32();
         }
         DelayDuringCompaction.MergeFrom(other.DelayDuringCompaction);
       }
       if (other.nodesLogMaxOpenedFiles_ != null) {
         if (nodesLogMaxOpenedFiles_ == null) {
-          NodesLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+          NodesLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
         }
         NodesLogMaxOpenedFiles.MergeFrom(other.NodesLogMaxOpenedFiles);
       }
       if (other.historyLogMaxOpenedFiles_ != null) {
         if (historyLogMaxOpenedFiles_ == null) {
-          HistoryLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+          HistoryLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
         }
         HistoryLogMaxOpenedFiles.MergeFrom(other.HistoryLogMaxOpenedFiles);
       }
       if (other.commitLogMaxOpenedFiles_ != null) {
         if (commitLogMaxOpenedFiles_ == null) {
-          CommitLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+          CommitLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
         }
         CommitLogMaxOpenedFiles.MergeFrom(other.CommitLogMaxOpenedFiles);
       }
       if (other.flushBufferSize_ != null) {
         if (flushBufferSize_ == null) {
-          FlushBufferSize = new global::Immudb.Schema.NullableUint32();
+          FlushBufferSize = new global::ImmudbProxy.NullableUint32();
         }
         FlushBufferSize.MergeFrom(other.FlushBufferSize);
       }
       if (other.cleanupPercentage_ != null) {
         if (cleanupPercentage_ == null) {
-          CleanupPercentage = new global::Immudb.Schema.NullableFloat();
+          CleanupPercentage = new global::ImmudbProxy.NullableFloat();
         }
         CleanupPercentage.MergeFrom(other.CleanupPercentage);
       }
@@ -22686,91 +22676,91 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (flushThreshold_ == null) {
-              FlushThreshold = new global::Immudb.Schema.NullableUint32();
+              FlushThreshold = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(FlushThreshold);
             break;
           }
           case 18: {
             if (syncThreshold_ == null) {
-              SyncThreshold = new global::Immudb.Schema.NullableUint32();
+              SyncThreshold = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(SyncThreshold);
             break;
           }
           case 26: {
             if (cacheSize_ == null) {
-              CacheSize = new global::Immudb.Schema.NullableUint32();
+              CacheSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(CacheSize);
             break;
           }
           case 34: {
             if (maxNodeSize_ == null) {
-              MaxNodeSize = new global::Immudb.Schema.NullableUint32();
+              MaxNodeSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxNodeSize);
             break;
           }
           case 42: {
             if (maxActiveSnapshots_ == null) {
-              MaxActiveSnapshots = new global::Immudb.Schema.NullableUint32();
+              MaxActiveSnapshots = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxActiveSnapshots);
             break;
           }
           case 50: {
             if (renewSnapRootAfter_ == null) {
-              RenewSnapRootAfter = new global::Immudb.Schema.NullableUint64();
+              RenewSnapRootAfter = new global::ImmudbProxy.NullableUint64();
             }
             input.ReadMessage(RenewSnapRootAfter);
             break;
           }
           case 58: {
             if (compactionThld_ == null) {
-              CompactionThld = new global::Immudb.Schema.NullableUint32();
+              CompactionThld = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(CompactionThld);
             break;
           }
           case 66: {
             if (delayDuringCompaction_ == null) {
-              DelayDuringCompaction = new global::Immudb.Schema.NullableUint32();
+              DelayDuringCompaction = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(DelayDuringCompaction);
             break;
           }
           case 74: {
             if (nodesLogMaxOpenedFiles_ == null) {
-              NodesLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              NodesLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(NodesLogMaxOpenedFiles);
             break;
           }
           case 82: {
             if (historyLogMaxOpenedFiles_ == null) {
-              HistoryLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              HistoryLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(HistoryLogMaxOpenedFiles);
             break;
           }
           case 90: {
             if (commitLogMaxOpenedFiles_ == null) {
-              CommitLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              CommitLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(CommitLogMaxOpenedFiles);
             break;
           }
           case 98: {
             if (flushBufferSize_ == null) {
-              FlushBufferSize = new global::Immudb.Schema.NullableUint32();
+              FlushBufferSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(FlushBufferSize);
             break;
           }
           case 106: {
             if (cleanupPercentage_ == null) {
-              CleanupPercentage = new global::Immudb.Schema.NullableFloat();
+              CleanupPercentage = new global::ImmudbProxy.NullableFloat();
             }
             input.ReadMessage(CleanupPercentage);
             break;
@@ -22792,91 +22782,91 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (flushThreshold_ == null) {
-              FlushThreshold = new global::Immudb.Schema.NullableUint32();
+              FlushThreshold = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(FlushThreshold);
             break;
           }
           case 18: {
             if (syncThreshold_ == null) {
-              SyncThreshold = new global::Immudb.Schema.NullableUint32();
+              SyncThreshold = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(SyncThreshold);
             break;
           }
           case 26: {
             if (cacheSize_ == null) {
-              CacheSize = new global::Immudb.Schema.NullableUint32();
+              CacheSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(CacheSize);
             break;
           }
           case 34: {
             if (maxNodeSize_ == null) {
-              MaxNodeSize = new global::Immudb.Schema.NullableUint32();
+              MaxNodeSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxNodeSize);
             break;
           }
           case 42: {
             if (maxActiveSnapshots_ == null) {
-              MaxActiveSnapshots = new global::Immudb.Schema.NullableUint32();
+              MaxActiveSnapshots = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(MaxActiveSnapshots);
             break;
           }
           case 50: {
             if (renewSnapRootAfter_ == null) {
-              RenewSnapRootAfter = new global::Immudb.Schema.NullableUint64();
+              RenewSnapRootAfter = new global::ImmudbProxy.NullableUint64();
             }
             input.ReadMessage(RenewSnapRootAfter);
             break;
           }
           case 58: {
             if (compactionThld_ == null) {
-              CompactionThld = new global::Immudb.Schema.NullableUint32();
+              CompactionThld = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(CompactionThld);
             break;
           }
           case 66: {
             if (delayDuringCompaction_ == null) {
-              DelayDuringCompaction = new global::Immudb.Schema.NullableUint32();
+              DelayDuringCompaction = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(DelayDuringCompaction);
             break;
           }
           case 74: {
             if (nodesLogMaxOpenedFiles_ == null) {
-              NodesLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              NodesLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(NodesLogMaxOpenedFiles);
             break;
           }
           case 82: {
             if (historyLogMaxOpenedFiles_ == null) {
-              HistoryLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              HistoryLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(HistoryLogMaxOpenedFiles);
             break;
           }
           case 90: {
             if (commitLogMaxOpenedFiles_ == null) {
-              CommitLogMaxOpenedFiles = new global::Immudb.Schema.NullableUint32();
+              CommitLogMaxOpenedFiles = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(CommitLogMaxOpenedFiles);
             break;
           }
           case 98: {
             if (flushBufferSize_ == null) {
-              FlushBufferSize = new global::Immudb.Schema.NullableUint32();
+              FlushBufferSize = new global::ImmudbProxy.NullableUint32();
             }
             input.ReadMessage(FlushBufferSize);
             break;
           }
           case 106: {
             if (cleanupPercentage_ == null) {
-              CleanupPercentage = new global::Immudb.Schema.NullableFloat();
+              CleanupPercentage = new global::ImmudbProxy.NullableFloat();
             }
             input.ReadMessage(CleanupPercentage);
             break;
@@ -22902,7 +22892,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[76]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[76]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23094,7 +23084,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[77]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[77]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23286,7 +23276,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[78]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[78]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23475,7 +23465,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[79]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[79]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23664,7 +23654,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[80]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[80]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23853,7 +23843,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[81]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[81]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24042,7 +24032,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[82]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[82]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24268,7 +24258,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[83]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[83]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24457,7 +24447,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[84]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[84]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24646,7 +24636,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[85]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[85]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24693,12 +24683,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "pkValues" field.</summary>
     public const int PkValuesFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.SQLValue> _repeated_pkValues_codec
-        = pb::FieldCodec.ForMessage(18, global::Immudb.Schema.SQLValue.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.SQLValue> pkValues_ = new pbc::RepeatedField<global::Immudb.Schema.SQLValue>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.SQLValue> _repeated_pkValues_codec
+        = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.SQLValue.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.SQLValue> pkValues_ = new pbc::RepeatedField<global::ImmudbProxy.SQLValue>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.SQLValue> PkValues {
+    public pbc::RepeatedField<global::ImmudbProxy.SQLValue> PkValues {
       get { return pkValues_; }
     }
 
@@ -24935,7 +24925,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[86]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[86]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24968,10 +24958,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "sqlGetRequest" field.</summary>
     public const int SqlGetRequestFieldNumber = 1;
-    private global::Immudb.Schema.SQLGetRequest sqlGetRequest_;
+    private global::ImmudbProxy.SQLGetRequest sqlGetRequest_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.SQLGetRequest SqlGetRequest {
+    public global::ImmudbProxy.SQLGetRequest SqlGetRequest {
       get { return sqlGetRequest_; }
       set {
         sqlGetRequest_ = value;
@@ -25090,7 +25080,7 @@ namespace Immudb.Schema {
       }
       if (other.sqlGetRequest_ != null) {
         if (sqlGetRequest_ == null) {
-          SqlGetRequest = new global::Immudb.Schema.SQLGetRequest();
+          SqlGetRequest = new global::ImmudbProxy.SQLGetRequest();
         }
         SqlGetRequest.MergeFrom(other.SqlGetRequest);
       }
@@ -25114,7 +25104,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (sqlGetRequest_ == null) {
-              SqlGetRequest = new global::Immudb.Schema.SQLGetRequest();
+              SqlGetRequest = new global::ImmudbProxy.SQLGetRequest();
             }
             input.ReadMessage(SqlGetRequest);
             break;
@@ -25140,7 +25130,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (sqlGetRequest_ == null) {
-              SqlGetRequest = new global::Immudb.Schema.SQLGetRequest();
+              SqlGetRequest = new global::ImmudbProxy.SQLGetRequest();
             }
             input.ReadMessage(SqlGetRequest);
             break;
@@ -25170,7 +25160,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[87]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[87]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -25241,10 +25231,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 4;
-    private global::Immudb.Schema.KVMetadata metadata_;
+    private global::ImmudbProxy.KVMetadata metadata_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.KVMetadata Metadata {
+    public global::ImmudbProxy.KVMetadata Metadata {
       get { return metadata_; }
       set {
         metadata_ = value;
@@ -25386,7 +25376,7 @@ namespace Immudb.Schema {
       }
       if (other.metadata_ != null) {
         if (metadata_ == null) {
-          Metadata = new global::Immudb.Schema.KVMetadata();
+          Metadata = new global::ImmudbProxy.KVMetadata();
         }
         Metadata.MergeFrom(other.Metadata);
       }
@@ -25419,7 +25409,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -25453,7 +25443,7 @@ namespace Immudb.Schema {
           }
           case 34: {
             if (metadata_ == null) {
-              Metadata = new global::Immudb.Schema.KVMetadata();
+              Metadata = new global::ImmudbProxy.KVMetadata();
             }
             input.ReadMessage(Metadata);
             break;
@@ -25479,7 +25469,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[88]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[88]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -25520,10 +25510,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "sqlEntry" field.</summary>
     public const int SqlEntryFieldNumber = 1;
-    private global::Immudb.Schema.SQLEntry sqlEntry_;
+    private global::ImmudbProxy.SQLEntry sqlEntry_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.SQLEntry SqlEntry {
+    public global::ImmudbProxy.SQLEntry SqlEntry {
       get { return sqlEntry_; }
       set {
         sqlEntry_ = value;
@@ -25532,10 +25522,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "verifiableTx" field.</summary>
     public const int VerifiableTxFieldNumber = 2;
-    private global::Immudb.Schema.VerifiableTx verifiableTx_;
+    private global::ImmudbProxy.VerifiableTx verifiableTx_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.VerifiableTx VerifiableTx {
+    public global::ImmudbProxy.VerifiableTx VerifiableTx {
       get { return verifiableTx_; }
       set {
         verifiableTx_ = value;
@@ -25544,10 +25534,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "inclusionProof" field.</summary>
     public const int InclusionProofFieldNumber = 3;
-    private global::Immudb.Schema.InclusionProof inclusionProof_;
+    private global::ImmudbProxy.InclusionProof inclusionProof_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.InclusionProof InclusionProof {
+    public global::ImmudbProxy.InclusionProof InclusionProof {
       get { return inclusionProof_; }
       set {
         inclusionProof_ = value;
@@ -25797,19 +25787,19 @@ namespace Immudb.Schema {
       }
       if (other.sqlEntry_ != null) {
         if (sqlEntry_ == null) {
-          SqlEntry = new global::Immudb.Schema.SQLEntry();
+          SqlEntry = new global::ImmudbProxy.SQLEntry();
         }
         SqlEntry.MergeFrom(other.SqlEntry);
       }
       if (other.verifiableTx_ != null) {
         if (verifiableTx_ == null) {
-          VerifiableTx = new global::Immudb.Schema.VerifiableTx();
+          VerifiableTx = new global::ImmudbProxy.VerifiableTx();
         }
         VerifiableTx.MergeFrom(other.VerifiableTx);
       }
       if (other.inclusionProof_ != null) {
         if (inclusionProof_ == null) {
-          InclusionProof = new global::Immudb.Schema.InclusionProof();
+          InclusionProof = new global::ImmudbProxy.InclusionProof();
         }
         InclusionProof.MergeFrom(other.InclusionProof);
       }
@@ -25841,21 +25831,21 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (sqlEntry_ == null) {
-              SqlEntry = new global::Immudb.Schema.SQLEntry();
+              SqlEntry = new global::ImmudbProxy.SQLEntry();
             }
             input.ReadMessage(SqlEntry);
             break;
           }
           case 18: {
             if (verifiableTx_ == null) {
-              VerifiableTx = new global::Immudb.Schema.VerifiableTx();
+              VerifiableTx = new global::ImmudbProxy.VerifiableTx();
             }
             input.ReadMessage(VerifiableTx);
             break;
           }
           case 26: {
             if (inclusionProof_ == null) {
-              InclusionProof = new global::Immudb.Schema.InclusionProof();
+              InclusionProof = new global::ImmudbProxy.InclusionProof();
             }
             input.ReadMessage(InclusionProof);
             break;
@@ -25906,21 +25896,21 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (sqlEntry_ == null) {
-              SqlEntry = new global::Immudb.Schema.SQLEntry();
+              SqlEntry = new global::ImmudbProxy.SQLEntry();
             }
             input.ReadMessage(SqlEntry);
             break;
           }
           case 18: {
             if (verifiableTx_ == null) {
-              VerifiableTx = new global::Immudb.Schema.VerifiableTx();
+              VerifiableTx = new global::ImmudbProxy.VerifiableTx();
             }
             input.ReadMessage(VerifiableTx);
             break;
           }
           case 26: {
             if (inclusionProof_ == null) {
-              InclusionProof = new global::Immudb.Schema.InclusionProof();
+              InclusionProof = new global::ImmudbProxy.InclusionProof();
             }
             input.ReadMessage(InclusionProof);
             break;
@@ -25975,7 +25965,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[89]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[89]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -26164,7 +26154,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[90]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[90]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -26199,10 +26189,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "action" field.</summary>
     public const int ActionFieldNumber = 1;
-    private global::Immudb.Schema.PermissionAction action_ = global::Immudb.Schema.PermissionAction.Grant;
+    private global::ImmudbProxy.PermissionAction action_ = global::ImmudbProxy.PermissionAction.Grant;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.PermissionAction Action {
+    public global::ImmudbProxy.PermissionAction Action {
       get { return action_; }
       set {
         action_ = value;
@@ -26271,7 +26261,7 @@ namespace Immudb.Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Action != global::Immudb.Schema.PermissionAction.Grant) hash ^= Action.GetHashCode();
+      if (Action != global::ImmudbProxy.PermissionAction.Grant) hash ^= Action.GetHashCode();
       if (Username.Length != 0) hash ^= Username.GetHashCode();
       if (Database.Length != 0) hash ^= Database.GetHashCode();
       if (Permission != 0) hash ^= Permission.GetHashCode();
@@ -26293,7 +26283,7 @@ namespace Immudb.Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Action != global::Immudb.Schema.PermissionAction.Grant) {
+      if (Action != global::ImmudbProxy.PermissionAction.Grant) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Action);
       }
@@ -26319,7 +26309,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Action != global::Immudb.Schema.PermissionAction.Grant) {
+      if (Action != global::ImmudbProxy.PermissionAction.Grant) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Action);
       }
@@ -26345,7 +26335,7 @@ namespace Immudb.Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Action != global::Immudb.Schema.PermissionAction.Grant) {
+      if (Action != global::ImmudbProxy.PermissionAction.Grant) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Action);
       }
       if (Username.Length != 0) {
@@ -26369,7 +26359,7 @@ namespace Immudb.Schema {
       if (other == null) {
         return;
       }
-      if (other.Action != global::Immudb.Schema.PermissionAction.Grant) {
+      if (other.Action != global::ImmudbProxy.PermissionAction.Grant) {
         Action = other.Action;
       }
       if (other.Username.Length != 0) {
@@ -26397,7 +26387,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Action = (global::Immudb.Schema.PermissionAction) input.ReadEnum();
+            Action = (global::ImmudbProxy.PermissionAction) input.ReadEnum();
             break;
           }
           case 18: {
@@ -26428,7 +26418,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Action = (global::Immudb.Schema.PermissionAction) input.ReadEnum();
+            Action = (global::ImmudbProxy.PermissionAction) input.ReadEnum();
             break;
           }
           case 18: {
@@ -26464,7 +26454,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[91]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[91]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -26690,7 +26680,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[92]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[92]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -26722,12 +26712,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "databases" field.</summary>
     public const int DatabasesFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Database> _repeated_databases_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.Database.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Database> databases_ = new pbc::RepeatedField<global::Immudb.Schema.Database>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Database> _repeated_databases_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Database.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Database> databases_ = new pbc::RepeatedField<global::ImmudbProxy.Database>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Database> Databases {
+    public pbc::RepeatedField<global::ImmudbProxy.Database> Databases {
       get { return databases_; }
     }
 
@@ -26868,7 +26858,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[93]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[93]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27020,7 +27010,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[94]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[94]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27052,12 +27042,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "databases" field.</summary>
     public const int DatabasesFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.DatabaseWithSettings> _repeated_databases_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.DatabaseWithSettings.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.DatabaseWithSettings> databases_ = new pbc::RepeatedField<global::Immudb.Schema.DatabaseWithSettings>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.DatabaseWithSettings> _repeated_databases_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.DatabaseWithSettings.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.DatabaseWithSettings> databases_ = new pbc::RepeatedField<global::ImmudbProxy.DatabaseWithSettings>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.DatabaseWithSettings> Databases {
+    public pbc::RepeatedField<global::ImmudbProxy.DatabaseWithSettings> Databases {
       get { return databases_; }
     }
 
@@ -27198,7 +27188,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[95]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[95]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27244,10 +27234,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
-    private global::Immudb.Schema.DatabaseNullableSettings settings_;
+    private global::ImmudbProxy.DatabaseNullableSettings settings_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.DatabaseNullableSettings Settings {
+    public global::ImmudbProxy.DatabaseNullableSettings Settings {
       get { return settings_; }
       set {
         settings_ = value;
@@ -27382,7 +27372,7 @@ namespace Immudb.Schema {
       }
       if (other.settings_ != null) {
         if (settings_ == null) {
-          Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+          Settings = new global::ImmudbProxy.DatabaseNullableSettings();
         }
         Settings.MergeFrom(other.Settings);
       }
@@ -27410,7 +27400,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -27440,7 +27430,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (settings_ == null) {
-              Settings = new global::Immudb.Schema.DatabaseNullableSettings();
+              Settings = new global::ImmudbProxy.DatabaseNullableSettings();
             }
             input.ReadMessage(Settings);
             break;
@@ -27470,7 +27460,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[96]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[96]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27659,7 +27649,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[97]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[97]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27885,7 +27875,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[98]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[98]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27931,12 +27921,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "params" field.</summary>
     public const int ParamsFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.NamedParam> _repeated_params_codec
-        = pb::FieldCodec.ForMessage(18, global::Immudb.Schema.NamedParam.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.NamedParam> params_ = new pbc::RepeatedField<global::Immudb.Schema.NamedParam>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.NamedParam> _repeated_params_codec
+        = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.NamedParam.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.NamedParam> params_ = new pbc::RepeatedField<global::ImmudbProxy.NamedParam>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.NamedParam> Params {
+    public pbc::RepeatedField<global::ImmudbProxy.NamedParam> Params {
       get { return params_; }
     }
 
@@ -28137,7 +28127,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[99]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[99]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28183,12 +28173,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "params" field.</summary>
     public const int ParamsFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.NamedParam> _repeated_params_codec
-        = pb::FieldCodec.ForMessage(18, global::Immudb.Schema.NamedParam.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.NamedParam> params_ = new pbc::RepeatedField<global::Immudb.Schema.NamedParam>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.NamedParam> _repeated_params_codec
+        = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.NamedParam.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.NamedParam> params_ = new pbc::RepeatedField<global::ImmudbProxy.NamedParam>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.NamedParam> Params {
+    public pbc::RepeatedField<global::ImmudbProxy.NamedParam> Params {
       get { return params_; }
     }
 
@@ -28389,7 +28379,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[100]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[100]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28434,10 +28424,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 2;
-    private global::Immudb.Schema.SQLValue value_;
+    private global::ImmudbProxy.SQLValue value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.SQLValue Value {
+    public global::ImmudbProxy.SQLValue Value {
       get { return value_; }
       set {
         value_ = value;
@@ -28547,7 +28537,7 @@ namespace Immudb.Schema {
       }
       if (other.value_ != null) {
         if (value_ == null) {
-          Value = new global::Immudb.Schema.SQLValue();
+          Value = new global::ImmudbProxy.SQLValue();
         }
         Value.MergeFrom(other.Value);
       }
@@ -28572,7 +28562,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Immudb.Schema.SQLValue();
+              Value = new global::ImmudbProxy.SQLValue();
             }
             input.ReadMessage(Value);
             break;
@@ -28598,7 +28588,7 @@ namespace Immudb.Schema {
           }
           case 18: {
             if (value_ == null) {
-              Value = new global::Immudb.Schema.SQLValue();
+              Value = new global::ImmudbProxy.SQLValue();
             }
             input.ReadMessage(Value);
             break;
@@ -28624,7 +28614,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[101]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[101]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28657,12 +28647,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "txs" field.</summary>
     public const int TxsFieldNumber = 5;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.CommittedSQLTx> _repeated_txs_codec
-        = pb::FieldCodec.ForMessage(42, global::Immudb.Schema.CommittedSQLTx.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.CommittedSQLTx> txs_ = new pbc::RepeatedField<global::Immudb.Schema.CommittedSQLTx>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.CommittedSQLTx> _repeated_txs_codec
+        = pb::FieldCodec.ForMessage(42, global::ImmudbProxy.CommittedSQLTx.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.CommittedSQLTx> txs_ = new pbc::RepeatedField<global::ImmudbProxy.CommittedSQLTx>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.CommittedSQLTx> Txs {
+    public pbc::RepeatedField<global::ImmudbProxy.CommittedSQLTx> Txs {
       get { return txs_; }
     }
 
@@ -28839,7 +28829,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[102]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[102]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28874,10 +28864,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "header" field.</summary>
     public const int HeaderFieldNumber = 1;
-    private global::Immudb.Schema.TxHeader header_;
+    private global::ImmudbProxy.TxHeader header_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.TxHeader Header {
+    public global::ImmudbProxy.TxHeader Header {
       get { return header_; }
       set {
         header_ = value;
@@ -28898,23 +28888,23 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "lastInsertedPKs" field.</summary>
     public const int LastInsertedPKsFieldNumber = 3;
-    private static readonly pbc::MapField<string, global::Immudb.Schema.SQLValue>.Codec _map_lastInsertedPKs_codec
-        = new pbc::MapField<string, global::Immudb.Schema.SQLValue>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForMessage(18, global::Immudb.Schema.SQLValue.Parser), 26);
-    private readonly pbc::MapField<string, global::Immudb.Schema.SQLValue> lastInsertedPKs_ = new pbc::MapField<string, global::Immudb.Schema.SQLValue>();
+    private static readonly pbc::MapField<string, global::ImmudbProxy.SQLValue>.Codec _map_lastInsertedPKs_codec
+        = new pbc::MapField<string, global::ImmudbProxy.SQLValue>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForMessage(18, global::ImmudbProxy.SQLValue.Parser), 26);
+    private readonly pbc::MapField<string, global::ImmudbProxy.SQLValue> lastInsertedPKs_ = new pbc::MapField<string, global::ImmudbProxy.SQLValue>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::MapField<string, global::Immudb.Schema.SQLValue> LastInsertedPKs {
+    public pbc::MapField<string, global::ImmudbProxy.SQLValue> LastInsertedPKs {
       get { return lastInsertedPKs_; }
     }
 
     /// <summary>Field number for the "firstInsertedPKs" field.</summary>
     public const int FirstInsertedPKsFieldNumber = 4;
-    private static readonly pbc::MapField<string, global::Immudb.Schema.SQLValue>.Codec _map_firstInsertedPKs_codec
-        = new pbc::MapField<string, global::Immudb.Schema.SQLValue>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForMessage(18, global::Immudb.Schema.SQLValue.Parser), 34);
-    private readonly pbc::MapField<string, global::Immudb.Schema.SQLValue> firstInsertedPKs_ = new pbc::MapField<string, global::Immudb.Schema.SQLValue>();
+    private static readonly pbc::MapField<string, global::ImmudbProxy.SQLValue>.Codec _map_firstInsertedPKs_codec
+        = new pbc::MapField<string, global::ImmudbProxy.SQLValue>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForMessage(18, global::ImmudbProxy.SQLValue.Parser), 34);
+    private readonly pbc::MapField<string, global::ImmudbProxy.SQLValue> firstInsertedPKs_ = new pbc::MapField<string, global::ImmudbProxy.SQLValue>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::MapField<string, global::Immudb.Schema.SQLValue> FirstInsertedPKs {
+    public pbc::MapField<string, global::ImmudbProxy.SQLValue> FirstInsertedPKs {
       get { return firstInsertedPKs_; }
     }
 
@@ -29028,7 +29018,7 @@ namespace Immudb.Schema {
       }
       if (other.header_ != null) {
         if (header_ == null) {
-          Header = new global::Immudb.Schema.TxHeader();
+          Header = new global::ImmudbProxy.TxHeader();
         }
         Header.MergeFrom(other.Header);
       }
@@ -29054,7 +29044,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (header_ == null) {
-              Header = new global::Immudb.Schema.TxHeader();
+              Header = new global::ImmudbProxy.TxHeader();
             }
             input.ReadMessage(Header);
             break;
@@ -29088,7 +29078,7 @@ namespace Immudb.Schema {
             break;
           case 10: {
             if (header_ == null) {
-              Header = new global::Immudb.Schema.TxHeader();
+              Header = new global::ImmudbProxy.TxHeader();
             }
             input.ReadMessage(Header);
             break;
@@ -29126,7 +29116,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[103]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[103]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -29159,23 +29149,23 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "columns" field.</summary>
     public const int ColumnsFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Column> _repeated_columns_codec
-        = pb::FieldCodec.ForMessage(18, global::Immudb.Schema.Column.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Column> columns_ = new pbc::RepeatedField<global::Immudb.Schema.Column>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Column> _repeated_columns_codec
+        = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.Column.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Column> columns_ = new pbc::RepeatedField<global::ImmudbProxy.Column>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Column> Columns {
+    public pbc::RepeatedField<global::ImmudbProxy.Column> Columns {
       get { return columns_; }
     }
 
     /// <summary>Field number for the "rows" field.</summary>
     public const int RowsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.Row> _repeated_rows_codec
-        = pb::FieldCodec.ForMessage(10, global::Immudb.Schema.Row.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.Row> rows_ = new pbc::RepeatedField<global::Immudb.Schema.Row>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.Row> _repeated_rows_codec
+        = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Row.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.Row> rows_ = new pbc::RepeatedField<global::ImmudbProxy.Row>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.Row> Rows {
+    public pbc::RepeatedField<global::ImmudbProxy.Row> Rows {
       get { return rows_; }
     }
 
@@ -29330,7 +29320,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[104]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[104]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -29556,7 +29546,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[105]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[105]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -29600,12 +29590,12 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "values" field.</summary>
     public const int ValuesFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::Immudb.Schema.SQLValue> _repeated_values_codec
-        = pb::FieldCodec.ForMessage(18, global::Immudb.Schema.SQLValue.Parser);
-    private readonly pbc::RepeatedField<global::Immudb.Schema.SQLValue> values_ = new pbc::RepeatedField<global::Immudb.Schema.SQLValue>();
+    private static readonly pb::FieldCodec<global::ImmudbProxy.SQLValue> _repeated_values_codec
+        = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.SQLValue.Parser);
+    private readonly pbc::RepeatedField<global::ImmudbProxy.SQLValue> values_ = new pbc::RepeatedField<global::ImmudbProxy.SQLValue>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::Immudb.Schema.SQLValue> Values {
+    public pbc::RepeatedField<global::ImmudbProxy.SQLValue> Values {
       get { return values_; }
     }
 
@@ -29760,7 +29750,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[106]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[106]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30181,7 +30171,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[107]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[107]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30213,10 +30203,10 @@ namespace Immudb.Schema {
 
     /// <summary>Field number for the "mode" field.</summary>
     public const int ModeFieldNumber = 1;
-    private global::Immudb.Schema.TxMode mode_ = global::Immudb.Schema.TxMode.ReadOnly;
+    private global::ImmudbProxy.TxMode mode_ = global::ImmudbProxy.TxMode.ReadOnly;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Immudb.Schema.TxMode Mode {
+    public global::ImmudbProxy.TxMode Mode {
       get { return mode_; }
       set {
         mode_ = value;
@@ -30246,7 +30236,7 @@ namespace Immudb.Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Mode != global::Immudb.Schema.TxMode.ReadOnly) hash ^= Mode.GetHashCode();
+      if (Mode != global::ImmudbProxy.TxMode.ReadOnly) hash ^= Mode.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -30265,7 +30255,7 @@ namespace Immudb.Schema {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Mode != global::Immudb.Schema.TxMode.ReadOnly) {
+      if (Mode != global::ImmudbProxy.TxMode.ReadOnly) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Mode);
       }
@@ -30279,7 +30269,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Mode != global::Immudb.Schema.TxMode.ReadOnly) {
+      if (Mode != global::ImmudbProxy.TxMode.ReadOnly) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Mode);
       }
@@ -30293,7 +30283,7 @@ namespace Immudb.Schema {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Mode != global::Immudb.Schema.TxMode.ReadOnly) {
+      if (Mode != global::ImmudbProxy.TxMode.ReadOnly) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mode);
       }
       if (_unknownFields != null) {
@@ -30308,7 +30298,7 @@ namespace Immudb.Schema {
       if (other == null) {
         return;
       }
-      if (other.Mode != global::Immudb.Schema.TxMode.ReadOnly) {
+      if (other.Mode != global::ImmudbProxy.TxMode.ReadOnly) {
         Mode = other.Mode;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -30327,7 +30317,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Mode = (global::Immudb.Schema.TxMode) input.ReadEnum();
+            Mode = (global::ImmudbProxy.TxMode) input.ReadEnum();
             break;
           }
         }
@@ -30346,7 +30336,7 @@ namespace Immudb.Schema {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Mode = (global::Immudb.Schema.TxMode) input.ReadEnum();
+            Mode = (global::ImmudbProxy.TxMode) input.ReadEnum();
             break;
           }
         }
@@ -30370,7 +30360,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[108]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[108]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30559,7 +30549,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[109]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[109]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30785,7 +30775,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[110]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[110]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30974,7 +30964,7 @@ namespace Immudb.Schema {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Immudb.Schema.SchemaReflection.Descriptor.MessageTypes[111]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[111]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

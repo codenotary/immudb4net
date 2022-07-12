@@ -14,9 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-namespace ImmuDB;
+namespace ImmuDB.Exceptions;
 
-public interface ImmuStateHolder {
-    ImmuState? GetState(string? serverUuid, string database);
-    void setState(string serverUuid, ImmuState state);
+public class VerificationException : Exception
+{
+    public VerificationException(String message) : base(message)
+    {
+    }
+
+    public VerificationException(String message, Exception cause) : base(message, cause)
+    {
+    }
+
 }

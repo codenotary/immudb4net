@@ -13,10 +13,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 namespace ImmuDB;
 
-public interface ImmuStateHolder {
-    ImmuState? GetState(string? serverUuid, string database);
-    void setState(string serverUuid, ImmuState state);
+public abstract class MetadataAttribute
+{
+    public const int AttrCodeSize = 1;
+    public abstract byte Code();
+    public abstract byte[] Serialize();
 }

@@ -16,7 +16,19 @@ limitations under the License.
 
 namespace ImmuDB;
 
-public interface ImmuStateHolder {
-    ImmuState? GetState(string? serverUuid, string database);
-    void setState(string serverUuid, ImmuState state);
+public class KVPair
+{
+    public byte[] Key { get; private set; }
+    public byte[] Value { get; private set; }
+
+    public KVPair(String key, byte[] value) :
+        this(Utils.ToByteArray(key), value)
+    {
+    }
+
+    public KVPair(byte[] key, byte[] value)
+    {
+        this.Key = key;
+        this.Value = value;
+    }
 }

@@ -8,11 +8,11 @@ public class SerializableImmuStateHolder : ImmuStateHolder
      /**
      * Mapping "{serverUuid}_{databaseName}" to the appropriate state.
      */
-    private Dictionary<String, ImmuState> statesMap = new Dictionary<string, ImmuState>();
+    private Dictionary<string, ImmuState> statesMap = new Dictionary<string, ImmuState>();
 
-    public void ReadFrom(String fileName) {
-        String contents = File.ReadAllText(fileName);
-        var deserialized = JsonSerializer.Deserialize<Dictionary<String, ImmuState>>(contents);
+    public void ReadFrom(string fileName) {
+        string contents = File.ReadAllText(fileName);
+        var deserialized = JsonSerializer.Deserialize<Dictionary<string, ImmuState>>(contents);
         statesMap.Clear();
         if(deserialized == null) {
             return;
@@ -20,14 +20,16 @@ public class SerializableImmuStateHolder : ImmuStateHolder
         deserialized.ToList().ForEach(pair => statesMap.Add(pair.Key, pair.Value));
     }
 
-    public void WriteTo(String fileName) {
+    public void WriteTo(string fileName) {
         var options = new JsonSerializerOptions { WriteIndented = true };
-        String contents = JsonSerializer.Serialize(statesMap, options);
+        string contents = JsonSerializer.Serialize(statesMap, options);
         File.WriteAllText(fileName, contents);
     }
 
-    public ImmuState GetState(string serverUuid, string database)
+    public ImmuState? GetState(string? serverUuid, string database)
     {
+        if(serverUuid == null)
+            return null;
         return statesMap[serverUuid + "_" + database];
     }
 

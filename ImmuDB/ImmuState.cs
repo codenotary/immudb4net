@@ -26,12 +26,12 @@ public class ImmuState
 {
     private const string HASH_ENCRYPTION_ALGORITHM = "SHA256withECDSA";
 
-    public String Database { get; set; }
-    public long TxId { get; set; }
+    public string Database { get; set; }
+    public ulong TxId { get; set; }
     public byte[] TxHash { get; set; }
     public byte[] Signature { get; set; }
 
-    public ImmuState(String database, long txId, byte[] txHash, byte[] signature)
+    public ImmuState(string database, ulong txId, byte[] txHash, byte[] signature)
     {
         this.Database = database;
         this.TxId = txId;
@@ -39,7 +39,7 @@ public class ImmuState
         this.Signature = signature;
     }
 
-    private bool CheckSignature(AsymmetricKeyParameter publicKey)
+    public bool CheckSignature(AsymmetricKeyParameter? publicKey)
     {
         if (publicKey == null)
         {
@@ -62,12 +62,12 @@ public class ImmuState
     {
         byte[] result = new byte[4 + Database.Length + 8 + Consts.SHA256_SIZE];
         int i = 0;
-        Utils.putUint32(Database.Length, result, i);
+        Utils.PutUint32(Database.Length, result, i);
         i += 4;
         var databaseBytes = Encoding.UTF8.GetBytes(Database);
         Array.Copy(databaseBytes, 0, result, i, Database.Length);
         i += Database.Length;
-        Utils.putUint64(TxId, result, i);
+        Utils.PutUint64(TxId, result, i);
         i += 8;
         Array.Copy(TxHash, 0, result, i, TxHash.Length);
         return result;
@@ -81,5 +81,15 @@ public class ImmuState
         PemReader pemReader = new PemReader(fileStream);
         AsymmetricKeyParameter keyParameter = (AsymmetricKeyParameter)pemReader.ReadObject();
         return keyParameter;
+    }
+
+    // This method converts Proto ImmutableState to ImmuState
+    internal static ImmuState ValueOf(ImmudbProxy.ImmutableState state) {
+        return new ImmuState(
+                state.Db,
+                state.TxId,
+                state.TxHash.ToByteArray(),
+                state.Signature.Signature_.ToByteArray()
+        );
     }
 }

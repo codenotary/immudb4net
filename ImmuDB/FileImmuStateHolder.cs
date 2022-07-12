@@ -21,9 +21,9 @@ using System.Diagnostics;
 
 public class FileImmuStateHolder : ImmuStateHolder
 {
-    private readonly String statesFolder;
-    private readonly String currentStateFile;
-    private String stateHolderFile = "";
+    private readonly string statesFolder;
+    private readonly string currentStateFile;
+    private string stateHolderFile = "";
 
     private readonly SerializableImmuStateHolder stateHolder;
 
@@ -43,9 +43,9 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
 
         stateHolder = new SerializableImmuStateHolder();
-        String lastStateFilename = File.ReadAllText(currentStateFile);
+        string lastStateFilename = File.ReadAllText(currentStateFile);
 
-        if (!String.IsNullOrEmpty(lastStateFilename))
+        if (!string.IsNullOrEmpty(lastStateFilename))
         {
             stateHolderFile = Path.Combine(statesFolder, lastStateFilename);
 
@@ -58,7 +58,7 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
-    public ImmuState GetState(string serverUuid, string database)
+    public ImmuState? GetState(string? serverUuid, string database)
     {
         lock (this)
         {
@@ -70,14 +70,14 @@ public class FileImmuStateHolder : ImmuStateHolder
     {
         lock (this)
         {
-            ImmuState currentState = stateHolder.GetState(serverUuid, state.Database);
+            ImmuState? currentState = stateHolder.GetState(serverUuid, state.Database);
             if (currentState != null && currentState.TxId >= state.TxId)
             {
                 return;
             }
 
             stateHolder.setState(serverUuid, state);
-            String newStateFile = Path.Combine(statesFolder, "state_" + serverUuid + "_" + state.Database + "_" + Stopwatch.GetTimestamp());
+            string newStateFile = Path.Combine(statesFolder, "state_" + serverUuid + "_" + state.Database + "_" + Stopwatch.GetTimestamp());
 
             if (File.Exists(newStateFile))
             {
@@ -104,14 +104,14 @@ public class FileImmuStateHolder : ImmuStateHolder
 
     public class Builder
     {
-        public String StatesFolder { get; private set; }
+        public string StatesFolder { get; private set; }
 
         private Builder()
         {
             StatesFolder = "states";
         }
 
-        public Builder WithStatesFolder(String statesFolder)
+        public Builder WithStatesFolder(string statesFolder)
         {
             this.StatesFolder = statesFolder;
             return this;
