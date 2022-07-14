@@ -19,7 +19,7 @@ public class Reference
 
         if (proxyRef.Metadata != null)
         {
-            reference.Metadata = KVMetadata.valueOf(proxyRef.Metadata);
+            reference.Metadata = KVMetadata.ValueOf(proxyRef.Metadata);
         }
 
         return reference;

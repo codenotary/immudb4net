@@ -16,6 +16,7 @@ limitations under the License.
 
 using System.Text;
 using Google.Protobuf;
+using Google.Protobuf.Collections;
 
 namespace ImmuDB;
 
@@ -77,7 +78,7 @@ public static class Utils
     /**
      * Convert the list of SHA256 (32-length) bytes to a primitive byte[][].
      */
-    public static byte[][] ConvertSha256ListToBytesArray(List<ByteString> data)
+    public static byte[][] ConvertSha256ListToBytesArray(RepeatedField<ByteString> data)
     {
         if (data == null)
         {
@@ -123,5 +124,54 @@ public static class Utils
             Array.Reverse(valueBytes);
         }
         Array.Copy(valueBytes, 0, dest, destPos, valueBytes.Length);
+    }
+
+    public static void WriteWithBigEndian(BinaryWriter bw, ulong item)
+    {
+        var content = BitConverter.GetBytes(item);
+        if (BitConverter.IsLittleEndian)
+        {
+            Array.Reverse(content);
+        }
+        bw.Write(content);
+    }
+    
+    public static void WriteWithBigEndian(BinaryWriter bw, long item)
+    {
+        var content = BitConverter.GetBytes(item);
+        if (BitConverter.IsLittleEndian)
+        {
+            Array.Reverse(content);
+        }
+        bw.Write(content);
+    }
+    
+    public static void WriteWithBigEndian(BinaryWriter bw, double item)
+    {
+        var content = BitConverter.GetBytes(item);
+        if (BitConverter.IsLittleEndian)
+        {
+            Array.Reverse(content);
+        }
+        bw.Write(content);
+    }
+    
+    public static void WriteWithBigEndian(BinaryWriter bw, short item)
+    {
+        var content = BitConverter.GetBytes(item);
+        if (BitConverter.IsLittleEndian)
+        {
+            Array.Reverse(content);
+        }
+        bw.Write(content);
+    }
+
+    public static void WriteWithBigEndian(BinaryWriter bw, byte[]? item)
+    {
+        if ((item == null) || (item.Length == 0))
+        {
+            return;
+        }
+        bw.Write(item);
     }
 }

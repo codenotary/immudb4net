@@ -39,7 +39,7 @@ public class Entry
 
         if (e.Metadata != null)
         {
-            entry.Metadata = KVMetadata.valueOf(e.Metadata);
+            entry.Metadata = KVMetadata.ValueOf(e.Metadata);
         }
 
         if (e.ReferencedBy != null)

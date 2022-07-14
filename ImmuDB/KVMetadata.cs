@@ -38,11 +38,11 @@ public class KVMetadata
         attributes = new Dictionary<Byte, MetadataAttribute>();
     }
 
-    public static KVMetadata valueOf(ImmudbProxy.KVMetadata md)
+    public static KVMetadata ValueOf(ImmudbProxy.KVMetadata md)
     {
         KVMetadata metadata = new KVMetadata();
 
-        metadata.asDeleted(md.Deleted);
+        metadata.AsDeleted(md.Deleted);
 
         if (md.Expiration != null)
         {
@@ -54,7 +54,7 @@ public class KVMetadata
         return metadata;
     }
 
-    private void asDeleted(bool deleted)
+    private void AsDeleted(bool deleted)
     {
         if (!deleted)
         {

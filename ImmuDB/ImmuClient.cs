@@ -20,6 +20,7 @@ using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
+using ImmuDB.Crypto;
 using ImmuDB.Exceptions;
 using ImmudbProxy;
 using Org.BouncyCastle.Crypto;
@@ -191,6 +192,118 @@ public class ImmuClient
         return await GetAtTx(Utils.ToByteArray(key), 0);
     }
 
+    private async Task<Entry> VerifiedGet(ImmudbProxy.KeyRequest keyReq, ImmuState state)
+    {
+        ImmudbProxy.VerifiableGetRequest vGetReq = new ImmudbProxy.VerifiableGetRequest()
+        {
+            KeyRequest = keyReq,
+            ProveSinceTx = state.TxId
+        };
+
+        ImmudbProxy.VerifiableEntry vEntry;
+
+        try
+        {
+            vEntry = await immuServiceClient.WithAuthHeaders().VerifiableGetAsync(vGetReq);
+        }
+        catch (RpcException e)
+        {
+            if (e.Message.Contains("key not found"))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            throw e;
+        }
+
+        ImmuDB.Crypto.InclusionProof inclusionProof = ImmuDB.Crypto.InclusionProof.ValueOf(vEntry.InclusionProof);
+        ImmuDB.Crypto.DualProof dualProof = ImmuDB.Crypto.DualProof.ValueOf(vEntry.VerifiableTx.DualProof);
+
+        byte[] eh;
+        ulong sourceId, targetId;
+        byte[] sourceAlh;
+        byte[] targetAlh;
+
+        Entry entry = Entry.ValueOf(vEntry.Entry);
+
+        if (entry.ReferencedBy == null && !keyReq.Key.ToByteArray().SequenceEqual(entry.Key))
+        {
+            throw new VerificationException("Data is corrupted: entry does not belong to specified key");
+        }
+
+        if (entry.ReferencedBy != null && !keyReq.Key.ToByteArray().SequenceEqual(entry.ReferencedBy.Key))
+        {
+            throw new VerificationException("Data is corrupted: entry does not belong to specified key");
+        }
+
+        if (entry.Metadata != null && entry.Metadata.Deleted())
+        {
+            throw new VerificationException("Data is corrupted: entry is marked as deleted");
+        }
+
+        if (keyReq.AtTx != 0 && entry.Tx != keyReq.AtTx)
+        {
+            throw new VerificationException("Data is corrupted: entry does not belong to specified tx");
+        }
+
+        if (state.TxId <= entry.Tx)
+        {
+            byte[] digest = vEntry.VerifiableTx.DualProof.TargetTxHeader.EH.ToByteArray();
+            eh = CryptoUtils.DigestFrom(digest);
+
+            sourceId = state.TxId;
+            sourceAlh = CryptoUtils.DigestFrom(state.TxHash);
+            targetId = entry.Tx;
+            targetAlh = dualProof.TargetTxHeader.Alh();
+        }
+        else
+        {
+            byte[] digest = vEntry.VerifiableTx.DualProof.SourceTxHeader.EH.ToByteArray();
+            eh = CryptoUtils.DigestFrom(digest);
+
+            sourceId = entry.Tx;
+            sourceAlh = dualProof.SourceTxHeader.Alh();
+            targetId = state.TxId;
+            targetAlh = CryptoUtils.DigestFrom(state.TxHash);
+        }
+
+        byte[] kvDigest = entry.digestFor(vEntry.VerifiableTx.Tx.Header.Version);
+
+        if (!CryptoUtils.VerifyInclusion(inclusionProof, kvDigest, eh))
+        {
+            throw new VerificationException("Inclusion verification failed.");
+        }
+
+        if (state.TxId > 0)
+        {
+            if (!CryptoUtils.VerifyDualProof(
+                    dualProof,
+                    sourceId,
+                    targetId,
+                    sourceAlh,
+                    targetAlh
+            ))
+            {
+                throw new VerificationException("Dual proof verification failed.");
+            }
+        }
+
+        ImmuState newState = new ImmuState(
+                currentDb,
+                targetId,
+                targetAlh,
+                vEntry.VerifiableTx.Signature.Signature_.ToByteArray());
+
+        if (!newState.CheckSignature(serverSigningKey))
+        {
+            throw new VerificationException("State signature verification failed");
+        }
+
+        stateHolder.setState(CurrentServerUuid, newState);
+
+        return Entry.ValueOf(vEntry.Entry);
+    }
+
     //
     // ========== SET ==========
     //
@@ -219,6 +332,160 @@ public class ImmuClient
     public async Task<TxHeader> Set(string key, byte[] value)
     {
         return await Set(Utils.ToByteArray(key), value);
+    }
+
+    public async Task<TxHeader> SetAll(List<KVPair> kvList)
+    {
+        ImmudbProxy.SetRequest request = new ImmudbProxy.SetRequest();
+
+        foreach (KVPair kv in kvList)
+        {
+            ImmudbProxy.KeyValue kvProxy = new ImmudbProxy.KeyValue();
+
+            kvProxy.Key = Utils.ToByteString(kv.Key);
+            kvProxy.Value = Utils.ToByteString(kv.Value);
+            request.KVs.Add(kvProxy);
+        }
+
+        ImmudbProxy.TxHeader txHdr = await immuServiceClient.WithAuthHeaders().SetAsync(request);
+
+        if (txHdr.Nentries != kvList.Count)
+        {
+            throw new CorruptedDataException();
+        }
+
+        return TxHeader.ValueOf(txHdr);
+    }
+
+    public async Task<TxHeader> SetReference(byte[] key, byte[] referencedKey, ulong atTx)
+    {
+        ImmudbProxy.ReferenceRequest req = new ImmudbProxy.ReferenceRequest()
+        {
+            Key = Utils.ToByteString(key),
+            ReferencedKey = Utils.ToByteString(referencedKey),
+            AtTx = atTx,
+            BoundRef = atTx > 0
+        };
+
+        ImmudbProxy.TxHeader txHdr = await immuServiceClient.WithAuthHeaders().SetReferenceAsync(req);
+
+        if (txHdr.Nentries != 1)
+        {
+            throw new CorruptedDataException();
+        }
+
+        return TxHeader.ValueOf(txHdr);
+    }
+
+    public async Task<TxHeader> SetReference(String key, String referencedKey, ulong atTx)
+    {
+        return await SetReference(
+            Utils.ToByteArray(key),
+            Utils.ToByteArray(referencedKey),
+            atTx);
+    }
+
+    public async Task<TxHeader> SetReference(String key, String referencedKey)
+    {
+        return await SetReference(
+            Utils.ToByteArray(key),
+            Utils.ToByteArray(referencedKey),
+            0);
+    }
+
+    //
+    // ========== DELETE ==========
+    //
+
+    public async Task<TxHeader> Delete(String key)
+    {
+        return await Delete(Utils.ToByteArray(key));
+    }
+
+    public async Task<TxHeader> Delete(byte[] key)
+    {
+        try
+        {
+            ImmudbProxy.DeleteKeysRequest req = new ImmudbProxy.DeleteKeysRequest();
+            req.Keys.Add(Utils.ToByteString(key));
+
+            return TxHeader.ValueOf(await immuServiceClient.WithAuthHeaders().DeleteAsync(req));
+        }
+        catch (RpcException e)
+        {
+            if (e.Message.Contains("key not found"))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            throw e;
+        }
+    }
+
+    //
+    // ========== HISTORY ==========
+    //
+
+    public async Task<List<Entry>> History(String key, int limit, ulong offset, bool desc)
+    {
+        return await History(Utils.ToByteArray(key), limit, offset, desc);
+    }
+
+    public async Task<List<Entry>> History(byte[] key, int limit, ulong offset, bool desc)
+    {
+        try
+        {
+            ImmudbProxy.Entries entries = await immuServiceClient.WithAuthHeaders().HistoryAsync(new ImmudbProxy.HistoryRequest()
+            {
+                Key = Utils.ToByteString(key),
+                Limit = limit,
+                Offset = offset,
+                Desc = desc
+            });
+
+            return buildList(entries);
+        }
+        catch (RpcException e)
+        {
+            if (e.Message.Contains("key not found"))
+            {
+                throw new KeyNotFoundException();
+            }
+
+            throw e;
+        }
+    }
+
+    private List<Entry> buildList(ImmudbProxy.Entries entries)
+    {
+        List<Entry> result = new List<Entry>(entries.Entries_.Count);
+        entries.Entries_.ToList().ForEach(entry => result.Add(Entry.ValueOf(entry)));
+        return result;
+    }
+
+    private List<ZEntry> buildList(ImmudbProxy.ZEntries entries)
+    {
+        List<ZEntry> result = new List<ZEntry>(entries.Entries.Count);
+        entries.Entries.ToList()
+                .ForEach(entry => result.Add(ZEntry.ValueOf(entry)));
+        return result;
+    }
+
+    private List<Tx> buildList(ImmudbProxy.TxList txList)
+    {
+        List<Tx> result = new List<Tx>(txList.Txs.Count);
+        txList.Txs.ToList().ForEach(tx =>
+        {
+            try
+            {
+                result.Add(Tx.ValueOf(tx));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        });
+        return result;
     }
 
     ///Builder is an inner class that implements the builder pattern for ImmuClient

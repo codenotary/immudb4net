@@ -62,54 +62,15 @@ public class TxHeader
         );
     }
 
-    private void WriteWithBigEndian(BinaryWriter bw, ulong item)
-    {
-        var content = BitConverter.GetBytes(item);
-        if (BitConverter.IsLittleEndian)
-        {
-            Array.Reverse(content);
-        }
-        bw.Write(content);
-    }
-
-    private void WriteWithBigEndian(BinaryWriter bw, long item)
-    {
-        var content = BitConverter.GetBytes(item);
-        if (BitConverter.IsLittleEndian)
-        {
-            Array.Reverse(content);
-        }
-        bw.Write(content);
-    }
-
-    private void WriteWithBigEndian(BinaryWriter bw, short item)
-    {
-        var content = BitConverter.GetBytes(item);
-        if (BitConverter.IsLittleEndian)
-        {
-            Array.Reverse(content);
-        }
-        bw.Write(content);
-    }
-
-    private void WriteWithBigEndian(BinaryWriter bw, byte[]? item)
-    {
-        if ((item == null) || (item.Length == 0))
-        {
-            return;
-        }
-        bw.Write(item);
-    }
-
     public byte[] Alh()
     {
         // txID + prevAlh + innerHash
         MemoryStream bytes = new MemoryStream(Consts.TX_ID_SIZE + 2 * Consts.SHA256_SIZE);
         using (BinaryWriter bw = new BinaryWriter(bytes))
         {
-            WriteWithBigEndian(bw, Id);
-            WriteWithBigEndian(bw, PrevAlh);
-            WriteWithBigEndian(bw, InnerHash());
+            Utils.WriteWithBigEndian(bw, Id);
+            Utils.WriteWithBigEndian(bw, PrevAlh);
+            Utils.WriteWithBigEndian(bw, InnerHash());
         }
 
         return CryptoUtils.Sha256Sum(bytes.ToArray());
@@ -125,21 +86,21 @@ public class TxHeader
 
         using (BinaryWriter bw = new BinaryWriter(bytes))
         {
-            WriteWithBigEndian(bw, Ts);
-            WriteWithBigEndian(bw, (short)Version);
+            Utils.WriteWithBigEndian(bw, Ts);
+            Utils.WriteWithBigEndian(bw, (short)Version);
 
             switch (Version)
             {
                 case 0:
                     {
-                        WriteWithBigEndian(bw, NEntries);
+                        Utils.WriteWithBigEndian(bw, NEntries);
                         break;
                     }
                 case 1:
                     {
                         // TODO: add support for TxMetadata
-                        WriteWithBigEndian(bw, (short)0);
-                        WriteWithBigEndian(bw, NEntries);
+                        Utils.WriteWithBigEndian(bw, (short)0);
+                        Utils.WriteWithBigEndian(bw, NEntries);
                         break;
                     }
                 default:
@@ -148,9 +109,9 @@ public class TxHeader
                     }
                     // following records are currently common in versions 0 and 1
             }
-            WriteWithBigEndian(bw, Eh);
-            WriteWithBigEndian(bw, BlTxId);
-            WriteWithBigEndian(bw, BlRoot);
+            Utils.WriteWithBigEndian(bw, Eh);
+            Utils.WriteWithBigEndian(bw, BlTxId);
+            Utils.WriteWithBigEndian(bw, BlRoot);
         }
 
         return CryptoUtils.Sha256Sum(bytes.ToArray());

@@ -18,20 +18,39 @@ using ImmuDB.Crypto;
 
 namespace ImmuDB;
 
-/**
- * KV represents a key value pair.
- */
-public class KV
+public class TxEntry
 {
-    public byte[] Key { get; private set; }
-    public KVMetadata? Metadata { get; private set; }
-    public byte[] Value { get; private set; }
 
-    public KV(byte[] key, KVMetadata? metadata, byte[] value)
+    public byte[] Key {get; private set;}
+    public KVMetadata Metadata {get; private set;}
+    public int VLength {get; private set;}
+    public byte[] HVal {get; private set;}
+
+    private TxEntry(byte[] key, KVMetadata metadata, int vLength, byte[] hVal)
     {
-        this.Key = key;
+        this.Key = new byte[key.Length];
+        Array.Copy(key, 0, this.Key, 0, key.Length);
+
         this.Metadata = metadata;
-        this.Value = value;
+        this.VLength = vLength;
+        this.HVal = hVal;
+    }
+
+    public static TxEntry valueOf(ImmudbProxy.TxEntry txe)
+    {
+        KVMetadata md = null;
+
+        if (txe.Metadata != null)
+        {
+            md = KVMetadata.ValueOf(txe.Metadata);
+        }
+
+        return new TxEntry(
+                        txe.Key.ToByteArray(),
+                        md,
+                        txe.VLen,
+                        CryptoUtils.DigestFrom(txe.HValue.ToByteArray())
+                );
     }
 
     public byte[] DigestFor(int version)
@@ -45,7 +64,7 @@ public class KV
         throw new InvalidOperationException("unsupported tx header version");
     }
 
-    byte[] Digest_v0()
+    public byte[] Digest_v0()
     {
         if (Metadata != null)
         {
@@ -53,17 +72,16 @@ public class KV
         }
 
         byte[] b = new byte[Key.Length + Consts.SHA256_SIZE];
-        Array.Copy(Key, b, Key.Length);
 
-        byte[] hvalue = CryptoUtils.Sha256Sum(Value);
-        Array.Copy(Value, 0, b, Key.Length, hvalue.Length);
+        Array.Copy(Key, 0, b, 0, Key.Length);
+        Array.Copy(HVal, 0, b, Key.Length, HVal.Length);
 
         return CryptoUtils.Sha256Sum(b);
     }
 
-    byte[] Digest_v1()
+    public byte[] Digest_v1()
     {
-        byte[] mdbs = new byte[] { };
+        byte[] mdbs = null;
         int mdLen = 0;
 
         if (Metadata != null)
@@ -73,7 +91,7 @@ public class KV
         }
 
         MemoryStream bytes = new MemoryStream(2 + mdLen + 2 + Key.Length + Consts.SHA256_SIZE);
-        using (BinaryWriter bw = new BinaryWriter(bytes))
+        using (BinaryWriter bw = new BinaryWriter(bytes)) 
         {
             Utils.WriteWithBigEndian(bw, (short)mdLen);
             if (mdLen > 0)
@@ -82,8 +100,10 @@ public class KV
             }
             Utils.WriteWithBigEndian(bw, (short)Key.Length);
             Utils.WriteWithBigEndian(bw, Key);
-            Utils.WriteWithBigEndian(bw, CryptoUtils.Sha256Sum(Value));
+            Utils.WriteWithBigEndian(bw, HVal);
+
         }
-        return bytes.ToArray();
+        return CryptoUtils.Sha256Sum(bytes.ToArray());
     }
+
 }

@@ -57,6 +57,10 @@ TODO
 
 [NuGet.Org]: https://nuget.org
 
+## Build locally from sources
+
+Use ```dotnet build``` to build locally the ImmuDB client assembly.
+
 ### How to use immudb4net packages from Github Packages
 
 ## Supported Versions
