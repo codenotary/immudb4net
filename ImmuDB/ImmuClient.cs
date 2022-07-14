@@ -91,7 +91,7 @@ public class ImmuClient
         await immuServiceClient.WithAuthHeaders().LogoutAsync(new Empty(), this.headers);
     }
 
-    public async Task<ImmuState?> State()
+    public async Task<ImmuState> State()
     {
         ImmuState? state = stateHolder.GetState(CurrentServerUuid, currentDb);
         if (state == null)
@@ -391,6 +391,99 @@ public class ImmuClient
             Utils.ToByteArray(key),
             Utils.ToByteArray(referencedKey),
             0);
+    }
+
+    public async Task<TxHeader> VerifiedSet(String key, byte[] value)
+    {
+        return await VerifiedSet(Utils.ToByteArray(key), value);
+    }
+
+    public async Task<TxHeader> VerifiedSet(byte[] key, byte[] value)
+    {
+        ImmuState state = await State();
+        ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
+        {
+            Key = Utils.ToByteString(key),
+            Value = Utils.ToByteString(value),
+        };
+
+
+        var setRequest = new ImmudbProxy.SetRequest();
+        setRequest.KVs.Add(kv);
+        ImmudbProxy.VerifiableSetRequest vSetReq = new ImmudbProxy.VerifiableSetRequest()
+        {
+            SetRequest = setRequest,
+            ProveSinceTx = state.TxId
+        };
+
+        ImmudbProxy.VerifiableTx vtx = await immuServiceClient.WithAuthHeaders().VerifiableSetAsync(vSetReq);
+        int ne = vtx.Tx.Header.Nentries;
+
+        if (ne != 1 || vtx.Tx.Entries.Count != 1)
+        {
+            throw new VerificationException($"Got back ${ne} entries (in tx metadata) instead of 1.");
+        }
+
+        Tx tx;
+        try
+        {
+            tx = Tx.ValueOf(vtx.Tx);
+        }
+        catch (Exception e)
+        {
+            throw new VerificationException("Failed to extract the transaction.", e);
+        }
+
+        TxHeader txHeader = tx.Header;
+
+        Entry entry = Entry.ValueOf(new ImmudbProxy.Entry()
+        {
+            Key = Utils.ToByteString(key),
+            Value = Utils.ToByteString(value),
+        });
+
+        ImmuDB.Crypto.InclusionProof inclusionProof = tx.Proof(entry.getEncodedKey());
+
+        if (!CryptoUtils.VerifyInclusion(inclusionProof, entry.digestFor(txHeader.Version), txHeader.Eh))
+        {
+            throw new VerificationException("Data is corrupted (verify inclusion failed)");
+        }
+
+        ImmuState newState = VerifyDualProof(vtx, tx, state);
+
+        if (!newState.CheckSignature(serverSigningKey))
+        {
+            throw new VerificationException("State signature verification failed");
+        }
+
+        stateHolder.setState(CurrentServerUuid, newState);
+
+        return TxHeader.ValueOf(vtx.Tx.Header);
+    }
+
+    private ImmuState VerifyDualProof(ImmudbProxy.VerifiableTx vtx, Tx tx, ImmuState state)
+    {
+
+        ulong sourceId = state.TxId;
+        ulong targetId = tx.Header.Id;
+        byte[] sourceAlh = CryptoUtils.DigestFrom(state.TxHash);
+        byte[] targetAlh = tx.Header.Alh();
+
+        if (state.TxId > 0)
+        {
+            if (!CryptoUtils.VerifyDualProof(
+                    Crypto.DualProof.ValueOf(vtx.DualProof),
+                    sourceId,
+                    targetId,
+                    sourceAlh,
+                    targetAlh
+            ))
+            {
+                throw new VerificationException("Data is corrupted (dual proof verification failed).");
+            }
+        }
+
+        return new ImmuState(currentDb, targetId, targetAlh, vtx.Signature.Signature_.ToByteArray());
     }
 
     //

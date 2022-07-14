@@ -20,15 +20,15 @@ namespace ImmuDB;
 
 public class Tx
 {
-    private TxHeader header;
-    private List<TxEntry> entries;
-    private HTree htree;
+    public TxHeader Header {get; private set;}
+    public List<TxEntry> Entries {get; private set;}
+    public HTree Htree {get; private set;}
 
     private Tx(TxHeader header, List<TxEntry> entries, HTree htree)
     {
-        this.header = header;
-        this.entries = entries;
-        this.htree = htree;
+        this.Header = header;
+        this.Entries = entries;
+        this.Htree = htree;
     }
 
     public static Tx ValueOf(ImmudbProxy.Tx stx)
@@ -45,7 +45,7 @@ public class Tx
 
         tx.BuildHashTree();
 
-        if (!tx.header.Eh.SequenceEqual(hTree.Root()))
+        if (!tx.Header.Eh.SequenceEqual(hTree.Root()))
         {
             throw new InvalidOperationException("corrupted data, eh doesn't match expected value");
         }
@@ -56,12 +56,12 @@ public class Tx
 
     public void BuildHashTree()
     {
-        byte[][] digests = new byte[entries.Count][];
-        for (int i = 0; i < entries.Count; i++)
+        byte[][] digests = new byte[Entries.Count][];
+        for (int i = 0; i < Entries.Count; i++)
         {
-            digests[i] = entries[i].DigestFor(header.Version);
+            digests[i] = Entries[i].DigestFor(Header.Version);
         }
-        htree.BuildWith(digests);
+        Htree.BuildWith(digests);
     }
 
     public InclusionProof Proof(byte[] key)
@@ -71,14 +71,14 @@ public class Tx
         {
             throw new KeyNotFoundException();
         }
-        return htree.inclusionProof(kindex);
+        return Htree.inclusionProof(kindex);
     }
 
     private int IndexOf(byte[] key)
     {
-        for (int i = 0; i < entries.Count; i++)
+        for (int i = 0; i < Entries.Count; i++)
         {
-            if (entries[i].Key.SequenceEqual(key))
+            if (Entries[i].Key.SequenceEqual(key))
             {
                 return i;
             }
