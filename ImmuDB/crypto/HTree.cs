@@ -54,6 +54,7 @@ public class HTree
         {
             levels[l] = new byte[lw >> l][];
         }
+        root = new byte[] {};
     }
 
     public void BuildWith(byte[][] digests)
@@ -146,7 +147,7 @@ public class HTree
 
         if (width == 1)
         {
-            return new InclusionProof(i, width, null);
+            return new InclusionProof(i, width, new byte[][] {});
         }
 
         byte[][] terms = new byte[0][];

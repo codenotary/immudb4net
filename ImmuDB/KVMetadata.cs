@@ -33,7 +33,7 @@ public class KVMetadata
 
     private Dictionary<Byte, MetadataAttribute> attributes;
 
-    private KVMetadata()
+    public KVMetadata()
     {
         attributes = new Dictionary<Byte, MetadataAttribute>();
     }

@@ -21,7 +21,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Protobuf Include="proto/schema.proto"
-			OutputDir="%(RelativeDir)/.." 
+			OutputDir="%(RelativeDir)/.."
+            ProtoCompile = "True"
 			OutputOptions="file_extension=.g.cs"
 			GrpcServices="client"  />
 		

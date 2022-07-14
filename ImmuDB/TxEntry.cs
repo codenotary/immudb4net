@@ -38,7 +38,7 @@ public class TxEntry
 
     public static TxEntry valueOf(ImmudbProxy.TxEntry txe)
     {
-        KVMetadata md = null;
+        KVMetadata md = new KVMetadata();
 
         if (txe.Metadata != null)
         {
@@ -81,7 +81,7 @@ public class TxEntry
 
     public byte[] Digest_v1()
     {
-        byte[] mdbs = null;
+        byte[] mdbs = new byte[0];
         int mdLen = 0;
 
         if (Metadata != null)

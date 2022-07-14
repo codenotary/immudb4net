@@ -16,6 +16,7 @@ limitations under the License.
 
 namespace ImmuDB;
 
+using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
@@ -33,7 +34,7 @@ public class ImmuClient
     private readonly ImmuStateHolder stateHolder;
     private GrpcChannel? channel;
 
-    public string? CurrentServerUuid { get; set; }
+    public string CurrentServerUuid { get; set; } = "";
 
     private string currentDb = "defaultdb";
     internal ImmuService.ImmuServiceClient immuServiceClient;
@@ -487,6 +488,144 @@ public class ImmuClient
     }
 
     //
+    // ========== Z ==========
+    //
+
+    public async Task<TxHeader> ZAdd(byte[] set, byte[] key, ulong atTx, double score)
+    {
+        ImmudbProxy.TxHeader txHdr = await immuServiceClient.WithAuthHeaders().ZAddAsync(
+                new ImmudbProxy.ZAddRequest()
+                {
+                    Set = Utils.ToByteString(set),
+                    Key = Utils.ToByteString(key),
+                    AtTx = atTx,
+                    Score = score,
+                    BoundRef = atTx > 0
+                });
+
+        if (txHdr.Nentries != 1)
+        {
+            throw new CorruptedDataException();
+        }
+
+        return TxHeader.ValueOf(txHdr);
+    }
+
+    public async Task<TxHeader> ZAdd(String set, String key, double score)
+    {
+        return await ZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), score);
+    }
+
+    public async Task<TxHeader> ZAdd(byte[] set, byte[] key, double score)
+    {
+        return await ZAdd(set, key, 0, score);
+    }
+
+    public async Task<TxHeader> VerifiedZAdd(byte[] set, byte[] key, ulong atTx, double score)
+    {
+        ImmuState state = await State();
+
+        ImmudbProxy.ZAddRequest zAddReq = new ImmudbProxy.ZAddRequest()
+        {
+            Set = Utils.ToByteString(set),
+            Key = Utils.ToByteString(key),
+            AtTx = atTx,
+            Score = score,
+            BoundRef = atTx > 0
+        };
+
+        ImmudbProxy.VerifiableZAddRequest vZAddReq = new ImmudbProxy.VerifiableZAddRequest()
+        {
+            ZAddRequest = zAddReq,
+            ProveSinceTx = state.TxId
+        };
+
+        ImmudbProxy.VerifiableTx vtx = await immuServiceClient.WithAuthHeaders().VerifiableZAddAsync(vZAddReq);
+
+        if (vtx.Tx.Header.Nentries != 1)
+        {
+            throw new VerificationException("Data is corrupted.");
+        }
+
+        Tx tx;
+        try
+        {
+            tx = Tx.ValueOf(vtx.Tx);
+        }
+        catch (Exception e)
+        {
+            throw new VerificationException("Failed to extract the transaction.", e);
+        }
+
+        TxHeader txHeader = tx.Header;
+
+        ZEntry entry = ZEntry.ValueOf(new ImmudbProxy.ZEntry
+        {
+            Set = Utils.ToByteString(set),
+            Key = Utils.ToByteString(key),
+            AtTx = atTx,
+            Score = score
+        });
+
+        Crypto.InclusionProof inclusionProof = tx.Proof(entry.getEncodedKey());
+
+        if (!CryptoUtils.VerifyInclusion(inclusionProof, entry.DigestFor(txHeader.Version), txHeader.Eh))
+        {
+            throw new VerificationException("Data is corrupted (inclusion verification failed).");
+        }
+
+        if (!txHeader.Eh.SequenceEqual(CryptoUtils.DigestFrom(vtx.DualProof.TargetTxHeader.EH.ToByteArray())))
+        {
+            throw new VerificationException("Data is corrupted (different digests).");
+        }
+
+        ImmuState newState = VerifyDualProof(vtx, tx, state);
+
+        if (!newState.CheckSignature(serverSigningKey))
+        {
+            throw new VerificationException("State signature verification failed");
+        }
+
+        stateHolder.setState(CurrentServerUuid, newState);
+
+        return TxHeader.ValueOf(vtx.Tx.Header);
+    }
+
+    public async Task<TxHeader> VerifiedZAdd(String set, String key, double score)
+    {
+        return await VerifiedZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), score);
+    }
+
+    public async Task<TxHeader> VerifiedZAdd(byte[] set, byte[] key, double score)
+    {
+        return await VerifiedZAdd(set, key, 0, score);
+    }
+
+    public async Task<TxHeader> VerifiedZAdd(String set, String key, ulong atTx, double score)
+    {
+        return await VerifiedZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), atTx, score);
+    }
+
+    public async Task<List<ZEntry>> ZScan(String set, ulong limit, bool reverse)
+    {
+        return await ZScan(Utils.ToByteArray(set), limit, reverse);
+    }
+
+    public async Task<List<ZEntry>> ZScan(byte[] set, ulong limit, bool reverse)
+    {
+        ImmudbProxy.ZScanRequest req = new ImmudbProxy.ZScanRequest()
+        {
+            Set = Utils.ToByteString(set),
+            Limit = limit,
+            Desc = reverse
+        };
+
+        ImmudbProxy.ZEntries zEntries = await immuServiceClient.WithAuthHeaders().ZScanAsync(req);
+
+        return buildList(zEntries);
+    }
+
+    //
     // ========== DELETE ==========
     //
 
@@ -508,11 +647,229 @@ public class ImmuClient
         {
             if (e.Message.Contains("key not found"))
             {
+
                 throw new KeyNotFoundException();
             }
 
             throw e;
         }
+    }
+
+    //
+    // ========== TX ==========
+    //
+
+    public async Task<Tx> TxById(ulong txId)
+    {
+        try
+        {
+            ImmudbProxy.Tx tx = await immuServiceClient.WithAuthHeaders().TxByIdAsync(
+                new ImmudbProxy.TxRequest()
+                {
+                    Tx = txId
+                });
+            return Tx.ValueOf(tx);
+        }
+        catch (RpcException e)
+        {
+            if (e.Message.Contains("tx not found"))
+            {
+                throw new TxNotFoundException();
+            }
+
+            throw e;
+        }
+    }
+
+    public async Task<Tx> VerifiedTxById(ulong txId)
+    {
+        ImmuState state = await State();
+        ImmudbProxy.VerifiableTxRequest vTxReq = new ImmudbProxy.VerifiableTxRequest()
+        {
+            Tx = txId,
+            ProveSinceTx = state.TxId
+        };
+
+        ImmudbProxy.VerifiableTx vtx;
+
+        try
+        {
+            vtx = await immuServiceClient.WithAuthHeaders().VerifiableTxByIdAsync(vTxReq);
+        }
+        catch (RpcException e)
+        {
+            if (e.Message.Contains("tx not found"))
+            {
+                throw new TxNotFoundException();
+            }
+
+            throw e;
+        }
+
+        Crypto.DualProof dualProof = Crypto.DualProof.ValueOf(vtx.DualProof);
+
+        ulong sourceId;
+        ulong targetId;
+        byte[] sourceAlh;
+        byte[] targetAlh;
+
+        if (state.TxId <= txId)
+        {
+            sourceId = state.TxId;
+            sourceAlh = CryptoUtils.DigestFrom(state.TxHash);
+            targetId = txId;
+            targetAlh = dualProof.TargetTxHeader.Alh();
+        }
+        else
+        {
+            sourceId = txId;
+            sourceAlh = dualProof.SourceTxHeader.Alh();
+            targetId = state.TxId;
+            targetAlh = CryptoUtils.DigestFrom(state.TxHash);
+        }
+
+        if (state.TxId > 0)
+        {
+            if (!CryptoUtils.VerifyDualProof(
+                    Crypto.DualProof.ValueOf(vtx.DualProof),
+                    sourceId,
+                    targetId,
+                    sourceAlh,
+                    targetAlh
+            ))
+            {
+                throw new VerificationException("Data is corrupted (dual proof verification failed).");
+            }
+        }
+
+        Tx tx;
+        try
+        {
+            tx = Tx.ValueOf(vtx.Tx);
+        }
+        catch (Exception e)
+        {
+            throw new VerificationException("Failed to extract the transaction.", e);
+        }
+
+        ImmuState newState = new ImmuState(currentDb, targetId, targetAlh, vtx.Signature.Signature_.ToByteArray());
+
+        if (!newState.CheckSignature(serverSigningKey))
+        {
+            throw new VerificationException("State signature verification failed");
+        }
+
+        stateHolder.setState(CurrentServerUuid, newState);
+
+        return tx;
+    }
+
+    public async Task<List<Tx>> TxScan(ulong initialTxId)
+    {
+        ImmudbProxy.TxScanRequest req = new ImmudbProxy.TxScanRequest()
+        {
+            InitialTx = initialTxId
+        };
+
+        ImmudbProxy.TxList txList = await immuServiceClient.WithAuthHeaders().TxScanAsync(req);
+        return buildList(txList);
+    }
+
+    public async Task<List<Tx>> TxScan(ulong initialTxId, uint limit, bool desc)
+    {
+        ImmudbProxy.TxScanRequest req = new ImmudbProxy.TxScanRequest()
+        {
+            InitialTx = initialTxId,
+            Limit = limit,
+            Desc = desc
+        };
+        ImmudbProxy.TxList txList = await immuServiceClient.WithAuthHeaders().TxScanAsync(req);
+        return buildList(txList);
+    }
+
+    //
+    // ========== HEALTH ==========
+    //
+
+    public async Task<bool> HealthCheck()
+    {
+        var healthResponse =await immuServiceClient.WithAuthHeaders().HealthAsync(new Empty());
+        return healthResponse.Status;
+    }
+
+    public bool isConnected()
+    {
+        return channel != null;
+    }
+
+    //
+    // ========== USER MGMT ==========
+    //
+
+    public async Task<List<Iam.User>> ListUsers()
+    {
+        ImmudbProxy.UserList userList = await immuServiceClient.WithAuthHeaders().ListUsersAsync(new Empty());
+
+        return userList.Users.ToList()
+                .Select(u => new Iam.User(
+                    u.User_.ToString(System.Text.Encoding.UTF8),
+                    BuildPermissions(u.Permissions))
+                {
+                    Active = u.Active,
+                    CreatedAt = u.Createdat,
+                    CreatedBy = u.Createdby,
+                }).ToList();
+    }
+
+    private List<Iam.Permission> BuildPermissions(RepeatedField<ImmudbProxy.Permission> permissionsList)
+    {
+        return permissionsList.ToList()
+                .Select(p => (Iam.Permission)p.Permission_).ToList();
+    }
+
+    public async Task CreateUser(String user, String password, Iam.Permission permission, String database)
+    {
+        ImmudbProxy.CreateUserRequest createUserRequest = new ImmudbProxy.CreateUserRequest()
+        {
+            User = Utils.ToByteString(user),
+            Password = Utils.ToByteString(password),
+            Permission = (uint)permission,
+            Database = database
+        };
+
+        await immuServiceClient.WithAuthHeaders().CreateUserAsync(createUserRequest);
+    }
+
+    public async Task ChangePassword(String user, String oldPassword, String newPassword)
+    {
+        ImmudbProxy.ChangePasswordRequest changePasswordRequest = new ImmudbProxy.ChangePasswordRequest()
+        {
+            User = Utils.ToByteString(user),
+            OldPassword = Utils.ToByteString(oldPassword),
+            NewPassword = Utils.ToByteString(newPassword),
+        };
+
+        await immuServiceClient.WithAuthHeaders().ChangePasswordAsync(changePasswordRequest);
+    }
+
+    //
+    // ========== INDEX MGMT ==========
+    //
+
+    public async Task FlushIndex(float cleanupPercentage, bool synced)
+    {
+        ImmudbProxy.FlushIndexRequest req = new ImmudbProxy.FlushIndexRequest()
+        {
+            CleanupPercentage = cleanupPercentage,
+            Synced = synced
+        };
+
+        await immuServiceClient.WithAuthHeaders().FlushIndexAsync(req);
+    }
+
+    public async Task CompactIndex()
+    {
+        await immuServiceClient.WithAuthHeaders().CompactIndexAsync(new Empty());
     }
 
     //
