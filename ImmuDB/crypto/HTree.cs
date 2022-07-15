@@ -69,7 +69,7 @@ public class HTree
         if (digests.Length > maxWidth)
         {
             throw new ArgumentException(
-                    $"Provided digests' length of ${digests.Length} is bigger than tree's maxWidth of ${maxWidth}.");
+                    $"Provided digests' length of {digests.Length} is bigger than tree's maxWidth of {maxWidth}.");
         }
 
         for (int i = 0; i < digests.Length; i++)
@@ -138,7 +138,7 @@ public class HTree
     {
         if (i >= width)
         {
-            throw new ArgumentException($"Provided index (${i}) is higher then the tree's width (${width}).");
+            throw new ArgumentException($"Provided index ({i}) is higher then the tree's width ({width}).");
         }
         int m = i;
         int n = width;

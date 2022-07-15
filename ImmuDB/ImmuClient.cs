@@ -48,7 +48,7 @@ public class ImmuClient
     public ImmuClient(Builder builder)
     {
         string schema = builder.ServerUrl.StartsWith("http") ? "" : "http://";
-        var grpcAddress = $"{schema}{builder.ServerUrl}:${builder.ServerPort}";
+        var grpcAddress = $"{schema}{builder.ServerUrl}:{builder.ServerPort}";
         channel = GrpcChannel.ForAddress(grpcAddress);
         var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
         immuServiceClient = new ImmuService.ImmuServiceClient(invoker);
@@ -422,7 +422,7 @@ public class ImmuClient
 
         if (ne != 1 || vtx.Tx.Entries.Count != 1)
         {
-            throw new VerificationException($"Got back ${ne} entries (in tx metadata) instead of 1.");
+            throw new VerificationException($"Got back {ne} entries (in tx metadata) instead of 1.");
         }
 
         Tx tx;
@@ -956,6 +956,11 @@ public class ImmuClient
             Auth = true;
         }
 
+        public Builder WithStateHolder(ImmuStateHolder stateHolder) {
+            StateHolder = stateHolder;
+            return this;
+        }
+
         public Builder WithAuth(bool withAuth)
         {
             this.Auth = withAuth;
@@ -978,6 +983,10 @@ public class ImmuClient
         {
             this.ServerSigningKey = ImmuState.GetPublicKeyFromPemFile(publicKeyFileName);
             return this;
+        }
+
+        public ImmuClient Build() {
+            return new ImmuClient(this);
         }
     }
 }

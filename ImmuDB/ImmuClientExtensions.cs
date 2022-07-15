@@ -17,11 +17,11 @@ limitations under the License.
 namespace ImmudbProxy
 {
     using Grpc.Core;
-    using grpc = global::Grpc.Core;
+    using GrpcCore = global::Grpc.Core;
 
     public static partial class ImmuService
     {
-        public partial class ImmuServiceClient : grpc::ClientBase<ImmuServiceClient>
+        public partial class ImmuServiceClient : GrpcCore::ClientBase<ImmuServiceClient>
         {
             internal const string AUTH_HEADER = "authorization";
 

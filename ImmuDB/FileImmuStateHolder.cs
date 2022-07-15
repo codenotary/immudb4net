@@ -102,11 +102,16 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
+    public static Builder NewBuilder() 
+    {
+        return new Builder();
+    }
+
     public class Builder
     {
         public string StatesFolder { get; private set; }
 
-        private Builder()
+        public Builder()
         {
             StatesFolder = "states";
         }

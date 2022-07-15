@@ -105,7 +105,7 @@ public class TxHeader
                     }
                 default:
                     {
-                        throw new InvalidOperationException($"missing tx hash calculation method for version ${Version}");
+                        throw new InvalidOperationException($"missing tx hash calculation method for version {Version}");
                     }
                     // following records are currently common in versions 0 and 1
             }

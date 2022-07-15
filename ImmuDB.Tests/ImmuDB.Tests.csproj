@@ -1,18 +1,29 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <LangVersion>10.0</LangVersion>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net7.0</TargetFrameworks>
+		<LangVersion>10.0</LangVersion>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="NUnit.Analyzers" Version="3.3.0" />
-    <PackageReference Include="coverlet.collector" Version="3.1.2" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
+        <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
+        <PackageReference Include="coverlet.collector" Version="3.1.2" />
+
+        <PackageReference Include="Portable.BouncyCastle" Version="1.9.0"/>
+        <PackageReference Include="Google.Protobuf" Version="3.21.2"/>
+        <PackageReference Include="System.Text.Json" Version="6.0.5"/>
+        <PackageReference Include="Google.Api.CommonProtos" Version="2.6.0"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.46.0"/>
+        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.46.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\ImmuDB\ImmuDB.csproj" />
+    </ItemGroup>
 
 </Project>
