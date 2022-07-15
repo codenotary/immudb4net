@@ -29,7 +29,7 @@ namespace ImmudbProxy {
   /// </summary>
   public static partial class ImmuService
   {
-    static readonly string __ServiceName = "ImmudbProxy.ImmuService";
+    static readonly string __ServiceName = "immudb.schema.ImmuService";
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static void __Helper_SerializeMessage(global::Google.Protobuf.IMessage message, grpc::SerializationContext context)
@@ -67,151 +67,151 @@ namespace ImmudbProxy {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::Google.Protobuf.WellKnownTypes.Empty> __Marshaller_google_protobuf_Empty = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::Google.Protobuf.WellKnownTypes.Empty.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.UserList> __Marshaller_ImmudbProxy_UserList = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UserList.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.UserList> __Marshaller_immudb_schema_UserList = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UserList.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.CreateUserRequest> __Marshaller_ImmudbProxy_CreateUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.CreateUserRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.CreateUserRequest> __Marshaller_immudb_schema_CreateUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.CreateUserRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ChangePasswordRequest> __Marshaller_ImmudbProxy_ChangePasswordRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ChangePasswordRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ChangePasswordRequest> __Marshaller_immudb_schema_ChangePasswordRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ChangePasswordRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ChangePermissionRequest> __Marshaller_ImmudbProxy_ChangePermissionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ChangePermissionRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ChangePermissionRequest> __Marshaller_immudb_schema_ChangePermissionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ChangePermissionRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.SetActiveUserRequest> __Marshaller_ImmudbProxy_SetActiveUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SetActiveUserRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.SetActiveUserRequest> __Marshaller_immudb_schema_SetActiveUserRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SetActiveUserRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.AuthConfig> __Marshaller_ImmudbProxy_AuthConfig = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.AuthConfig.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.AuthConfig> __Marshaller_immudb_schema_AuthConfig = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.AuthConfig.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.MTLSConfig> __Marshaller_ImmudbProxy_MTLSConfig = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.MTLSConfig.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.MTLSConfig> __Marshaller_immudb_schema_MTLSConfig = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.MTLSConfig.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.OpenSessionRequest> __Marshaller_ImmudbProxy_OpenSessionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.OpenSessionRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.OpenSessionRequest> __Marshaller_immudb_schema_OpenSessionRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.OpenSessionRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.OpenSessionResponse> __Marshaller_ImmudbProxy_OpenSessionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.OpenSessionResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.OpenSessionResponse> __Marshaller_immudb_schema_OpenSessionResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.OpenSessionResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.NewTxRequest> __Marshaller_ImmudbProxy_NewTxRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.NewTxRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.NewTxRequest> __Marshaller_immudb_schema_NewTxRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.NewTxRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.NewTxResponse> __Marshaller_ImmudbProxy_NewTxResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.NewTxResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.NewTxResponse> __Marshaller_immudb_schema_NewTxResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.NewTxResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.CommittedSQLTx> __Marshaller_ImmudbProxy_CommittedSQLTx = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.CommittedSQLTx.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.CommittedSQLTx> __Marshaller_immudb_schema_CommittedSQLTx = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.CommittedSQLTx.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.SQLExecRequest> __Marshaller_ImmudbProxy_SQLExecRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SQLExecRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.SQLExecRequest> __Marshaller_immudb_schema_SQLExecRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SQLExecRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.SQLQueryRequest> __Marshaller_ImmudbProxy_SQLQueryRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SQLQueryRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.SQLQueryRequest> __Marshaller_immudb_schema_SQLQueryRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SQLQueryRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.SQLQueryResult> __Marshaller_ImmudbProxy_SQLQueryResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SQLQueryResult.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.SQLQueryResult> __Marshaller_immudb_schema_SQLQueryResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SQLQueryResult.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.LoginRequest> __Marshaller_ImmudbProxy_LoginRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.LoginRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.LoginRequest> __Marshaller_immudb_schema_LoginRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.LoginRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.LoginResponse> __Marshaller_ImmudbProxy_LoginResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.LoginResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.LoginResponse> __Marshaller_immudb_schema_LoginResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.LoginResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.SetRequest> __Marshaller_ImmudbProxy_SetRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SetRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.SetRequest> __Marshaller_immudb_schema_SetRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SetRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.TxHeader> __Marshaller_ImmudbProxy_TxHeader = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.TxHeader.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.TxHeader> __Marshaller_immudb_schema_TxHeader = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.TxHeader.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableSetRequest> __Marshaller_ImmudbProxy_VerifiableSetRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableSetRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableSetRequest> __Marshaller_immudb_schema_VerifiableSetRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableSetRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableTx> __Marshaller_ImmudbProxy_VerifiableTx = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableTx.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableTx> __Marshaller_immudb_schema_VerifiableTx = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableTx.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.KeyRequest> __Marshaller_ImmudbProxy_KeyRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.KeyRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.KeyRequest> __Marshaller_immudb_schema_KeyRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.KeyRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.Entry> __Marshaller_ImmudbProxy_Entry = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Entry.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.Entry> __Marshaller_immudb_schema_Entry = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Entry.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableGetRequest> __Marshaller_ImmudbProxy_VerifiableGetRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableGetRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableGetRequest> __Marshaller_immudb_schema_VerifiableGetRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableGetRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableEntry> __Marshaller_ImmudbProxy_VerifiableEntry = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableEntry.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableEntry> __Marshaller_immudb_schema_VerifiableEntry = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableEntry.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DeleteKeysRequest> __Marshaller_ImmudbProxy_DeleteKeysRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DeleteKeysRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DeleteKeysRequest> __Marshaller_immudb_schema_DeleteKeysRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DeleteKeysRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.KeyListRequest> __Marshaller_ImmudbProxy_KeyListRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.KeyListRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.KeyListRequest> __Marshaller_immudb_schema_KeyListRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.KeyListRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.Entries> __Marshaller_ImmudbProxy_Entries = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Entries.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.Entries> __Marshaller_immudb_schema_Entries = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Entries.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ExecAllRequest> __Marshaller_ImmudbProxy_ExecAllRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ExecAllRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ExecAllRequest> __Marshaller_immudb_schema_ExecAllRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ExecAllRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ScanRequest> __Marshaller_ImmudbProxy_ScanRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ScanRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ScanRequest> __Marshaller_immudb_schema_ScanRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ScanRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.KeyPrefix> __Marshaller_ImmudbProxy_KeyPrefix = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.KeyPrefix.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.KeyPrefix> __Marshaller_immudb_schema_KeyPrefix = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.KeyPrefix.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.EntryCount> __Marshaller_ImmudbProxy_EntryCount = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.EntryCount.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.EntryCount> __Marshaller_immudb_schema_EntryCount = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.EntryCount.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.TxRequest> __Marshaller_ImmudbProxy_TxRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.TxRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.TxRequest> __Marshaller_immudb_schema_TxRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.TxRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.Tx> __Marshaller_ImmudbProxy_Tx = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Tx.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.Tx> __Marshaller_immudb_schema_Tx = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Tx.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableTxRequest> __Marshaller_ImmudbProxy_VerifiableTxRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableTxRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableTxRequest> __Marshaller_immudb_schema_VerifiableTxRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableTxRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.TxScanRequest> __Marshaller_ImmudbProxy_TxScanRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.TxScanRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.TxScanRequest> __Marshaller_immudb_schema_TxScanRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.TxScanRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.TxList> __Marshaller_ImmudbProxy_TxList = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.TxList.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.TxList> __Marshaller_immudb_schema_TxList = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.TxList.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.HistoryRequest> __Marshaller_ImmudbProxy_HistoryRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.HistoryRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.HistoryRequest> __Marshaller_immudb_schema_HistoryRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.HistoryRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.HealthResponse> __Marshaller_ImmudbProxy_HealthResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.HealthResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.HealthResponse> __Marshaller_immudb_schema_HealthResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.HealthResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseHealthResponse> __Marshaller_ImmudbProxy_DatabaseHealthResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseHealthResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseHealthResponse> __Marshaller_immudb_schema_DatabaseHealthResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseHealthResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ImmutableState> __Marshaller_ImmudbProxy_ImmutableState = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ImmutableState.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ImmutableState> __Marshaller_immudb_schema_ImmutableState = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ImmutableState.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ReferenceRequest> __Marshaller_ImmudbProxy_ReferenceRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ReferenceRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ReferenceRequest> __Marshaller_immudb_schema_ReferenceRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ReferenceRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableReferenceRequest> __Marshaller_ImmudbProxy_VerifiableReferenceRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableReferenceRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableReferenceRequest> __Marshaller_immudb_schema_VerifiableReferenceRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableReferenceRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ZAddRequest> __Marshaller_ImmudbProxy_ZAddRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ZAddRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ZAddRequest> __Marshaller_immudb_schema_ZAddRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ZAddRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableZAddRequest> __Marshaller_ImmudbProxy_VerifiableZAddRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableZAddRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableZAddRequest> __Marshaller_immudb_schema_VerifiableZAddRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableZAddRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ZScanRequest> __Marshaller_ImmudbProxy_ZScanRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ZScanRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ZScanRequest> __Marshaller_immudb_schema_ZScanRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ZScanRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ZEntries> __Marshaller_ImmudbProxy_ZEntries = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ZEntries.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ZEntries> __Marshaller_immudb_schema_ZEntries = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ZEntries.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.Database> __Marshaller_ImmudbProxy_Database = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Database.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.Database> __Marshaller_immudb_schema_Database = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Database.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseSettings> __Marshaller_ImmudbProxy_DatabaseSettings = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseSettings.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseSettings> __Marshaller_immudb_schema_DatabaseSettings = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseSettings.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.CreateDatabaseRequest> __Marshaller_ImmudbProxy_CreateDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.CreateDatabaseRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.CreateDatabaseRequest> __Marshaller_immudb_schema_CreateDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.CreateDatabaseRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.CreateDatabaseResponse> __Marshaller_ImmudbProxy_CreateDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.CreateDatabaseResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.CreateDatabaseResponse> __Marshaller_immudb_schema_CreateDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.CreateDatabaseResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.LoadDatabaseRequest> __Marshaller_ImmudbProxy_LoadDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.LoadDatabaseRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.LoadDatabaseRequest> __Marshaller_immudb_schema_LoadDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.LoadDatabaseRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.LoadDatabaseResponse> __Marshaller_ImmudbProxy_LoadDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.LoadDatabaseResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.LoadDatabaseResponse> __Marshaller_immudb_schema_LoadDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.LoadDatabaseResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.UnloadDatabaseRequest> __Marshaller_ImmudbProxy_UnloadDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UnloadDatabaseRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.UnloadDatabaseRequest> __Marshaller_immudb_schema_UnloadDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UnloadDatabaseRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.UnloadDatabaseResponse> __Marshaller_ImmudbProxy_UnloadDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UnloadDatabaseResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.UnloadDatabaseResponse> __Marshaller_immudb_schema_UnloadDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UnloadDatabaseResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DeleteDatabaseRequest> __Marshaller_ImmudbProxy_DeleteDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DeleteDatabaseRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DeleteDatabaseRequest> __Marshaller_immudb_schema_DeleteDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DeleteDatabaseRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DeleteDatabaseResponse> __Marshaller_ImmudbProxy_DeleteDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DeleteDatabaseResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DeleteDatabaseResponse> __Marshaller_immudb_schema_DeleteDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DeleteDatabaseResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseListResponse> __Marshaller_ImmudbProxy_DatabaseListResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseListResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseListResponse> __Marshaller_immudb_schema_DatabaseListResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseListResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseListRequestV2> __Marshaller_ImmudbProxy_DatabaseListRequestV2 = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseListRequestV2.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseListRequestV2> __Marshaller_immudb_schema_DatabaseListRequestV2 = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseListRequestV2.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseListResponseV2> __Marshaller_ImmudbProxy_DatabaseListResponseV2 = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseListResponseV2.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseListResponseV2> __Marshaller_immudb_schema_DatabaseListResponseV2 = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseListResponseV2.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.UseDatabaseReply> __Marshaller_ImmudbProxy_UseDatabaseReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UseDatabaseReply.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.UseDatabaseReply> __Marshaller_immudb_schema_UseDatabaseReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UseDatabaseReply.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.UpdateDatabaseRequest> __Marshaller_ImmudbProxy_UpdateDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UpdateDatabaseRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.UpdateDatabaseRequest> __Marshaller_immudb_schema_UpdateDatabaseRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UpdateDatabaseRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.UpdateDatabaseResponse> __Marshaller_ImmudbProxy_UpdateDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UpdateDatabaseResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.UpdateDatabaseResponse> __Marshaller_immudb_schema_UpdateDatabaseResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.UpdateDatabaseResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseSettingsRequest> __Marshaller_ImmudbProxy_DatabaseSettingsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseSettingsRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseSettingsRequest> __Marshaller_immudb_schema_DatabaseSettingsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseSettingsRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseSettingsResponse> __Marshaller_ImmudbProxy_DatabaseSettingsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseSettingsResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseSettingsResponse> __Marshaller_immudb_schema_DatabaseSettingsResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseSettingsResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.FlushIndexRequest> __Marshaller_ImmudbProxy_FlushIndexRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.FlushIndexRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.FlushIndexRequest> __Marshaller_immudb_schema_FlushIndexRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.FlushIndexRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.FlushIndexResponse> __Marshaller_ImmudbProxy_FlushIndexResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.FlushIndexResponse.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.FlushIndexResponse> __Marshaller_immudb_schema_FlushIndexResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.FlushIndexResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.Chunk> __Marshaller_ImmudbProxy_Chunk = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Chunk.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.Chunk> __Marshaller_immudb_schema_Chunk = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Chunk.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.ExportTxRequest> __Marshaller_ImmudbProxy_ExportTxRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ExportTxRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.ExportTxRequest> __Marshaller_immudb_schema_ExportTxRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ExportTxRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.SQLExecResult> __Marshaller_ImmudbProxy_SQLExecResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SQLExecResult.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.SQLExecResult> __Marshaller_immudb_schema_SQLExecResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.SQLExecResult.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.Table> __Marshaller_ImmudbProxy_Table = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Table.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.Table> __Marshaller_immudb_schema_Table = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.Table.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableSQLGetRequest> __Marshaller_ImmudbProxy_VerifiableSQLGetRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableSQLGetRequest.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableSQLGetRequest> __Marshaller_immudb_schema_VerifiableSQLGetRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableSQLGetRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableSQLEntry> __Marshaller_ImmudbProxy_VerifiableSQLEntry = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableSQLEntry.Parser));
+    static readonly grpc::Marshaller<global::ImmudbProxy.VerifiableSQLEntry> __Marshaller_immudb_schema_VerifiableSQLEntry = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.VerifiableSQLEntry.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.UserList> __Method_ListUsers = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.UserList>(
@@ -219,14 +219,14 @@ namespace ImmudbProxy {
         __ServiceName,
         "ListUsers",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_UserList);
+        __Marshaller_immudb_schema_UserList);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.CreateUserRequest, global::Google.Protobuf.WellKnownTypes.Empty> __Method_CreateUser = new grpc::Method<global::ImmudbProxy.CreateUserRequest, global::Google.Protobuf.WellKnownTypes.Empty>(
         grpc::MethodType.Unary,
         __ServiceName,
         "CreateUser",
-        __Marshaller_ImmudbProxy_CreateUserRequest,
+        __Marshaller_immudb_schema_CreateUserRequest,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -234,7 +234,7 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "ChangePassword",
-        __Marshaller_ImmudbProxy_ChangePasswordRequest,
+        __Marshaller_immudb_schema_ChangePasswordRequest,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -242,7 +242,7 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "ChangePermission",
-        __Marshaller_ImmudbProxy_ChangePermissionRequest,
+        __Marshaller_immudb_schema_ChangePermissionRequest,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -250,7 +250,7 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "SetActiveUser",
-        __Marshaller_ImmudbProxy_SetActiveUserRequest,
+        __Marshaller_immudb_schema_SetActiveUserRequest,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -258,7 +258,7 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "UpdateAuthConfig",
-        __Marshaller_ImmudbProxy_AuthConfig,
+        __Marshaller_immudb_schema_AuthConfig,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -266,7 +266,7 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "UpdateMTLSConfig",
-        __Marshaller_ImmudbProxy_MTLSConfig,
+        __Marshaller_immudb_schema_MTLSConfig,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -274,8 +274,8 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "OpenSession",
-        __Marshaller_ImmudbProxy_OpenSessionRequest,
-        __Marshaller_ImmudbProxy_OpenSessionResponse);
+        __Marshaller_immudb_schema_OpenSessionRequest,
+        __Marshaller_immudb_schema_OpenSessionResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Empty> __Method_CloseSession = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Empty>(
@@ -298,8 +298,8 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "NewTx",
-        __Marshaller_ImmudbProxy_NewTxRequest,
-        __Marshaller_ImmudbProxy_NewTxResponse);
+        __Marshaller_immudb_schema_NewTxRequest,
+        __Marshaller_immudb_schema_NewTxResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.CommittedSQLTx> __Method_Commit = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.CommittedSQLTx>(
@@ -307,7 +307,7 @@ namespace ImmudbProxy {
         __ServiceName,
         "Commit",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_CommittedSQLTx);
+        __Marshaller_immudb_schema_CommittedSQLTx);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Empty> __Method_Rollback = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Empty>(
@@ -322,7 +322,7 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "TxSQLExec",
-        __Marshaller_ImmudbProxy_SQLExecRequest,
+        __Marshaller_immudb_schema_SQLExecRequest,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -330,16 +330,16 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "TxSQLQuery",
-        __Marshaller_ImmudbProxy_SQLQueryRequest,
-        __Marshaller_ImmudbProxy_SQLQueryResult);
+        __Marshaller_immudb_schema_SQLQueryRequest,
+        __Marshaller_immudb_schema_SQLQueryResult);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.LoginRequest, global::ImmudbProxy.LoginResponse> __Method_Login = new grpc::Method<global::ImmudbProxy.LoginRequest, global::ImmudbProxy.LoginResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Login",
-        __Marshaller_ImmudbProxy_LoginRequest,
-        __Marshaller_ImmudbProxy_LoginResponse);
+        __Marshaller_immudb_schema_LoginRequest,
+        __Marshaller_immudb_schema_LoginResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Empty> __Method_Logout = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Empty>(
@@ -354,72 +354,72 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "Set",
-        __Marshaller_ImmudbProxy_SetRequest,
-        __Marshaller_ImmudbProxy_TxHeader);
+        __Marshaller_immudb_schema_SetRequest,
+        __Marshaller_immudb_schema_TxHeader);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.VerifiableSetRequest, global::ImmudbProxy.VerifiableTx> __Method_VerifiableSet = new grpc::Method<global::ImmudbProxy.VerifiableSetRequest, global::ImmudbProxy.VerifiableTx>(
         grpc::MethodType.Unary,
         __ServiceName,
         "VerifiableSet",
-        __Marshaller_ImmudbProxy_VerifiableSetRequest,
-        __Marshaller_ImmudbProxy_VerifiableTx);
+        __Marshaller_immudb_schema_VerifiableSetRequest,
+        __Marshaller_immudb_schema_VerifiableTx);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.KeyRequest, global::ImmudbProxy.Entry> __Method_Get = new grpc::Method<global::ImmudbProxy.KeyRequest, global::ImmudbProxy.Entry>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Get",
-        __Marshaller_ImmudbProxy_KeyRequest,
-        __Marshaller_ImmudbProxy_Entry);
+        __Marshaller_immudb_schema_KeyRequest,
+        __Marshaller_immudb_schema_Entry);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.VerifiableGetRequest, global::ImmudbProxy.VerifiableEntry> __Method_VerifiableGet = new grpc::Method<global::ImmudbProxy.VerifiableGetRequest, global::ImmudbProxy.VerifiableEntry>(
         grpc::MethodType.Unary,
         __ServiceName,
         "VerifiableGet",
-        __Marshaller_ImmudbProxy_VerifiableGetRequest,
-        __Marshaller_ImmudbProxy_VerifiableEntry);
+        __Marshaller_immudb_schema_VerifiableGetRequest,
+        __Marshaller_immudb_schema_VerifiableEntry);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.DeleteKeysRequest, global::ImmudbProxy.TxHeader> __Method_Delete = new grpc::Method<global::ImmudbProxy.DeleteKeysRequest, global::ImmudbProxy.TxHeader>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Delete",
-        __Marshaller_ImmudbProxy_DeleteKeysRequest,
-        __Marshaller_ImmudbProxy_TxHeader);
+        __Marshaller_immudb_schema_DeleteKeysRequest,
+        __Marshaller_immudb_schema_TxHeader);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.KeyListRequest, global::ImmudbProxy.Entries> __Method_GetAll = new grpc::Method<global::ImmudbProxy.KeyListRequest, global::ImmudbProxy.Entries>(
         grpc::MethodType.Unary,
         __ServiceName,
         "GetAll",
-        __Marshaller_ImmudbProxy_KeyListRequest,
-        __Marshaller_ImmudbProxy_Entries);
+        __Marshaller_immudb_schema_KeyListRequest,
+        __Marshaller_immudb_schema_Entries);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.ExecAllRequest, global::ImmudbProxy.TxHeader> __Method_ExecAll = new grpc::Method<global::ImmudbProxy.ExecAllRequest, global::ImmudbProxy.TxHeader>(
         grpc::MethodType.Unary,
         __ServiceName,
         "ExecAll",
-        __Marshaller_ImmudbProxy_ExecAllRequest,
-        __Marshaller_ImmudbProxy_TxHeader);
+        __Marshaller_immudb_schema_ExecAllRequest,
+        __Marshaller_immudb_schema_TxHeader);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.ScanRequest, global::ImmudbProxy.Entries> __Method_Scan = new grpc::Method<global::ImmudbProxy.ScanRequest, global::ImmudbProxy.Entries>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Scan",
-        __Marshaller_ImmudbProxy_ScanRequest,
-        __Marshaller_ImmudbProxy_Entries);
+        __Marshaller_immudb_schema_ScanRequest,
+        __Marshaller_immudb_schema_Entries);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.KeyPrefix, global::ImmudbProxy.EntryCount> __Method_Count = new grpc::Method<global::ImmudbProxy.KeyPrefix, global::ImmudbProxy.EntryCount>(
         grpc::MethodType.Unary,
         __ServiceName,
         "Count",
-        __Marshaller_ImmudbProxy_KeyPrefix,
-        __Marshaller_ImmudbProxy_EntryCount);
+        __Marshaller_immudb_schema_KeyPrefix,
+        __Marshaller_immudb_schema_EntryCount);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.EntryCount> __Method_CountAll = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.EntryCount>(
@@ -427,39 +427,39 @@ namespace ImmudbProxy {
         __ServiceName,
         "CountAll",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_EntryCount);
+        __Marshaller_immudb_schema_EntryCount);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.TxRequest, global::ImmudbProxy.Tx> __Method_TxById = new grpc::Method<global::ImmudbProxy.TxRequest, global::ImmudbProxy.Tx>(
         grpc::MethodType.Unary,
         __ServiceName,
         "TxById",
-        __Marshaller_ImmudbProxy_TxRequest,
-        __Marshaller_ImmudbProxy_Tx);
+        __Marshaller_immudb_schema_TxRequest,
+        __Marshaller_immudb_schema_Tx);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.VerifiableTxRequest, global::ImmudbProxy.VerifiableTx> __Method_VerifiableTxById = new grpc::Method<global::ImmudbProxy.VerifiableTxRequest, global::ImmudbProxy.VerifiableTx>(
         grpc::MethodType.Unary,
         __ServiceName,
         "VerifiableTxById",
-        __Marshaller_ImmudbProxy_VerifiableTxRequest,
-        __Marshaller_ImmudbProxy_VerifiableTx);
+        __Marshaller_immudb_schema_VerifiableTxRequest,
+        __Marshaller_immudb_schema_VerifiableTx);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.TxScanRequest, global::ImmudbProxy.TxList> __Method_TxScan = new grpc::Method<global::ImmudbProxy.TxScanRequest, global::ImmudbProxy.TxList>(
         grpc::MethodType.Unary,
         __ServiceName,
         "TxScan",
-        __Marshaller_ImmudbProxy_TxScanRequest,
-        __Marshaller_ImmudbProxy_TxList);
+        __Marshaller_immudb_schema_TxScanRequest,
+        __Marshaller_immudb_schema_TxList);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.HistoryRequest, global::ImmudbProxy.Entries> __Method_History = new grpc::Method<global::ImmudbProxy.HistoryRequest, global::ImmudbProxy.Entries>(
         grpc::MethodType.Unary,
         __ServiceName,
         "History",
-        __Marshaller_ImmudbProxy_HistoryRequest,
-        __Marshaller_ImmudbProxy_Entries);
+        __Marshaller_immudb_schema_HistoryRequest,
+        __Marshaller_immudb_schema_Entries);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.HealthResponse> __Method_Health = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.HealthResponse>(
@@ -467,7 +467,7 @@ namespace ImmudbProxy {
         __ServiceName,
         "Health",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_HealthResponse);
+        __Marshaller_immudb_schema_HealthResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.DatabaseHealthResponse> __Method_DatabaseHealth = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.DatabaseHealthResponse>(
@@ -475,7 +475,7 @@ namespace ImmudbProxy {
         __ServiceName,
         "DatabaseHealth",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_DatabaseHealthResponse);
+        __Marshaller_immudb_schema_DatabaseHealthResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.ImmutableState> __Method_CurrentState = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.ImmutableState>(
@@ -483,54 +483,54 @@ namespace ImmudbProxy {
         __ServiceName,
         "CurrentState",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_ImmutableState);
+        __Marshaller_immudb_schema_ImmutableState);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.ReferenceRequest, global::ImmudbProxy.TxHeader> __Method_SetReference = new grpc::Method<global::ImmudbProxy.ReferenceRequest, global::ImmudbProxy.TxHeader>(
         grpc::MethodType.Unary,
         __ServiceName,
         "SetReference",
-        __Marshaller_ImmudbProxy_ReferenceRequest,
-        __Marshaller_ImmudbProxy_TxHeader);
+        __Marshaller_immudb_schema_ReferenceRequest,
+        __Marshaller_immudb_schema_TxHeader);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.VerifiableReferenceRequest, global::ImmudbProxy.VerifiableTx> __Method_VerifiableSetReference = new grpc::Method<global::ImmudbProxy.VerifiableReferenceRequest, global::ImmudbProxy.VerifiableTx>(
         grpc::MethodType.Unary,
         __ServiceName,
         "VerifiableSetReference",
-        __Marshaller_ImmudbProxy_VerifiableReferenceRequest,
-        __Marshaller_ImmudbProxy_VerifiableTx);
+        __Marshaller_immudb_schema_VerifiableReferenceRequest,
+        __Marshaller_immudb_schema_VerifiableTx);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.ZAddRequest, global::ImmudbProxy.TxHeader> __Method_ZAdd = new grpc::Method<global::ImmudbProxy.ZAddRequest, global::ImmudbProxy.TxHeader>(
         grpc::MethodType.Unary,
         __ServiceName,
         "ZAdd",
-        __Marshaller_ImmudbProxy_ZAddRequest,
-        __Marshaller_ImmudbProxy_TxHeader);
+        __Marshaller_immudb_schema_ZAddRequest,
+        __Marshaller_immudb_schema_TxHeader);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.VerifiableZAddRequest, global::ImmudbProxy.VerifiableTx> __Method_VerifiableZAdd = new grpc::Method<global::ImmudbProxy.VerifiableZAddRequest, global::ImmudbProxy.VerifiableTx>(
         grpc::MethodType.Unary,
         __ServiceName,
         "VerifiableZAdd",
-        __Marshaller_ImmudbProxy_VerifiableZAddRequest,
-        __Marshaller_ImmudbProxy_VerifiableTx);
+        __Marshaller_immudb_schema_VerifiableZAddRequest,
+        __Marshaller_immudb_schema_VerifiableTx);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.ZScanRequest, global::ImmudbProxy.ZEntries> __Method_ZScan = new grpc::Method<global::ImmudbProxy.ZScanRequest, global::ImmudbProxy.ZEntries>(
         grpc::MethodType.Unary,
         __ServiceName,
         "ZScan",
-        __Marshaller_ImmudbProxy_ZScanRequest,
-        __Marshaller_ImmudbProxy_ZEntries);
+        __Marshaller_immudb_schema_ZScanRequest,
+        __Marshaller_immudb_schema_ZEntries);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.Database, global::Google.Protobuf.WellKnownTypes.Empty> __Method_CreateDatabase = new grpc::Method<global::ImmudbProxy.Database, global::Google.Protobuf.WellKnownTypes.Empty>(
         grpc::MethodType.Unary,
         __ServiceName,
         "CreateDatabase",
-        __Marshaller_ImmudbProxy_Database,
+        __Marshaller_immudb_schema_Database,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -538,7 +538,7 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "CreateDatabaseWith",
-        __Marshaller_ImmudbProxy_DatabaseSettings,
+        __Marshaller_immudb_schema_DatabaseSettings,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -546,32 +546,32 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "CreateDatabaseV2",
-        __Marshaller_ImmudbProxy_CreateDatabaseRequest,
-        __Marshaller_ImmudbProxy_CreateDatabaseResponse);
+        __Marshaller_immudb_schema_CreateDatabaseRequest,
+        __Marshaller_immudb_schema_CreateDatabaseResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.LoadDatabaseRequest, global::ImmudbProxy.LoadDatabaseResponse> __Method_LoadDatabase = new grpc::Method<global::ImmudbProxy.LoadDatabaseRequest, global::ImmudbProxy.LoadDatabaseResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "LoadDatabase",
-        __Marshaller_ImmudbProxy_LoadDatabaseRequest,
-        __Marshaller_ImmudbProxy_LoadDatabaseResponse);
+        __Marshaller_immudb_schema_LoadDatabaseRequest,
+        __Marshaller_immudb_schema_LoadDatabaseResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.UnloadDatabaseRequest, global::ImmudbProxy.UnloadDatabaseResponse> __Method_UnloadDatabase = new grpc::Method<global::ImmudbProxy.UnloadDatabaseRequest, global::ImmudbProxy.UnloadDatabaseResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "UnloadDatabase",
-        __Marshaller_ImmudbProxy_UnloadDatabaseRequest,
-        __Marshaller_ImmudbProxy_UnloadDatabaseResponse);
+        __Marshaller_immudb_schema_UnloadDatabaseRequest,
+        __Marshaller_immudb_schema_UnloadDatabaseResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.DeleteDatabaseRequest, global::ImmudbProxy.DeleteDatabaseResponse> __Method_DeleteDatabase = new grpc::Method<global::ImmudbProxy.DeleteDatabaseRequest, global::ImmudbProxy.DeleteDatabaseResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "DeleteDatabase",
-        __Marshaller_ImmudbProxy_DeleteDatabaseRequest,
-        __Marshaller_ImmudbProxy_DeleteDatabaseResponse);
+        __Marshaller_immudb_schema_DeleteDatabaseRequest,
+        __Marshaller_immudb_schema_DeleteDatabaseResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.DatabaseListResponse> __Method_DatabaseList = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.DatabaseListResponse>(
@@ -579,30 +579,30 @@ namespace ImmudbProxy {
         __ServiceName,
         "DatabaseList",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_DatabaseListResponse);
+        __Marshaller_immudb_schema_DatabaseListResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.DatabaseListRequestV2, global::ImmudbProxy.DatabaseListResponseV2> __Method_DatabaseListV2 = new grpc::Method<global::ImmudbProxy.DatabaseListRequestV2, global::ImmudbProxy.DatabaseListResponseV2>(
         grpc::MethodType.Unary,
         __ServiceName,
         "DatabaseListV2",
-        __Marshaller_ImmudbProxy_DatabaseListRequestV2,
-        __Marshaller_ImmudbProxy_DatabaseListResponseV2);
+        __Marshaller_immudb_schema_DatabaseListRequestV2,
+        __Marshaller_immudb_schema_DatabaseListResponseV2);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.Database, global::ImmudbProxy.UseDatabaseReply> __Method_UseDatabase = new grpc::Method<global::ImmudbProxy.Database, global::ImmudbProxy.UseDatabaseReply>(
         grpc::MethodType.Unary,
         __ServiceName,
         "UseDatabase",
-        __Marshaller_ImmudbProxy_Database,
-        __Marshaller_ImmudbProxy_UseDatabaseReply);
+        __Marshaller_immudb_schema_Database,
+        __Marshaller_immudb_schema_UseDatabaseReply);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.DatabaseSettings, global::Google.Protobuf.WellKnownTypes.Empty> __Method_UpdateDatabase = new grpc::Method<global::ImmudbProxy.DatabaseSettings, global::Google.Protobuf.WellKnownTypes.Empty>(
         grpc::MethodType.Unary,
         __ServiceName,
         "UpdateDatabase",
-        __Marshaller_ImmudbProxy_DatabaseSettings,
+        __Marshaller_immudb_schema_DatabaseSettings,
         __Marshaller_google_protobuf_Empty);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -610,8 +610,8 @@ namespace ImmudbProxy {
         grpc::MethodType.Unary,
         __ServiceName,
         "UpdateDatabaseV2",
-        __Marshaller_ImmudbProxy_UpdateDatabaseRequest,
-        __Marshaller_ImmudbProxy_UpdateDatabaseResponse);
+        __Marshaller_immudb_schema_UpdateDatabaseRequest,
+        __Marshaller_immudb_schema_UpdateDatabaseResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.DatabaseSettings> __Method_GetDatabaseSettings = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.DatabaseSettings>(
@@ -619,23 +619,23 @@ namespace ImmudbProxy {
         __ServiceName,
         "GetDatabaseSettings",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_DatabaseSettings);
+        __Marshaller_immudb_schema_DatabaseSettings);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.DatabaseSettingsRequest, global::ImmudbProxy.DatabaseSettingsResponse> __Method_GetDatabaseSettingsV2 = new grpc::Method<global::ImmudbProxy.DatabaseSettingsRequest, global::ImmudbProxy.DatabaseSettingsResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "GetDatabaseSettingsV2",
-        __Marshaller_ImmudbProxy_DatabaseSettingsRequest,
-        __Marshaller_ImmudbProxy_DatabaseSettingsResponse);
+        __Marshaller_immudb_schema_DatabaseSettingsRequest,
+        __Marshaller_immudb_schema_DatabaseSettingsResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.FlushIndexRequest, global::ImmudbProxy.FlushIndexResponse> __Method_FlushIndex = new grpc::Method<global::ImmudbProxy.FlushIndexRequest, global::ImmudbProxy.FlushIndexResponse>(
         grpc::MethodType.Unary,
         __ServiceName,
         "FlushIndex",
-        __Marshaller_ImmudbProxy_FlushIndexRequest,
-        __Marshaller_ImmudbProxy_FlushIndexResponse);
+        __Marshaller_immudb_schema_FlushIndexRequest,
+        __Marshaller_immudb_schema_FlushIndexResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Empty> __Method_CompactIndex = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::Google.Protobuf.WellKnownTypes.Empty>(
@@ -650,96 +650,96 @@ namespace ImmudbProxy {
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "streamGet",
-        __Marshaller_ImmudbProxy_KeyRequest,
-        __Marshaller_ImmudbProxy_Chunk);
+        __Marshaller_immudb_schema_KeyRequest,
+        __Marshaller_immudb_schema_Chunk);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.Chunk, global::ImmudbProxy.TxHeader> __Method_streamSet = new grpc::Method<global::ImmudbProxy.Chunk, global::ImmudbProxy.TxHeader>(
         grpc::MethodType.ClientStreaming,
         __ServiceName,
         "streamSet",
-        __Marshaller_ImmudbProxy_Chunk,
-        __Marshaller_ImmudbProxy_TxHeader);
+        __Marshaller_immudb_schema_Chunk,
+        __Marshaller_immudb_schema_TxHeader);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.VerifiableGetRequest, global::ImmudbProxy.Chunk> __Method_streamVerifiableGet = new grpc::Method<global::ImmudbProxy.VerifiableGetRequest, global::ImmudbProxy.Chunk>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "streamVerifiableGet",
-        __Marshaller_ImmudbProxy_VerifiableGetRequest,
-        __Marshaller_ImmudbProxy_Chunk);
+        __Marshaller_immudb_schema_VerifiableGetRequest,
+        __Marshaller_immudb_schema_Chunk);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.Chunk, global::ImmudbProxy.VerifiableTx> __Method_streamVerifiableSet = new grpc::Method<global::ImmudbProxy.Chunk, global::ImmudbProxy.VerifiableTx>(
         grpc::MethodType.ClientStreaming,
         __ServiceName,
         "streamVerifiableSet",
-        __Marshaller_ImmudbProxy_Chunk,
-        __Marshaller_ImmudbProxy_VerifiableTx);
+        __Marshaller_immudb_schema_Chunk,
+        __Marshaller_immudb_schema_VerifiableTx);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.ScanRequest, global::ImmudbProxy.Chunk> __Method_streamScan = new grpc::Method<global::ImmudbProxy.ScanRequest, global::ImmudbProxy.Chunk>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "streamScan",
-        __Marshaller_ImmudbProxy_ScanRequest,
-        __Marshaller_ImmudbProxy_Chunk);
+        __Marshaller_immudb_schema_ScanRequest,
+        __Marshaller_immudb_schema_Chunk);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.ZScanRequest, global::ImmudbProxy.Chunk> __Method_streamZScan = new grpc::Method<global::ImmudbProxy.ZScanRequest, global::ImmudbProxy.Chunk>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "streamZScan",
-        __Marshaller_ImmudbProxy_ZScanRequest,
-        __Marshaller_ImmudbProxy_Chunk);
+        __Marshaller_immudb_schema_ZScanRequest,
+        __Marshaller_immudb_schema_Chunk);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.HistoryRequest, global::ImmudbProxy.Chunk> __Method_streamHistory = new grpc::Method<global::ImmudbProxy.HistoryRequest, global::ImmudbProxy.Chunk>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "streamHistory",
-        __Marshaller_ImmudbProxy_HistoryRequest,
-        __Marshaller_ImmudbProxy_Chunk);
+        __Marshaller_immudb_schema_HistoryRequest,
+        __Marshaller_immudb_schema_Chunk);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.Chunk, global::ImmudbProxy.TxHeader> __Method_streamExecAll = new grpc::Method<global::ImmudbProxy.Chunk, global::ImmudbProxy.TxHeader>(
         grpc::MethodType.ClientStreaming,
         __ServiceName,
         "streamExecAll",
-        __Marshaller_ImmudbProxy_Chunk,
-        __Marshaller_ImmudbProxy_TxHeader);
+        __Marshaller_immudb_schema_Chunk,
+        __Marshaller_immudb_schema_TxHeader);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.ExportTxRequest, global::ImmudbProxy.Chunk> __Method_exportTx = new grpc::Method<global::ImmudbProxy.ExportTxRequest, global::ImmudbProxy.Chunk>(
         grpc::MethodType.ServerStreaming,
         __ServiceName,
         "exportTx",
-        __Marshaller_ImmudbProxy_ExportTxRequest,
-        __Marshaller_ImmudbProxy_Chunk);
+        __Marshaller_immudb_schema_ExportTxRequest,
+        __Marshaller_immudb_schema_Chunk);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.Chunk, global::ImmudbProxy.TxHeader> __Method_replicateTx = new grpc::Method<global::ImmudbProxy.Chunk, global::ImmudbProxy.TxHeader>(
         grpc::MethodType.ClientStreaming,
         __ServiceName,
         "replicateTx",
-        __Marshaller_ImmudbProxy_Chunk,
-        __Marshaller_ImmudbProxy_TxHeader);
+        __Marshaller_immudb_schema_Chunk,
+        __Marshaller_immudb_schema_TxHeader);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.SQLExecRequest, global::ImmudbProxy.SQLExecResult> __Method_SQLExec = new grpc::Method<global::ImmudbProxy.SQLExecRequest, global::ImmudbProxy.SQLExecResult>(
         grpc::MethodType.Unary,
         __ServiceName,
         "SQLExec",
-        __Marshaller_ImmudbProxy_SQLExecRequest,
-        __Marshaller_ImmudbProxy_SQLExecResult);
+        __Marshaller_immudb_schema_SQLExecRequest,
+        __Marshaller_immudb_schema_SQLExecResult);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.SQLQueryRequest, global::ImmudbProxy.SQLQueryResult> __Method_SQLQuery = new grpc::Method<global::ImmudbProxy.SQLQueryRequest, global::ImmudbProxy.SQLQueryResult>(
         grpc::MethodType.Unary,
         __ServiceName,
         "SQLQuery",
-        __Marshaller_ImmudbProxy_SQLQueryRequest,
-        __Marshaller_ImmudbProxy_SQLQueryResult);
+        __Marshaller_immudb_schema_SQLQueryRequest,
+        __Marshaller_immudb_schema_SQLQueryResult);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.SQLQueryResult> __Method_ListTables = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.SQLQueryResult>(
@@ -747,23 +747,23 @@ namespace ImmudbProxy {
         __ServiceName,
         "ListTables",
         __Marshaller_google_protobuf_Empty,
-        __Marshaller_ImmudbProxy_SQLQueryResult);
+        __Marshaller_immudb_schema_SQLQueryResult);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.Table, global::ImmudbProxy.SQLQueryResult> __Method_DescribeTable = new grpc::Method<global::ImmudbProxy.Table, global::ImmudbProxy.SQLQueryResult>(
         grpc::MethodType.Unary,
         __ServiceName,
         "DescribeTable",
-        __Marshaller_ImmudbProxy_Table,
-        __Marshaller_ImmudbProxy_SQLQueryResult);
+        __Marshaller_immudb_schema_Table,
+        __Marshaller_immudb_schema_SQLQueryResult);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::ImmudbProxy.VerifiableSQLGetRequest, global::ImmudbProxy.VerifiableSQLEntry> __Method_VerifiableSQLGet = new grpc::Method<global::ImmudbProxy.VerifiableSQLGetRequest, global::ImmudbProxy.VerifiableSQLEntry>(
         grpc::MethodType.Unary,
         __ServiceName,
         "VerifiableSQLGet",
-        __Marshaller_ImmudbProxy_VerifiableSQLGetRequest,
-        __Marshaller_ImmudbProxy_VerifiableSQLEntry);
+        __Marshaller_immudb_schema_VerifiableSQLGetRequest,
+        __Marshaller_immudb_schema_VerifiableSQLEntry);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor

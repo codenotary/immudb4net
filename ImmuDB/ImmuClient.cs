@@ -49,12 +49,16 @@ public class ImmuClient
     {
         string schema = builder.ServerUrl.StartsWith("http") ? "" : "http://";
         var grpcAddress = $"{schema}{builder.ServerUrl}:{builder.ServerPort}";
+        
+        // This is needed for .NET Core 3 and below.
+        AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+    
         channel = GrpcChannel.ForAddress(grpcAddress);
         var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
         immuServiceClient = new ImmuService.ImmuServiceClient(invoker);
-        this.immuServiceClient.WithAuth = builder.Auth;
-        this.serverSigningKey = builder.ServerSigningKey;
-        this.stateHolder = builder.StateHolder;
+        immuServiceClient.WithAuth = builder.Auth;
+        serverSigningKey = builder.ServerSigningKey;
+        stateHolder = builder.StateHolder;
     }
 
     public async Task Shutdown()
