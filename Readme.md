@@ -192,7 +192,7 @@ Atomic multi-key write (all entries are persisted or none):
 Atomic multi-key read (all entries are retrieved or none):
 
 ``` C#
-    List<String> keys = Arrays.asList(key1, key2, key3);
+    List<string> keys = Arrays.asList(key1, key2, key3);
     List<Entry> result = immuClient.getAll(keys);
 
     for (Entry entry : result) {

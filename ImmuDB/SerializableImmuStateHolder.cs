@@ -30,10 +30,14 @@ public class SerializableImmuStateHolder : ImmuStateHolder
     {
         if(serverUuid == null)
             return null;
-        return statesMap[serverUuid + "_" + database];
+        string key = serverUuid + "_" + database;
+        if(statesMap.TryGetValue(key, out var state)) {
+            return state;
+        }
+        return null;
     }
 
-    public void setState(string serverUuid, ImmuState state)
+    public void SetState(string serverUuid, ImmuState state)
     {
         statesMap[serverUuid + "_" + state.Database] = state;
     }

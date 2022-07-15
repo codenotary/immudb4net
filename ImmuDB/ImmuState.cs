@@ -48,7 +48,7 @@ public class ImmuState
 
         if (Signature != null && Signature.Length > 0)
         {
-            var payload = toBytes();
+            var payload = ToBytes();
             ISigner signer = SignerUtilities.GetSigner(HASH_ENCRYPTION_ALGORITHM);
             signer.Init(false, publicKey);
             signer.BlockUpdate(payload, 0, payload.Length);
@@ -58,7 +58,7 @@ public class ImmuState
         return false;
     }
 
-    private byte[] toBytes()
+    private byte[] ToBytes()
     {
         byte[] result = new byte[4 + Database.Length + 8 + Consts.SHA256_SIZE];
         int i = 0;
@@ -85,11 +85,12 @@ public class ImmuState
 
     // This method converts Proto ImmutableState to ImmuState
     internal static ImmuState ValueOf(ImmudbProxy.ImmutableState state) {
+        
         return new ImmuState(
                 state.Db,
                 state.TxId,
                 state.TxHash.ToByteArray(),
-                state.Signature.Signature_.ToByteArray()
+                (state.Signature ?? new ImmudbProxy.Signature()).Signature_.ToByteArray()
         );
     }
 }

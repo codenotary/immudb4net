@@ -18,5 +18,5 @@ namespace ImmuDB;
 
 public interface ImmuStateHolder {
     ImmuState? GetState(string? serverUuid, string database);
-    void setState(string serverUuid, ImmuState state);
+    void SetState(string serverUuid, ImmuState state);
 }

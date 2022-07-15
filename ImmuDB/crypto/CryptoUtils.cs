@@ -40,7 +40,8 @@ public static class CryptoUtils
         }
         using (SHA256 sha256Hash = SHA256.Create())
         {
-            return sha256Hash.ComputeHash(data);
+            var result = sha256Hash.ComputeHash(data);
+            return result;
         }
     }
 

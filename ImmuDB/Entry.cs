@@ -60,7 +60,7 @@ public class Entry
         return Utils.WrapWithPrefix(ReferencedBy.Key, Consts.SET_KEY_PREFIX);
     }
 
-    public byte[] digestFor(int version)
+    public byte[] DigestFor(int version)
     {
         KV kv;
 

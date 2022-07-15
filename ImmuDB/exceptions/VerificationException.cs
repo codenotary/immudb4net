@@ -18,11 +18,11 @@ namespace ImmuDB.Exceptions;
 
 public class VerificationException : Exception
 {
-    public VerificationException(String message) : base(message)
+    public VerificationException(string message) : base(message)
     {
     }
 
-    public VerificationException(String message, Exception cause) : base(message, cause)
+    public VerificationException(string message, Exception cause) : base(message, cause)
     {
     }
 

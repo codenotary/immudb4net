@@ -16,28 +16,52 @@ limitations under the License.
 
 using Grpc.Core;
 using Grpc.Core.Interceptors;
-using static Grpc.Core.Metadata;
 
 namespace ImmuDB;
 
-public class ImmuServerUUIDInterceptor : Interceptor {
+public class ImmuServerUUIDInterceptor : Interceptor
+{
 
     private static readonly string SERVER_UUID = "immudb-uuid";
     private readonly ImmuClient client;
 
-    public ImmuServerUUIDInterceptor(ImmuClient client) {
+    public ImmuServerUUIDInterceptor(ImmuClient client)
+    {
         this.client = client;
     }
-    
+
+
+
     public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(
         TRequest request,
         ClientInterceptorContext<TRequest, TResponse> context,
         AsyncUnaryCallContinuation<TRequest, TResponse> continuation)
     {
-        Grpc.Core.Metadata.Entry? serverUuid = context.Options.Headers?.Get(SERVER_UUID);
-        if((serverUuid != null) && !serverUuid.Value.Equals(client.CurrentServerUuid, StringComparison.InvariantCultureIgnoreCase)) {
-            client.CurrentServerUuid = serverUuid.Value;
-        } 
-        return base.AsyncUnaryCall(request, context, continuation);
+        var call = continuation(request, context);
+        
+        return new AsyncUnaryCall<TResponse>(
+            call.ResponseAsync,
+            HandleHeaderResponse(call),
+            call.GetStatus,
+            call.GetTrailers,
+            call.Dispose);
+    }
+
+    private async Task<Metadata> HandleHeaderResponse<TResponse>(AsyncUnaryCall<TResponse> c)
+    {
+        try
+        {
+            Metadata mdata = await c.ResponseHeadersAsync;
+            Grpc.Core.Metadata.Entry? serverUuid = mdata.Get(SERVER_UUID);
+            if ((serverUuid != null) && !serverUuid.Value.Equals(client.CurrentServerUuid, StringComparison.InvariantCultureIgnoreCase))
+            {
+                client.CurrentServerUuid = serverUuid.Value;
+            }
+            return mdata;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Custom error", ex);
+        }
     }
 }

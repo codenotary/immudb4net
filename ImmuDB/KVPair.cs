@@ -21,7 +21,7 @@ public class KVPair
     public byte[] Key { get; private set; }
     public byte[] Value { get; private set; }
 
-    public KVPair(String key, byte[] value) :
+    public KVPair(string key, byte[] value) :
         this(Utils.ToByteArray(key), value)
     {
     }

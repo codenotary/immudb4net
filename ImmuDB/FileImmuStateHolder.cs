@@ -36,7 +36,7 @@ public class FileImmuStateHolder : ImmuStateHolder
             Directory.CreateDirectory(statesFolder);
         }
 
-        currentStateFile = Path.Combine(stateHolderFile, "current_state");
+        currentStateFile = Path.Combine(statesFolder, "current_state");
         if (!File.Exists(currentStateFile))
         {
             using (File.Create(currentStateFile)) { }
@@ -66,7 +66,7 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
-    public void setState(string serverUuid, ImmuState state)
+    public void SetState(string serverUuid, ImmuState state)
     {
         lock (this)
         {
@@ -76,7 +76,7 @@ public class FileImmuStateHolder : ImmuStateHolder
                 return;
             }
 
-            stateHolder.setState(serverUuid, state);
+            stateHolder.SetState(serverUuid, state);
             string newStateFile = Path.Combine(statesFolder, "state_" + serverUuid + "_" + state.Database + "_" + Stopwatch.GetTimestamp());
 
             if (File.Exists(newStateFile))
