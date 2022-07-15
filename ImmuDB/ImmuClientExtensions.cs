@@ -27,16 +27,16 @@ namespace ImmudbProxy
 
             public bool WithAuth { get; set; }
             public string AuthToken { get; set; }
-            internal Metadata headers = new Metadata();
+            internal Metadata Headers = new Metadata();
 
             public ImmuServiceClient WithAuthHeaders()
             {
+                Headers.Clear();
                 if (!WithAuth || (AuthToken == null))
                 {
-                   headers.Clear();
                    return this;
                 }
-                headers.Add(AUTH_HEADER, "Bearer " + AuthToken);
+                Headers.Add(AUTH_HEADER, "Bearer " + AuthToken);
                 return this;
             }
         }

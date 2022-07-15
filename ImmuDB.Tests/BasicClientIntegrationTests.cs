@@ -37,6 +37,6 @@ public class BasicClientTests : BaseClientIntTests
     public async Task Test1()
     {
         await client.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client.UseDatabase("defaultdb");        
     }
 }

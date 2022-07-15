@@ -143,7 +143,7 @@ public class ImmuClient
         {
             DatabaseName = database
         };
-        ImmudbProxy.UseDatabaseReply response = await immuServiceClient.WithAuthHeaders().UseDatabaseAsync(db);
+        ImmudbProxy.UseDatabaseReply response = await immuServiceClient.WithAuthHeaders().UseDatabaseAsync(db, immuServiceClient.Headers);
         immuServiceClient.AuthToken = response.Token;
         currentDb = database;
     }
