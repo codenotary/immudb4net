@@ -34,13 +34,14 @@ public static class CryptoUtils
      */
     public static byte[] Sha256Sum(byte[] data)
     {
-        if (data == null)
+        if ((data == null) || data.Length == 0)
         {
             return SHA256_SUM_OF_NULL;
         }
         using (SHA256 sha256Hash = SHA256.Create())
         {
             var result = sha256Hash.ComputeHash(data);
+            
             return result;
         }
     }

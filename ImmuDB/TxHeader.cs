@@ -68,9 +68,9 @@ public class TxHeader
         MemoryStream bytes = new MemoryStream(Consts.TX_ID_SIZE + 2 * Consts.SHA256_SIZE);
         using (BinaryWriter bw = new BinaryWriter(bytes))
         {
-            Utils.Write(bw, Id);
-            Utils.Write(bw, PrevAlh);
-            Utils.Write(bw, InnerHash());
+            Utils.WriteWithBigEndian(bw, Id);
+            Utils.WriteArray(bw, PrevAlh);
+            Utils.WriteArray(bw, InnerHash());
         }
 
         return CryptoUtils.Sha256Sum(bytes.ToArray());
@@ -79,6 +79,7 @@ public class TxHeader
     private byte[] InnerHash()
     {
         // ts + version + (mdLen + md)? + nentries + eH + blTxID + blRoot
+
         MemoryStream bytes = new MemoryStream(TS_SIZE +
                 SHORT_SSIZE + (SHORT_SSIZE + maxTxMetadataLen) +
                 LONG_SSIZE + Consts.SHA256_SIZE +
@@ -99,8 +100,8 @@ public class TxHeader
                 case 1:
                     {
                         // TODO: add support for TxMetadata
-                        Utils.WriteWithBigEndian(bw, (short)0);
-                        Utils.WriteWithBigEndian(bw, NEntries);
+                        Utils.WriteWithBigEndian(bw, (short)0L);
+                        Utils.WriteWithBigEndian(bw, (uint)NEntries);
                         break;
                     }
                 default:
@@ -109,9 +110,9 @@ public class TxHeader
                     }
                     // following records are currently common in versions 0 and 1
             }
-            Utils.WriteWithBigEndian(bw, Eh);
+            Utils.WriteArray(bw, Eh);
             Utils.WriteWithBigEndian(bw, BlTxId);
-            Utils.WriteWithBigEndian(bw, BlRoot);
+            Utils.WriteArray(bw, BlRoot);
         }
 
         return CryptoUtils.Sha256Sum(bytes.ToArray());

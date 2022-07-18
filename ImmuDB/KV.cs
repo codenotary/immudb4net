@@ -78,11 +78,11 @@ public class KV
             Utils.WriteWithBigEndian(bw, (short)mdLen);
             if (mdLen > 0)
             {
-                Utils.WriteWithBigEndian(bw, mdbs);
+                Utils.WriteArray(bw, mdbs);
             }
             Utils.WriteWithBigEndian(bw, (short)Key.Length);
-            Utils.WriteWithBigEndian(bw, Key);
-            Utils.WriteWithBigEndian(bw, CryptoUtils.Sha256Sum(Value));
+            Utils.WriteArray(bw, Key);
+            Utils.WriteArray(bw, CryptoUtils.Sha256Sum(Value));
         }
         return CryptoUtils.Sha256Sum(bytes.ToArray());
     }

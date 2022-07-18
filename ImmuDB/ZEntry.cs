@@ -57,10 +57,10 @@ public class ZEntry
         using (BinaryWriter bw = new BinaryWriter(zKey))
         {
             Utils.WriteWithBigEndian(bw, Set.Length);
-            Utils.WriteWithBigEndian(bw, Set);
+            Utils.WriteArray(bw, Set);
             Utils.WriteWithBigEndian(bw, Score);
             Utils.WriteWithBigEndian(bw, encodedKey.Length);
-            Utils.WriteWithBigEndian(bw, encodedKey);
+            Utils.WriteArray(bw, encodedKey);
             Utils.WriteWithBigEndian(bw, AtTx);
         }
 
