@@ -163,7 +163,6 @@ public static class CryptoUtils
     public static bool VerifyDualProof(DualProof proof, ulong sourceTxId, ulong targetTxId,
             byte[] sourceAlh, byte[] targetAlh)
     {
-
         if (proof == null || proof.SourceTxHeader == null || proof.TargetTxHeader == null
                 || proof.SourceTxHeader.Id != sourceTxId
                 || proof.TargetTxHeader.Id != targetTxId)

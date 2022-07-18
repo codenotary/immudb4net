@@ -68,9 +68,9 @@ public class TxHeader
         MemoryStream bytes = new MemoryStream(Consts.TX_ID_SIZE + 2 * Consts.SHA256_SIZE);
         using (BinaryWriter bw = new BinaryWriter(bytes))
         {
-            Utils.WriteWithBigEndian(bw, Id);
-            Utils.WriteWithBigEndian(bw, PrevAlh);
-            Utils.WriteWithBigEndian(bw, InnerHash());
+            Utils.Write(bw, Id);
+            Utils.Write(bw, PrevAlh);
+            Utils.Write(bw, InnerHash());
         }
 
         return CryptoUtils.Sha256Sum(bytes.ToArray());
@@ -93,7 +93,7 @@ public class TxHeader
             {
                 case 0:
                     {
-                        Utils.WriteWithBigEndian(bw, NEntries);
+                        Utils.WriteWithBigEndian(bw, (short)NEntries);
                         break;
                     }
                 case 1:

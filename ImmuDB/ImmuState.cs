@@ -90,7 +90,7 @@ public class ImmuState
                 state.Db,
                 state.TxId,
                 state.TxHash.ToByteArray(),
-                (state.Signature ?? new ImmudbProxy.Signature()).Signature_.ToByteArray()
+                (state.Signature ?? ImmudbProxy.Signature.DefaultInstance).Signature_.ToByteArray()
         );
     }
 }

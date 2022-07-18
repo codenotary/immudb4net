@@ -87,7 +87,7 @@ public class FileImmuStateHolder : ImmuStateHolder
             try
             {
                 stateHolder.WriteTo(newStateFile);
-                File.WriteAllText(currentStateFile, newStateFile);
+                File.WriteAllText(currentStateFile, Path.GetFileName(newStateFile));
                 if (File.Exists(stateHolderFile))
                 {
                     File.Delete(stateHolderFile);

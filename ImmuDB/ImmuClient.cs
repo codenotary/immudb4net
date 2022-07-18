@@ -297,7 +297,7 @@ public class ImmuClient
                 currentDb,
                 targetId,
                 targetAlh,
-                (vEntry.VerifiableTx.Signature ?? new Signature()).Signature_.ToByteArray());
+                (vEntry.VerifiableTx.Signature ?? ImmudbProxy.Signature.DefaultInstance).Signature_.ToByteArray());
 
         if (!newState.CheckSignature(serverSigningKey))
         {
@@ -601,7 +601,7 @@ public class ImmuClient
             }
         }
 
-        return new ImmuState(currentDb, targetId, targetAlh, (vtx.Signature ?? new Signature()).Signature_.ToByteArray());
+        return new ImmuState(currentDb, targetId, targetAlh, (vtx.Signature ?? ImmudbProxy.Signature.DefaultInstance).Signature_.ToByteArray());
     }
 
     //
@@ -869,7 +869,7 @@ public class ImmuClient
             throw new VerificationException("Failed to extract the transaction.", e);
         }
 
-        ImmuState newState = new ImmuState(currentDb, targetId, targetAlh, (vtx.Signature ?? new Signature()).Signature_.ToByteArray());
+        ImmuState newState = new ImmuState(currentDb, targetId, targetAlh, (vtx.Signature ?? ImmudbProxy.Signature.DefaultInstance).Signature_.ToByteArray());
 
         if (!newState.CheckSignature(serverSigningKey))
         {

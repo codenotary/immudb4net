@@ -126,6 +126,17 @@ public static class Utils
         Array.Copy(valueBytes, 0, dest, destPos, valueBytes.Length);
     }
 
+    public static void Write(BinaryWriter bw, ulong item)
+    {
+        var content = BitConverter.GetBytes(item);
+        bw.Write(content);
+    }
+
+    public static void Write(BinaryWriter bw, byte[] item)
+    {
+        bw.Write(item);
+    }
+
     public static void WriteWithBigEndian(BinaryWriter bw, ulong item)
     {
         var content = BitConverter.GetBytes(item);
@@ -135,7 +146,7 @@ public static class Utils
         }
         bw.Write(content);
     }
-    
+
     public static void WriteWithBigEndian(BinaryWriter bw, long item)
     {
         var content = BitConverter.GetBytes(item);
@@ -145,7 +156,7 @@ public static class Utils
         }
         bw.Write(content);
     }
-    
+
     public static void WriteWithBigEndian(BinaryWriter bw, double item)
     {
         var content = BitConverter.GetBytes(item);
@@ -155,7 +166,7 @@ public static class Utils
         }
         bw.Write(content);
     }
-    
+
     public static void WriteWithBigEndian(BinaryWriter bw, short item)
     {
         var content = BitConverter.GetBytes(item);
