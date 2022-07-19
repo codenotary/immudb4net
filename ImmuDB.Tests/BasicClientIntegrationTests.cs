@@ -39,7 +39,7 @@ public class BasicClientTests : BaseClientIntTests
     [TestMethod("execute login, usedatabase, set, get and verifiedget")]
     public async Task Test1()
     {
-        await client.Login("immudb", "immudb");
+        await client!.Login("immudb", "immudb");
         await client.UseDatabase("defaultdb");
 
         byte[] v0 = new byte[] { 0, 1, 2, 3 };
@@ -81,7 +81,7 @@ public class BasicClientTests : BaseClientIntTests
     [TestMethod("execute login, usedatabase, set, get and verifiedget")]
     public async Task Test2()
     {
-        await client.Login("immudb", "immudb");
+        await client!.Login("immudb", "immudb");
         await client.UseDatabase("defaultdb");
         List<String> keys = new List<String>();
         keys.Add("k0");

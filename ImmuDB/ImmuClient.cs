@@ -435,7 +435,7 @@ public class ImmuClient
 
         ImmudbProxy.KeyListRequest req = new ImmudbProxy.KeyListRequest();
         req.Keys.AddRange(keysBS);
-        
+
         ImmudbProxy.Entries entries = await Service.WithAuthHeaders().GetAllAsync(req, Service.Headers);
         List<Entry> result = new List<Entry>(entries.Entries_.Count);
 
@@ -445,6 +445,68 @@ public class ImmuClient
         }
 
         return result;
+    }
+
+    //
+    // ========== SCAN ==========
+    //
+
+    public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, bool inclusiveSeek, bool inclusiveEnd,
+                            ulong limit, bool desc)
+    {
+        ImmudbProxy.ScanRequest req = new ImmudbProxy.ScanRequest()
+        {
+            Prefix = Utils.ToByteString(prefix),
+            SeekKey = Utils.ToByteString(seekKey),
+            EndKey = Utils.ToByteString(endKey),
+            InclusiveSeek = inclusiveSeek,
+            InclusiveEnd = inclusiveEnd,
+            Limit = limit,
+            Desc = desc
+        };
+
+        ImmudbProxy.Entries entries = await Service.WithAuthHeaders().ScanAsync(req, Service.Headers);
+        return BuildList(entries);
+    }
+
+    public async Task<List<Entry>> Scan(String prefix)
+    {
+        return await Scan(Utils.ToByteArray(prefix));
+    }
+
+    public async Task<List<Entry>> Scan(byte[] prefix)
+    {
+        return await Scan(prefix, 0, false);
+    }
+
+    public async Task<List<Entry>> Scan(String prefix, ulong limit, bool desc)
+    {
+        return await Scan(Utils.ToByteArray(prefix), limit, desc);
+    }
+
+    public async Task<List<Entry>> Scan(byte[] prefix, ulong limit, bool desc)
+    {
+        return await Scan(prefix, new byte[0], limit, desc);
+    }
+
+    public async Task<List<Entry>> Scan(String prefix, String seekKey, ulong limit, bool desc)
+    {
+        return await Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), limit, desc);
+    }
+
+    public async Task<List<Entry>> Scan(String prefix, String seekKey, String endKey, ulong limit, bool desc)
+    {
+        return await Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), Utils.ToByteArray(endKey), limit, desc);
+    }
+
+    public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, ulong limit, bool desc)
+    {
+        return await Scan(prefix, seekKey, new byte[0], limit, desc);
+    }
+
+    public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, ulong limit, bool desc)
+    {
+        return await Scan(prefix, seekKey, endKey, false, false, limit, desc);
     }
 
     //
@@ -764,7 +826,7 @@ public class ImmuClient
 
         ImmudbProxy.ZEntries zEntries = await Service.WithAuthHeaders().ZScanAsync(req, Service.Headers);
 
-        return buildList(zEntries);
+        return BuildList(zEntries);
     }
 
     //
@@ -1035,7 +1097,7 @@ public class ImmuClient
                 Desc = desc
             }, Service.Headers);
 
-            return buildList(entries);
+            return BuildList(entries);
         }
         catch (RpcException e)
         {
@@ -1048,14 +1110,14 @@ public class ImmuClient
         }
     }
 
-    private List<Entry> buildList(ImmudbProxy.Entries entries)
+    private List<Entry> BuildList(ImmudbProxy.Entries entries)
     {
         List<Entry> result = new List<Entry>(entries.Entries_.Count);
         entries.Entries_.ToList().ForEach(entry => result.Add(Entry.ValueOf(entry)));
         return result;
     }
 
-    private List<ZEntry> buildList(ImmudbProxy.ZEntries entries)
+    private List<ZEntry> BuildList(ImmudbProxy.ZEntries entries)
     {
         List<ZEntry> result = new List<ZEntry>(entries.Entries.Count);
         entries.Entries.ToList()

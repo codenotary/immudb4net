@@ -19,7 +19,7 @@ namespace ImmuDB.Tests
     [TestClass]
     public class BaseClientIntTests
     {
-        public ImmuClient client;
+        public ImmuClient? client;
 
         public void BaseSetUp()
         {
