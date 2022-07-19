@@ -43,7 +43,7 @@ public class ZEntry
 
     public static ZEntry ValueOf(ImmudbProxy.ZEntry e)
     {
-        ZEntry entry = new ZEntry(e.Key.ToByteArray(), e.Set.ToByteArray(), ImmuDB.Entry.ValueOf(e.Entry));
+        ZEntry entry = new ZEntry(e.Key.ToByteArray(), e.Set.ToByteArray(), ImmuDB.Entry.ValueOf(e.Entry ?? ImmudbProxy.Entry.DefaultInstance));
         entry.Score = e.Score;
         entry.AtTx = e.AtTx;
         return entry;

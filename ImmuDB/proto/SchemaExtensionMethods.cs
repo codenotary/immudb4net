@@ -21,3 +21,23 @@ public sealed partial class Signature
         }
     }
 }
+
+public sealed partial class Entry
+{
+    private static Entry? _defaultInstance;
+    private static Object sync = new Object();
+    public static Entry DefaultInstance
+    {
+        get
+        {
+            if (_defaultInstance == null)
+            {
+                lock (sync)
+                {
+                    _defaultInstance = new Entry();
+                }
+            }
+            return _defaultInstance;
+        }
+    }
+}

@@ -46,6 +46,8 @@ public class HistoryTests : BaseClientIntTests
         byte[] value2 = { 4, 5, 6, 7 };
         byte[] value3 = { 8, 9, 10, 11 };
 
+
+
         try
         {
             await client.Set("history1", value1);
@@ -61,10 +63,10 @@ public class HistoryTests : BaseClientIntTests
 
         List<Entry> historyResponse1 = await client.History("history1", 10, 0, false);
 
-        Assert.AreEqual(historyResponse1.Count, 2);
+        Assert.AreEqual(2, historyResponse1.Count);
 
-        CollectionAssert.AreEqual(historyResponse1[0].Key, Encoding.UTF8.GetBytes("history1"));
-        CollectionAssert.AreEqual(historyResponse1[0].Value, value1);
+        CollectionAssert.AreEqual(Encoding.UTF8.GetBytes("history1"), historyResponse1[0].Key);
+        CollectionAssert.AreEqual(value1, historyResponse1[0].Value);
 
         CollectionAssert.AreEqual(historyResponse1[1].Key, Encoding.UTF8.GetBytes("history1"));
         CollectionAssert.AreEqual(historyResponse1[1].Value, value2);

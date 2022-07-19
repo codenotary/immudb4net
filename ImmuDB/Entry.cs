@@ -34,17 +34,18 @@ public class Entry
 
     public static Entry ValueOf(ImmudbProxy.Entry e)
     {
-        Entry entry = new Entry(e.Key.ToByteArray(), e.Value.ToByteArray());
-        entry.Tx = e.Tx;
+        ImmudbProxy.Entry proxyInst = e ?? ImmudbProxy.Entry.DefaultInstance;
+        Entry entry = new Entry(proxyInst.Key.ToByteArray(), proxyInst.Value.ToByteArray());
+        entry.Tx = proxyInst.Tx;
 
-        if (e.Metadata != null)
+        if (proxyInst.Metadata != null)
         {
-            entry.Metadata = KVMetadata.ValueOf(e.Metadata);
+            entry.Metadata = KVMetadata.ValueOf(proxyInst.Metadata);
         }
 
-        if (e.ReferencedBy != null)
+        if (proxyInst.ReferencedBy != null)
         {
-            entry.ReferencedBy = Reference.ValueOf(e.ReferencedBy);
+            entry.ReferencedBy = Reference.ValueOf(proxyInst.ReferencedBy);
         }
 
         return entry;

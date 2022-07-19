@@ -597,6 +597,11 @@ public class ImmuClient
             Utils.ToByteArray(referencedKey),
             0);
     }
+    
+    public async Task<TxHeader> SetReference(byte[] key, byte[] referencedKey)
+    {
+        return await SetReference(key, referencedKey, 0);
+    }
 
     public async Task<TxHeader> VerifiedSet(string key, byte[] value)
     {
