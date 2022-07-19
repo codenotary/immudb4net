@@ -16,6 +16,7 @@ limitations under the License.
 
 namespace ImmuDB;
 
+using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
@@ -402,7 +403,8 @@ public class ImmuClient
 
     public async Task<Entry> GetAtRevision(byte[] key, long rev)
     {
-        ImmudbProxy.KeyRequest req = new ImmudbProxy.KeyRequest() {
+        ImmudbProxy.KeyRequest req = new ImmudbProxy.KeyRequest()
+        {
             Key = Utils.ToByteString(key),
             AtRevision = rev
         };
@@ -420,6 +422,29 @@ public class ImmuClient
 
             throw e;
         }
+    }
+
+    public async Task<List<Entry>> GetAll(List<String> keys)
+    {
+        List<ByteString> keysBS = new List<ByteString>(keys.Count);
+
+        foreach (string key in keys)
+        {
+            keysBS.Add(Utils.ToByteString(key));
+        }
+
+        ImmudbProxy.KeyListRequest req = new ImmudbProxy.KeyListRequest();
+        req.Keys.AddRange(keysBS);
+        
+        ImmudbProxy.Entries entries = await Service.WithAuthHeaders().GetAllAsync(req, Service.Headers);
+        List<Entry> result = new List<Entry>(entries.Entries_.Count);
+
+        foreach (ImmudbProxy.Entry entry in entries.Entries_)
+        {
+            result.Add(Entry.ValueOf(entry));
+        }
+
+        return result;
     }
 
     //
