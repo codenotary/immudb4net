@@ -65,9 +65,9 @@ Use ```dotnet build``` to build locally the ImmuDB client assembly.
 
 ## Supported Versions
 
-immudb4net supports the [latest immudb server] release, that is 1.3.0 at the time of updating this document.
+immudb4net supports the [latest immudb server] release, that is 1.3.1 at the time of updating this document.
 
-[latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.3.0
+[latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.3.1
 
 ## Quickstart
 
@@ -86,28 +86,28 @@ The following code snippets show how to create a client.
 Using default configuration:
 
 ``` C#
-    ImmuClient immuClient = ImmuClient.newBuilder().build();
+    ImmuClient immuClient = ImmuClient.NewBuilder().Build();
 ```
 
 Setting `immudb` url and port:
 
 ``` C#
-    ImmuClient immuClient = ImmuClient.newBuilder()
-                                .withServerUrl("localhost")
-                                .withServerPort(3322)
-                                .build();
+    ImmuClient immuClient = ImmuClient.NewBuilder()
+                                .WithServerUrl("localhost")
+                                .WithServerPort(3322)
+                                .Build();
 ```
 
 Customizing the `State Holder`:
 
 ``` C#
-    FileImmuStateHolder stateHolder = FileImmuStateHolder.newBuilder()
-                                        .withStatesFolder("./my_immuapp_states")
-                                        .build();
+    FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
+                                        .WithStatesFolder("./my_immuapp_states")
+                                        .Build();
 
-    ImmuClient immuClient = ImmuClient.newBuilder()
-                                      .withStateHolder(stateHolder)
-                                      .build();
+    ImmuClient immuClient = ImmuClient.NewBuilder()
+                                      .WithStateHolder(stateHolder)
+                                      .Build();
 ```
 
 ### User Sessions
@@ -115,12 +115,12 @@ Customizing the `State Holder`:
 Use `login` and `logout` methods to initiate and terminate user sessions:
 
 ``` C#
-    immuClient.login("usr1", "pwd1");
+    await immuClient.Login("usr1", "pwd1");
 
     // Interact with immudb using logged-in user.
     //...
 
-    immuClient.logout();
+    await immuClient.Logout();
 ```
 
 ### Creating a Database
@@ -128,7 +128,7 @@ Use `login` and `logout` methods to initiate and terminate user sessions:
 Creating a new database is quite simple:
 
 ``` C#
-    immuClient.createDatabase("db1");
+    await immuClient.CreateDatabase("db1");
 ```
 
 ### Setting the Active Database
@@ -136,7 +136,7 @@ Creating a new database is quite simple:
 Specify the active database with:
 
 ``` C#
-    immuClient.useDatabase("db1");
+    await immuClient.UseDatabase("db1");
 ```
 
 ### Standard Read and Write
@@ -146,9 +146,9 @@ key-value store i.e. no cryptographic verification is involved. Such operations
 may be used when validations can be postponed.
 
 ``` C#
-    client.set("k123", new byte[]{1, 2, 3});
+    await client.Set("k123", new byte[]{1, 2, 3});
     
-    byte[] v = client.get("k123").getValue();
+    byte[] v = await client.Get("k123").Value;
 ```
 
 ### Verified or Safe Read and Write
@@ -158,12 +158,12 @@ implements the mathematical validations while the application uses as a standard
 read or write operation:
 
 ``` C#
-    try {
-        client.verifiedSet("k123", new byte[]{1, 2, 3});
-    
-        byte[] v = client.verifiedGet("k123").getValue();
+    try 
+    {
+        await Client.VerifiedSet("k123", new byte[]{1, 2, 3});    
+        byte[] v = await client.VerifiedGet("k123").Value;
 
-    } (catch VerificationException e) {
+    } catch(VerificationException e) {
 
         // Check if it is a data tampering detected case!
 
@@ -177,14 +177,17 @@ Transactional multi-key read and write operations are supported by immudb and im
 Atomic multi-key write (all entries are persisted or none):
 
 ``` C#
-        final List<KVPair> kvs = KVListBuilder.newBuilder()
-            .add(new KVPair("sga-key1", new byte[] {1, 2}))
-            .add(new KVPair("sga-key2", new byte[] {3, 4}))
-            .entries();
+        List<KVPair> kvs = new List<KVPair>() 
+        {
+            new KVPair("sga-key1", new byte[] {1, 2}),
+            new KVPair("sga-key2", new byte[] {3, 4})
+        }
 
-        try {
-            immuClient.setAll(kvs);
-        } catch (CorruptedDataException e) {
+        try 
+        {
+            await immuClient.SetAll(kvs);
+        } catch (CorruptedDataException e) 
+        {
             // ...
         }
 ```
@@ -192,12 +195,12 @@ Atomic multi-key write (all entries are persisted or none):
 Atomic multi-key read (all entries are retrieved or none):
 
 ``` C#
-    List<string> keys = Arrays.asList(key1, key2, key3);
-    List<Entry> result = immuClient.getAll(keys);
+    List<string> keys = new List<string>() {key1, key2, key3};
+    List<Entry> result = await immuClient.GetAll(keys);
 
-    for (Entry entry : result) {
-        byte[] key = entry.getKey();
-        byte[] value = entry.getValue();
+    foreach(Entry entry in result) {
+        byte[] key = entry.Key;
+        byte[] value = entry.Value;
         // ...
     }
 ```
@@ -207,7 +210,7 @@ Atomic multi-key read (all entries are retrieved or none):
 Apart from the `logout`, for closing the connection with immudb server use the `shutdown` operation:
 
 ``` C#
-    immuClient.shutdown();
+    await immuClient.Shutdown();
 ```
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.
