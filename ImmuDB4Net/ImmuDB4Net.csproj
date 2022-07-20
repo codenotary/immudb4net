@@ -5,6 +5,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>10.0</LangVersion>
+        <PackageId>ImmuDB4Net</PackageId>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Grpc.Tools" Version="2.47.0">

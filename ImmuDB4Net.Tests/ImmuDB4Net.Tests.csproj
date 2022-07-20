@@ -20,10 +20,11 @@
         <PackageReference Include="Google.Api.CommonProtos" Version="2.6.0"/>
         <PackageReference Include="Grpc.Net.Client" Version="2.46.0"/>
         <PackageReference Include="Grpc.Net.ClientFactory" Version="2.46.0"/>
+        
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\ImmuDB\ImmuDB.csproj" />
+        <ProjectReference Include="..\ImmuDB4Net\ImmuDB4Net.csproj" />
     </ItemGroup>
 
 </Project>
