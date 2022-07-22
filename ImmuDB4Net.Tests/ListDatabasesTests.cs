@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Grpc.Core;
-
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class LoginHealthCheckCompactIndexTests : BaseClientIntTests
+public class ListDatabasesTests : BaseClientIntTests
 {
 
     [TestInitialize]
@@ -34,20 +32,14 @@ public class LoginHealthCheckCompactIndexTests : BaseClientIntTests
         await BaseTearDown();
     }
 
-    [TestMethod("login (with default credentials), healthCheck, logout")]
+    [TestMethod("list databases retrieves at least 1 database")]
     public async Task Test1()
     {
         await client!.Login("immudb", "immudb");
-        bool isHealthy = await client.HealthCheck();
-        Assert.IsTrue(isHealthy);
-        await client.CompactIndex();
-        await client.Logout();
-    }
+        await client.UseDatabase("defaultdb");
 
-    [TestMethod("login with invalid credentials")]
-    [ExpectedException(typeof(RpcException))]
-    public async Task Test9()
-    {
-        await client!.Login("immudb", "incorrect_password");
+        List<string> databases = await client.Databases();
+        await client.Logout();
+        Assert.IsTrue(databases.Count > 0);
     }
 }

@@ -27,4 +27,9 @@
         <ProjectReference Include="..\ImmuDB4Net\ImmuDB4Net.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+        <EmbeddedResource Include="resources/test_private_key.pem" />
+        <EmbeddedResource Include="resources/test_public_key.pem" />
+    </ItemGroup>
+
 </Project>

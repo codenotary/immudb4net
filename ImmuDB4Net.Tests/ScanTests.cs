@@ -71,7 +71,7 @@ public class ScanTests : BaseClientIntTests
     }
 
     [TestMethod("execute set, zadd, zscan")]
-    public async Task Test5()
+    public async Task Test1()
     {
         await client!.Login("immudb", "immudb");
         await client.UseDatabase("defaultdb");

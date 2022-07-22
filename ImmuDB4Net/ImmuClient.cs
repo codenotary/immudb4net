@@ -256,7 +256,6 @@ public class ImmuClient
         {
             byte[] digest = vEntry.VerifiableTx.DualProof.TargetTxHeader.EH.ToByteArray();
             eh = CryptoUtils.DigestFrom(digest);
-
             sourceId = state.TxId;
             sourceAlh = CryptoUtils.DigestFrom(state.TxHash);
             targetId = entry.Tx;
@@ -266,7 +265,6 @@ public class ImmuClient
         {
             byte[] digest = vEntry.VerifiableTx.DualProof.SourceTxHeader.EH.ToByteArray();
             eh = CryptoUtils.DigestFrom(digest);
-
             sourceId = entry.Tx;
             sourceAlh = dualProof.SourceTxHeader.Alh();
             targetId = state.TxId;
@@ -274,7 +272,6 @@ public class ImmuClient
         }
 
         byte[] kvDigest = entry.DigestFor(vEntry.VerifiableTx.Tx.Header.Version);
-
         if (!CryptoUtils.VerifyInclusion(inclusionProof, kvDigest, eh))
         {
             throw new VerificationException("Inclusion verification failed.");
@@ -306,7 +303,6 @@ public class ImmuClient
         }
 
         stateHolder.SetState(CurrentServerUuid, newState);
-
         return Entry.ValueOf(vEntry.Entry);
     }
 
@@ -424,7 +420,7 @@ public class ImmuClient
         }
     }
 
-    public async Task<List<Entry>> GetAll(List<String> keys)
+    public async Task<List<Entry>> GetAll(List<string> keys)
     {
         List<ByteString> keysBS = new List<ByteString>(keys.Count);
 
@@ -469,7 +465,7 @@ public class ImmuClient
         return BuildList(entries);
     }
 
-    public async Task<List<Entry>> Scan(String prefix)
+    public async Task<List<Entry>> Scan(string prefix)
     {
         return await Scan(Utils.ToByteArray(prefix));
     }
@@ -479,7 +475,7 @@ public class ImmuClient
         return await Scan(prefix, 0, false);
     }
 
-    public async Task<List<Entry>> Scan(String prefix, ulong limit, bool desc)
+    public async Task<List<Entry>> Scan(string prefix, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), limit, desc);
     }
@@ -489,12 +485,12 @@ public class ImmuClient
         return await Scan(prefix, new byte[0], limit, desc);
     }
 
-    public async Task<List<Entry>> Scan(String prefix, String seekKey, ulong limit, bool desc)
+    public async Task<List<Entry>> Scan(string prefix, string seekKey, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), limit, desc);
     }
 
-    public async Task<List<Entry>> Scan(String prefix, String seekKey, String endKey, ulong limit, bool desc)
+    public async Task<List<Entry>> Scan(string prefix, string seekKey, string endKey, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), Utils.ToByteArray(endKey), limit, desc);
     }
@@ -546,7 +542,6 @@ public class ImmuClient
         foreach (KVPair kv in kvList)
         {
             ImmudbProxy.KeyValue kvProxy = new ImmudbProxy.KeyValue();
-
             kvProxy.Key = Utils.ToByteString(kv.Key);
             kvProxy.Value = Utils.ToByteString(kv.Value);
             request.KVs.Add(kvProxy);
@@ -617,7 +612,6 @@ public class ImmuClient
             Value = Utils.ToByteString(value),
         };
 
-
         var setRequest = new ImmudbProxy.SetRequest();
         setRequest.KVs.Add(kv);
         ImmudbProxy.VerifiableSetRequest vSetReq = new ImmudbProxy.VerifiableSetRequest()
@@ -673,7 +667,6 @@ public class ImmuClient
 
     private ImmuState VerifyDualProof(ImmudbProxy.VerifiableTx vtx, Tx tx, ImmuState state)
     {
-
         ulong sourceId = state.TxId;
         ulong targetId = tx.Header.Id;
         byte[] sourceAlh = CryptoUtils.DigestFrom(state.TxHash);
@@ -796,7 +789,6 @@ public class ImmuClient
         }
 
         stateHolder.SetState(CurrentServerUuid, newState);
-
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
 
@@ -830,7 +822,6 @@ public class ImmuClient
         };
 
         ImmudbProxy.ZEntries zEntries = await Service.WithAuthHeaders().ZScanAsync(req, Service.Headers);
-
         return BuildList(zEntries);
     }
 
@@ -847,9 +838,9 @@ public class ImmuClient
     {
         try
         {
-            ImmudbProxy.DeleteKeysRequest req = new ImmudbProxy.DeleteKeysRequest();
-            req.Keys.Add(Utils.ToByteString(key));
-
+            ImmudbProxy.DeleteKeysRequest req = new ImmudbProxy.DeleteKeysRequest() {
+                Keys = {Utils.ToByteString(key)}
+            };
             return TxHeader.ValueOf(await Service.WithAuthHeaders().DeleteAsync(req, Service.Headers));
         }
         catch (RpcException e)
@@ -911,12 +902,10 @@ public class ImmuClient
             {
                 throw new TxNotFoundException();
             }
-
             throw e;
         }
 
         Crypto.DualProof dualProof = Crypto.DualProof.ValueOf(vtx.DualProof);
-
         ulong sourceId;
         ulong targetId;
         byte[] sourceAlh;
@@ -969,7 +958,6 @@ public class ImmuClient
         }
 
         stateHolder.SetState(CurrentServerUuid, newState);
-
         return tx;
     }
 
@@ -1018,7 +1006,6 @@ public class ImmuClient
     public async Task<List<Iam.User>> ListUsers()
     {
         ImmudbProxy.UserList userList = await Service.WithAuthHeaders().ListUsersAsync(new Empty(), Service.Headers);
-
         return userList.Users.ToList()
                 .Select(u => new Iam.User(
                     u.User_.ToString(System.Text.Encoding.UTF8),
@@ -1156,7 +1143,6 @@ public class ImmuClient
         public bool Auth { get; private set; }
         public ImmuStateHolder StateHolder { get; private set; }
 
-
         public Builder()
         {
             ServerUrl = "localhost";
@@ -1192,6 +1178,12 @@ public class ImmuClient
         public Builder WithServerSigningKey(string publicKeyFileName)
         {
             this.ServerSigningKey = ImmuState.GetPublicKeyFromPemFile(publicKeyFileName);
+            return this;
+        }
+        
+        public Builder WithServerSigningKey(AsymmetricKeyParameter? key)
+        {
+            this.ServerSigningKey = key;
             return this;
         }
 

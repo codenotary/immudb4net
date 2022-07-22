@@ -36,7 +36,7 @@ public class SetAllGetAllTests : BaseClientIntTests
     }
 
     [TestMethod("getall and setall")]
-    public async Task Test6()
+    public async Task Test1()
     {
         await client!.Login("immudb", "immudb");
         await client.UseDatabase("defaultdb");
@@ -64,14 +64,14 @@ public class SetAllGetAllTests : BaseClientIntTests
             Assert.Fail("Failed at SetAll.", e);
         }
 
-        List<String> keys = new List<string>() {key1, key2, key3};
+        List<string> keys = new List<string>() {key1, key2, key3};
         List<Entry> got = await client.GetAll(keys);
 
         Assert.AreEqual(kvs.Count, got.Count);
 
         for (int i = 0; i < kvs.Count; i++)
         {
-            CollectionAssert.AreEqual(kvs[i].Value, got[i].Value, String.Format("Expected: %s got: %s", kvs[i], got[i]));
+            CollectionAssert.AreEqual(kvs[i].Value, got[i].Value, string.Format("Expected: %s got: %s", kvs[i], got[i]));
         }
 
         await client.Logout();

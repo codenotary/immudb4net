@@ -36,7 +36,7 @@ public class ReferenceTests : BaseClientIntTests
     }
 
     [TestMethod("set, setreference and getreference")]
-    public async Task Test7()
+    public async Task Test1()
     {
         await client!.Login("immudb", "immudb");
         await client.UseDatabase("defaultdb");

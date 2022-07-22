@@ -36,7 +36,7 @@ public class HistoryTests : BaseClientIntTests
     }
 
     [TestMethod("execute set, history")]
-    public async Task Test3()
+    public async Task Test1()
     {
 
         await client!.Login("immudb", "immudb");

@@ -83,7 +83,7 @@ public class BasicClientTests : BaseClientIntTests
     {
         await client!.Login("immudb", "immudb");
         await client.UseDatabase("defaultdb");
-        List<String> keys = new List<String>();
+        List<string> keys = new List<string>();
         keys.Add("k0");
         keys.Add("k1");
 

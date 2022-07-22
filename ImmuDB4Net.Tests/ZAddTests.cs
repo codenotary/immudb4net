@@ -37,15 +37,15 @@ public class ZAddTests : BaseClientIntTests
     }
 
     [TestMethod("ZAdd, VerifiedZAdd and VerifiedZAddAt")]
-    public async Task Test10()
+    public async Task Test1()
     {
         await client!.Login("immudb", "immudb");
         await client.UseDatabase("defaultdb");
 
-        String set = "test-zadd";
-        String key1 = "test-zadd-key1";
+        string set = "test-zadd";
+        string key1 = "test-zadd-key1";
         byte[] val1 = Encoding.UTF8.GetBytes("val123");
-        String key2 = "key2";
+        string key2 = "key2";
         byte[] val2 = Encoding.UTF8.GetBytes("val234");
 
         try
