@@ -160,9 +160,12 @@ public class StateTests : BaseClientIntTests
     public async Task Test3()
     {
         string tmpFile = CreatePrivateKeyInTmpFolder();
+        string containerId = "";
+        bool containerHasStarted = false;
+        DockerClient dockerClient = new DockerClientConfiguration().CreateClient();
+
         try
         {
-            DockerClient dockerClient = new DockerClientConfiguration().CreateClient();
             var createRsp = await dockerClient.Containers.CreateContainerAsync(new Docker.DotNet.Models.CreateContainerParameters()
             {
                 Image = "codenotary/immudb",
@@ -178,13 +181,15 @@ public class StateTests : BaseClientIntTests
                     {"3323/tcp", new EmptyStruct() }
                 }
             });
-            var containerId = createRsp.ID;
-            var containerHasStarted = await dockerClient.Containers.StartContainerAsync(containerId, new ContainerStartParameters());
+            containerId = createRsp.ID;
+            containerHasStarted = await dockerClient.Containers.StartContainerAsync(containerId, new ContainerStartParameters());
             if (!containerHasStarted)
             {
                 Assert.Fail("Could not start the immudb container");
                 return;
             }
+            //wait for ImmuDB to start
+            Thread.Sleep(2500);
             Assembly asm = Assembly.GetExecutingAssembly();
             string resourceName = "ImmuDB4Net.Tests.resources.test_public_key.pem";
             AsymmetricKeyParameter assymKey;
@@ -227,12 +232,16 @@ public class StateTests : BaseClientIntTests
                 Assert.Fail("Signing key provided on the client side and server and currentstate should work");
             }
             await client.Logout();
-            await dockerClient.Containers.StopContainerAsync(containerId, new ContainerStopParameters() { WaitBeforeKillSeconds = 4 });
-            await dockerClient.Containers.RemoveContainerAsync(containerId, new ContainerRemoveParameters() { Force = true });
         }
         finally
         {
             File.Delete(tmpFile);
+            if (containerHasStarted)
+            {
+                await dockerClient.Containers.StopContainerAsync(containerId, new ContainerStopParameters() { WaitBeforeKillSeconds = 4 });
+                await dockerClient.Containers.RemoveContainerAsync(containerId, new ContainerRemoveParameters() { Force = true });
+
+            }
         }
     }
 
