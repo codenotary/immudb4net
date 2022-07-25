@@ -1,4 +1,4 @@
-# immudb4net [![License](https://img.shields.io/github/license/codenotary/immudb4net)](LICENSE)
+# immudb4net [![License](https://img.shields.io/github/license/codenotary/immudb4j)](LICENSE)
 
 
 ### The Official [immudb] Client for .NET
