@@ -5,12 +5,8 @@
 
 [immudb]: https://immudb.io/
 
-
 ## Contents
 
-- [immudb4net ![License](LICENSE)](#immudb4net-)
-    - [The Official [immudb] Client for .NET](#the-official-immudb-client-for-net)
-  - [Contents](#contents)
   - [Introduction](#introduction)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
