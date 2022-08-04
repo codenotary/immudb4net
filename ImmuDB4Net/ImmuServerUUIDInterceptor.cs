@@ -23,11 +23,11 @@ public class ImmuServerUUIDInterceptor : Interceptor
 {
 
     private static readonly string SERVER_UUID = "immudb-uuid";
-    private readonly ImmuClient client;
+    private readonly Connection connection;
 
-    public ImmuServerUUIDInterceptor(ImmuClient client)
+    public ImmuServerUUIDInterceptor(Connection client)
     {
-        this.client = client;
+        this.connection = client;
     }
 
 
@@ -53,9 +53,9 @@ public class ImmuServerUUIDInterceptor : Interceptor
         {
             Metadata mdata = await c.ResponseHeadersAsync;
             Grpc.Core.Metadata.Entry? serverUuid = mdata.Get(SERVER_UUID);
-            if ((serverUuid != null) && !serverUuid.Value.Equals(client.CurrentServerUuid, StringComparison.InvariantCultureIgnoreCase))
+            if ((serverUuid != null) && !serverUuid.Value.Equals(connection.ServerUUID, StringComparison.InvariantCultureIgnoreCase))
             {
-                client.CurrentServerUuid = serverUuid.Value;
+                connection.ServerUUID = serverUuid.Value;
             }
             return mdata;
         }

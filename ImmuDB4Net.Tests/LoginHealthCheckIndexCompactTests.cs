@@ -38,6 +38,7 @@ public class LoginHealthCheckCompactIndexTests : BaseClientIntTests
     public async Task Test1()
     {
         await client!.Login("immudb", "immudb");
+        await client!.UseDatabase("defaultdb");
         bool isHealthy = await client.HealthCheck();
         Assert.IsTrue(isHealthy);
         await client.CompactIndex();

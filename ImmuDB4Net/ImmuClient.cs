@@ -20,8 +20,6 @@ using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Grpc.Core.Interceptors;
-using Grpc.Net.Client;
 using ImmuDB.Crypto;
 using ImmuDB.Exceptions;
 using ImmudbProxy;
@@ -33,13 +31,15 @@ public class ImmuClient
 
     private readonly AsymmetricKeyParameter? serverSigningKey;
     private readonly ImmuStateHolder stateHolder;
-    private GrpcChannel? channel;
+    
 
     public string CurrentServerUuid { get; set; } = "";
 
     private string currentDb = "defaultdb";
-    internal ImmuService.ImmuServiceClient Service { get; private set; }
-
+    internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
+    public IConnection Connection {get; internal set; }
+    internal ISessionManager SessionManager {get; set; }
+    internal string? SessionId;
 
     public static Builder NewBuilder()
     {
@@ -48,36 +48,27 @@ public class ImmuClient
 
     public ImmuClient(Builder builder)
     {
-        string schema = builder.ServerUrl.StartsWith("http") ? "" : "http://";
-        var grpcAddress = $"{schema}{builder.ServerUrl}:{builder.ServerPort}";
-
-        // This is needed for .NET Core 3 and below.
-        AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-
-        channel = GrpcChannel.ForAddress(grpcAddress);
-        var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
-        Service = new ImmuService.ImmuServiceClient(invoker);
-        Service.WithAuth = builder.Auth;
+        Connection = builder.ConnectionPool.Acquire(this);
+        SessionManager = builder.SessionManager;
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
     }
 
     public async Task Shutdown()
     {
-        if (channel == null)
+        if(Connection == null)
         {
             return;
         }
-        Task shutdownTask = channel.ShutdownAsync();
-        await Task.WhenAny(shutdownTask, Task.Delay(TimeSpan.FromSeconds(2)));
-        channel = null;
+        await SessionManager.CloseSession(Connection, SessionId);
+        Connection.Pool.Release(this);
     }
 
     public bool IsShutdown()
     {
         lock (this)
         {
-            return channel == null;
+            return Connection == null;
         }
     }
 
@@ -95,6 +86,11 @@ public class ImmuClient
     public async Task Logout()
     {
         await Service.WithAuthHeaders().LogoutAsync(new Empty(), Service.Headers);
+    }
+
+    public async Task OpenSession(string username, string password, string defaultdb) 
+    {
+        SessionId = await SessionManager.OpenSession(Connection, username, password, defaultdb);
     }
 
     public async Task<ImmuState> State()
@@ -994,9 +990,9 @@ public class ImmuClient
         return healthResponse.Status;
     }
 
-    public bool isConnected()
+    public bool IsConnected()
     {
-        return channel != null;
+        return Connection != null;
     }
 
     //
@@ -1143,12 +1139,23 @@ public class ImmuClient
         public bool Auth { get; private set; }
         public ImmuStateHolder StateHolder { get; private set; }
 
+        internal IConnectionPool ConnectionPool {get; }
+        internal ISessionManager SessionManager {get; }
+
+        static Builder() 
+        {
+            // This is needed for .NET Core 3 and below.
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+        }
+
         public Builder()
         {
             ServerUrl = "localhost";
             ServerPort = 3322;
             StateHolder = new SerializableImmuStateHolder();
             Auth = true;
+            ConnectionPool = new TrivialConnectionPool(this);
+            SessionManager = new SessionManager();
         }
 
         public Builder WithStateHolder(ImmuStateHolder stateHolder)
