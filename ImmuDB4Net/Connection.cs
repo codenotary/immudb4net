@@ -25,6 +25,7 @@ public interface IConnection
 {
     IConnectionPool Pool { get; }
     string? ServerUUID { get; set; }
+    string? RemoteAddress {get; }
     ImmuService.ImmuServiceClient Service { get; }
     Task Shutdown();
 }
@@ -35,15 +36,14 @@ public class Connection : IConnection
     public ImmuService.ImmuServiceClient Service => grpcClient;
     private GrpcChannel? channel;
     public IConnectionPool Pool { get; private set; }
+    public string? RemoteAddress {get; private set; }
     public string? ServerUUID { get; set; }
     internal HashSet<ImmuClient> Owners = new HashSet<ImmuClient>();
 
     internal Connection(ImmuClientBuilder builder)
     {
-        string schema = builder.ServerUrl.StartsWith("http") ? "" : "http://";
-        var grpcAddress = $"{schema}{builder.ServerUrl}:{builder.ServerPort}";
-
-        channel = GrpcChannel.ForAddress(grpcAddress);
+        RemoteAddress = builder.GrpcAddress;
+        channel = GrpcChannel.ForAddress(RemoteAddress);
         var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
         grpcClient = new ImmuService.ImmuServiceClient(invoker);
         Service.WithAuth = builder.Auth;
@@ -69,10 +69,12 @@ public class ReleasedConnection : IConnection
     public ReleasedConnection(IConnectionPool pool)
     {
         this.Pool = pool;
+        this.RemoteAddress = "<not established>";
     }
 
     public ImmuService.ImmuServiceClient Service => throw new InvalidOperationException("The connection has been released");
     public string? ServerUUID { get; set; }
+    public string? RemoteAddress {get; private set; }
 
     public Task Shutdown()
     {

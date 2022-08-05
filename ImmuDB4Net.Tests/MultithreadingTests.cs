@@ -35,8 +35,7 @@ public class MultithreadingTests : BaseClientIntTests
     [TestMethod("Multithreaded with key overlap")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         int threadCount = 10;
         int keyCount = 100;
@@ -78,6 +77,6 @@ public class MultithreadingTests : BaseClientIntTests
             }
         }
 
-        await client.Logout();
+        await client.Close();
     }
 }

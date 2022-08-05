@@ -37,8 +37,7 @@ namespace ImmuDB.Tests
 
         public async Task BaseTearDown()
         {
-            await client!.Close();
-            await client.Connection.Pool.Shutdown();
+            await client!.Connection.Pool.Shutdown();
         }
     }
 }

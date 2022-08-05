@@ -31,22 +31,21 @@ public class ImmuClient
 
     private readonly AsymmetricKeyParameter? serverSigningKey;
     private readonly ImmuStateHolder stateHolder;
-    
-
-    public string CurrentServerUuid { get; set; } = "";
 
     private string currentDb = "defaultdb";
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
-    public IConnection Connection {get; internal set; }
-    internal ISessionManager SessionManager {get; set; }
-    internal string? SessionId;
+    public IConnection Connection { get; internal set; }
+    internal IConnectionPool ConnectionPool { get; set; }
+    internal ISessionManager SessionManager { get; set; }
+    internal Session? session;
     private static object sync = new Object();
     private static ImmuClientBuilder? builderInstance;
 
     public static ImmuClientBuilder Builder()
     {
-        lock(sync) {
-            if(builderInstance == null) 
+        lock (sync)
+        {
+            if (builderInstance == null)
             {
                 builderInstance = new ImmuClientBuilder();
             }
@@ -56,19 +55,26 @@ public class ImmuClient
 
     public ImmuClient(ImmuClientBuilder builder)
     {
-        Connection = builder.ConnectionPool.Acquire(this);
+        ConnectionPool = builder.ConnectionPool;
+        Connection = new ReleasedConnection(ConnectionPool);
         SessionManager = builder.SessionManager;
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
     }
 
+    public async Task Open(string username, string password, string defaultdb)
+    {
+        Connection = ConnectionPool.Acquire(this);
+        session = await SessionManager.OpenSession(Connection, username, password, defaultdb);
+    }
+
     public async Task Close()
     {
-        if(Connection == null)
+        if (Connection == null)
         {
             return;
         }
-        await SessionManager.CloseSession(Connection, SessionId);
+        await SessionManager.CloseSession(Connection, session);
         Connection.Pool.Release(this);
     }
 
@@ -79,35 +85,20 @@ public class ImmuClient
             return Connection == null;
         }
     }
-
-    public async Task Login(string username, string password)
-    {
-        ImmudbProxy.LoginRequest loginRequest = new ImmudbProxy.LoginRequest()
-        {
-            User = Utils.ToByteString(username),
-            Password = Utils.ToByteString(password)
-        };
-        ImmudbProxy.LoginResponse loginResponse = await Service.LoginAsync(loginRequest);
-        Service.AuthToken = loginResponse.Token;
-    }
-
-    public async Task Logout()
-    {
-        await Service.WithHeaders(SessionId).LogoutAsync(new Empty(), Service.Headers);
-    }
-
-    public async Task Open(string username, string password, string defaultdb) 
-    {
-        SessionId = await SessionManager.OpenSession(Connection, username, password, defaultdb);
-    }
+    
 
     public async Task<ImmuState> State()
     {
-        ImmuState? state = stateHolder.GetState(CurrentServerUuid, currentDb);
+         if(session == null)
+        {
+            throw new ArgumentException("Could not set state on a null session");
+        }
+
+        ImmuState? state = stateHolder.GetState(session, currentDb);
         if (state == null)
         {
             state = await CurrentState();
-            stateHolder.SetState(CurrentServerUuid, state);
+            stateHolder.SetState(session, state);
         }
         return state;
     }
@@ -119,7 +110,7 @@ public class ImmuClient
     */
     public async Task<ImmuState> CurrentState()
     {
-        ImmudbProxy.ImmutableState state = await Service.WithHeaders(SessionId).CurrentStateAsync(new Empty(), Service.Headers);
+        ImmudbProxy.ImmutableState state = await Service.WithHeaders(session).CurrentStateAsync(new Empty(), Service.Headers);
         ImmuState immuState = ImmuState.ValueOf(state);
         if (!immuState.CheckSignature(serverSigningKey))
         {
@@ -139,7 +130,7 @@ public class ImmuClient
             Name = database
         };
 
-        await Service.WithHeaders(SessionId).CreateDatabaseV2Async(db, Service.Headers);
+        await Service.WithHeaders(session).CreateDatabaseV2Async(db, Service.Headers);
     }
 
     public async Task UseDatabase(string database)
@@ -148,7 +139,7 @@ public class ImmuClient
         {
             DatabaseName = database
         };
-        ImmudbProxy.UseDatabaseReply response = await Service.WithHeaders(SessionId).UseDatabaseAsync(db, Service.Headers);
+        ImmudbProxy.UseDatabaseReply response = await Service.WithHeaders(session).UseDatabaseAsync(db, Service.Headers);
         Service.AuthToken = response.Token;
         currentDb = database;
     }
@@ -156,7 +147,7 @@ public class ImmuClient
     public async Task<List<string>> Databases()
     {
         ImmudbProxy.DatabaseListRequestV2 req = new ImmudbProxy.DatabaseListRequestV2();
-        ImmudbProxy.DatabaseListResponseV2 res = await Service.WithHeaders(SessionId).DatabaseListV2Async(req, Service.Headers);
+        ImmudbProxy.DatabaseListResponseV2 res = await Service.WithHeaders(session).DatabaseListV2Async(req, Service.Headers);
         List<string> list = new List<string>(res.Databases.Count);
         foreach (ImmudbProxy.DatabaseWithSettings db in res.Databases)
         {
@@ -178,7 +169,7 @@ public class ImmuClient
         };
         try
         {
-            ImmudbProxy.Entry entry = await Service.WithHeaders(SessionId).GetAsync(req, Service.Headers);
+            ImmudbProxy.Entry entry = await Service.WithHeaders(session).GetAsync(req, Service.Headers);
             return Entry.ValueOf(entry);
         }
         catch (RpcException e)
@@ -204,6 +195,10 @@ public class ImmuClient
 
     public async Task<Entry> VerifiedGet(ImmudbProxy.KeyRequest keyReq, ImmuState state)
     {
+        if(session == null)
+        {
+            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
+        }
         ImmudbProxy.VerifiableGetRequest vGetReq = new ImmudbProxy.VerifiableGetRequest()
         {
             KeyRequest = keyReq,
@@ -214,7 +209,7 @@ public class ImmuClient
 
         try
         {
-            vEntry = await Service.WithHeaders(SessionId).VerifiableGetAsync(vGetReq, Service.Headers);
+            vEntry = await Service.WithHeaders(session).VerifiableGetAsync(vGetReq, Service.Headers);
         }
         catch (RpcException e)
         {
@@ -306,7 +301,7 @@ public class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(CurrentServerUuid, newState);
+        stateHolder.SetState(session, newState);
         return Entry.ValueOf(vEntry.Entry);
     }
 
@@ -383,7 +378,7 @@ public class ImmuClient
 
         try
         {
-            return Entry.ValueOf(await Service.WithHeaders(SessionId).GetAsync(req, Service.Headers));
+            return Entry.ValueOf(await Service.WithHeaders(session).GetAsync(req, Service.Headers));
         }
         catch (RpcException e)
         {
@@ -411,7 +406,7 @@ public class ImmuClient
 
         try
         {
-            return Entry.ValueOf(await Service.WithHeaders(SessionId).GetAsync(req, Service.Headers));
+            return Entry.ValueOf(await Service.WithHeaders(session).GetAsync(req, Service.Headers));
         }
         catch (RpcException e)
         {
@@ -436,7 +431,7 @@ public class ImmuClient
         ImmudbProxy.KeyListRequest req = new ImmudbProxy.KeyListRequest();
         req.Keys.AddRange(keysBS);
 
-        ImmudbProxy.Entries entries = await Service.WithHeaders(SessionId).GetAllAsync(req, Service.Headers);
+        ImmudbProxy.Entries entries = await Service.WithHeaders(session).GetAllAsync(req, Service.Headers);
         List<Entry> result = new List<Entry>(entries.Entries_.Count);
 
         foreach (ImmudbProxy.Entry entry in entries.Entries_)
@@ -465,7 +460,7 @@ public class ImmuClient
             Desc = desc
         };
 
-        ImmudbProxy.Entries entries = await Service.WithHeaders(SessionId).ScanAsync(req, Service.Headers);
+        ImmudbProxy.Entries entries = await Service.WithHeaders(session).ScanAsync(req, Service.Headers);
         return BuildList(entries);
     }
 
@@ -524,7 +519,7 @@ public class ImmuClient
         ImmudbProxy.SetRequest req = new ImmudbProxy.SetRequest();
         req.KVs.Add(kv);
 
-        ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(SessionId).SetAsync(req, Service.Headers);
+        ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(session).SetAsync(req, Service.Headers);
 
         if (txHdr.Nentries != 1)
         {
@@ -551,7 +546,7 @@ public class ImmuClient
             request.KVs.Add(kvProxy);
         }
 
-        ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(SessionId).SetAsync(request, Service.Headers);
+        ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(session).SetAsync(request, Service.Headers);
 
         if (txHdr.Nentries != kvList.Count)
         {
@@ -571,7 +566,7 @@ public class ImmuClient
             BoundRef = atTx > 0
         };
 
-        ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(SessionId).SetReferenceAsync(req, Service.Headers);
+        ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(session).SetReferenceAsync(req, Service.Headers);
 
         if (txHdr.Nentries != 1)
         {
@@ -596,7 +591,7 @@ public class ImmuClient
             Utils.ToByteArray(referencedKey),
             0);
     }
-    
+
     public async Task<TxHeader> SetReference(byte[] key, byte[] referencedKey)
     {
         return await SetReference(key, referencedKey, 0);
@@ -609,6 +604,11 @@ public class ImmuClient
 
     public async Task<TxHeader> VerifiedSet(byte[] key, byte[] value)
     {
+        if(session == null)
+        {
+            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
+        }
+
         ImmuState state = await State();
         ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
         {
@@ -624,7 +624,7 @@ public class ImmuClient
             ProveSinceTx = state.TxId
         };
 
-        ImmudbProxy.VerifiableTx vtx = await Service.WithHeaders(SessionId).VerifiableSetAsync(vSetReq, Service.Headers);
+        ImmudbProxy.VerifiableTx vtx = await Service.WithHeaders(session).VerifiableSetAsync(vSetReq, Service.Headers);
         int ne = vtx.Tx.Header.Nentries;
 
         if (ne != 1 || vtx.Tx.Entries.Count != 1)
@@ -664,7 +664,7 @@ public class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(CurrentServerUuid, newState);
+        stateHolder.SetState(session, newState);
 
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
@@ -699,7 +699,7 @@ public class ImmuClient
 
     public async Task<TxHeader> ZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
-        ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(SessionId).ZAddAsync(
+        ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(session).ZAddAsync(
                 new ImmudbProxy.ZAddRequest()
                 {
                     Set = Utils.ToByteString(set),
@@ -729,8 +729,12 @@ public class ImmuClient
 
     public async Task<TxHeader> VerifiedZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
-        ImmuState state = await State();
+        if(session == null)
+        {
+            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
+        }
 
+        ImmuState state = await State();
         ImmudbProxy.ZAddRequest zAddReq = new ImmudbProxy.ZAddRequest()
         {
             Set = Utils.ToByteString(set),
@@ -739,14 +743,13 @@ public class ImmuClient
             Score = score,
             BoundRef = atTx > 0
         };
-
         ImmudbProxy.VerifiableZAddRequest vZAddReq = new ImmudbProxy.VerifiableZAddRequest()
         {
             ZAddRequest = zAddReq,
             ProveSinceTx = state.TxId
         };
 
-        ImmudbProxy.VerifiableTx vtx = await Service.WithHeaders(SessionId).VerifiableZAddAsync(vZAddReq, Service.Headers);
+        ImmudbProxy.VerifiableTx vtx = await Service.WithHeaders(session).VerifiableZAddAsync(vZAddReq, Service.Headers);
 
         if (vtx.Tx.Header.Nentries != 1)
         {
@@ -792,7 +795,7 @@ public class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(CurrentServerUuid, newState);
+        stateHolder.SetState(session, newState);
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
 
@@ -825,7 +828,7 @@ public class ImmuClient
             Desc = reverse
         };
 
-        ImmudbProxy.ZEntries zEntries = await Service.WithHeaders(SessionId).ZScanAsync(req, Service.Headers);
+        ImmudbProxy.ZEntries zEntries = await Service.WithHeaders(session).ZScanAsync(req, Service.Headers);
         return BuildList(zEntries);
     }
 
@@ -842,10 +845,11 @@ public class ImmuClient
     {
         try
         {
-            ImmudbProxy.DeleteKeysRequest req = new ImmudbProxy.DeleteKeysRequest() {
-                Keys = {Utils.ToByteString(key)}
+            ImmudbProxy.DeleteKeysRequest req = new ImmudbProxy.DeleteKeysRequest()
+            {
+                Keys = { Utils.ToByteString(key) }
             };
-            return TxHeader.ValueOf(await Service.WithHeaders(SessionId).DeleteAsync(req, Service.Headers));
+            return TxHeader.ValueOf(await Service.WithHeaders(session).DeleteAsync(req, Service.Headers));
         }
         catch (RpcException e)
         {
@@ -867,7 +871,7 @@ public class ImmuClient
     {
         try
         {
-            ImmudbProxy.Tx tx = await Service.WithHeaders(SessionId).TxByIdAsync(
+            ImmudbProxy.Tx tx = await Service.WithHeaders(session).TxByIdAsync(
                 new ImmudbProxy.TxRequest()
                 {
                     Tx = txId
@@ -887,6 +891,11 @@ public class ImmuClient
 
     public async Task<Tx> VerifiedTxById(ulong txId)
     {
+        if(session == null)
+        {
+            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
+        }
+        
         ImmuState state = await State();
         ImmudbProxy.VerifiableTxRequest vTxReq = new ImmudbProxy.VerifiableTxRequest()
         {
@@ -898,7 +907,7 @@ public class ImmuClient
 
         try
         {
-            vtx = await Service.WithHeaders(SessionId).VerifiableTxByIdAsync(vTxReq, Service.Headers);
+            vtx = await Service.WithHeaders(session).VerifiableTxByIdAsync(vTxReq, Service.Headers);
         }
         catch (RpcException e)
         {
@@ -961,7 +970,7 @@ public class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(CurrentServerUuid, newState);
+        stateHolder.SetState(session, newState);
         return tx;
     }
 
@@ -972,7 +981,7 @@ public class ImmuClient
             InitialTx = initialTxId
         };
 
-        ImmudbProxy.TxList txList = await Service.WithHeaders(SessionId).TxScanAsync(req, Service.Headers);
+        ImmudbProxy.TxList txList = await Service.WithHeaders(session).TxScanAsync(req, Service.Headers);
         return buildList(txList);
     }
 
@@ -984,7 +993,7 @@ public class ImmuClient
             Limit = limit,
             Desc = desc
         };
-        ImmudbProxy.TxList txList = await Service.WithHeaders(SessionId).TxScanAsync(req, Service.Headers);
+        ImmudbProxy.TxList txList = await Service.WithHeaders(session).TxScanAsync(req, Service.Headers);
         return buildList(txList);
     }
 
@@ -994,7 +1003,7 @@ public class ImmuClient
 
     public async Task<bool> HealthCheck()
     {
-        var healthResponse = await Service.WithHeaders(SessionId).HealthAsync(new Empty(), Service.Headers);
+        var healthResponse = await Service.WithHeaders(session).HealthAsync(new Empty(), Service.Headers);
         return healthResponse.Status;
     }
 
@@ -1009,7 +1018,7 @@ public class ImmuClient
 
     public async Task<List<Iam.User>> ListUsers()
     {
-        ImmudbProxy.UserList userList = await Service.WithHeaders(SessionId).ListUsersAsync(new Empty(), Service.Headers);
+        ImmudbProxy.UserList userList = await Service.WithHeaders(session).ListUsersAsync(new Empty(), Service.Headers);
         return userList.Users.ToList()
                 .Select(u => new Iam.User(
                     u.User_.ToString(System.Text.Encoding.UTF8),
@@ -1037,7 +1046,7 @@ public class ImmuClient
             Database = database
         };
 
-        await Service.WithHeaders(SessionId).CreateUserAsync(createUserRequest, Service.Headers);
+        await Service.WithHeaders(session).CreateUserAsync(createUserRequest, Service.Headers);
     }
 
     public async Task ChangePassword(string user, string oldPassword, string newPassword)
@@ -1049,7 +1058,7 @@ public class ImmuClient
             NewPassword = Utils.ToByteString(newPassword),
         };
 
-        await Service.WithHeaders(SessionId).ChangePasswordAsync(changePasswordRequest, Service.Headers);
+        await Service.WithHeaders(session).ChangePasswordAsync(changePasswordRequest, Service.Headers);
     }
 
     //
@@ -1064,12 +1073,12 @@ public class ImmuClient
             Synced = synced
         };
 
-        await Service.WithHeaders(SessionId).FlushIndexAsync(req, Service.Headers);
+        await Service.WithHeaders(session).FlushIndexAsync(req, Service.Headers);
     }
 
     public async Task CompactIndex()
     {
-        await Service.WithHeaders(SessionId).CompactIndexAsync(new Empty(), Service.Headers);
+        await Service.WithHeaders(session).CompactIndexAsync(new Empty(), Service.Headers);
     }
 
     //
@@ -1085,7 +1094,7 @@ public class ImmuClient
     {
         try
         {
-            ImmudbProxy.Entries entries = await Service.WithHeaders(SessionId).HistoryAsync(new ImmudbProxy.HistoryRequest()
+            ImmudbProxy.Entries entries = await Service.WithHeaders(session).HistoryAsync(new ImmudbProxy.HistoryRequest()
             {
                 Key = Utils.ToByteString(key),
                 Limit = limit,
@@ -1147,10 +1156,10 @@ public class ImmuClient
         public bool Auth { get; private set; }
         public ImmuStateHolder StateHolder { get; private set; }
 
-        internal IConnectionPool ConnectionPool {get; }
-        internal ISessionManager SessionManager {get; }
+        internal IConnectionPool ConnectionPool { get; }
+        internal ISessionManager SessionManager { get; }
 
-        static ImmuClientBuilder() 
+        static ImmuClientBuilder()
         {
             // This is needed for .NET Core 3 and below.
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
@@ -1162,8 +1171,17 @@ public class ImmuClient
             ServerPort = 3322;
             StateHolder = new SerializableImmuStateHolder();
             Auth = true;
-            ConnectionPool = new TrivialConnectionPool(this);
+            ConnectionPool = new RandomAssignConnectionPool(this);
             SessionManager = new SessionManager();
+        }
+
+        public string GrpcAddress
+        {
+            get
+            {
+                string schema = ServerUrl.StartsWith("http") ? "" : "http://";
+                return $"{schema}{ServerUrl.ToLowerInvariant()}:{ServerPort}";
+            }
         }
 
         public ImmuClientBuilder WithStateHolder(ImmuStateHolder stateHolder)
@@ -1195,7 +1213,7 @@ public class ImmuClient
             this.ServerSigningKey = ImmuState.GetPublicKeyFromPemFile(publicKeyFileName);
             return this;
         }
-        
+
         public ImmuClientBuilder WithServerSigningKey(AsymmetricKeyParameter? key)
         {
             this.ServerSigningKey = key;

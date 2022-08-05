@@ -35,11 +35,10 @@ public class ListDatabasesTests : BaseClientIntTests
     [TestMethod("list databases retrieves at least 1 database")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         List<string> databases = await client.Databases();
-        await client.Logout();
+        await client.Close();
         Assert.IsTrue(databases.Count > 0);
     }
     

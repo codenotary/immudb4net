@@ -58,26 +58,26 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
-    public ImmuState? GetState(string? serverUuid, string database)
+    public ImmuState? GetState(Session? session, string database)
     {
         lock (this)
         {
-            return stateHolder.GetState(serverUuid, database);
+            return stateHolder.GetState(session, database);
         }
     }
 
-    public void SetState(string serverUuid, ImmuState state)
+    public void SetState(Session session, ImmuState state)
     {
         lock (this)
         {
-            ImmuState? currentState = stateHolder.GetState(serverUuid, state.Database);
+            ImmuState? currentState = stateHolder.GetState(session, state.Database);
             if (currentState != null && currentState.TxId >= state.TxId)
             {
                 return;
             }
 
-            stateHolder.SetState(serverUuid, state);
-            string newStateFile = Path.Combine(statesFolder, "state_" + serverUuid + "_" + state.Database + "_" + Stopwatch.GetTimestamp());
+            stateHolder.SetState(session, state);
+            string newStateFile = Path.Combine(statesFolder, "state_" + session.ServerUUID + "_" + state.Database + "_" + Stopwatch.GetTimestamp());
 
             if (File.Exists(newStateFile))
             {

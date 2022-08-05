@@ -38,8 +38,7 @@ public class ReferenceTests : BaseClientIntTests
     [TestMethod("set, setreference and getreference")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         byte[] key = Encoding.UTF8.GetBytes("testRef");
         byte[] val = Encoding.UTF8.GetBytes("abc");
@@ -70,6 +69,6 @@ public class ReferenceTests : BaseClientIntTests
         }
         Assert.IsNotNull(ref2TxHdr);
 
-        await client.Logout();
+        await client.Close();
     }
 }

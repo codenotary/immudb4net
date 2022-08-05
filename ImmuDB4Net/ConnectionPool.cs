@@ -26,32 +26,40 @@ public interface IConnectionPool
     Task Shutdown();
 }
 
-public class TrivialConnectionPool : IConnectionPool
+public class RandomAssignConnectionPool : IConnectionPool
 {
-    const int MAX_CONNECTIONS = 1;
+    const int MAX_CONNECTIONS = 2;
     private ImmuClientBuilder builder;
     private Random random = new Random(Environment.TickCount);
     private ReleasedConnection releasedConnection;
 
-    public TrivialConnectionPool(ImmuClientBuilder builder)
+    public RandomAssignConnectionPool(ImmuClientBuilder builder)
     {
         this.builder = builder;
         this.releasedConnection = new ReleasedConnection(this);
     }
 
-    List<IConnection> connections = new List<IConnection>();
+    Dictionary<string, List<IConnection>>  connections = new Dictionary<string, List<IConnection>>();
     Dictionary<ImmuClient, IConnection> _assignments = new Dictionary<ImmuClient, IConnection>();
 
     public IConnection Acquire(ImmuClient client)
     {
-        if (connections.Count < MAX_CONNECTIONS)
-        {
+        List<IConnection> poolForAddress;
+        if(!connections.TryGetValue(builder.GrpcAddress, out poolForAddress)) {
+            poolForAddress = new List<IConnection>();
             var conn = new Connection(builder);
-            connections.Add(conn);
+            poolForAddress.Add(conn);
+            connections.Add(builder.GrpcAddress, poolForAddress);
             _assignments[client] = conn;
             return conn;
         }
-        var randomConn = connections[random.Next(MAX_CONNECTIONS)];
+        if (poolForAddress.Count < MAX_CONNECTIONS)
+        {
+            var conn = new Connection(builder);
+            poolForAddress.Add(conn);
+            return conn;
+        }
+        var randomConn = poolForAddress[random.Next(MAX_CONNECTIONS)];
         _assignments[client] = randomConn;
         return randomConn;
     }
@@ -64,8 +72,10 @@ public class TrivialConnectionPool : IConnectionPool
 
     public async Task Shutdown()
     {
-        foreach(var connection in connections) {
-            await connection.Shutdown();
+        foreach(var addressPool in connections) {
+            foreach(var connection in addressPool.Value) {
+                await connection.Shutdown();
+            }
         }
     }
 }

@@ -42,19 +42,19 @@ public class SerializableImmuStateHolder : ImmuStateHolder
         File.WriteAllText(fileName, contents);
     }
 
-    public ImmuState? GetState(string? serverUuid, string database)
+    public ImmuState? GetState(Session? session, string database)
     {
-        if(serverUuid == null)
+        if(session == null)
             return null;
-        string key = serverUuid + "_" + database;
+        string key = session.ServerUUID + "_" + database;
         if(statesMap.TryGetValue(key, out var state)) {
             return state;
         }
         return null;
     }
 
-    public void SetState(string serverUuid, ImmuState state)
+    public void SetState(Session session, ImmuState state)
     {
-        statesMap[serverUuid + "_" + state.Database] = state;
+        statesMap[session.ServerUUID + "_" + state.Database] = state;
     }
 }

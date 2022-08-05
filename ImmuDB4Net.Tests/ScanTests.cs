@@ -39,8 +39,7 @@ public class ScanTests : BaseClientIntTests
     public async Task Test4()
     {
 
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         byte[] value1 = { 0, 1, 2, 3 };
         byte[] value2 = { 4, 5, 6, 7 };
@@ -67,14 +66,13 @@ public class ScanTests : BaseClientIntTests
 
         Assert.AreEqual((await client.Scan("scan", "scan1", 1, false)).Count, 1);
 
-        await client.Logout();
+        await client.Close();
     }
 
     [TestMethod("execute set, zadd, zscan")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         byte[] value1 = { 0, 1, 2, 3 };
         byte[] value2 = { 4, 5, 6, 7 };
@@ -112,6 +110,6 @@ public class ScanTests : BaseClientIntTests
         List<ZEntry> zScan2 = await client.ZScan("set2", 5, false);
         Assert.AreEqual(zScan2.Count, 2);
 
-        await client.Logout();
+        await client.Close();
     }
 }

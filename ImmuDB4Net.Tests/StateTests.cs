@@ -44,8 +44,7 @@ public class StateTests : BaseClientIntTests
     [TestMethod("current state")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         ImmuState currState = await client.CurrentState();
         Assert.IsNotNull(currState);
@@ -70,13 +69,13 @@ public class StateTests : BaseClientIntTests
                     // Again, "covering" `checkSignature` when there is a `signature` attached.
                     ImmuState someState = new ImmuState(currState.Database, currState.TxId, currState.TxHash, new byte[1]);
                     Assert.IsFalse(someState.CheckSignature(assymKey));
-                    await client.Logout();
+                    await client.Close();
                 }
             }
         }
         catch (Exception e)
         {
-            await client.Logout();
+            await client.Close();
             Assert.Fail(string.Format("An exception occurred in StateTests->Test1. %s", e.ToString()));
             return;
         }
@@ -115,8 +114,7 @@ public class StateTests : BaseClientIntTests
             return;
         }
 
-        await client.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client.Open("immudb", "immudb", "defaultdb");
         try
         {
             await client.CurrentState();
@@ -126,7 +124,7 @@ public class StateTests : BaseClientIntTests
         {
 
         }
-        await client.Logout();
+        await client.Close();
     }
 
     private string CreatePrivateKeyInTmpFolder()
@@ -220,8 +218,7 @@ public class StateTests : BaseClientIntTests
                 return;
             }
 
-            await client.Login("immudb", "immudb");
-            await client.UseDatabase("defaultdb");
+            await client.Open("immudb", "immudb", "defaultdb");
             try
             {
                 var state = await client.CurrentState();
@@ -231,7 +228,7 @@ public class StateTests : BaseClientIntTests
             {
                 Assert.Fail("Signing key provided on the client side and server and currentstate should work");
             }
-            await client.Logout();
+            await client.Close();
         }
         finally
         {

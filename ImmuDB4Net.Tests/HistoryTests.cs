@@ -39,8 +39,7 @@ public class HistoryTests : BaseClientIntTests
     public async Task Test1()
     {
 
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         byte[] value1 = { 0, 1, 2, 3 };
         byte[] value2 = { 4, 5, 6, 7 };
@@ -98,7 +97,7 @@ public class HistoryTests : BaseClientIntTests
             // exception is expected here
         }
 
-        await client.Logout();
+        await client.Close();
     }
 
 }

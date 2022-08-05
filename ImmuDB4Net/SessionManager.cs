@@ -21,15 +21,15 @@ namespace ImmuDB;
 
 public interface ISessionManager
 {
-    Task<string> OpenSession(IConnection connection, string username, string password, string initialDbName);
-    Task CloseSession(IConnection connection, string? sessionId);
+    Task<Session> OpenSession(IConnection connection, string username, string password, string initialDbName);
+    Task CloseSession(IConnection connection, Session? session);
 }
 
 public class SessionManager : ISessionManager
 {
     private Dictionary<string, Session> sessions = new Dictionary<string, Session>();
 
-    public async Task<string> OpenSession(IConnection connection, string username, string password, string initialDbName)
+    public async Task<Session> OpenSession(IConnection connection, string username, string password, string initialDbName)
     {
         OpenSessionRequest openSessionRequest = new OpenSessionRequest()
         {
@@ -39,17 +39,20 @@ public class SessionManager : ISessionManager
         };
         
         var result = await connection.Service.OpenSessionAsync(openSessionRequest);
-        var session = new Session(result.SessionID, result.ServerUUID);
+        var session = new Session(result.SessionID, result.ServerUUID) {
+            Kind = SessionKind.ReadWrite
+        };
         sessions[result.SessionID] = session;
-        return result.SessionID;
+        return session;
     }
 
-    public async Task CloseSession(IConnection connection, string? sessionId)
+    public async Task CloseSession(IConnection connection, Session? session)
     {
-        await connection.Service.WithHeaders(sessionId).CloseSessionAsync(new Empty(), connection.Service.Headers);
-        if(sessionId != null) {
-            sessions.Remove(sessionId);
+        if(session?.Name == null) {
+            return;
         }
+        await connection.Service.WithHeaders(session).CloseSessionAsync(new Empty(), connection.Service.Headers);
+        sessions.Remove(session.Name);
     }
 }
 

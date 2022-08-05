@@ -39,8 +39,7 @@ public class ZAddTests : BaseClientIntTests
     [TestMethod("ZAdd, VerifiedZAdd and VerifiedZAddAt")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         string set = "test-zadd";
         string key1 = "test-zadd-key1";
@@ -82,6 +81,6 @@ public class ZAddTests : BaseClientIntTests
         }
         Assert.IsNotNull(txHdr);
 
-        await client.Logout();
+        await client.Close();
     }
 }

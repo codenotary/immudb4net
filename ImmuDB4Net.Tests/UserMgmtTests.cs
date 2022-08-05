@@ -38,8 +38,7 @@ public class UserMgmtTests : BaseClientIntTests
     [TestMethod("create user and change password")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         try
         {
@@ -51,12 +50,12 @@ public class UserMgmtTests : BaseClientIntTests
         }
 
         await client.ChangePassword("testUser", "testTest123!", "newTestTest123!");
-        await client.Logout();
+        await client.Close();
 
         // This must fail.
         try
         {
-            await client.Login("testUser", "testTest123!");
+            await client.Open("testUser", "testTest123!", "defauldb");
             Assert.Fail("Login with wrong (old) password must fail.");
         }
         catch (RpcException)
@@ -64,8 +63,8 @@ public class UserMgmtTests : BaseClientIntTests
             // Login failed, everything's fine.
         }
 
-        await client.Login("testUser", "newTestTest123!");
-        await client.Logout();
+        await client.Open("testUser", "newTestTest123!", "defaultdb");
+        await client.Close();
 
         // Some basic test to temporary (until t1 test above can be used) increase the code coverage.
         User myUser = new User("myusername") {
