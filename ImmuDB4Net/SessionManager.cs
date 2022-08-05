@@ -46,7 +46,7 @@ public class SessionManager : ISessionManager
 
     public async Task CloseSession(IConnection connection, string? sessionId)
     {
-        await connection.Service.CloseSessionAsync(new Empty());
+        await connection.Service.WithHeaders(sessionId).CloseSessionAsync(new Empty(), connection.Service.Headers);
         if(sessionId != null) {
             sessions.Remove(sessionId);
         }

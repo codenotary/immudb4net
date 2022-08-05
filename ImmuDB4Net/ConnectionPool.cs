@@ -29,11 +29,11 @@ public interface IConnectionPool
 public class TrivialConnectionPool : IConnectionPool
 {
     const int MAX_CONNECTIONS = 1;
-    private Builder builder;
+    private ImmuClientBuilder builder;
     private Random random = new Random(Environment.TickCount);
     private ReleasedConnection releasedConnection;
 
-    public TrivialConnectionPool(Builder builder)
+    public TrivialConnectionPool(ImmuClientBuilder builder)
     {
         this.builder = builder;
         this.releasedConnection = new ReleasedConnection(this);

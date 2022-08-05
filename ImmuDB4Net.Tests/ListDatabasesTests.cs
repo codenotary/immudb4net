@@ -42,4 +42,12 @@ public class ListDatabasesTests : BaseClientIntTests
         await client.Logout();
         Assert.IsTrue(databases.Count > 0);
     }
+    
+    [TestMethod("list databases with session retrieves at least 1 database")]
+    public async Task Test2()
+    {
+        await client!.Open("immudb", "immudb", "defaultdb");
+        List<string> databases = await client.Databases();
+        Assert.IsTrue(databases.Count > 0);
+    }
 }

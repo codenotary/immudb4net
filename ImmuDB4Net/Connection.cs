@@ -38,7 +38,7 @@ public class Connection : IConnection
     public string? ServerUUID { get; set; }
     internal HashSet<ImmuClient> Owners = new HashSet<ImmuClient>();
 
-    internal Connection(Builder builder)
+    internal Connection(ImmuClientBuilder builder)
     {
         string schema = builder.ServerUrl.StartsWith("http") ? "" : "http://";
         var grpcAddress = $"{schema}{builder.ServerUrl}:{builder.ServerPort}";

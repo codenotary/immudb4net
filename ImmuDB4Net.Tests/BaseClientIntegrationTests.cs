@@ -27,7 +27,7 @@ namespace ImmuDB.Tests
                 .WithStatesFolder("immudb/states")
                 .build();
 
-            client = ImmuClient.NewBuilder()
+            client = ImmuClient.Builder()
                 .WithStateHolder(stateHolder)
                 .WithServerUrl("localhost")
                 .WithServerPort(3322)
@@ -37,7 +37,7 @@ namespace ImmuDB.Tests
 
         public async Task BaseTearDown()
         {
-            client!.Shutdown();
+            await client!.Close();
             await client.Connection.Pool.Shutdown();
         }
     }
