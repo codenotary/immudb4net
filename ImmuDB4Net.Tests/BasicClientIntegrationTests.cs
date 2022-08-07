@@ -77,7 +77,7 @@ public class BasicClientTests : BaseClientIntTests
         await client.Close();
     }
 
-    [TestMethod("execute login, set, get and verifiedget")]
+    [TestMethod("execute login, setall, get and getall")]
     public async Task Test2()
     {
         await client!.Open("immudb", "immudb", "defaultdb");
@@ -125,5 +125,7 @@ public class BasicClientTests : BaseClientIntTests
 
         await client.Close();
     }
+
+
 
 }

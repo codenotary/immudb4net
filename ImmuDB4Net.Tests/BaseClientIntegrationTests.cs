@@ -32,7 +32,20 @@ namespace ImmuDB.Tests
                 .WithServerUrl("localhost")
                 .WithServerPort(3322)
                 .Build();
+        }
+        
+        public void BaseSetUp(TimeSpan heartbeatInterval)
+        {
+            FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
+                .WithStatesFolder("immudb/states")
+                .build();
 
+            client = ImmuClient.Builder()
+                .WithStateHolder(stateHolder)
+                .WithServerUrl("localhost")
+                .WithServerPort(3322)
+                .WithHeartbeatInterval(heartbeatInterval)
+                .Build();
         }
 
         public async Task BaseTearDown()

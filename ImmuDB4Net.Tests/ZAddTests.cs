@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 using System.Text;
-using Grpc.Core;
 using ImmuDB.Exceptions;
 
 namespace ImmuDB.Tests;

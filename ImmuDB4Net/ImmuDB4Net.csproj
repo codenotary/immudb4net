@@ -1,21 +1,26 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
 		<Description>.NET SDK for ImmuDB</Description>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<LangVersion>10.0</LangVersion>
-        <PackageId>ImmuDB4Net</PackageId>
-        <Version>1.0.0</Version>
-        <Authors>CodeNotary engineering</Authors>
-        <Company>CodeNotary</Company>
+		<PackageId>ImmuDB4Net</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>CodeNotary engineering</Authors>
+		<Company>CodeNotary</Company>
 	</PropertyGroup>
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>$(AssemblyName).Tests</_Parameter1>			<!-- We use the value of AssemblyName to declare the value of the attribute -->
+		</AssemblyAttribute>
+	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Grpc.Tools" Version="2.47.0">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		
+
 		<PackageReference Include="Portable.BouncyCastle" Version="1.9.0"/>
 		<PackageReference Include="Google.Protobuf" Version="3.21.2"/>
 		<PackageReference Include="System.Text.Json" Version="6.0.5"/>
@@ -24,9 +29,6 @@
 		<PackageReference Include="Grpc.Net.ClientFactory" Version="2.46.0"/>
 	</ItemGroup>
 	<ItemGroup>
-		<Protobuf Include="proto/schema.proto"
-			OutputDir="%(RelativeDir)/.."
-			GrpcServices="client"  />
-		
+		<Protobuf Include="proto/schema.proto" OutputDir="%(RelativeDir)/.." GrpcServices="client" />
 	</ItemGroup>
 </Project>

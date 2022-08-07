@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using Google.Protobuf.WellKnownTypes;
+using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
 using ImmudbProxy;
@@ -38,7 +40,8 @@ public class Connection : IConnection
     public IConnectionPool Pool { get; private set; }
     public string? RemoteAddress {get; private set; }
     public string? ServerUUID { get; set; }
-    internal HashSet<ImmuClient> Owners = new HashSet<ImmuClient>();
+    
+    
 
     internal Connection(ImmuClientBuilder builder)
     {
@@ -50,6 +53,7 @@ public class Connection : IConnection
         Pool = builder.ConnectionPool;
     }
 
+    
     public async Task Shutdown()
     {
         if (channel == null)

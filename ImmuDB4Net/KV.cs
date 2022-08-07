@@ -68,7 +68,7 @@ public class KV
 
         if (Metadata != null)
         {
-            mdbs = Metadata.serialize();
+            mdbs = Metadata.Serialize();
             mdLen = mdbs.Length;
         }
 

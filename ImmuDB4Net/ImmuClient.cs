@@ -38,8 +38,15 @@ public class ImmuClient
     internal IConnectionPool ConnectionPool { get; set; }
     internal ISessionManager SessionManager { get; set; }
     internal Session? session;
+    
     private static object sync = new Object();
     private static ImmuClientBuilder? builderInstance;
+
+    private TimeSpan heartbeatInterval;
+    private ManualResetEvent? heartbeatCloseRequested;
+    internal ManualResetEvent? heartbeatCalled;
+    private Task? heartbeatTask;
+
 
     public static ImmuClientBuilder Builder()
     {
@@ -53,19 +60,57 @@ public class ImmuClient
         }
     }
 
-    public ImmuClient(ImmuClientBuilder builder)
+    internal ImmuClient(ImmuClientBuilder builder)
     {
         ConnectionPool = builder.ConnectionPool;
         Connection = new ReleasedConnection(ConnectionPool);
         SessionManager = builder.SessionManager;
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
+        heartbeatInterval = builder.HeartbeatInterval;
     }
+
+    private void StartHeartbeat()
+    {
+        heartbeatTask = Task.Factory.StartNew(async () => {
+            while(true)
+            {
+                if(heartbeatCloseRequested != null && heartbeatCloseRequested.WaitOne(heartbeatInterval)) return;
+                try
+                {
+                    await Service.WithHeaders(session).KeepAliveAsync(new Empty(), Service.Headers);
+                    heartbeatCalled?.Set();
+                }
+                catch(RpcException) {}
+            }
+        });
+    }
+
+    private void StopHeartbeat()
+    {
+        if(heartbeatTask == null)
+        {
+            return;
+        }
+        heartbeatCloseRequested?.Set();
+        heartbeatTask.Wait();
+        heartbeatCloseRequested?.Close();
+        heartbeatCalled?.Close();
+        heartbeatTask = null;
+    }
+
 
     public async Task Open(string username, string password, string defaultdb)
     {
+        if(session != null)
+        {
+            throw new InvalidOperationException("please close the existing session before opening a new one");
+        }
         Connection = ConnectionPool.Acquire(this);
         session = await SessionManager.OpenSession(Connection, username, password, defaultdb);
+        heartbeatCloseRequested = new ManualResetEvent(false);
+        heartbeatCalled = new ManualResetEvent(false);
+        StartHeartbeat();
     }
 
     public async Task Close()
@@ -74,7 +119,9 @@ public class ImmuClient
         {
             return;
         }
+        StopHeartbeat();
         await SessionManager.CloseSession(Connection, session);
+        session = null;
         Connection.Pool.Release(this);
     }
 
@@ -1155,6 +1202,7 @@ public class ImmuClient
         public AsymmetricKeyParameter? ServerSigningKey { get; private set; }
         public bool Auth { get; private set; }
         public ImmuStateHolder StateHolder { get; private set; }
+        public TimeSpan HeartbeatInterval {get; set;}
 
         internal IConnectionPool ConnectionPool { get; }
         internal ISessionManager SessionManager { get; }
@@ -1171,6 +1219,7 @@ public class ImmuClient
             ServerPort = 3322;
             StateHolder = new SerializableImmuStateHolder();
             Auth = true;
+            HeartbeatInterval = TimeSpan.FromMinutes(1);
             ConnectionPool = new RandomAssignConnectionPool(this);
             SessionManager = new SessionManager();
         }
@@ -1205,6 +1254,12 @@ public class ImmuClient
         public ImmuClientBuilder WithServerUrl(string serverUrl)
         {
             this.ServerUrl = serverUrl;
+            return this;
+        }
+        
+        public ImmuClientBuilder WithHeartbeatInterval(TimeSpan heartbeatInterval)
+        {
+            this.HeartbeatInterval = heartbeatInterval;
             return this;
         }
 

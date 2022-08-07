@@ -46,10 +46,10 @@ public class KVMetadata
 
         if (md.Expiration != null)
         {
-            metadata.expiresAt(md.Expiration.ExpiresAt);
+            metadata.ExpiresAt(md.Expiration.ExpiresAt);
         }
 
-        metadata.asNonIndexable(md.NonIndexable);
+        metadata.AsNonIndexable(md.NonIndexable);
 
         return metadata;
     }
@@ -75,7 +75,7 @@ public class KVMetadata
         return attributes.ContainsKey(deletedAttrCode);
     }
 
-    private void asNonIndexable(bool nonIndexable)
+    private void AsNonIndexable(bool nonIndexable)
     {
         if (!nonIndexable)
         {
@@ -91,12 +91,15 @@ public class KVMetadata
         return;
     }
 
-    public bool nonIndexable()
+    public bool NonIndexable
     {
-        return attributes.ContainsKey(nonIndexableAttrCode);
+        get
+        {
+            return attributes.ContainsKey(nonIndexableAttrCode);
+        }
     }
 
-    private void expiresAt(long expirationTime)
+    private void ExpiresAt(long expirationTime)
     {
         ExpiresAtAttribute expiresAt;
 
@@ -112,12 +115,15 @@ public class KVMetadata
         }
     }
 
-    public bool hasExpirationTime()
+    public bool HasExpirationTime
     {
-        return attributes.ContainsKey(expiresAtAttrCode);
+        get
+        {
+            return attributes.ContainsKey(expiresAtAttrCode);
+        }
     }
 
-    public long expirationTime()
+    public long ExpirationTime()
     {
         if (!attributes.ContainsKey(expiresAtAttrCode))
         {
@@ -127,7 +133,7 @@ public class KVMetadata
         return ((ExpiresAtAttribute)attributes[expiresAtAttrCode]).ExpiresAt;
     }
 
-    public byte[] serialize()
+    public byte[] Serialize()
     {
         MemoryStream bytes = new MemoryStream(maxKVMetadataLen);
 
