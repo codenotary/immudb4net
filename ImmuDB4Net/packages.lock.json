@@ -243,7 +243,7 @@
         }
       }
     },
-    "net7.0": {
+    "net6.0": {
       "Google.Api.CommonProtos": {
         "type": "Direct",
         "requested": "[2.6.0, )",
