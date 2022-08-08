@@ -15,12 +15,14 @@ sequenceDiagram
     CP-->CP: create / reuse connection
     CP-->CP: provide connection id
     deactivate CP
+
     CP->>C: new or existing connection id    
     C->>C: check if session is already opened
     C->>SM: open session
     SM->>SRV: get session
     SRV->>SM: session
     SM->>C: session
+    C->>C: start session heartbeat
         
     C->>SRV: run command with session context
     SRV->>C: result
@@ -29,5 +31,7 @@ sequenceDiagram
     SM->>SRV:close session
     SRV->>SM: close session result
     SM->>C: close session result
+    C->>C: stop session heartbeat
     C->>C: clear session
+
 ```
