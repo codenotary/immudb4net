@@ -32,7 +32,7 @@ public class SessionTests : BaseClientIntTests
         await BaseTearDown();
     }
 
-    [TestMethod("execute login, set, get check if heartbeat is executed")]
+    [TestMethod("execute open, set, get check if heartbeat is executed")]
     public async Task Test1()
     {
         await client!.Open("immudb", "immudb", "defaultdb");
@@ -68,5 +68,31 @@ public class SessionTests : BaseClientIntTests
         {
             await client.Close();
         }
+    }
+
+    [TestMethod("execute open, set, get, reconnect, check if heartbeat is executed")]
+    public async Task Test3()
+    {
+        await client!.Open("immudb", "immudb", "defaultdb");
+
+        byte[] v0 = new byte[] { 0, 1, 2, 3 };
+        byte[] v1 = new byte[] { 3, 2, 1, 0 };
+
+        TxHeader hdr0 = await client.Set("k0", v0);
+        Assert.IsNotNull(hdr0);
+
+        client.Reconnect();
+
+        TxHeader hdr1 = await client.Set("k1", v1);
+        Assert.IsNotNull(hdr1);
+
+        Entry entry0 = await client.Get("k0");
+        CollectionAssert.AreEqual(entry0.Value, v0);
+
+        Entry entry1 = await client.Get("k1");
+        CollectionAssert.AreEqual(entry1.Value, v1);
+        Assert.IsTrue(client.heartbeatCalled?.WaitOne(TimeSpan.FromSeconds(3)));
+
+        await client.Close();
     }
 }

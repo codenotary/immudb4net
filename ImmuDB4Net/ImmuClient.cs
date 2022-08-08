@@ -113,6 +113,12 @@ public class ImmuClient
         StartHeartbeat();
     }
 
+    public void Reconnect()
+    {       
+        Connection.Pool.Release(this);
+        Connection = ConnectionPool.Acquire(this);
+    }
+
     public async Task Close()
     {
         if (Connection == null)
