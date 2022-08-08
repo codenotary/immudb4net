@@ -206,7 +206,7 @@ Atomic multi-key read (all entries are retrieved or none):
 Apart from the `Close`, for closing the connection with immudb server use the `Shutdown` operation:
 
 ``` C#
-    await immuClient.Shutdown();
+     await client.Connection.Pool.Shutdown();
 ```
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.
