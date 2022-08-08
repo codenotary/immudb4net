@@ -82,13 +82,13 @@ The following code snippets show how to create a client.
 Using default configuration:
 
 ``` C#
-    ImmuClient immuClient = ImmuClient.NewBuilder().Build();
+    ImmuClient immuClient = ImmuClient.Builder().Build();
 ```
 
 Setting `immudb` url and port:
 
 ``` C#
-    ImmuClient immuClient = ImmuClient.NewBuilder()
+    ImmuClient immuClient = ImmuClient.Builder()
                                 .WithServerUrl("localhost")
                                 .WithServerPort(3322)
                                 .Build();
@@ -101,7 +101,7 @@ Customizing the `State Holder`:
                                         .WithStatesFolder("./my_immuapp_states")
                                         .Build();
 
-    ImmuClient immuClient = ImmuClient.NewBuilder()
+    ImmuClient immuClient = ImmuClient.Builder()
                                       .WithStateHolder(stateHolder)
                                       .Build();
 ```
