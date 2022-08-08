@@ -108,15 +108,15 @@ Customizing the `State Holder`:
 
 ### User Sessions
 
-Use `login` and `logout` methods to initiate and terminate user sessions:
+Use `Open` and `Close` methods to initiate and terminate user sessions:
 
 ``` C#
-    await immuClient.Login("usr1", "pwd1");
+    await immuClient.Open("usr1", "pwd1", "defaultdb");
 
     // Interact with immudb using logged-in user.
     //...
 
-    await immuClient.Logout();
+    await immuClient.Close();
 ```
 
 ### Creating a Database
@@ -203,7 +203,7 @@ Atomic multi-key read (all entries are retrieved or none):
 
 ### Closing the client
 
-Apart from the `logout`, for closing the connection with immudb server use the `shutdown` operation:
+Apart from the `Close`, for closing the connection with immudb server use the `Shutdown` operation:
 
 ``` C#
     await immuClient.Shutdown();
