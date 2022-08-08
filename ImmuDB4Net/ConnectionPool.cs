@@ -39,41 +39,50 @@ public class RandomAssignConnectionPool : IConnectionPool
         this.releasedConnection = new ReleasedConnection(this);
     }
 
-    Dictionary<string, List<IConnection>>  connections = new Dictionary<string, List<IConnection>>();
+    Dictionary<string, List<IConnection>> connections = new Dictionary<string, List<IConnection>>();
     Dictionary<ImmuClient, IConnection> _assignments = new Dictionary<ImmuClient, IConnection>();
 
     public IConnection Acquire(ImmuClient client)
     {
-        List<IConnection> poolForAddress;
-        if(!connections.TryGetValue(builder.GrpcAddress, out poolForAddress)) {
-            poolForAddress = new List<IConnection>();
-            var conn = new Connection(builder);
-            poolForAddress.Add(conn);
-            connections.Add(builder.GrpcAddress, poolForAddress);
-            _assignments[client] = conn;
-            return conn;
-        }
-        if (poolForAddress.Count < MAX_CONNECTIONS)
+        lock (this)
         {
-            var conn = new Connection(builder);
-            poolForAddress.Add(conn);
-            return conn;
+            List<IConnection> poolForAddress;
+            if (!connections.TryGetValue(builder.GrpcAddress, out poolForAddress))
+            {
+                poolForAddress = new List<IConnection>();
+                var conn = new Connection(builder);
+                poolForAddress.Add(conn);
+                connections.Add(builder.GrpcAddress, poolForAddress);
+                _assignments[client] = conn;
+                return conn;
+            }
+            if (poolForAddress.Count < MAX_CONNECTIONS)
+            {
+                var conn = new Connection(builder);
+                poolForAddress.Add(conn);
+                return conn;
+            }
+            var randomConn = poolForAddress[random.Next(MAX_CONNECTIONS)];
+            _assignments[client] = randomConn;
+            return randomConn;
         }
-        var randomConn = poolForAddress[random.Next(MAX_CONNECTIONS)];
-        _assignments[client] = randomConn;
-        return randomConn;
     }
 
     public void Release(ImmuClient client)
     {
-        _assignments.Remove(client);
-        client.Connection = releasedConnection;
+        lock (this)
+        {
+            _assignments.Remove(client);
+            client.Connection = releasedConnection;
+        }
     }
 
     public async Task Shutdown()
     {
-        foreach(var addressPool in connections) {
-            foreach(var connection in addressPool.Value) {
+        foreach (var addressPool in connections)
+        {
+            foreach (var connection in addressPool.Value)
+            {
                 await connection.Shutdown();
             }
         }
