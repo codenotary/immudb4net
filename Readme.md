@@ -211,6 +211,17 @@ Apart from the `Close`, for closing the connection with immudb server use the `S
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.
 
+## Building from source
+
+To build from source you need as prerequisites to clone a local copy of the git repo: <https://github.com/codenotary/immudb4net>
+and then to have installed on the build machine the dotnet 6.0 SDK. Then, from the terminal just run ```dotnet build``` .
+
+In order to successfully execute the integration tests with the command```dotnet test``` to have to install as prerequisites ```docker``` and also to start locally an ImmuDB instance on port 3322. For example, you can run ImmuDB in docker as below:
+
+``` bash
+docker run -d --name immudb -p 3322:3322 codenotary/immudb:latest
+```
+
 ## Contributing
 
 We welcome contributions. Feel free to join the team!
