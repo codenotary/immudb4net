@@ -145,7 +145,7 @@ public class ImmuClient
     {
         if(session == null)
         {
-            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
+            throw new ArgumentException("Session is null. Make sure you call Open beforehand.");
         }
     }
 
