@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Google.Protobuf.WellKnownTypes;
-using Grpc.Core;
 using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
 using ImmudbProxy;
@@ -27,7 +25,7 @@ public interface IConnection
 {
     IConnectionPool Pool { get; }
     string? ServerUUID { get; set; }
-    string? RemoteAddress {get; }
+    string? RemoteAddress { get; }
     ImmuService.ImmuServiceClient Service { get; }
     Task Shutdown();
 }
@@ -38,22 +36,23 @@ public class Connection : IConnection
     public ImmuService.ImmuServiceClient Service => grpcClient;
     private GrpcChannel? channel;
     public IConnectionPool Pool { get; private set; }
-    public string? RemoteAddress {get; private set; }
+    public string? RemoteAddress { get; private set; }
     public string? ServerUUID { get; set; }
-    
-    
+    public int shutdownTimeoutInSec;
 
-    internal Connection(ImmuClientBuilder builder)
+
+    internal Connection(ImmuClient client, ImmuClientBuilder builder)
     {
-        RemoteAddress = builder.GrpcAddress;
+        RemoteAddress = client.GrpcAddress;
         channel = GrpcChannel.ForAddress(RemoteAddress);
         var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
         grpcClient = new ImmuService.ImmuServiceClient(invoker);
         Service.WithAuth = builder.Auth;
         Pool = builder.ConnectionPool;
+        shutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
     }
 
-    
+
     public async Task Shutdown()
     {
         if (channel == null)
@@ -61,14 +60,14 @@ public class Connection : IConnection
             return;
         }
         Task shutdownTask = channel.ShutdownAsync();
-        await Task.WhenAny(shutdownTask, Task.Delay(TimeSpan.FromSeconds(2)));
+        await Task.WhenAny(shutdownTask, Task.Delay(TimeSpan.FromSeconds(shutdownTimeoutInSec)));
         channel = null;
     }
 }
 
 public class ReleasedConnection : IConnection
 {
-    public IConnectionPool Pool {get; private set; }
+    public IConnectionPool Pool { get; private set; }
 
     public ReleasedConnection(IConnectionPool pool)
     {
@@ -78,7 +77,7 @@ public class ReleasedConnection : IConnection
 
     public ImmuService.ImmuServiceClient Service => throw new InvalidOperationException("The connection has been released");
     public string? ServerUUID { get; set; }
-    public string? RemoteAddress {get; private set; }
+    public string? RemoteAddress { get; private set; }
 
     public Task Shutdown()
     {

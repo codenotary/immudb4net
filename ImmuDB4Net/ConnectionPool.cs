@@ -47,18 +47,18 @@ public class RandomAssignConnectionPool : IConnectionPool
         lock (this)
         {
             List<IConnection> poolForAddress;
-            if (!connections.TryGetValue(builder.GrpcAddress, out poolForAddress))
+            if (!connections.TryGetValue(client.GrpcAddress, out poolForAddress))
             {
                 poolForAddress = new List<IConnection>();
-                var conn = new Connection(builder);
+                var conn = new Connection(client, builder);
                 poolForAddress.Add(conn);
-                connections.Add(builder.GrpcAddress, poolForAddress);
+                connections.Add(client.GrpcAddress, poolForAddress);
                 _assignments[client] = conn;
                 return conn;
             }
             if (poolForAddress.Count < MAX_CONNECTIONS)
             {
-                var conn = new Connection(builder);
+                var conn = new Connection(client, builder);
                 poolForAddress.Add(conn);
                 return conn;
             }

@@ -34,8 +34,9 @@ public class ImmuClient
 
     private string currentDb = "defaultdb";
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
-    public IConnection Connection { get; internal set; }
+    internal IConnection Connection { get; set; }
     internal IConnectionPool ConnectionPool { get; set; }
+    public string GrpcAddress { get; }
     internal ISessionManager SessionManager { get; set; }
     internal Session? session;
     
@@ -63,6 +64,7 @@ public class ImmuClient
     internal ImmuClient(ImmuClientBuilder builder)
     {
         ConnectionPool = builder.ConnectionPool;
+        GrpcAddress = builder.GrpcAddress;
         Connection = new ReleasedConnection(ConnectionPool);
         SessionManager = builder.SessionManager;
         serverSigningKey = builder.ServerSigningKey;
@@ -139,19 +141,23 @@ public class ImmuClient
         }
     }
     
+    private void CheckSessionHasBeenOpen()
+    {
+        if(session == null)
+        {
+            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
+        }
+    }
 
     public async Task<ImmuState> State()
     {
-         if(session == null)
-        {
-            throw new ArgumentException("Could not set state on a null session");
-        }
+        CheckSessionHasBeenOpen();
 
         ImmuState? state = stateHolder.GetState(session, currentDb);
         if (state == null)
         {
             state = await CurrentState();
-            stateHolder.SetState(session, state);
+            stateHolder.SetState(session!, state);
         }
         return state;
     }
@@ -162,7 +168,7 @@ public class ImmuClient
     * (if this feature is enabled on the client side, at least).
     */
     public async Task<ImmuState> CurrentState()
-    {
+    {        
         ImmudbProxy.ImmutableState state = await Service.WithHeaders(session).CurrentStateAsync(new Empty(), Service.Headers);
         ImmuState immuState = ImmuState.ValueOf(state);
         if (!immuState.CheckSignature(serverSigningKey))
@@ -178,6 +184,7 @@ public class ImmuClient
 
     public async Task CreateDatabase(string database)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.CreateDatabaseRequest db = new ImmudbProxy.CreateDatabaseRequest
         {
             Name = database
@@ -188,6 +195,7 @@ public class ImmuClient
 
     public async Task UseDatabase(string database)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.Database db = new ImmudbProxy.Database
         {
             DatabaseName = database
@@ -199,6 +207,7 @@ public class ImmuClient
 
     public async Task<List<string>> Databases()
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.DatabaseListRequestV2 req = new ImmudbProxy.DatabaseListRequestV2();
         ImmudbProxy.DatabaseListResponseV2 res = await Service.WithHeaders(session).DatabaseListV2Async(req, Service.Headers);
         List<string> list = new List<string>(res.Databases.Count);
@@ -215,6 +224,7 @@ public class ImmuClient
 
     public async Task<Entry> GetAtTx(byte[] key, ulong tx)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.KeyRequest req = new ImmudbProxy.KeyRequest
         {
             Key = Utils.ToByteString(key),
@@ -248,10 +258,7 @@ public class ImmuClient
 
     public async Task<Entry> VerifiedGet(ImmudbProxy.KeyRequest keyReq, ImmuState state)
     {
-        if(session == null)
-        {
-            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
-        }
+        CheckSessionHasBeenOpen();
         ImmudbProxy.VerifiableGetRequest vGetReq = new ImmudbProxy.VerifiableGetRequest()
         {
             KeyRequest = keyReq,
@@ -354,7 +361,7 @@ public class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(session, newState);
+        stateHolder.SetState(session!, newState);
         return Entry.ValueOf(vEntry.Entry);
     }
 
@@ -423,6 +430,7 @@ public class ImmuClient
 
     public async Task<Entry> GetSinceTx(byte[] key, ulong tx)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.KeyRequest req = new ImmudbProxy.KeyRequest()
         {
             Key = Utils.ToByteString(key),
@@ -451,6 +459,7 @@ public class ImmuClient
 
     public async Task<Entry> GetAtRevision(byte[] key, long rev)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.KeyRequest req = new ImmudbProxy.KeyRequest()
         {
             Key = Utils.ToByteString(key),
@@ -474,6 +483,7 @@ public class ImmuClient
 
     public async Task<List<Entry>> GetAll(List<string> keys)
     {
+        CheckSessionHasBeenOpen();
         List<ByteString> keysBS = new List<ByteString>(keys.Count);
 
         foreach (string key in keys)
@@ -502,6 +512,7 @@ public class ImmuClient
     public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, bool inclusiveSeek, bool inclusiveEnd,
                             ulong limit, bool desc)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.ScanRequest req = new ImmudbProxy.ScanRequest()
         {
             Prefix = Utils.ToByteString(prefix),
@@ -563,6 +574,7 @@ public class ImmuClient
 
     public async Task<TxHeader> Set(byte[] key, byte[] value)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
         {
             Key = Utils.ToByteString(key),
@@ -589,8 +601,8 @@ public class ImmuClient
 
     public async Task<TxHeader> SetAll(List<KVPair> kvList)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.SetRequest request = new ImmudbProxy.SetRequest();
-
         foreach (KVPair kv in kvList)
         {
             ImmudbProxy.KeyValue kvProxy = new ImmudbProxy.KeyValue();
@@ -611,6 +623,7 @@ public class ImmuClient
 
     public async Task<TxHeader> SetReference(byte[] key, byte[] referencedKey, ulong atTx)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.ReferenceRequest req = new ImmudbProxy.ReferenceRequest()
         {
             Key = Utils.ToByteString(key),
@@ -657,10 +670,7 @@ public class ImmuClient
 
     public async Task<TxHeader> VerifiedSet(byte[] key, byte[] value)
     {
-        if(session == null)
-        {
-            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
-        }
+        CheckSessionHasBeenOpen();
 
         ImmuState state = await State();
         ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
@@ -717,7 +727,7 @@ public class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(session, newState);
+        stateHolder.SetState(session!, newState);
 
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
@@ -752,6 +762,7 @@ public class ImmuClient
 
     public async Task<TxHeader> ZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.TxHeader txHdr = await Service.WithHeaders(session).ZAddAsync(
                 new ImmudbProxy.ZAddRequest()
                 {
@@ -782,10 +793,7 @@ public class ImmuClient
 
     public async Task<TxHeader> VerifiedZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
-        if(session == null)
-        {
-            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
-        }
+        CheckSessionHasBeenOpen();
 
         ImmuState state = await State();
         ImmudbProxy.ZAddRequest zAddReq = new ImmudbProxy.ZAddRequest()
@@ -848,7 +856,7 @@ public class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(session, newState);
+        stateHolder.SetState(session!, newState);
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
 
@@ -874,6 +882,7 @@ public class ImmuClient
 
     public async Task<List<ZEntry>> ZScan(byte[] set, ulong limit, bool reverse)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.ZScanRequest req = new ImmudbProxy.ZScanRequest()
         {
             Set = Utils.ToByteString(set),
@@ -896,6 +905,7 @@ public class ImmuClient
 
     public async Task<TxHeader> Delete(byte[] key)
     {
+        CheckSessionHasBeenOpen();
         try
         {
             ImmudbProxy.DeleteKeysRequest req = new ImmudbProxy.DeleteKeysRequest()
@@ -922,6 +932,7 @@ public class ImmuClient
 
     public async Task<Tx> TxById(ulong txId)
     {
+        CheckSessionHasBeenOpen();
         try
         {
             ImmudbProxy.Tx tx = await Service.WithHeaders(session).TxByIdAsync(
@@ -944,11 +955,7 @@ public class ImmuClient
 
     public async Task<Tx> VerifiedTxById(ulong txId)
     {
-        if(session == null)
-        {
-            throw new ArgumentException("Session is null. Make sure you call Open before this command.");
-        }
-        
+        CheckSessionHasBeenOpen();
         ImmuState state = await State();
         ImmudbProxy.VerifiableTxRequest vTxReq = new ImmudbProxy.VerifiableTxRequest()
         {
@@ -1023,12 +1030,13 @@ public class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(session, newState);
+        stateHolder.SetState(session!, newState);
         return tx;
     }
 
     public async Task<List<Tx>> TxScan(ulong initialTxId)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.TxScanRequest req = new ImmudbProxy.TxScanRequest()
         {
             InitialTx = initialTxId
@@ -1071,6 +1079,7 @@ public class ImmuClient
 
     public async Task<List<Iam.User>> ListUsers()
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.UserList userList = await Service.WithHeaders(session).ListUsersAsync(new Empty(), Service.Headers);
         return userList.Users.ToList()
                 .Select(u => new Iam.User(
@@ -1091,6 +1100,7 @@ public class ImmuClient
 
     public async Task CreateUser(string user, string password, Iam.Permission permission, string database)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.CreateUserRequest createUserRequest = new ImmudbProxy.CreateUserRequest()
         {
             User = Utils.ToByteString(user),
@@ -1104,6 +1114,7 @@ public class ImmuClient
 
     public async Task ChangePassword(string user, string oldPassword, string newPassword)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.ChangePasswordRequest changePasswordRequest = new ImmudbProxy.ChangePasswordRequest()
         {
             User = Utils.ToByteString(user),
@@ -1120,6 +1131,7 @@ public class ImmuClient
 
     public async Task FlushIndex(float cleanupPercentage, bool synced)
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.FlushIndexRequest req = new ImmudbProxy.FlushIndexRequest()
         {
             CleanupPercentage = cleanupPercentage,
@@ -1131,6 +1143,7 @@ public class ImmuClient
 
     public async Task CompactIndex()
     {
+        CheckSessionHasBeenOpen();
         await Service.WithHeaders(session).CompactIndexAsync(new Empty(), Service.Headers);
     }
 
@@ -1145,6 +1158,7 @@ public class ImmuClient
 
     public async Task<List<Entry>> History(byte[] key, int limit, ulong offset, bool desc)
     {
+        CheckSessionHasBeenOpen();
         try
         {
             ImmudbProxy.Entries entries = await Service.WithHeaders(session).HistoryAsync(new ImmudbProxy.HistoryRequest()
@@ -1228,6 +1242,7 @@ public class ImmuClient
             HeartbeatInterval = TimeSpan.FromMinutes(1);
             ConnectionPool = new RandomAssignConnectionPool(this);
             SessionManager = new SessionManager();
+            ConnectionShutdownTimeoutInSec = 2;
         }
 
         public string GrpcAddress
@@ -1238,6 +1253,8 @@ public class ImmuClient
                 return $"{schema}{ServerUrl.ToLowerInvariant()}:{ServerPort}";
             }
         }
+
+        public int ConnectionShutdownTimeoutInSec { get; internal set; }
 
         public ImmuClientBuilder WithStateHolder(ImmuStateHolder stateHolder)
         {

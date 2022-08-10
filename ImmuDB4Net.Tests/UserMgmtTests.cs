@@ -58,8 +58,9 @@ public class UserMgmtTests : BaseClientIntTests
             await client.Open("testUser", "testTest123!", "defauldb");
             Assert.Fail("Login with wrong (old) password must fail.");
         }
-        catch (RpcException)
+        catch (RpcException e)
         {
+            Assert.IsTrue(e.Message.Contains("invalid user name or password"));
             // Login failed, everything's fine.
         }
 
