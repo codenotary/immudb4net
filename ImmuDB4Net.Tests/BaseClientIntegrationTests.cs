@@ -20,11 +20,14 @@ namespace ImmuDB.Tests
     public class BaseClientIntTests
     {
         public ImmuClient? client;
-
+        private string? tmpStateFolder;
         public void BaseSetUp()
         {
+            tmpStateFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(tmpStateFolder);
+
             FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
-                .WithStatesFolder("immudb/states")
+                .WithStatesFolder(tmpStateFolder)
                 .build();
 
             client = ImmuClient.Builder()
@@ -36,8 +39,10 @@ namespace ImmuDB.Tests
         
         public void BaseSetUp(TimeSpan heartbeatInterval)
         {
+            tmpStateFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+            Directory.CreateDirectory(tmpStateFolder);
             FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
-                .WithStatesFolder("immudb/states")
+                .WithStatesFolder(tmpStateFolder)
                 .build();
 
             client = ImmuClient.Builder()
@@ -51,6 +56,9 @@ namespace ImmuDB.Tests
         public async Task BaseTearDown()
         {
             await client!.Connection.Pool.Shutdown();
+            if(tmpStateFolder != null) {
+                Directory.Delete(tmpStateFolder, true);
+            }
         }
     }
 }

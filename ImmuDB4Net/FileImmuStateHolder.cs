@@ -31,7 +31,7 @@ public class FileImmuStateHolder : ImmuStateHolder
     public FileImmuStateHolder(Builder builder)
     {
         statesFolder = builder.StatesFolder;
-        if (!File.Exists(statesFolder))
+        if (!Directory.Exists(statesFolder))
         {
             Directory.CreateDirectory(statesFolder);
         }
