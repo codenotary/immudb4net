@@ -25,39 +25,49 @@ using ImmuDB.Exceptions;
 using ImmudbProxy;
 using Org.BouncyCastle.Crypto;
 
-public class ImmuClient
+public partial class ImmuClient
 {
     internal const string AUTH_HEADER = "authorization";
 
     private readonly AsymmetricKeyParameter? serverSigningKey;
     private readonly ImmuStateHolder stateHolder;
 
+    public bool Auth { get; internal set; }
+    public int ConnectionShutdownTimeoutInSec { get; internal set; }
     private string currentDb = "defaultdb";
+    public string GrpcAddress { get; }
+    private static LibraryWideSettings globalSettings = new LibraryWideSettings();
+    public static LibraryWideSettings GlobalSettings
+    {
+        get
+        {
+            return globalSettings;
+        }
+    }
+
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
     internal IConnection Connection { get; set; }
     internal IConnectionPool ConnectionPool { get; set; }
-    public string GrpcAddress { get; }
     internal ISessionManager SessionManager { get; set; }
     internal Session? session;
-    
-    private static object sync = new Object();
-    private static ImmuClientBuilder? builderInstance;
-
     private TimeSpan heartbeatInterval;
     private ManualResetEvent? heartbeatCloseRequested;
     internal ManualResetEvent? heartbeatCalled;
     private Task? heartbeatTask;
 
 
-    public static ImmuClientBuilder Builder()
+    public static ImmuClientBuilder NewBuilder()
     {
-        lock (sync)
+        return new ImmuClientBuilder();
+    }
+
+    public class LibraryWideSettings
+    {
+        public int MaxConnectionsPerServer { get; set; }
+        internal LibraryWideSettings()
         {
-            if (builderInstance == null)
-            {
-                builderInstance = new ImmuClientBuilder();
-            }
-            return builderInstance;
+            //this is the default value
+            MaxConnectionsPerServer = 2;
         }
     }
 
@@ -70,27 +80,30 @@ public class ImmuClient
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
+        Auth = builder.Auth;
+        ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;        
     }
 
     private void StartHeartbeat()
     {
-        heartbeatTask = Task.Factory.StartNew(async () => {
-            while(true)
+        heartbeatTask = Task.Factory.StartNew(async () =>
+        {
+            while (true)
             {
-                if(heartbeatCloseRequested != null && heartbeatCloseRequested.WaitOne(heartbeatInterval)) return;
+                if (heartbeatCloseRequested != null && heartbeatCloseRequested.WaitOne(heartbeatInterval)) return;
                 try
                 {
                     await Service.WithHeaders(session).KeepAliveAsync(new Empty(), Service.Headers);
                     heartbeatCalled?.Set();
                 }
-                catch(RpcException) {}
+                catch (RpcException) { }
             }
         });
     }
 
     private void StopHeartbeat()
     {
-        if(heartbeatTask == null)
+        if (heartbeatTask == null)
         {
             return;
         }
@@ -104,7 +117,7 @@ public class ImmuClient
 
     public async Task Open(string username, string password, string defaultdb)
     {
-        if(session != null)
+        if (session != null)
         {
             throw new InvalidOperationException("please close the existing session before opening a new one");
         }
@@ -116,7 +129,7 @@ public class ImmuClient
     }
 
     public void Reconnect()
-    {       
+    {
         Connection.Pool.Release(this);
         Connection = ConnectionPool.Acquire(this);
     }
@@ -140,10 +153,10 @@ public class ImmuClient
             return Connection == null;
         }
     }
-    
+
     private void CheckSessionHasBeenOpen()
     {
-        if(session == null)
+        if (session == null)
         {
             throw new ArgumentException("Session is null. Make sure you call Open beforehand.");
         }
@@ -168,7 +181,7 @@ public class ImmuClient
     * (if this feature is enabled on the client side, at least).
     */
     public async Task<ImmuState> CurrentState()
-    {        
+    {
         ImmudbProxy.ImmutableState state = await Service.WithHeaders(session).CurrentStateAsync(new Empty(), Service.Headers);
         ImmuState immuState = ImmuState.ValueOf(state);
         if (!immuState.CheckSignature(serverSigningKey))
@@ -1212,95 +1225,5 @@ public class ImmuClient
             }
         });
         return result;
-    }
-
-    ///Builder is an inner class that implements the builder pattern for ImmuClient
-    public class ImmuClientBuilder
-    {
-        public string ServerUrl { get; private set; }
-        public int ServerPort { get; private set; }
-        public AsymmetricKeyParameter? ServerSigningKey { get; private set; }
-        public bool Auth { get; private set; }
-        public ImmuStateHolder StateHolder { get; private set; }
-        public TimeSpan HeartbeatInterval {get; set;}
-
-        internal IConnectionPool ConnectionPool { get; }
-        internal ISessionManager SessionManager { get; }
-
-        static ImmuClientBuilder()
-        {
-            // This is needed for .NET Core 3 and below.
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-        }
-
-        public ImmuClientBuilder()
-        {
-            ServerUrl = "localhost";
-            ServerPort = 3322;
-            StateHolder = new SerializableImmuStateHolder();
-            Auth = true;
-            HeartbeatInterval = TimeSpan.FromMinutes(1);
-            ConnectionPool = new RandomAssignConnectionPool(this);
-            SessionManager = new SessionManager();
-            ConnectionShutdownTimeoutInSec = 2;
-        }
-
-        public string GrpcAddress
-        {
-            get
-            {
-                string schema = ServerUrl.StartsWith("http") ? "" : "http://";
-                return $"{schema}{ServerUrl.ToLowerInvariant()}:{ServerPort}";
-            }
-        }
-
-        public int ConnectionShutdownTimeoutInSec { get; internal set; }
-
-        public ImmuClientBuilder WithStateHolder(ImmuStateHolder stateHolder)
-        {
-            StateHolder = stateHolder;
-            return this;
-        }
-
-        public ImmuClientBuilder WithAuth(bool withAuth)
-        {
-            this.Auth = withAuth;
-            return this;
-        }
-
-        public ImmuClientBuilder WithServerPort(int serverPort)
-        {
-            this.ServerPort = serverPort;
-            return this;
-        }
-
-        public ImmuClientBuilder WithServerUrl(string serverUrl)
-        {
-            this.ServerUrl = serverUrl;
-            return this;
-        }
-        
-        public ImmuClientBuilder WithHeartbeatInterval(TimeSpan heartbeatInterval)
-        {
-            this.HeartbeatInterval = heartbeatInterval;
-            return this;
-        }
-
-        public ImmuClientBuilder WithServerSigningKey(string publicKeyFileName)
-        {
-            this.ServerSigningKey = ImmuState.GetPublicKeyFromPemFile(publicKeyFileName);
-            return this;
-        }
-
-        public ImmuClientBuilder WithServerSigningKey(AsymmetricKeyParameter? key)
-        {
-            this.ServerSigningKey = key;
-            return this;
-        }
-
-        public ImmuClient Build()
-        {
-            return new ImmuClient(this);
-        }
     }
 }

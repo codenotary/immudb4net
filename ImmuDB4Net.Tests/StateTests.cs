@@ -102,7 +102,7 @@ public class StateTests : BaseClientIntTests
                     assymKey = (AsymmetricKeyParameter)pemReader.ReadObject();
                 }
             }
-            client = ImmuClient.Builder()
+            client = ImmuClient.NewBuilder()
                         .WithServerUrl("localhost")
                         .WithServerPort(3322)
                         .WithServerSigningKey(assymKey)
@@ -206,7 +206,7 @@ public class StateTests : BaseClientIntTests
                         assymKey = (AsymmetricKeyParameter)pemReader.ReadObject();
                     }
                 }
-                client = ImmuClient.Builder()
+                client = ImmuClient.NewBuilder()
                             .WithServerUrl("localhost")
                             .WithServerPort(3323)
                             .WithServerSigningKey(assymKey)

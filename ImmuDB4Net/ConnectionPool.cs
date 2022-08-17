@@ -17,10 +17,10 @@ limitations under the License.
 
 namespace ImmuDB;
 
-using static ImmuDB.ImmuClient;
 
 public interface IConnectionPool
 {
+    int MaxConnectionsPerServer { get; set; }
     IConnection Acquire(ImmuClient client);
     void Release(ImmuClient client);
     Task Shutdown();
@@ -28,14 +28,22 @@ public interface IConnectionPool
 
 public class RandomAssignConnectionPool : IConnectionPool
 {
-    const int MAX_CONNECTIONS = 2;
-    private ImmuClientBuilder builder;
+    public int MaxConnectionsPerServer { get; set; }
     private Random random = new Random(Environment.TickCount);
     private ReleasedConnection releasedConnection;
 
-    public RandomAssignConnectionPool(ImmuClientBuilder builder)
+    internal static RandomAssignConnectionPool _instance = new RandomAssignConnectionPool();
+    public static IConnectionPool Instance
     {
-        this.builder = builder;
+        get
+        {
+            return _instance;
+        }
+    }
+
+    internal RandomAssignConnectionPool()
+    {
+        MaxConnectionsPerServer = ImmuClient.GlobalSettings.MaxConnectionsPerServer;
         this.releasedConnection = new ReleasedConnection(this);
     }
 
@@ -50,19 +58,19 @@ public class RandomAssignConnectionPool : IConnectionPool
             if (!connections.TryGetValue(client.GrpcAddress, out poolForAddress))
             {
                 poolForAddress = new List<IConnection>();
-                var conn = new Connection(client, builder);
+                var conn = new Connection(client);
                 poolForAddress.Add(conn);
                 connections.Add(client.GrpcAddress, poolForAddress);
                 _assignments[client] = conn;
                 return conn;
             }
-            if (poolForAddress.Count < MAX_CONNECTIONS)
+            if (poolForAddress.Count < MaxConnectionsPerServer)
             {
-                var conn = new Connection(client, builder);
+                var conn = new Connection(client);
                 poolForAddress.Add(conn);
                 return conn;
             }
-            var randomConn = poolForAddress[random.Next(MAX_CONNECTIONS)];
+            var randomConn = poolForAddress[random.Next(MaxConnectionsPerServer)];
             _assignments[client] = randomConn;
             return randomConn;
         }

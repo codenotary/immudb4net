@@ -30,13 +30,14 @@ namespace ImmuDB.Tests
                 .WithStatesFolder(tmpStateFolder)
                 .build();
 
-            client = ImmuClient.Builder()
+            ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
+            client = ImmuClient.NewBuilder()
                 .WithStateHolder(stateHolder)
                 .WithServerUrl("localhost")
                 .WithServerPort(3322)
                 .Build();
         }
-        
+
         public void BaseSetUp(TimeSpan heartbeatInterval)
         {
             tmpStateFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -45,7 +46,8 @@ namespace ImmuDB.Tests
                 .WithStatesFolder(tmpStateFolder)
                 .build();
 
-            client = ImmuClient.Builder()
+            ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
+            client = ImmuClient.NewBuilder()
                 .WithStateHolder(stateHolder)
                 .WithServerUrl("localhost")
                 .WithServerPort(3322)
@@ -56,7 +58,8 @@ namespace ImmuDB.Tests
         public async Task BaseTearDown()
         {
             await client!.Connection.Pool.Shutdown();
-            if(tmpStateFolder != null) {
+            if (tmpStateFolder != null)
+            {
                 Directory.Delete(tmpStateFolder, true);
             }
         }

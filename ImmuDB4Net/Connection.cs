@@ -41,15 +41,15 @@ public class Connection : IConnection
     public int shutdownTimeoutInSec;
 
 
-    internal Connection(ImmuClient client, ImmuClientBuilder builder)
+    internal Connection(ImmuClient client)
     {
         RemoteAddress = client.GrpcAddress;
         channel = GrpcChannel.ForAddress(RemoteAddress);
         var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
         grpcClient = new ImmuService.ImmuServiceClient(invoker);
-        Service.WithAuth = builder.Auth;
-        Pool = builder.ConnectionPool;
-        shutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
+        Service.WithAuth = client.Auth;
+        Pool = client.ConnectionPool;
+        shutdownTimeoutInSec = client.ConnectionShutdownTimeoutInSec;
     }
 
 
