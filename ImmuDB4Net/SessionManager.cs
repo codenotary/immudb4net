@@ -25,8 +25,16 @@ public interface ISessionManager
     Task CloseSession(IConnection connection, Session? session);
 }
 
-public class SessionManager : ISessionManager
+public class DefaultSessionManager : ISessionManager
 {
+    internal static DefaultSessionManager _instance = new DefaultSessionManager();
+    public static ISessionManager Instance
+    {
+        get
+        {
+            return _instance;
+        }
+    }
     private Dictionary<string, Session> sessions = new Dictionary<string, Session>();
 
     public async Task<Session> OpenSession(IConnection connection, string username, string password, string initialDbName)
@@ -37,9 +45,10 @@ public class SessionManager : ISessionManager
             Password = Utils.ToByteString(password),
             DatabaseName = initialDbName
         };
-        
+
         var result = await connection.Service.OpenSessionAsync(openSessionRequest);
-        var session = new Session(result.SessionID, result.ServerUUID) {
+        var session = new Session(result.SessionID, result.ServerUUID)
+        {
             Kind = SessionKind.ReadWrite
         };
         sessions[result.SessionID] = session;
@@ -48,7 +57,8 @@ public class SessionManager : ISessionManager
 
     public async Task CloseSession(IConnection connection, Session? session)
     {
-        if(session?.Name == null) {
+        if (session?.Name == null)
+        {
             return;
         }
         await connection.Service.WithHeaders(session).CloseSessionAsync(new Empty(), connection.Service.Headers);

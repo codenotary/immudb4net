@@ -52,7 +52,7 @@ public partial class ImmuClient
             Auth = true;
             HeartbeatInterval = TimeSpan.FromMinutes(1);
             ConnectionPool = RandomAssignConnectionPool.Instance;
-            SessionManager = new SessionManager();
+            SessionManager = DefaultSessionManager.Instance;
             ConnectionShutdownTimeoutInSec = 2;
         }
 
