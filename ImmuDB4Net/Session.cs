@@ -16,20 +16,20 @@ limitations under the License.
 
 namespace ImmuDB;
 
-public enum SessionKind {
+public enum TransactionKind {
     Read,
     ReadWrite
 }
 
 public class Session
 {
-    public SessionKind Kind;
-    public string Name { get; private set; }
+    public TransactionKind Kind;
+    public string Id { get; private set; }
     public string ServerUUID { get; private set; }
-    public string? TransactionId { get; set; }
+    internal string? TransactionId { get; set; }
 
-    public Session(string name, string serverUUID) {
-        Name = name; 
+    public Session(string id, string serverUUID) {
+        Id = id; 
         ServerUUID = serverUUID;
     }
 }

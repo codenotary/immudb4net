@@ -24,23 +24,16 @@ namespace ImmudbProxy
     {
         public partial class ImmuServiceClient : GrpcCore::ClientBase<ImmuServiceClient>
         {
-            internal const string AUTH_HEADER = "authorization";
             internal const string SESSIONID_HEADER = "sessionid";
 
-            public bool WithAuth { get; set; }
-            public string AuthToken { get; set; }
             internal Metadata Headers = new Metadata();
 
             public ImmuServiceClient WithHeaders(Session? session)
             {
                 Headers.Clear();
-                if (WithAuth && (AuthToken != null))
+                if (session?.Id != null)
                 {
-                    Headers.Add(AUTH_HEADER, "Bearer " + AuthToken);
-                }
-                if (session?.Name != null)
-                {
-                    Headers.Add(SESSIONID_HEADER, session.Name);
+                    Headers.Add(SESSIONID_HEADER, session.Id);
                 }
                 return this;
             }

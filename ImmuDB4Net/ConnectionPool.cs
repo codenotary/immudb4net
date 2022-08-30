@@ -87,7 +87,16 @@ public class RandomAssignConnectionPool : IConnectionPool
 
     public async Task Shutdown()
     {
-        foreach (var addressPool in connections)
+        Dictionary<string, List<IConnection>> clone = new Dictionary<string, List<IConnection>>();
+        lock (this)
+        {
+            foreach (var addressPool in connections)
+            {
+                List<IConnection> connections = new List<IConnection>(addressPool.Value);
+                clone.Add(addressPool.Key, connections);
+            }
+        }
+        foreach (var addressPool in clone)
         {
             foreach (var connection in addressPool.Value)
             {

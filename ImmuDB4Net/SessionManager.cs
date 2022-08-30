@@ -49,7 +49,7 @@ public class DefaultSessionManager : ISessionManager
         var result = await connection.Service.OpenSessionAsync(openSessionRequest);
         var session = new Session(result.SessionID, result.ServerUUID)
         {
-            Kind = SessionKind.ReadWrite
+            Kind = TransactionKind.ReadWrite
         };
         sessions[result.SessionID] = session;
         return session;
@@ -57,12 +57,12 @@ public class DefaultSessionManager : ISessionManager
 
     public async Task CloseSession(IConnection connection, Session? session)
     {
-        if (session?.Name == null)
+        if (session?.Id == null)
         {
             return;
         }
         await connection.Service.WithHeaders(session).CloseSessionAsync(new Empty(), connection.Service.Headers);
-        sessions.Remove(session.Name);
+        sessions.Remove(session.Id);
     }
 }
 

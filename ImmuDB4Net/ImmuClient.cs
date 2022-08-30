@@ -32,7 +32,6 @@ public partial class ImmuClient
     private readonly AsymmetricKeyParameter? serverSigningKey;
     private readonly ImmuStateHolder stateHolder;
 
-    public bool Auth { get; internal set; }
     public int ConnectionShutdownTimeoutInSec { get; internal set; }
     private string currentDb = "defaultdb";
     public string GrpcAddress { get; }
@@ -80,8 +79,7 @@ public partial class ImmuClient
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
-        Auth = builder.Auth;
-        ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;        
+        ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
     }
 
     private void StartHeartbeat()
@@ -164,13 +162,15 @@ public partial class ImmuClient
 
     public async Task<ImmuState> State()
     {
-        CheckSessionHasBeenOpen();
-
         ImmuState? state = stateHolder.GetState(session, currentDb);
         if (state == null)
         {
             state = await CurrentState();
             stateHolder.SetState(session!, state);
+        }
+        else
+        {
+            CheckSessionHasBeenOpen();
         }
         return state;
     }
@@ -182,6 +182,7 @@ public partial class ImmuClient
     */
     public async Task<ImmuState> CurrentState()
     {
+        CheckSessionHasBeenOpen();
         ImmudbProxy.ImmutableState state = await Service.WithHeaders(session).CurrentStateAsync(new Empty(), Service.Headers);
         ImmuState immuState = ImmuState.ValueOf(state);
         if (!immuState.CheckSignature(serverSigningKey))
@@ -214,7 +215,6 @@ public partial class ImmuClient
             DatabaseName = database
         };
         ImmudbProxy.UseDatabaseReply response = await Service.WithHeaders(session).UseDatabaseAsync(db, Service.Headers);
-        Service.AuthToken = response.Token;
         currentDb = database;
     }
 
