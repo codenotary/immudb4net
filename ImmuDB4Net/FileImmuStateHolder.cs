@@ -22,7 +22,6 @@ using System.Diagnostics;
 public class FileImmuStateHolder : ImmuStateHolder
 {
     private readonly string statesFolder;
-    private readonly string currentStateFile;
     private string stateHolderFile = "";
 
     private readonly SerializableImmuStateHolder stateHolder;
@@ -36,14 +35,8 @@ public class FileImmuStateHolder : ImmuStateHolder
             Directory.CreateDirectory(statesFolder);
         }
 
-        currentStateFile = Path.Combine(statesFolder, "current_state");
-        if (!File.Exists(currentStateFile))
-        {
-            using (File.Create(currentStateFile)) { }
-        }
-
         stateHolder = new SerializableImmuStateHolder();
-        string lastStateFilename = File.ReadAllText(currentStateFile);
+        string lastStateFilename = GetOldestStateFile();
 
         if (!string.IsNullOrEmpty(lastStateFilename))
         {
@@ -56,6 +49,18 @@ public class FileImmuStateHolder : ImmuStateHolder
 
             stateHolder.ReadFrom(stateHolderFile);
         }
+    }
+
+    private string GetOldestStateFile()
+    {
+        var stateFiles = Directory.GetFiles(statesFolder);
+        if(stateFiles.Length == 0) 
+        {
+            return "";
+        }
+        List<Tuple<string, DateTime>> stateFilesData = new List<Tuple<string, DateTime>>(stateFiles.Length);
+        var sortedFileInfo = stateFiles.Select(x => new Tuple<string, DateTime>(x, File.GetLastWriteTimeUtc(x))).OrderBy(x => x.Item2).ToList();
+        return sortedFileInfo[0].Item1;
     }
 
     public ImmuState? GetState(Session? session, string database)
@@ -91,7 +96,6 @@ public class FileImmuStateHolder : ImmuStateHolder
             try
             {
                 stateHolder.WriteTo(newStateFile);
-                File.WriteAllText(currentStateFile, Path.GetFileName(newStateFile));
                 if (File.Exists(stateHolderFile))
                 {
                     File.Delete(stateHolderFile);
