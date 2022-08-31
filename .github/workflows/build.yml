@@ -28,4 +28,6 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: test
-        run: dotnet test --no-restore
+        run: |
+          docker pull codenotary/immudb:latest
+          dotnet test --no-restore
