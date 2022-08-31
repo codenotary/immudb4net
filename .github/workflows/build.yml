@@ -18,9 +18,6 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
-      - name: setup docker
-        uses: docker-practice/actions-setup-docker@master
-
       - name: Install dependencies
         run: dotnet restore
 
