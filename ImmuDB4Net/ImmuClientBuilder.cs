@@ -38,7 +38,7 @@ public partial class ImmuClient
         static ImmuClientBuilder()
         {
             // This is needed for .NET Core 3 and below.
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+            // AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
         }
 
         public ImmuClientBuilder()
