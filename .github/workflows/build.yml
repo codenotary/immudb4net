@@ -5,13 +5,16 @@ on: [push]
 jobs:
   build:
 
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: ['6.0.x' ]
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: setup docker
+        uses: docker-practice/actions-setup-docker@master
 
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v2
