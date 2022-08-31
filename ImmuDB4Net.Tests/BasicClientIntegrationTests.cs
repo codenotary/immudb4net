@@ -35,7 +35,6 @@ public class BasicClientTests : BaseClientIntTests
         await BaseTearDown();
     }
 
-
     [TestMethod("execute open, set, get and verifiedget")]
     public async Task Test1()
     {
@@ -125,7 +124,4 @@ public class BasicClientTests : BaseClientIntTests
 
         await client.Close();
     }
-
-
-
 }

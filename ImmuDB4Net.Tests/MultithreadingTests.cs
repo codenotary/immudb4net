@@ -20,6 +20,14 @@ namespace ImmuDB.Tests;
 public class MultithreadingTests : BaseClientIntTests
 {
 
+
+    /// <summary>
+    /// Gets or sets the test context which provides
+    /// information about and functionality for the current test run.
+    /// </summary>
+    public TestContext? TestContext {get;set;}
+    
+
     [TestInitialize]
     public void SetUp()
     {
@@ -32,16 +40,24 @@ public class MultithreadingTests : BaseClientIntTests
         await BaseTearDown();
     }
 
+    class IntHolder
+    {
+        public int succededCount;
+    }
+
     [TestMethod("Multithreaded with key overlap")]
     public async Task Test1()
     {
+        TestContext!.WriteLine("Start test");
         await client!.Open("immudb", "immudb", "defaultdb");
 
         int threadCount = 10;
-        int keyCount = 100;
+        int keyCount = 10;
 
-        CountdownEvent cde = new CountdownEvent(threadCount);
-        int succededCount = 0;
+        CountdownEvent cde = new CountdownEvent(threadCount * keyCount);
+
+        var intHolder = new IntHolder() {succededCount = 0};
+
         var action = async () =>
         {
             for (int i = 0; i < keyCount; i++)
@@ -53,27 +69,30 @@ public class MultithreadingTests : BaseClientIntTests
                 {
                     await client.VerifiedSet("k" + i, b);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    TestContext.WriteLine("Exception in verifiedset: {0}", e.ToString());
                     cde.Signal();
                     throw new InvalidOperationException();
                 }
-                Interlocked.Increment(ref succededCount);
+                Interlocked.Increment(ref intHolder.succededCount);
                 cde.Signal();
             }
         };
         List<Task> tasks = new List<Task>(threadCount);
-        for(int i = 0; i < threadCount; i++)
+        for (int i = 0; i < threadCount; i++)
         {
             tasks.Add(Task.Factory.StartNew(action));
         }
-        await Task.WhenAll(tasks);
+        Task.WaitAll(tasks.ToArray());
         Assert.IsTrue(cde.Wait(TimeSpan.FromSeconds(1)));
-        Assert.AreEqual(threadCount, succededCount);
+        Assert.AreEqual(threadCount * keyCount, intHolder.succededCount);
 
-        for (int i = 0; i < threadCount; i++) {
-            for (int k = 0; k < keyCount; k++) {
-                await client.VerifiedGet("k" + i);
+        for (int i = 0; i < threadCount; i++)
+        {
+            for (int k = 0; k < keyCount; k++)
+            {
+                await client.VerifiedGet("k" + k);
             }
         }
 

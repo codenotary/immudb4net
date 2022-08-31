@@ -70,7 +70,7 @@ public class SetAllGetAllTests : BaseClientIntTests
 
         for (int i = 0; i < kvs.Count; i++)
         {
-            CollectionAssert.AreEqual(kvs[i].Value, got[i].Value, string.Format("Expected: %s got: %s", kvs[i], got[i]));
+            CollectionAssert.AreEqual(kvs[i].Value, got[i].Value, string.Format("Expected: {0} got: {1}", kvs[i], got[i]));
         }
 
         await client.Close();

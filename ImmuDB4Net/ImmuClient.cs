@@ -160,19 +160,24 @@ public partial class ImmuClient
         }
     }
 
-    public async Task<ImmuState> State()
+    private object stateSync = new Object();
+
+    public ImmuState State()
     {
-        ImmuState? state = stateHolder.GetState(session, currentDb);
-        if (state == null)
+        lock (stateSync)
         {
-            state = await CurrentState();
-            stateHolder.SetState(session!, state);
+            ImmuState? state = stateHolder.GetState(session, currentDb);
+            if (state == null)
+            {
+                state = CurrentState();
+                stateHolder.SetState(session!, state);
+            }
+            else
+            {
+                CheckSessionHasBeenOpen();
+            }
+            return state;
         }
-        else
-        {
-            CheckSessionHasBeenOpen();
-        }
-        return state;
     }
 
     /**
@@ -180,10 +185,10 @@ public partial class ImmuClient
     * It may throw a RuntimeException if server's state signature verification fails
     * (if this feature is enabled on the client side, at least).
     */
-    public async Task<ImmuState> CurrentState()
+    public ImmuState CurrentState()
     {
         CheckSessionHasBeenOpen();
-        ImmudbProxy.ImmutableState state = await Service.WithHeaders(session).CurrentStateAsync(new Empty(), Service.Headers);
+        ImmudbProxy.ImmutableState state = Service.WithHeaders(session).CurrentState(new Empty(), Service.Headers);
         ImmuState immuState = ImmuState.ValueOf(state);
         if (!immuState.CheckSignature(serverSigningKey))
         {
@@ -288,7 +293,7 @@ public partial class ImmuClient
         {
             if (e.Message.Contains("key not found"))
             {
-                throw new KeyNotFoundException();
+                throw new KeyNotFoundException(string.Format("The key {0} was not found", keyReq.Key.ToStringUtf8()));
             }
 
             throw e;
@@ -374,7 +379,10 @@ public partial class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(session!, newState);
+        lock (stateSync)
+        {
+            stateHolder.SetState(session!, newState);
+        }
         return Entry.ValueOf(vEntry.Entry);
     }
 
@@ -401,7 +409,7 @@ public partial class ImmuClient
             AtTx = tx
         };
 
-        return await VerifiedGet(keyReq, await State());
+        return await VerifiedGet(keyReq, State());
     }
 
     public async Task<Entry> VerifiedGetSinceTx(string key, ulong tx)
@@ -417,7 +425,7 @@ public partial class ImmuClient
             SinceTx = tx
         };
 
-        return await VerifiedGet(keyReq, await State());
+        return await VerifiedGet(keyReq, State());
     }
 
     public async Task<Entry> VerifiedGetAtRevision(string key, long rev)
@@ -433,7 +441,7 @@ public partial class ImmuClient
             AtRevision = rev
         };
 
-        return await VerifiedGet(keyReq, await State());
+        return await VerifiedGet(keyReq, State());
     }
 
     public async Task<Entry> GetSinceTx(string key, ulong tx)
@@ -685,7 +693,7 @@ public partial class ImmuClient
     {
         CheckSessionHasBeenOpen();
 
-        ImmuState state = await State();
+        ImmuState state = State();
         ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
         {
             Key = Utils.ToByteString(key),
@@ -700,7 +708,14 @@ public partial class ImmuClient
             ProveSinceTx = state.TxId
         };
 
-        ImmudbProxy.VerifiableTx vtx = await Service.WithHeaders(session).VerifiableSetAsync(vSetReq, Service.Headers);
+        // using the awaitable VerifiableSetAsync is not ok here, because in the multithreading case it fails. Switched back to synchronous call in this case.
+        ImmudbProxy.VerifiableTx vtx;
+        lock(this)
+        {
+            vtx = Service.WithHeaders(session).VerifiableSet(vSetReq, Service.Headers);
+        }
+        await Task.Yield();
+
         int ne = vtx.Tx.Header.Nentries;
 
         if (ne != 1 || vtx.Tx.Entries.Count != 1)
@@ -740,8 +755,10 @@ public partial class ImmuClient
             throw new VerificationException("State signature verification failed");
         }
 
-        stateHolder.SetState(session!, newState);
-
+        lock (stateSync)
+        {
+            stateHolder.SetState(session!, newState);
+        }
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
 
@@ -808,7 +825,7 @@ public partial class ImmuClient
     {
         CheckSessionHasBeenOpen();
 
-        ImmuState state = await State();
+        ImmuState state = State();
         ImmudbProxy.ZAddRequest zAddReq = new ImmudbProxy.ZAddRequest()
         {
             Set = Utils.ToByteString(set),
@@ -868,8 +885,10 @@ public partial class ImmuClient
         {
             throw new VerificationException("State signature verification failed");
         }
-
-        stateHolder.SetState(session!, newState);
+        lock (stateSync)
+        {
+            stateHolder.SetState(session!, newState);
+        }
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
 
@@ -969,7 +988,7 @@ public partial class ImmuClient
     public async Task<Tx> VerifiedTxById(ulong txId)
     {
         CheckSessionHasBeenOpen();
-        ImmuState state = await State();
+        ImmuState state = State();
         ImmudbProxy.VerifiableTxRequest vTxReq = new ImmudbProxy.VerifiableTxRequest()
         {
             Tx = txId,
@@ -1042,8 +1061,10 @@ public partial class ImmuClient
         {
             throw new VerificationException("State signature verification failed");
         }
-
-        stateHolder.SetState(session!, newState);
+        lock (stateSync)
+        {
+            stateHolder.SetState(session!, newState);
+        }
         return tx;
     }
 

@@ -77,7 +77,11 @@ public class FileImmuStateHolder : ImmuStateHolder
             }
 
             stateHolder.SetState(session, state);
-            string newStateFile = Path.Combine(statesFolder, "state_" + session.ServerUUID + "_" + state.Database + "_" + Stopwatch.GetTimestamp());
+            string newStateFile = Path.Combine(statesFolder, string.Format("state_{0}_{1}_{2}_{3}",
+                session.ServerUUID,
+                state.Database,
+                Stopwatch.GetTimestamp(),
+                Task.CurrentId ?? 0));
 
             if (File.Exists(newStateFile))
             {
@@ -102,7 +106,7 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
-    public static Builder NewBuilder() 
+    public static Builder NewBuilder()
     {
         return new Builder();
     }

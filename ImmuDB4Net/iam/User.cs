@@ -39,6 +39,6 @@ public class User
     public override string ToString()
     {
         // if I use string interpolation it looks uglier to escape the combination of { and '
-        return string.Format("User{user='%s', createdAt='%s', createdBy='%s', active=%s, permissions=%s}", Name, CreatedAt, CreatedBy, Active, Permissions);
+        return string.Format("User{user='{0}', createdAt='{1}', createdBy='{2}', active={3}, permissions={4}", Name, CreatedAt, CreatedBy, Active, Permissions);
     }
 }

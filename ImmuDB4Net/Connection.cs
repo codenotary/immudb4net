@@ -45,8 +45,8 @@ public class Connection : IConnection
     {
         RemoteAddress = client.GrpcAddress;
         channel = GrpcChannel.ForAddress(RemoteAddress);
-        var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
-        grpcClient = new ImmuService.ImmuServiceClient(invoker);
+        //var invoker = channel.Intercept(new ImmuServerUUIDInterceptor(this));
+        grpcClient = new ImmuService.ImmuServiceClient(channel);
         Pool = client.ConnectionPool;
         shutdownTimeoutInSec = client.ConnectionShutdownTimeoutInSec;
     }

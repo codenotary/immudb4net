@@ -40,7 +40,7 @@ public class BuilderTests
             client = await ImmuClient.NewBuilder()
                 .WithStateHolder(stateHolder)
                 .WithServerUrl("localhost")
-                .WithServerPort(3322)
+                .WithServerPort(3325)
                 .WithCredentials("immudb", "immudb")
                 .WithDatabase("defaultdb")
                 .Open();

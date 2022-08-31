@@ -28,14 +28,18 @@ namespace ImmudbProxy
 
             internal Metadata Headers = new Metadata();
 
+            private Object headersSync = new Object();
             public ImmuServiceClient WithHeaders(Session? session)
             {
-                Headers.Clear();
-                if (session?.Id != null)
+                lock (headersSync)
                 {
-                    Headers.Add(SESSIONID_HEADER, session.Id);
+                    Headers.Clear();
+                    if (session?.Id != null)
+                    {
+                        Headers.Add(SESSIONID_HEADER, session.Id);
+                    }
+                    return this;
                 }
-                return this;
             }
         }
     }
