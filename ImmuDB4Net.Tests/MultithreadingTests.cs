@@ -85,7 +85,7 @@ public class MultithreadingTests : BaseClientIntTests
             tasks.Add(Task.Factory.StartNew(action));
         }
         Task.WaitAll(tasks.ToArray());
-        Assert.IsTrue(cde.Wait(TimeSpan.FromSeconds(1)));
+        Assert.IsTrue(cde.Wait(TimeSpan.FromSeconds(12)));
         Assert.AreEqual(threadCount * keyCount, intHolder.succededCount);
 
         for (int i = 0; i < threadCount; i++)
