@@ -41,7 +41,7 @@ public static class CryptoUtils
         using (SHA256 sha256Hash = SHA256.Create())
         {
             var result = sha256Hash.ComputeHash(data);
-            
+
             return result;
         }
     }
@@ -260,21 +260,25 @@ public static class CryptoUtils
         return targetAlh.SequenceEqual(calculatedAlh);
     }
 
-    public static bool VerifyLastInclusion(byte[][] iProof, ulong i, byte[] leaf, byte[] root) {
-        if (i == 0) {
+    public static bool VerifyLastInclusion(byte[][] iProof, ulong i, byte[] leaf, byte[] root)
+    {
+        if (i == 0)
+        {
             return false;
         }
         return root.SequenceEqual(EvalLastInclusion(iProof, i, leaf));
     }
 
-    private static byte[] EvalLastInclusion(byte[][] iProof, ulong i, byte[] leaf) {
+    private static byte[] EvalLastInclusion(byte[][] iProof, ulong i, byte[] leaf)
+    {
         ulong i1 = i - 1;
         byte[] root = leaf;
 
         byte[] b = new byte[1 + Consts.SHA256_SIZE * 2];
         b[0] = Consts.NODE_PREFIX;
 
-        foreach (byte[] h in iProof) {
+        foreach (byte[] h in iProof)
+        {
             Array.Copy(h, 0, b, 1, h.Length);
             Array.Copy(root, 0, b, Consts.SHA256_SIZE + 1, root.Length);
             root = Sha256Sum(b);
@@ -284,12 +288,15 @@ public static class CryptoUtils
     }
 
     public static bool VerifyConsistency(byte[][] cProof, ulong i, ulong j, byte[] iRoot,
-            byte[] jRoot) {
-        if (i > j || i == 0 || (i < j && cProof.Length == 0)) {
+            byte[] jRoot)
+    {
+        if (i > j || i == 0 || (i < j && cProof.Length == 0))
+        {
             return false;
         }
 
-        if (i == j && cProof.Length == 0) {
+        if (i == j && cProof.Length == 0)
+        {
             return iRoot.SequenceEqual(jRoot);
         }
 
@@ -302,12 +309,14 @@ public static class CryptoUtils
 
     // Returns a "pair" (two) byte[] values (ciRoot, cjRoot), that's why
     // the returned data is byte[][] just to keep it simple.
-    public static byte[][] EvalConsistency(byte[][] cProof, ulong i, ulong j) {
+    public static byte[][] EvalConsistency(byte[][] cProof, ulong i, ulong j)
+    {
 
         ulong fn = i - 1;
         ulong sn = j - 1;
 
-        while (fn % 2 == 1) {
+        while (fn % 2 == 1)
+        {
             fn >>= 1;
             sn >>= 1;
         }
@@ -318,9 +327,11 @@ public static class CryptoUtils
         byte[] b = new byte[1 + Consts.SHA256_SIZE * 2];
         b[0] = Consts.NODE_PREFIX;
 
-        for (int k = 1; k < cProof.Length; k++) {
+        for (int k = 1; k < cProof.Length; k++)
+        {
             byte[] h = cProof[k];
-            if (fn % 2 == 1 || fn == sn) {
+            if (fn % 2 == 1 || fn == sn)
+            {
                 Array.Copy(h, 0, b, 1, h.Length);
 
                 Array.Copy(ciRoot, 0, b, 1 + Consts.SHA256_SIZE, ciRoot.Length);
@@ -329,11 +340,14 @@ public static class CryptoUtils
                 Array.Copy(cjRoot, 0, b, 1 + Consts.SHA256_SIZE, cjRoot.Length);
                 cjRoot = Sha256Sum(b);
 
-                while (fn % 2 == 0 && fn != 0) {
+                while (fn % 2 == 0 && fn != 0)
+                {
                     fn >>= 1;
                     sn >>= 1;
                 }
-            } else {
+            }
+            else
+            {
                 Array.Copy(cjRoot, 0, b, 1, cjRoot.Length);
                 Array.Copy(h, 0, b, 1 + Consts.SHA256_SIZE, h.Length);
                 cjRoot = Sha256Sum(b);

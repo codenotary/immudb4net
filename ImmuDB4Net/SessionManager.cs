@@ -61,7 +61,7 @@ public class DefaultSessionManager : ISessionManager
         {
             return;
         }
-        await connection.Service.WithHeaders(session).CloseSessionAsync(new Empty(), connection.Service.Headers);
+        await connection.Service.CloseSessionAsync(new Empty(), connection.Service.GetHeaders(session));
         sessions.Remove(session.Id);
     }
 }

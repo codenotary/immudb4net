@@ -20,7 +20,7 @@ namespace ImmuDB;
 
 public interface IConnectionPool
 {
-    int MaxConnectionsPerServer { get; set; }
+    int MaxConnectionsPerServer { get; }
     IConnection Acquire(ImmuClient client);
     void Release(ImmuClient client);
     Task Shutdown();
@@ -28,7 +28,7 @@ public interface IConnectionPool
 
 public class RandomAssignConnectionPool : IConnectionPool
 {
-    public int MaxConnectionsPerServer { get; set; }
+    public int MaxConnectionsPerServer { get; private set; }
     private Random random = new Random(Environment.TickCount);
     private ReleasedConnection releasedConnection;
 

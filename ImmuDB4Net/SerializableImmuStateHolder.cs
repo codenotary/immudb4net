@@ -26,6 +26,10 @@ public class SerializableImmuStateHolder : ImmuStateHolder
      */
     private Dictionary<string, ImmuState> statesMap = new Dictionary<string, ImmuState>();
 
+    public string? DeploymentKey { get ;set ; }
+    public string? DeploymentLabel { get ;set ; }
+    public bool DeploymentInfoCheck {get; set; } = true;
+
     public void ReadFrom(string fileName) {
         string contents = File.ReadAllText(fileName);
         var deserialized = JsonSerializer.Deserialize<Dictionary<string, ImmuState>>(contents);

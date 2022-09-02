@@ -83,6 +83,14 @@ Using default configuration:
 
 ``` C#
     ImmuClient immuClient = ImmuClient.NewBuilder().Build();
+
+    // or
+
+    Immuclient immuClient = new ImmuClient();
+    Immuclient immuClient = new ImmuClient("localhost", 3322);
+    Immuclient immuClient = new ImmuClient("localhost", 3322, "defaultdb");
+
+
 ```
 
 Setting `immudb` url and port:
@@ -92,6 +100,12 @@ Setting `immudb` url and port:
                                 .WithServerUrl("localhost")
                                 .WithServerPort(3322)
                                 .Build();
+
+    ImmuClient immuClient = ImmuClient.NewBuilder()
+                                .WithServerUrl("localhost")
+                                .WithServerPort(3322)
+                                .Build();
+
 ```
 
 Customizing the `State Holder`:
@@ -101,7 +115,7 @@ Customizing the `State Holder`:
                                         .WithStatesFolder("./my_immuapp_states")
                                         .Build();
 
-    ImmuClient immuClient = ImmuClient.Builder()
+    ImmuClient immuClient = ImmuClient.NewBuilder()
                                       .WithStateHolder(stateHolder)
                                       .Build();
 ```
@@ -117,6 +131,13 @@ Use `Open` and `Close` methods to initiate and terminate user sessions:
     //...
 
     await immuClient.Close();
+
+    // or one liner open the session right 
+    client = await ImmuClient.NewBuilder().Open();
+
+    //then close it
+    await immuClient.Close();
+
 ```
 
 ### Creating a Database
@@ -203,10 +224,11 @@ Atomic multi-key read (all entries are retrieved or none):
 
 ### Closing the client
 
-Apart from the `Close`, for closing the connection with immudb server use the `ReleaseSdkResources` operation:
+Use `Close`, for closing the connection with immudb server . When terminating the process, use the `ImmuClient.ReleaseSdkResources` operation :
 
 ``` C#
-     await ImmuClient.ReleaseSdkResources()
+    await client.Close();
+    await ImmuClient.ReleaseSdkResources();
 ```
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.

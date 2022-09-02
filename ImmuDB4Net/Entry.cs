@@ -13,6 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+using System.Text;
+
 namespace ImmuDB;
 
 public class Entry
@@ -30,6 +32,14 @@ public class Entry
     private Entry(byte[] key, byte[] value) {
         Key = key;
         Value = value;
+    }
+
+    public override string ToString()
+    {
+        if((Value == null) || (Value.Length == 0)) {
+            return "";
+        }
+        return Encoding.UTF8.GetString(Value);
     }
 
     public static Entry ValueOf(ImmudbProxy.Entry e)

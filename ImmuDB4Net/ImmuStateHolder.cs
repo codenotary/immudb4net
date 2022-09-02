@@ -16,7 +16,11 @@ limitations under the License.
 
 namespace ImmuDB;
 
-public interface ImmuStateHolder {
+public interface ImmuStateHolder
+{
+    string? DeploymentKey { get; internal set; }
+    string? DeploymentLabel { get; internal set; }
+    bool DeploymentInfoCheck {get; internal set; }
     ImmuState? GetState(Session? session, string database);
     void SetState(Session session, ImmuState state);
 }
