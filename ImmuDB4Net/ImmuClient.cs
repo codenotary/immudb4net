@@ -45,7 +45,7 @@ public partial class ImmuClient
     }
 
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
-    public IConnection Connection { get; set; }
+    internal IConnection Connection { get; set; }
     internal IConnectionPool ConnectionPool { get; set; }
     internal ISessionManager SessionManager { get; set; }
     internal Session? session;
@@ -80,6 +80,11 @@ public partial class ImmuClient
         stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
         ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
+    }
+
+    public static async Task ReleaseSdkResources() 
+    {
+        await RandomAssignConnectionPool.Instance.Shutdown();
     }
 
     private void StartHeartbeat()
