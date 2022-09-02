@@ -207,7 +207,7 @@ Use `Close`, for closing the connection with immudb server . When terminating th
 
 ``` C#
     await client.Close();
-    await ImmuClient.ReleaseSdkResources()
+    await ImmuClient.ReleaseSdkResources();
 ```
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.
