@@ -61,9 +61,9 @@ Use ```dotnet build``` to build locally the ImmuDB client assembly.
 
 ## Supported Versions
 
-immudb4net supports the [latest immudb server] release, that is 1.3.1 at the time of updating this document.
+immudb4net supports the [latest immudb server] release, that is 1.3.2 at the time of updating this document.
 
-[latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.3.1
+[latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.3.2
 
 ## Quickstart
 
@@ -82,13 +82,13 @@ The following code snippets show how to create a client.
 Using default configuration:
 
 ``` C#
-    ImmuClient immuClient = ImmuClient.Builder().Build();
+    ImmuClient immuClient = ImmuClient.NewBuilder().Build();
 ```
 
 Setting `immudb` url and port:
 
 ``` C#
-    ImmuClient immuClient = ImmuClient.Builder()
+    ImmuClient immuClient = ImmuClient.NewBuilder()
                                 .WithServerUrl("localhost")
                                 .WithServerPort(3322)
                                 .Build();
@@ -203,10 +203,10 @@ Atomic multi-key read (all entries are retrieved or none):
 
 ### Closing the client
 
-Apart from the `Close`, for closing the connection with immudb server use the `Shutdown` operation:
+Apart from the `Close`, for closing the connection with immudb server use the `ReleaseSdkResources` operation:
 
 ``` C#
-     await client.Connection.Pool.Shutdown();
+     await ImmuClient.ReleaseSdkResources()
 ```
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.
