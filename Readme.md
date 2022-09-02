@@ -101,7 +101,7 @@ Customizing the `State Holder`:
                                         .WithStatesFolder("./my_immuapp_states")
                                         .Build();
 
-    ImmuClient immuClient = ImmuClient.Builder()
+    ImmuClient immuClient = ImmuClient.NewBuilder()
                                       .WithStateHolder(stateHolder)
                                       .Build();
 ```
