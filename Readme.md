@@ -203,10 +203,11 @@ Atomic multi-key read (all entries are retrieved or none):
 
 ### Closing the client
 
-Apart from the `Close`, for closing the connection with immudb server use the `ReleaseSdkResources` operation:
+Use `Close`, for closing the connection with immudb server . When terminating the process, use the `ImmuClient.ReleaseSdkResources` operation :
 
 ``` C#
-     await ImmuClient.ReleaseSdkResources()
+    await client.Close();
+    await ImmuClient.ReleaseSdkResources()
 ```
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.
