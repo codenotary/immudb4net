@@ -45,7 +45,7 @@ public partial class ImmuClient
     }
 
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
-    internal IConnection Connection { get; set; }
+    public IConnection Connection { get; set; }
     internal IConnectionPool ConnectionPool { get; set; }
     internal ISessionManager SessionManager { get; set; }
     internal Session? session;
