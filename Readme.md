@@ -83,6 +83,14 @@ Using default configuration:
 
 ``` C#
     ImmuClient immuClient = ImmuClient.NewBuilder().Build();
+
+    // or
+
+    Immuclient immuClient = new ImmuClient();
+    Immuclient immuClient = new ImmuClient("localhost", 3322);
+    Immuclient immuClient = new ImmuClient("localhost", 3322, "defaultdb");
+
+
 ```
 
 Setting `immudb` url and port:
@@ -92,6 +100,12 @@ Setting `immudb` url and port:
                                 .WithServerUrl("localhost")
                                 .WithServerPort(3322)
                                 .Build();
+
+    ImmuClient immuClient = ImmuClient.NewBuilder()
+                                .WithServerUrl("localhost")
+                                .WithServerPort(3322)
+                                .Build();
+
 ```
 
 Customizing the `State Holder`:
@@ -117,6 +131,13 @@ Use `Open` and `Close` methods to initiate and terminate user sessions:
     //...
 
     await immuClient.Close();
+
+    // or one liner open the session right 
+    client = await ImmuClient.NewBuilder().Open();
+
+    //then close it
+    await immuClient.Close();
+
 ```
 
 ### Creating a Database
