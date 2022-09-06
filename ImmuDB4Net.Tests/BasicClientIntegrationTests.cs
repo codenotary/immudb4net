@@ -35,6 +35,16 @@ public class BasicClientTests : BaseClientIntTests
         await BaseTearDown();
     }
 
+ [TestMethod("execute open, set, get and verifiedget")]
+    public async Task BasicTest()
+    {
+        await client!.Open("immudb", "immudb", "defaultdb");
+        await client.VerifiedSet("mykey", Encoding.UTF8.GetBytes("test"));
+        await client.Close();
+        await client!.Open("immudb", "immudb", "defaultdb");
+        await client.Close();
+    }   
+
     [TestMethod("execute open, set, get and verifiedget")]
     public async Task Test1()
     {

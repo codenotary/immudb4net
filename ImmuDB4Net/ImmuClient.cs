@@ -70,6 +70,21 @@ public partial class ImmuClient
         }
     }
 
+    public ImmuClient() : this(NewBuilder())
+    {
+
+    }
+
+    public ImmuClient(string serverUrl, int serverPort)
+        : this(NewBuilder().WithServerUrl(serverUrl).WithServerPort(serverPort))
+    {
+    }
+
+    public ImmuClient(string serverUrl, int serverPort, string database)
+        : this(NewBuilder().WithServerUrl(serverUrl).WithServerPort(serverPort).WithDatabase(database))
+    {
+    }
+
     internal ImmuClient(ImmuClientBuilder builder)
     {
         ConnectionPool = builder.ConnectionPool;
@@ -80,9 +95,11 @@ public partial class ImmuClient
         stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
         ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
+        stateHolder.Key = GrpcAddress.Replace(":", "_").Replace("/", "_").Replace("-", "_");
+        stateHolder.Init();
     }
 
-    public static async Task ReleaseSdkResources() 
+    public static async Task ReleaseSdkResources()
     {
         await RandomAssignConnectionPool.Instance.Shutdown();
     }
@@ -625,6 +642,11 @@ public partial class ImmuClient
         return await Set(Utils.ToByteArray(key), value);
     }
 
+    public async Task<TxHeader> Set(string key, string value)
+    {
+        return await Set(Utils.ToByteArray(key), Utils.ToByteArray(value));
+    }
+
     public async Task<TxHeader> SetAll(List<KVPair> kvList)
     {
         CheckSessionHasBeenOpen();
@@ -694,6 +716,11 @@ public partial class ImmuClient
         return await VerifiedSet(Utils.ToByteArray(key), value);
     }
 
+    public async Task<TxHeader> VerifiedSet(string key, string value)
+    {
+        return await VerifiedSet(Utils.ToByteArray(key), Utils.ToByteArray(value));
+    }
+
     public async Task<TxHeader> VerifiedSet(byte[] key, byte[] value)
     {
         CheckSessionHasBeenOpen();
@@ -715,7 +742,7 @@ public partial class ImmuClient
 
         // using the awaitable VerifiableSetAsync is not ok here, because in the multithreading case it fails. Switched back to synchronous call in this case.
         ImmudbProxy.VerifiableTx vtx;
-        lock(this)
+        lock (this)
         {
             vtx = Service.WithHeaders(session).VerifiableSet(vSetReq, Service.Headers);
         }

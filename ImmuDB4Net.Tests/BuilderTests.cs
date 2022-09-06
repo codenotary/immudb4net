@@ -85,4 +85,50 @@ public class BuilderTests
             }
         }
     }
+
+
+    [TestMethod("simplified initialization")]
+    public async Task Test2()
+    {
+        try
+        {
+            client = await ImmuClient.NewBuilder()
+                .WithServerPort(3325)
+                .Open();
+            TxHeader hdr0 = await client.Set("k0", "v0");
+            Assert.IsNotNull(hdr0);
+            Entry entry0 = await client.Get("k0");
+            Assert.AreEqual(entry0.ToString(), "v0");
+
+        }
+        finally
+        {
+            if (client != null)
+            {
+                await client.Close();
+            }
+        }
+    }
+    
+    [TestMethod("simplified initialization with constructor")]
+    public async Task Test3()
+    {
+        try
+        {
+            client = new ImmuClient("localhost", 3325);
+            await client.Open("immudb", "immudb", "defaultdb");
+            TxHeader hdr0 = await client.Set("k0", "v0");
+            Assert.IsNotNull(hdr0);
+            Entry entry0 = await client.Get("k0");
+            Assert.AreEqual(entry0.ToString(), "v0");
+
+        }
+        finally
+        {
+            if (client != null)
+            {
+                await client.Close();
+            }
+        }
+    }
 }

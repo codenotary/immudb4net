@@ -48,7 +48,7 @@ public partial class ImmuClient
             Username = "immudb";
             Password = "immudb";
             Database = "defaultdb";
-            StateHolder = new SerializableImmuStateHolder();
+            StateHolder = new FileImmuStateHolder();
             Auth = true;
             HeartbeatInterval = TimeSpan.FromMinutes(1);
             ConnectionPool = RandomAssignConnectionPool.Instance;
