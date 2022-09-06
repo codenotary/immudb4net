@@ -21,22 +21,28 @@ using System.Diagnostics;
 
 public class FileImmuStateHolder : ImmuStateHolder
 {
-    private readonly string statesFolder;
-    private readonly string currentStateFile;
+    private string? statesFolder;
+    private string? currentStateFile;
     private string stateHolderFile = "";
 
-    private readonly SerializableImmuStateHolder stateHolder;
+    private SerializableImmuStateHolder? stateHolder;
+    public string? StatesFolder => statesFolder;
+    internal bool IsDefaultStateFolder { get; set; } = true;
+    public string? Key { get; set; }
 
-
-    public FileImmuStateHolder(Builder builder)
+    public void Init()
     {
-        statesFolder = builder.StatesFolder;
-        if (!Directory.Exists(statesFolder))
+        var folder = statesFolder;
+        if (IsDefaultStateFolder)
         {
-            Directory.CreateDirectory(statesFolder);
+            folder = Path.Combine(StatesFolder, Key);
+        }
+        if (!Directory.Exists(folder))
+        {
+            Directory.CreateDirectory(folder);
         }
 
-        currentStateFile = Path.Combine(statesFolder, "current_state");
+        currentStateFile = Path.Combine(folder, "current_state");
         if (!File.Exists(currentStateFile))
         {
             using (File.Create(currentStateFile)) { }
@@ -47,7 +53,7 @@ public class FileImmuStateHolder : ImmuStateHolder
 
         if (!string.IsNullOrEmpty(lastStateFilename))
         {
-            stateHolderFile = Path.Combine(statesFolder, lastStateFilename);
+            stateHolderFile = Path.Combine(folder, lastStateFilename);
 
             if (!File.Exists(stateHolderFile))
             {
@@ -58,11 +64,21 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
+    public FileImmuStateHolder(Builder builder)
+    {
+        statesFolder = builder.StatesFolder;
+        IsDefaultStateFolder = builder.IsDefaultStatesFolder;
+    }
+
+    public FileImmuStateHolder() : this(NewBuilder())
+    {
+    }
+
     public ImmuState? GetState(Session? session, string database)
     {
         lock (this)
         {
-            return stateHolder.GetState(session, database);
+            return stateHolder?.GetState(session, database);
         }
     }
 
@@ -70,6 +86,10 @@ public class FileImmuStateHolder : ImmuStateHolder
     {
         lock (this)
         {
+            if (stateHolder == null)
+            {
+                throw new InvalidOperationException("you need to call Init before setting state");
+            }
             ImmuState? currentState = stateHolder.GetState(session, state.Database);
             if (currentState != null && currentState.TxId >= state.TxId)
             {
@@ -77,7 +97,7 @@ public class FileImmuStateHolder : ImmuStateHolder
             }
 
             stateHolder.SetState(session, state);
-            string newStateFile = Path.Combine(statesFolder, string.Format("state_{0}_{1}_{2}_{3}",
+            string newStateFile = Path.Combine(StatesFolder, string.Format("state_{0}_{1}_{2}_{3}",
                 session.ServerUUID,
                 state.Database,
                 Stopwatch.GetTimestamp(),
@@ -113,16 +133,18 @@ public class FileImmuStateHolder : ImmuStateHolder
 
     public class Builder
     {
+        internal bool IsDefaultStatesFolder { get; set; } = true;
         public string StatesFolder { get; private set; }
 
         public Builder()
         {
-            StatesFolder = "states";
+            StatesFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "immudb4net");
         }
 
         public Builder WithStatesFolder(string statesFolder)
         {
             this.StatesFolder = statesFolder;
+            this.IsDefaultStatesFolder = false;
             return this;
         }
 
