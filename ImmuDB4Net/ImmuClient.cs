@@ -95,8 +95,8 @@ public partial class ImmuClient
         stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
         ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
-        stateHolder.Key = GrpcAddress.Replace(":", "_").Replace("/", "_").Replace("-", "_");
-        stateHolder.Init();
+        stateHolder.DeploymentKey = Utils.GenerateShortHash(GrpcAddress);
+        stateHolder.DeploymentLabel = GrpcAddress;
     }
 
     public static async Task ReleaseSdkResources()
