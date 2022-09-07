@@ -71,9 +71,9 @@ public class FileImmuStateHolder : ImmuStateHolder
                 }
                 if ((deploymentInfo.ServerUuid != session.ServerUUID) && DeploymentInfoCheck) 
                 {
-                    var deploymentInfoPath = Path.Combine(statesFolder, DeploymentKey, "deploymentinfo.json");
+                    var deploymentInfoPath = Path.Combine(statesFolder, DeploymentKey);
                     throw new VerificationException(
-                        string.Format("server UUID mismatch. Most likely you connected to a different server instance than previously used at the same address. if you understand the reason and you want to get rid of the problem, you can either delete the deploymentinfo.json file located at {0} or set CheckDeploymentInfo to false ", deploymentInfoPath));
+                        string.Format("server UUID mismatch. Most likely you connected to a different server instance than previously used at the same address. if you understand the reason and you want to get rid of the problem, you can either delete the folder `{0}` or set CheckDeploymentInfo to false ", deploymentInfoPath));
                 }
             }
             var completeStatesFolderPath = Path.Combine(statesFolder, DeploymentKey);
