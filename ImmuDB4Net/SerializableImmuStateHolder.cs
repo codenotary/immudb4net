@@ -28,6 +28,7 @@ public class SerializableImmuStateHolder : ImmuStateHolder
 
     public string? DeploymentKey { get ;set ; }
     public string? DeploymentLabel { get ;set ; }
+    public bool DeploymentInfoCheck {get; set; } = true;
 
     public void ReadFrom(string fileName) {
         string contents = File.ReadAllText(fileName);

@@ -160,7 +160,7 @@ public class BuilderTests
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
         try
         {
-           client = await ImmuClient.NewBuilder()
+           client = await ImmuClient.NewBuilder().CheckDeploymentInfo(false)
                 .WithServerPort(3325)
                 .Open();
             byte[] v0 = new byte[] { 0, 1, 2, 3 };

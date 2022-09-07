@@ -28,7 +28,7 @@ public partial class ImmuClient
         public string Database { get; private set; }
         public  int ServerPort { get; private set; }
         public AsymmetricKeyParameter? ServerSigningKey { get; private set; }
-        public bool Auth { get; private set; }
+        public bool DeploymentInfoCheck { get; private set; }
         public ImmuStateHolder StateHolder { get; private set; }
         public TimeSpan HeartbeatInterval {get; set;}
 
@@ -49,7 +49,7 @@ public partial class ImmuClient
             Password = "immudb";
             Database = "defaultdb";
             StateHolder = new FileImmuStateHolder();
-            Auth = true;
+            DeploymentInfoCheck = true;
             HeartbeatInterval = TimeSpan.FromMinutes(1);
             ConnectionPool = RandomAssignConnectionPool.Instance;
             SessionManager = DefaultSessionManager.Instance;
@@ -73,9 +73,9 @@ public partial class ImmuClient
             return this;
         }
 
-        public ImmuClientBuilder EnableAuthHeader(bool enabled)
+        public ImmuClientBuilder CheckDeploymentInfo(bool check)
         {
-            this.Auth = enabled;
+            this.DeploymentInfoCheck = check;
             return this;
         } 
         

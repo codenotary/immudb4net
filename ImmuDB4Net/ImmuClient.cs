@@ -53,6 +53,7 @@ public partial class ImmuClient
     private ManualResetEvent? heartbeatCloseRequested;
     internal ManualResetEvent? heartbeatCalled;
     private Task? heartbeatTask;
+    public bool DeploymentInfoCheck { get; set; } = true;
 
 
     public static ImmuClientBuilder NewBuilder()
@@ -91,10 +92,12 @@ public partial class ImmuClient
         GrpcAddress = builder.GrpcAddress;
         Connection = new ReleasedConnection(ConnectionPool);
         SessionManager = builder.SessionManager;
+        DeploymentInfoCheck = builder.DeploymentInfoCheck;
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
         ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
+        stateHolder.DeploymentInfoCheck = builder.DeploymentInfoCheck;
         stateHolder.DeploymentKey = Utils.GenerateShortHash(GrpcAddress);
         stateHolder.DeploymentLabel = GrpcAddress;
     }
@@ -206,7 +209,7 @@ public partial class ImmuClient
     * Get the current database state that exists on the server.
     * It may throw a RuntimeException if server's state signature verification fails
     * (if this feature is enabled on the client side, at least).
-    */
+*/
     public ImmuState CurrentState()
     {
         CheckSessionHasBeenOpen();

@@ -37,6 +37,7 @@ public class FileImmuStateHolder : ImmuStateHolder
     public string StatesFolder => statesFolder;
     public string? DeploymentKey { get; set; }
     public string? DeploymentLabel { get; set; }
+    public bool DeploymentInfoCheck {get; set; } = true;
     private DeploymentInfoContent? deploymentInfo;
 
     public FileImmuStateHolder(Builder builder)
@@ -60,7 +61,7 @@ public class FileImmuStateHolder : ImmuStateHolder
             if (session == null)
             {
                 return null;
-            }
+            }            
             if (deploymentInfo == null)
             {
                 deploymentInfo = GetDeploymentInfo();
@@ -68,9 +69,11 @@ public class FileImmuStateHolder : ImmuStateHolder
                 {
                     deploymentInfo = CreateDeploymentInfo(session);
                 }
-                if (deploymentInfo.ServerUuid != session.ServerUUID)
+                if ((deploymentInfo.ServerUuid != session.ServerUUID) && DeploymentInfoCheck) 
                 {
-                    throw new VerificationException("server UUID mismatch");
+                    var deploymentInfoPath = Path.Combine(statesFolder, DeploymentKey, "deploymentinfo.json");
+                    throw new VerificationException(
+                        string.Format("server UUID mismatch. Most likely you connected to a different server instance than previously used at the same address. if you understand the reason and you want to get rid of the problem, you can either delete the deploymentinfo.json file located at {0} or set CheckDeploymentInfo to false ", deploymentInfoPath));
                 }
             }
             var completeStatesFolderPath = Path.Combine(statesFolder, DeploymentKey);
