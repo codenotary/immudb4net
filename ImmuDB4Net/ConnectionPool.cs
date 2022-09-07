@@ -48,7 +48,6 @@ public class RandomAssignConnectionPool : IConnectionPool
     }
 
     Dictionary<string, List<IConnection>> connections = new Dictionary<string, List<IConnection>>();
-    Dictionary<ImmuClient, IConnection> _assignments = new Dictionary<ImmuClient, IConnection>();
 
     public IConnection Acquire(ImmuClient client)
     {
@@ -61,7 +60,6 @@ public class RandomAssignConnectionPool : IConnectionPool
                 var conn = new Connection(client);
                 poolForAddress.Add(conn);
                 connections.Add(client.GrpcAddress, poolForAddress);
-                _assignments[client] = conn;
                 return conn;
             }
             if (poolForAddress.Count < MaxConnectionsPerServer)
@@ -71,7 +69,6 @@ public class RandomAssignConnectionPool : IConnectionPool
                 return conn;
             }
             var randomConn = poolForAddress[random.Next(MaxConnectionsPerServer)];
-            _assignments[client] = randomConn;
             return randomConn;
         }
     }
@@ -80,7 +77,6 @@ public class RandomAssignConnectionPool : IConnectionPool
     {
         lock (this)
         {
-            _assignments.Remove(client);
             client.Connection = releasedConnection;
         }
     }
