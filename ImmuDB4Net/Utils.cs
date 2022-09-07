@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Security.Cryptography;
 using System.Text;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
@@ -204,4 +205,15 @@ public static class Utils
         }
         bw.Write(item);
     }
+
+    public static string GenerateShortHash(string source)
+    {
+        using (SHA1 sha1 = SHA1.Create())
+        {
+            var result = sha1.ComputeHash(Encoding.UTF8.GetBytes(source));
+            var hash = Convert.ToBase64String(result).ToUpper().Replace("=", "").Replace("/", "");
+            return hash;
+        }
+    }
+
 }

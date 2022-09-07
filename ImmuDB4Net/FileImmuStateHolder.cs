@@ -17,68 +17,111 @@ limitations under the License.
 namespace ImmuDB;
 
 using System;
-using System.Diagnostics;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using ImmuDB.Exceptions;
 
 public class FileImmuStateHolder : ImmuStateHolder
 {
-    private string? statesFolder;
-    private string? currentStateFile;
-    private string stateHolderFile = "";
-
-    private SerializableImmuStateHolder? stateHolder;
-    public string? StatesFolder => statesFolder;
-    internal bool IsDefaultStateFolder { get; set; } = true;
-    public string? Key { get; set; }
-
-    public void Init()
+    internal class DeploymentInfoContent
     {
-        var folder = statesFolder;
-        if (IsDefaultStateFolder)
-        {
-            folder = Path.Combine(StatesFolder, Key);
-        }
-        if (!Directory.Exists(folder))
-        {
-            Directory.CreateDirectory(folder);
-        }
-
-        currentStateFile = Path.Combine(folder, "current_state");
-        if (!File.Exists(currentStateFile))
-        {
-            using (File.Create(currentStateFile)) { }
-        }
-
-        stateHolder = new SerializableImmuStateHolder();
-        string lastStateFilename = File.ReadAllText(currentStateFile);
-
-        if (!string.IsNullOrEmpty(lastStateFilename))
-        {
-            stateHolderFile = Path.Combine(folder, lastStateFilename);
-
-            if (!File.Exists(stateHolderFile))
-            {
-                throw new InvalidOperationException("Inconsistent current state file");
-            }
-
-            stateHolder.ReadFrom(stateHolderFile);
-        }
+        [JsonPropertyName("label")]
+        public string? Label { get; set; }
+        [JsonPropertyName("serveruuid")]
+        public string? ServerUuid { get; set; }
     }
+
+    private string statesFolder;
+
+    private SerializableImmuStateHolder stateHolder;
+    public string StatesFolder => statesFolder;
+    public string? DeploymentKey { get; set; }
+    public string? DeploymentLabel { get; set; }
+    private DeploymentInfoContent? deploymentInfo;
 
     public FileImmuStateHolder(Builder builder)
     {
         statesFolder = builder.StatesFolder;
-        IsDefaultStateFolder = builder.IsDefaultStatesFolder;
+        stateHolder = new SerializableImmuStateHolder();
     }
 
     public FileImmuStateHolder() : this(NewBuilder())
     {
     }
 
-    public ImmuState? GetState(Session? session, string database)
+    public ImmuState? GetState(Session? session, string dbname)
     {
+        if(DeploymentKey == null)
+        {
+            throw new InvalidOperationException("you need to set deploymentkey before using GetDeploymentInfo");
+        }
         lock (this)
         {
-            return stateHolder?.GetState(session, database);
+            if (session == null)
+            {
+                return null;
+            }
+            if (deploymentInfo == null)
+            {
+                deploymentInfo = GetDeploymentInfo();
+                if (deploymentInfo == null)
+                {
+                    deploymentInfo = CreateDeploymentInfo(session);
+                }
+                if (deploymentInfo.ServerUuid != session.ServerUUID)
+                {
+                    throw new VerificationException("server UUID mismatch");
+                }
+            }
+            var completeStatesFolderPath = Path.Combine(statesFolder, DeploymentKey);
+            if (!Directory.Exists(completeStatesFolderPath))
+            {
+                Directory.CreateDirectory(completeStatesFolderPath);
+            }
+            string stateFilePath = Path.Combine(completeStatesFolderPath, string.Format("state_{0}", dbname));
+            if (!File.Exists(stateFilePath))
+            {
+                return null;
+            }
+            string stateContent = File.ReadAllText(stateFilePath);
+            stateHolder.ReadFrom(stateContent);
+            return stateHolder.GetState(session, dbname);
+        }
+    }
+
+    internal DeploymentInfoContent? GetDeploymentInfo()
+    {
+        if (DeploymentKey == null)
+        {
+            throw new InvalidOperationException("you need to set deploymentkey before using GetDeploymentInfo");
+        }
+        var completeStatesFolderPath = Path.Combine(statesFolder, DeploymentKey);
+        var deploymentInfoPath = Path.Combine(completeStatesFolderPath, "deploymentinfo.json");
+        if (!File.Exists(deploymentInfoPath))
+        {
+            return null;
+        }
+        return JsonSerializer.Deserialize<DeploymentInfoContent>(File.ReadAllText(deploymentInfoPath));
+    }
+
+    internal DeploymentInfoContent CreateDeploymentInfo(Session session)
+    {
+        if (DeploymentKey == null)
+        {
+            throw new InvalidOperationException("you need to set deploymentkey before using GetDeploymentInfo");
+        }
+        lock (this)
+        {
+            var completeStatesFolderPath = Path.Combine(statesFolder, DeploymentKey);
+            if (!Directory.Exists(completeStatesFolderPath))
+            {
+                Directory.CreateDirectory(completeStatesFolderPath);
+            }
+            var deploymentInfoPath = Path.Combine(completeStatesFolderPath, "deploymentinfo.json");
+            var info = new DeploymentInfoContent { Label = DeploymentLabel, ServerUuid = session.ServerUUID };
+            string contents = JsonSerializer.Serialize(deploymentInfo);
+            File.WriteAllText(deploymentInfoPath, contents);
+            return info;
         }
     }
 
@@ -86,35 +129,31 @@ public class FileImmuStateHolder : ImmuStateHolder
     {
         lock (this)
         {
-            if (stateHolder == null)
-            {
-                throw new InvalidOperationException("you need to call Init before setting state");
-            }
-            ImmuState? currentState = stateHolder.GetState(session, state.Database);
+            ImmuState? currentState = GetState(session, state.Database);
             if (currentState != null && currentState.TxId >= state.TxId)
             {
+                // if the state to save is older than what is save, just skip it
                 return;
             }
-
             stateHolder.SetState(session, state);
-            string newStateFile = Path.Combine(StatesFolder, string.Format("state_{0}_{1}_{2}_{3}",
-                session.ServerUUID,
+            string newStateFile = Path.Combine(StatesFolder, string.Format("state_{0}_{1}",
                 state.Database,
-                Stopwatch.GetTimestamp(),
-                Task.CurrentId ?? 0));
-
-            if (File.Exists(newStateFile))
-            {
-                throw new InvalidOperationException("Failed attempting to create a new state file. Please retry.");
-            }
-
+                Path.GetRandomFileName().Replace(".", "")));
             try
             {
+                // I had to use this workaround because File.Move with overwrite is not available in .NET Standard 2.0. Otherwise is't just a one-liner code.
+                var stateHolderFile = Path.Combine(StatesFolder, string.Format("state_{0}", state.Database));
+                var intermediateMoveStateFile = newStateFile + "_";
+
                 stateHolder.WriteTo(newStateFile);
-                File.WriteAllText(currentStateFile, Path.GetFileName(newStateFile));
                 if (File.Exists(stateHolderFile))
                 {
-                    File.Delete(stateHolderFile);
+                    File.Move(stateHolderFile, intermediateMoveStateFile);
+                }
+                File.Move(newStateFile, stateHolderFile);
+                if (File.Exists(intermediateMoveStateFile))
+                {
+                    File.Delete(intermediateMoveStateFile);
                 }
                 stateHolderFile = newStateFile;
             }
@@ -133,7 +172,6 @@ public class FileImmuStateHolder : ImmuStateHolder
 
     public class Builder
     {
-        internal bool IsDefaultStatesFolder { get; set; } = true;
         public string StatesFolder { get; private set; }
 
         public Builder()
@@ -144,7 +182,6 @@ public class FileImmuStateHolder : ImmuStateHolder
         public Builder WithStatesFolder(string statesFolder)
         {
             this.StatesFolder = statesFolder;
-            this.IsDefaultStatesFolder = false;
             return this;
         }
 

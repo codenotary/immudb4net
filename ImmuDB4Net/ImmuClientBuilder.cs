@@ -82,7 +82,7 @@ public partial class ImmuClient
         public ImmuClientBuilder WithCredentials(string username, string password)
         {
             this.Username = username;
-            this.Username = username;
+            this.Password = password;
             return this;
         }
 

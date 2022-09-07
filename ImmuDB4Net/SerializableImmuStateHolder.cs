@@ -26,7 +26,8 @@ public class SerializableImmuStateHolder : ImmuStateHolder
      */
     private Dictionary<string, ImmuState> statesMap = new Dictionary<string, ImmuState>();
 
-    public string? Key { get ;set ; }
+    public string? DeploymentKey { get ;set ; }
+    public string? DeploymentLabel { get ;set ; }
 
     public void ReadFrom(string fileName) {
         string contents = File.ReadAllText(fileName);
@@ -58,9 +59,5 @@ public class SerializableImmuStateHolder : ImmuStateHolder
     public void SetState(Session session, ImmuState state)
     {
         statesMap[session.ServerUUID + "_" + state.Database] = state;
-    }
-
-    public void Init()
-    {
     }
 }

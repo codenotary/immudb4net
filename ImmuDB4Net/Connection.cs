@@ -24,7 +24,6 @@ namespace ImmuDB;
 public interface IConnection
 {
     IConnectionPool Pool { get; }
-    string? ServerUUID { get; set; }
     string? RemoteAddress { get; }
     ImmuService.ImmuServiceClient Service { get; }
     Task Shutdown();
@@ -37,7 +36,6 @@ public class Connection : IConnection
     private GrpcChannel? channel;
     public IConnectionPool Pool { get; private set; }
     public string? RemoteAddress { get; private set; }
-    public string? ServerUUID { get; set; }
     public int shutdownTimeoutInSec;
 
 
@@ -74,7 +72,6 @@ public class ReleasedConnection : IConnection
     }
 
     public ImmuService.ImmuServiceClient Service => throw new InvalidOperationException("The connection has been released");
-    public string? ServerUUID { get; set; }
     public string? RemoteAddress { get; private set; }
 
     public Task Shutdown()

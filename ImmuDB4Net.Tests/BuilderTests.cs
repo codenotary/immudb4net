@@ -131,4 +131,26 @@ public class BuilderTests
             }
         }
     }
+    
+    [TestMethod("StateHolder custom server key")]
+    public async Task Test4()
+    {
+        try
+        {
+            client = new ImmuClient("localhost", 3325);
+            await client.Open("immudb", "immudb", "defaultdb");
+            TxHeader hdr0 = await client.Set("k0", "v0");
+            Assert.IsNotNull(hdr0);
+            Entry entry0 = await client.Get("k0");
+            Assert.AreEqual(entry0.ToString(), "v0");
+
+        }
+        finally
+        {
+            if (client != null)
+            {
+                await client.Close();
+            }
+        }
+    }
 }
