@@ -19,46 +19,42 @@ using System.Linq;
 
 namespace ImmuDB;
 
-public class SerializableImmuStateHolder : ImmuStateHolder
+public class ImmuStateSerde
 {
-     /**
-     * Mapping "{serverUuid}_{databaseName}" to the appropriate state.
-     */
+    /**
+    * Mapping "{serverUuid}_{databaseName}" to the appropriate state.
+    */
     private Dictionary<string, ImmuState> statesMap = new Dictionary<string, ImmuState>();
 
-    public string? DeploymentKey { get ;set ; }
-    public string? DeploymentLabel { get ;set ; }
-    public bool DeploymentInfoCheck {get; set; } = true;
+    public string? DeploymentKey { get; set; }
+    public string? DeploymentLabel { get; set; }
+    public bool DeploymentInfoCheck { get; set; } = true;
 
-    public void ReadFrom(string fileName) {
+    public ImmuState? Read(string fileName, Session? session, string database)
+    {
+        if (session == null)
+            return null;
         string contents = File.ReadAllText(fileName);
         var deserialized = JsonSerializer.Deserialize<Dictionary<string, ImmuState>>(contents);
         statesMap.Clear();
-        if(deserialized == null) {
-            return;
+        if (deserialized == null)
+        {
+            return null;
         }
         deserialized.ToList().ForEach(pair => statesMap.Add(pair.Key, pair.Value));
-    }
-
-    public void WriteTo(string fileName) {
-        var options = new JsonSerializerOptions { WriteIndented = true };
-        string contents = JsonSerializer.Serialize(statesMap, options);
-        File.WriteAllText(fileName, contents);
-    }
-
-    public ImmuState? GetState(Session? session, string database)
-    {
-        if(session == null)
-            return null;
         string key = session.ServerUUID + "_" + database;
-        if(statesMap.TryGetValue(key, out var state)) {
+        if (statesMap.TryGetValue(key, out var state))
+        {
             return state;
         }
         return null;
     }
 
-    public void SetState(Session session, ImmuState state)
+    public void Write(string fileName, Session session, ImmuState state)
     {
         statesMap[session.ServerUUID + "_" + state.Database] = state;
-    }
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string contents = JsonSerializer.Serialize(statesMap, options);
+        File.WriteAllText(fileName, contents);
+    }    
 }

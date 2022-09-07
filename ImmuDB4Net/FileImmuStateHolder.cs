@@ -33,7 +33,7 @@ public class FileImmuStateHolder : ImmuStateHolder
 
     private string statesFolder;
 
-    private SerializableImmuStateHolder stateHolder;
+    private ImmuStateSerde serde;
     public string StatesFolder => statesFolder;
     public string? DeploymentKey { get; set; }
     public string? DeploymentLabel { get; set; }
@@ -43,7 +43,7 @@ public class FileImmuStateHolder : ImmuStateHolder
     public FileImmuStateHolder(Builder builder)
     {
         statesFolder = builder.StatesFolder;
-        stateHolder = new SerializableImmuStateHolder();
+        serde = new ImmuStateSerde();
     }
 
     public FileImmuStateHolder() : this(NewBuilder())
@@ -86,8 +86,7 @@ public class FileImmuStateHolder : ImmuStateHolder
             {
                 return null;
             }
-            stateHolder.ReadFrom(stateFilePath);
-            return stateHolder.GetState(session, dbname);
+            return serde.Read(stateFilePath, session, dbname);
         }
     }
 
@@ -141,17 +140,16 @@ public class FileImmuStateHolder : ImmuStateHolder
                 // if the state to save is older than what is save, just skip it
                 return;
             }
-            stateHolder.SetState(session, state);
+            
             string newStateFile = Path.Combine(StatesFolder, string.Format("state_{0}_{1}",
                 state.Database,
                 Path.GetRandomFileName().Replace(".", "")));
+            serde.Write(newStateFile, session, state);
             try
             {
                 // I had to use this workaround because File.Move with overwrite is not available in .NET Standard 2.0. Otherwise is't just a one-liner code.
                 var stateHolderFile = Path.Combine(StatesFolder, DeploymentKey, string.Format("state_{0}", state.Database));
                 var intermediateMoveStateFile = newStateFile + "_";
-
-                stateHolder.WriteTo(newStateFile);
                 if (File.Exists(stateHolderFile))
                 {
                     File.Move(stateHolderFile, intermediateMoveStateFile);
