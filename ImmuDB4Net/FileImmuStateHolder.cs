@@ -119,7 +119,7 @@ public class FileImmuStateHolder : ImmuStateHolder
             }
             var deploymentInfoPath = Path.Combine(completeStatesFolderPath, "deploymentinfo.json");
             var info = new DeploymentInfoContent { Label = DeploymentLabel, ServerUuid = session.ServerUUID };
-            string contents = JsonSerializer.Serialize(deploymentInfo);
+            string contents = JsonSerializer.Serialize(info);
             File.WriteAllText(deploymentInfoPath, contents);
             return info;
         }
