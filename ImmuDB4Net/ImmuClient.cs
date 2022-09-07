@@ -159,21 +159,17 @@ public partial class ImmuClient
 
     public async Task Close()
     {
-        if (Connection == null)
-        {
-            return;
-        }
         StopHeartbeat();
         await SessionManager.CloseSession(Connection, session);
         session = null;
         Connection.Pool.Release(this);
     }
 
-    public bool IsShutdown()
+    public bool IsClosed()
     {
         lock (this)
         {
-            return Connection == null;
+            return Connection.Released;
         }
     }
 
@@ -1131,7 +1127,7 @@ public partial class ImmuClient
 
     public bool IsConnected()
     {
-        return Connection != null;
+        return !Connection.Released;
     }
 
     //

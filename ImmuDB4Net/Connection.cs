@@ -27,6 +27,7 @@ public interface IConnection
     string? RemoteAddress { get; }
     ImmuService.ImmuServiceClient Service { get; }
     Task Shutdown();
+    bool Released { get; }
 }
 
 public class Connection : IConnection
@@ -37,7 +38,7 @@ public class Connection : IConnection
     public IConnectionPool Pool { get; private set; }
     public string? RemoteAddress { get; private set; }
     public int shutdownTimeoutInSec;
-
+    public bool Released => channel == null;
 
     internal Connection(ImmuClient client)
     {
@@ -64,6 +65,7 @@ public class Connection : IConnection
 public class ReleasedConnection : IConnection
 {
     public IConnectionPool Pool { get; private set; }
+    public bool Released => true;
 
     public ReleasedConnection(IConnectionPool pool)
     {
@@ -71,7 +73,7 @@ public class ReleasedConnection : IConnection
         this.RemoteAddress = "<not established>";
     }
 
-    public ImmuService.ImmuServiceClient Service => throw new InvalidOperationException("The connection has been released");
+    public ImmuService.ImmuServiceClient Service => throw new InvalidOperationException("The connection is not established.");
     public string? RemoteAddress { get; private set; }
 
     public Task Shutdown()
