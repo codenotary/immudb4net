@@ -6,14 +6,14 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>10.0</LangVersion>
 		<PackageId>ImmuDB4Net</PackageId>
-		<Version>1.0.5</Version>
-		<PackageVersion>1.0.5</PackageVersion>
+		<Version>1.0.5-rc</Version>
+		<PackageVersion>1.0.5-rc</PackageVersion>
 		<Authors>CodeNotary engineering</Authors>
 		<Company>CodeNotary Inc.</Company>
 		<RepositoryUrl>https://github.com/codenotary/immudb4net</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-		<!-- <PackageReadmeFile>https://github.com/codenotary/immudb4net/blob/main/Readme.md</PackageReadmeFile> -->
+		<!-- <PackageReadmeFile>https://raw.githubusercontent.com/codenotary/immudb4net/main/Readme.md</PackageReadmeFile> -->
 
 		<Product>.NET SDK for ImmuDB</Product>
 		<Copyright>CodeNotary Inc.</Copyright>
