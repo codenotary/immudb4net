@@ -17,27 +17,26 @@ limitations under the License.
 namespace ImmudbProxy
 {
     using Grpc.Core;
+    using ImmuDB;
     using GrpcCore = global::Grpc.Core;
 
     public static partial class ImmuService
     {
         public partial class ImmuServiceClient : GrpcCore::ClientBase<ImmuServiceClient>
         {
-            internal const string AUTH_HEADER = "authorization";
+            internal const string SESSIONID_HEADER = "sessionid";
 
-            public bool WithAuth { get; set; }
-            public string AuthToken { get; set; }
-            internal Metadata Headers = new Metadata();
+            private Metadata headers = new Metadata();
+            private Object headersSync = new Object();
 
-            public ImmuServiceClient WithAuthHeaders()
+            public Metadata GetHeaders(Session? session)
             {
-                Headers.Clear();
-                if (!WithAuth || (AuthToken == null))
+                var mdata = new Metadata();
+                if (session?.Id != null)
                 {
-                   return this;
+                    mdata.Add(SESSIONID_HEADER, session.Id);
                 }
-                Headers.Add(AUTH_HEADER, "Bearer " + AuthToken);
-                return this;
+                return mdata;
             }
         }
     }

@@ -35,12 +35,20 @@ public class BasicClientTests : BaseClientIntTests
         await BaseTearDown();
     }
 
+ [TestMethod("execute open, set, get and verifiedget")]
+    public async Task BasicTest()
+    {
+        await client!.Open("immudb", "immudb", "defaultdb");
+        await client.VerifiedSet("mykey", Encoding.UTF8.GetBytes("test"));
+        await client.Close();
+        await client!.Open("immudb", "immudb", "defaultdb");
+        await client.Close();
+    }   
 
-    [TestMethod("execute login, usedatabase, set, get and verifiedget")]
+    [TestMethod("execute open, set, get and verifiedget")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
         byte[] v0 = new byte[] { 0, 1, 2, 3 };
         byte[] v1 = new byte[] { 3, 2, 1, 0 };
@@ -75,14 +83,13 @@ public class BasicClientTests : BaseClientIntTests
         Assert.IsNotNull(e);
         CollectionAssert.AreEqual(e.Value, v2);
 
-        await client.Logout();
+        await client.Close();
     }
 
-    [TestMethod("execute login, usedatabase, set, get and verifiedget")]
+    [TestMethod("execute login, setall, get and getall")]
     public async Task Test2()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
         List<string> keys = new List<string>();
         keys.Add("k0");
         keys.Add("k1");
@@ -125,7 +132,6 @@ public class BasicClientTests : BaseClientIntTests
             CollectionAssert.AreEqual(entry.Value, values[i]);
         }
 
-        await client.Logout();
+        await client.Close();
     }
-
 }

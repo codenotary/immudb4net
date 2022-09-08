@@ -16,11 +16,20 @@ limitations under the License.
 
 namespace ImmuDB;
 
-public interface ImmuStateHolder
+public enum TransactionKind {
+    Read,
+    ReadWrite
+}
+
+public class Session
 {
-    string? DeploymentKey { get; internal set; }
-    string? DeploymentLabel { get; internal set; }
-    bool DeploymentInfoCheck {get; internal set; }
-    ImmuState? GetState(Session? session, string database);
-    void SetState(Session session, ImmuState state);
+    public TransactionKind Kind;
+    public string Id { get; private set; }
+    public string ServerUUID { get; private set; }
+    internal string? TransactionId { get; set; }
+
+    public Session(string id, string serverUUID) {
+        Id = id; 
+        ServerUUID = serverUUID;
+    }
 }

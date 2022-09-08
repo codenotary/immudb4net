@@ -44,10 +44,9 @@ public class StateTests : BaseClientIntTests
     [TestMethod("current state")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client!.Open("immudb", "immudb", "defaultdb");
 
-        ImmuState currState = await client.CurrentState();
+        ImmuState currState = client.CurrentState();
         Assert.IsNotNull(currState);
 
         Assembly asm = Assembly.GetExecutingAssembly();
@@ -70,14 +69,14 @@ public class StateTests : BaseClientIntTests
                     // Again, "covering" `checkSignature` when there is a `signature` attached.
                     ImmuState someState = new ImmuState(currState.Database, currState.TxId, currState.TxHash, new byte[1]);
                     Assert.IsFalse(someState.CheckSignature(assymKey));
-                    await client.Logout();
+                    await client.Close();
                 }
             }
         }
         catch (Exception e)
         {
-            await client.Logout();
-            Assert.Fail(string.Format("An exception occurred in StateTests->Test1. %s", e.ToString()));
+            await client.Close();
+            Assert.Fail(string.Format("An exception occurred in StateTests->Test1. {0}", e.ToString()));
             return;
         }
     }
@@ -105,28 +104,27 @@ public class StateTests : BaseClientIntTests
             }
             client = ImmuClient.NewBuilder()
                         .WithServerUrl("localhost")
-                        .WithServerPort(3322)
+                        .WithServerPort(3325)
                         .WithServerSigningKey(assymKey)
                         .Build();
         }
         catch (Exception e)
         {
-            Assert.Fail(string.Format("An exception occurred in StateTests->Test1. %s", e.ToString()));
+            Assert.Fail(string.Format("An exception occurred in StateTests->Test1. {0}", e.ToString()));
             return;
         }
 
-        await client.Login("immudb", "immudb");
-        await client.UseDatabase("defaultdb");
+        await client.Open("immudb", "immudb", "defaultdb");
         try
         {
-            await client.CurrentState();
+            client.CurrentState();
             Assert.Fail("Signing key provided on the client side only and currentstate should raise verificationexception");
         }
         catch (VerificationException)
         {
 
         }
-        await client.Logout();
+        await client.Close();
     }
 
     private string CreatePrivateKeyInTmpFolder()
@@ -216,29 +214,28 @@ public class StateTests : BaseClientIntTests
             }
             catch (Exception e)
             {
-                Assert.Fail(string.Format("An exception occurred in StateTests->Test3. %s", e.ToString()));
+                Assert.Fail(string.Format("An exception occurred in StateTests->Test3. {0}", e.ToString()));
                 return;
             }
 
-            await client.Login("immudb", "immudb");
-            await client.UseDatabase("defaultdb");
+            await client.Open("immudb", "immudb", "defaultdb");
             try
             {
-                var state = await client.CurrentState();
+                var state = client.CurrentState();
                 Assert.IsNotNull(state);
             }
             catch (VerificationException)
             {
                 Assert.Fail("Signing key provided on the client side and server and currentstate should work");
             }
-            await client.Logout();
+            await client.Close();
         }
         finally
         {
             File.Delete(tmpFile);
             if (containerHasStarted)
             {
-                await dockerClient.Containers.StopContainerAsync(containerId, new ContainerStopParameters() { WaitBeforeKillSeconds = 4 });
+                await dockerClient.Containers.StopContainerAsync(containerId, new ContainerStopParameters() { WaitBeforeKillSeconds = 6 });
                 await dockerClient.Containers.RemoveContainerAsync(containerId, new ContainerRemoveParameters() { Force = true });
 
             }

@@ -86,7 +86,7 @@ public class TxEntry
 
         if (Metadata != null)
         {
-            mdbs = Metadata.serialize();
+            mdbs = Metadata.Serialize();
             mdLen = mdbs.Length;
         }
 

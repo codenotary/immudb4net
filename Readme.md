@@ -61,9 +61,9 @@ Use ```dotnet build``` to build locally the ImmuDB client assembly.
 
 ## Supported Versions
 
-immudb4net supports the [latest immudb server] release, that is 1.3.1 at the time of updating this document.
+immudb4net supports the [latest immudb server] release, that is 1.3.2 at the time of updating this document.
 
-[latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.3.1
+[latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.3.2
 
 ## Quickstart
 
@@ -83,6 +83,14 @@ Using default configuration:
 
 ``` C#
     ImmuClient immuClient = ImmuClient.NewBuilder().Build();
+
+    // or
+
+    Immuclient immuClient = new ImmuClient();
+    Immuclient immuClient = new ImmuClient("localhost", 3322);
+    Immuclient immuClient = new ImmuClient("localhost", 3322, "defaultdb");
+
+
 ```
 
 Setting `immudb` url and port:
@@ -92,6 +100,12 @@ Setting `immudb` url and port:
                                 .WithServerUrl("localhost")
                                 .WithServerPort(3322)
                                 .Build();
+
+    ImmuClient immuClient = ImmuClient.NewBuilder()
+                                .WithServerUrl("localhost")
+                                .WithServerPort(3322)
+                                .Build();
+
 ```
 
 Customizing the `State Holder`:
@@ -108,15 +122,22 @@ Customizing the `State Holder`:
 
 ### User Sessions
 
-Use `login` and `logout` methods to initiate and terminate user sessions:
+Use `Open` and `Close` methods to initiate and terminate user sessions:
 
 ``` C#
-    await immuClient.Login("usr1", "pwd1");
+    await immuClient.Open("usr1", "pwd1", "defaultdb");
 
     // Interact with immudb using logged-in user.
     //...
 
-    await immuClient.Logout();
+    await immuClient.Close();
+
+    // or one liner open the session right 
+    client = await ImmuClient.NewBuilder().Open();
+
+    //then close it
+    await immuClient.Close();
+
 ```
 
 ### Creating a Database
@@ -203,13 +224,25 @@ Atomic multi-key read (all entries are retrieved or none):
 
 ### Closing the client
 
-Apart from the `logout`, for closing the connection with immudb server use the `shutdown` operation:
+Use `Close`, for closing the connection with immudb server . When terminating the process, use the `ImmuClient.ReleaseSdkResources` operation :
 
 ``` C#
-    await immuClient.Shutdown();
+    await client.Close();
+    await ImmuClient.ReleaseSdkResources();
 ```
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.
+
+## Building from source
+
+To build from source you need as prerequisites to clone a local copy of the git repo: <https://github.com/codenotary/immudb4net>
+and then to have installed on the build machine the dotnet 6.0 SDK. Then, from the terminal just run ```dotnet build``` .
+
+In order to successfully execute the integration tests with the command```dotnet test``` to have to install as prerequisites ```docker``` and also to start locally an ImmuDB instance on port 3322. For example, you can run ImmuDB in docker as below:
+
+``` bash
+docker run -d --name immudb -p 3322:3322 codenotary/immudb:latest
+```
 
 ## Contributing
 

@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace ImmudbProxy;
 
 public sealed partial class Signature
@@ -40,4 +42,49 @@ public sealed partial class Entry
             return _defaultInstance;
         }
     }
+}
+
+[ExcludeFromCodeCoverage]
+public partial class ImmuService {
+
+}
+
+[ExcludeFromCodeCoverage]
+public partial class ImmutableState {
+
+}
+
+[ExcludeFromCodeCoverage]
+public partial class AuthConfig {
+
+}
+
+[ExcludeFromCodeCoverage]
+public partial class ChangePasswordRequest {
+
+}
+
+[ExcludeFromCodeCoverage]
+public partial class ChangePermissionRequest {
+
+}
+
+[ExcludeFromCodeCoverage]
+public partial class Database {
+
+}
+
+[ExcludeFromCodeCoverage]
+public partial class Chunk {
+
+}
+
+[ExcludeFromCodeCoverage]
+public partial class Column {
+
+}
+
+[ExcludeFromCodeCoverage]
+public partial class CommittedSQLTx {
+
 }

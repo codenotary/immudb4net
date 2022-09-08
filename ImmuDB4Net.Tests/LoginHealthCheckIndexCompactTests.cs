@@ -34,20 +34,20 @@ public class LoginHealthCheckCompactIndexTests : BaseClientIntTests
         await BaseTearDown();
     }
 
-    [TestMethod("login (with default credentials), healthCheck, logout")]
+    [TestMethod("open (with default credentials), healthCheck, logout")]
     public async Task Test1()
     {
-        await client!.Login("immudb", "immudb");
+        await client!.Open("immudb", "immudb", "defaultdb");
         bool isHealthy = await client.HealthCheck();
         Assert.IsTrue(isHealthy);
         await client.CompactIndex();
-        await client.Logout();
+        await client.Close();
     }
 
-    [TestMethod("login with invalid credentials")]
+    [TestMethod("open with invalid credentials")]
     [ExpectedException(typeof(RpcException))]
     public async Task Test9()
     {
-        await client!.Login("immudb", "incorrect_password");
+        await client!.Open("immudb", "incorrect_password", "defaultdb");
     }
 }
