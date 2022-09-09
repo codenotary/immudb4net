@@ -208,10 +208,10 @@ public static class Utils
 
     public static string GenerateShortHash(string source)
     {
-        using (SHA1 sha1 = SHA1.Create())
+        using (SHA256 sha1 = SHA256.Create())
         {
             var result = sha1.ComputeHash(Encoding.UTF8.GetBytes(source));
-            var hash = Convert.ToBase64String(result).ToUpper().Replace("=", "").Replace("/", "");
+            var hash = Convert.ToBase64String(result).ToUpper().Replace("=", "").Replace("/", "").Substring(0, 30);
             return hash;
         }
     }
