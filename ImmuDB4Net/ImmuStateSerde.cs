@@ -24,7 +24,6 @@ public class ImmuStateSerde
     /**
     * Mapping "{serverUuid}_{databaseName}" to the appropriate state.
     */
-    private Dictionary<string, ImmuState> statesMap = new Dictionary<string, ImmuState>();
 
     public string? DeploymentKey { get; set; }
     public string? DeploymentLabel { get; set; }
@@ -35,26 +34,13 @@ public class ImmuStateSerde
         if (session == null)
             return null;
         string contents = File.ReadAllText(fileName);
-        var deserialized = JsonSerializer.Deserialize<Dictionary<string, ImmuState>>(contents);
-        statesMap.Clear();
-        if (deserialized == null)
-        {
-            return null;
-        }
-        deserialized.ToList().ForEach(pair => statesMap.Add(pair.Key, pair.Value));
-        string key = session.ServerUUID + "_" + database;
-        if (statesMap.TryGetValue(key, out var state))
-        {
-            return state;
-        }
-        return null;
+        return JsonSerializer.Deserialize<ImmuState>(contents);
     }
 
     public void Write(string fileName, Session session, ImmuState state)
     {
-        statesMap[session.ServerUUID + "_" + state.Database] = state;
         var options = new JsonSerializerOptions { WriteIndented = true };
-        string contents = JsonSerializer.Serialize(statesMap, options);
+        string contents = JsonSerializer.Serialize(state, options);
         File.WriteAllText(fileName, contents);
     }    
 }
