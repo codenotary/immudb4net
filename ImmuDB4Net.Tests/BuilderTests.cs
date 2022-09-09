@@ -109,7 +109,7 @@ public class BuilderTests
             }
         }
     }
-    
+
     [TestMethod("simplified initialization with constructor")]
     public async Task Test3()
     {
@@ -131,7 +131,7 @@ public class BuilderTests
             }
         }
     }
-    
+
     [TestMethod("StateHolder custom server key")]
     public async Task Test4()
     {
@@ -160,9 +160,18 @@ public class BuilderTests
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
         try
         {
-           client = await ImmuClient.NewBuilder().CheckDeploymentInfo(false)
-                .WithServerPort(3325)
-                .Open();
+            client = await ImmuClient.NewBuilder()
+                 .WithServerPort(3325)
+                 .Open();
+            string hashedStateFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "immudb4net",
+                    Utils.GenerateShortHash(client.GrpcAddress));
+            if(Directory.Exists(hashedStateFolder))
+            {
+                Directory.Delete(hashedStateFolder, true);
+            }
+
             byte[] v0 = new byte[] { 0, 1, 2, 3 };
             byte[] v1 = new byte[] { 3, 2, 1, 0 };
 
