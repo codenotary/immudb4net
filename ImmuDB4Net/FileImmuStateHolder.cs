@@ -33,17 +33,15 @@ public class FileImmuStateHolder : ImmuStateHolder
 
     private string statesFolder;
 
-    private ImmuStateSerde serde;
     public string StatesFolder => statesFolder;
     public string? DeploymentKey { get; set; }
     public string? DeploymentLabel { get; set; }
-    public bool DeploymentInfoCheck {get; set; } = true;
+    public bool DeploymentInfoCheck { get; set; } = true;
     private DeploymentInfoContent? deploymentInfo;
 
     public FileImmuStateHolder(Builder builder)
     {
         statesFolder = builder.StatesFolder;
-        serde = new ImmuStateSerde();
     }
 
     public FileImmuStateHolder() : this(NewBuilder())
@@ -52,7 +50,7 @@ public class FileImmuStateHolder : ImmuStateHolder
 
     public ImmuState? GetState(Session? session, string dbname)
     {
-        if(DeploymentKey == null)
+        if (DeploymentKey == null)
         {
             throw new InvalidOperationException("you need to set deploymentkey before using GetDeploymentInfo");
         }
@@ -61,7 +59,7 @@ public class FileImmuStateHolder : ImmuStateHolder
             if (session == null)
             {
                 return null;
-            }            
+            }
             if (deploymentInfo == null)
             {
                 deploymentInfo = GetDeploymentInfo();
@@ -69,7 +67,7 @@ public class FileImmuStateHolder : ImmuStateHolder
                 {
                     deploymentInfo = CreateDeploymentInfo(session);
                 }
-                if ((deploymentInfo.ServerUUID != session.ServerUUID) && DeploymentInfoCheck) 
+                if ((deploymentInfo.ServerUUID != session.ServerUUID) && DeploymentInfoCheck)
                 {
                     var deploymentInfoPath = Path.Combine(statesFolder, DeploymentKey);
                     throw new VerificationException(
@@ -86,7 +84,8 @@ public class FileImmuStateHolder : ImmuStateHolder
             {
                 return null;
             }
-            return serde.Read(stateFilePath, session, dbname);
+            string contents = File.ReadAllText(stateFilePath);
+            return JsonSerializer.Deserialize<ImmuState>(contents);
         }
     }
 
@@ -140,11 +139,13 @@ public class FileImmuStateHolder : ImmuStateHolder
                 // if the state to save is older than what is save, just skip it
                 return;
             }
-            
+
             string newStateFile = Path.Combine(StatesFolder, string.Format("state_{0}_{1}",
                 state.Database,
                 Path.GetRandomFileName().Replace(".", "")));
-            serde.Write(newStateFile, session, state);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string contents = JsonSerializer.Serialize(state, options);
+            File.WriteAllText(newStateFile, contents);
             try
             {
                 // I had to use this workaround because File.Move with overwrite is not available in .NET Standard 2.0. Otherwise is't just a one-liner code.
