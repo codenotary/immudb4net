@@ -64,9 +64,13 @@ public class RandomAssignConnectionPool : IConnectionPool
 
     public IConnection Acquire(ConnectionParameters cp)
     {
+        if(cp == null)
+        {
+            throw new ArgumentException("Acquire: ConnectionParameters argument cannot be null");
+        }
         lock (this)
         {
-            List<Item> poolForAddress;
+            List<Item>? poolForAddress;
             if (!connections.TryGetValue(cp.Address, out poolForAddress))
             {
                 poolForAddress = new List<Item>();
@@ -95,7 +99,7 @@ public class RandomAssignConnectionPool : IConnectionPool
     ///</summary>
     public async Task Release(IConnection con)
     {
-        List<Item> poolForAddress;
+        List<Item>? poolForAddress;
         int indexToRemove = -1;
         lock (this)
         {
