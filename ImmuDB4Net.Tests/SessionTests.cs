@@ -81,7 +81,7 @@ public class SessionTests : BaseClientIntTests
         TxHeader hdr0 = await client.Set("k0", v0);
         Assert.IsNotNull(hdr0);
 
-        client.Reconnect();
+        await client.Reconnect();
 
         TxHeader hdr1 = await client.Set("k1", v1);
         Assert.IsNotNull(hdr1);

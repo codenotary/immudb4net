@@ -90,7 +90,7 @@ public partial class ImmuClient
     {
         ConnectionPool = builder.ConnectionPool;
         GrpcAddress = builder.GrpcAddress;
-        Connection = new ReleasedConnection(ConnectionPool);
+        Connection = new ReleasedConnection();
         SessionManager = builder.SessionManager;
         DeploymentInfoCheck = builder.DeploymentInfoCheck;
         serverSigningKey = builder.ServerSigningKey;
@@ -144,17 +144,23 @@ public partial class ImmuClient
         {
             throw new InvalidOperationException("please close the existing session before opening a new one");
         }
-        Connection = ConnectionPool.Acquire(this);
+        Connection = ConnectionPool.Acquire(new ConnectionParameters {
+            Address = GrpcAddress,
+            ShutdownTimeoutInSec = ConnectionShutdownTimeoutInSec
+        });
         session = await SessionManager.OpenSession(Connection, username, password, defaultdb);
         heartbeatCloseRequested = new ManualResetEvent(false);
         heartbeatCalled = new ManualResetEvent(false);
         StartHeartbeat();
     }
 
-    public void Reconnect()
+    public async Task Reconnect()
     {
-        Connection.Pool.Release(this);
-        Connection = ConnectionPool.Acquire(this);
+        await ConnectionPool.Release(Connection);
+        Connection = ConnectionPool.Acquire(new ConnectionParameters {
+            Address = GrpcAddress,
+            ShutdownTimeoutInSec = ConnectionShutdownTimeoutInSec
+        });
     }
 
     public async Task Close()
@@ -162,7 +168,7 @@ public partial class ImmuClient
         StopHeartbeat();
         await SessionManager.CloseSession(Connection, session);
         session = null;
-        Connection.Pool.Release(this);
+        await ConnectionPool.Release(Connection);
     }
 
     public bool IsClosed()

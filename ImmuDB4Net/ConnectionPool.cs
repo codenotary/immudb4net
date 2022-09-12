@@ -21,10 +21,12 @@ namespace ImmuDB;
 public interface IConnectionPool
 {
     int MaxConnectionsPerServer { get; }
-    IConnection Acquire(ImmuClient client);
-    void Release(ImmuClient client);
+    IConnection Acquire(ConnectionParameters cp);
+    Task Release(IConnection con);
     Task Shutdown();
 }
+
+
 
 public class RandomAssignConnectionPool : IConnectionPool
 {
@@ -41,62 +43,106 @@ public class RandomAssignConnectionPool : IConnectionPool
         }
     }
 
+    internal class Item
+    {
+        public Item(IConnection con)
+        {
+            Connection = con;
+            RefCount = 0;
+        }
+        public IConnection Connection { get; set; }
+        public int RefCount { get; set; }
+    }
+
     internal RandomAssignConnectionPool()
     {
         MaxConnectionsPerServer = ImmuClient.GlobalSettings.MaxConnectionsPerServer;
-        this.releasedConnection = new ReleasedConnection(this);
+        this.releasedConnection = new ReleasedConnection();
     }
 
-    Dictionary<string, List<IConnection>> connections = new Dictionary<string, List<IConnection>>();
+    Dictionary<string, List<Item>> connections = new Dictionary<string, List<Item>>();
 
-    public IConnection Acquire(ImmuClient client)
+    public IConnection Acquire(ConnectionParameters cp)
     {
         lock (this)
         {
-            List<IConnection> poolForAddress;
-            if (!connections.TryGetValue(client.GrpcAddress, out poolForAddress))
+            List<Item> poolForAddress;
+            if (!connections.TryGetValue(cp.Address, out poolForAddress))
             {
-                poolForAddress = new List<IConnection>();
-                var conn = new Connection(client);
-                poolForAddress.Add(conn);
-                connections.Add(client.GrpcAddress, poolForAddress);
+                poolForAddress = new List<Item>();
+                var conn = new Connection(cp);
+                var item = new Item(conn);
+                poolForAddress.Add(item);
+                connections.Add(cp.Address, poolForAddress);
                 return conn;
             }
             if (poolForAddress.Count < MaxConnectionsPerServer)
             {
-                var conn = new Connection(client);
-                poolForAddress.Add(conn);
+                var conn = new Connection(cp);
+                var item = new Item(conn);
+                poolForAddress.Add(item);
                 return conn;
             }
-            var randomConn = poolForAddress[random.Next(MaxConnectionsPerServer)];
-            return randomConn;
+            var randomItem = poolForAddress[random.Next(MaxConnectionsPerServer)];
+            randomItem.RefCount++;
+            return randomItem.Connection;
         }
     }
 
-    public void Release(ImmuClient client)
+    ///<summary>
+    /// The method <c>Release</c> is called when the connection specified as argument is no more used by an <c>ImmuClient</c> instance, therefore it
+    /// can be closed 
+    ///</summary>
+    public async Task Release(IConnection con)
     {
+        List<Item> poolForAddress;
+        int indexToRemove = -1;
         lock (this)
         {
-            client.Connection = releasedConnection;
+            if (!connections.TryGetValue(con.Address, out poolForAddress)) 
+            {
+                return;
+            }
+            
+            for(int i = 0; i < poolForAddress.Count; i++)
+            {
+                if((poolForAddress[i].Connection == con) && (poolForAddress[i].RefCount > 0))
+                {
+                    poolForAddress[i].RefCount--;
+                    if(poolForAddress[i].RefCount == 0) 
+                    {
+                        indexToRemove = i;
+                    }
+                    break;
+                }
+            }
+            if(indexToRemove > -1)
+            {
+                poolForAddress.RemoveAt(indexToRemove);
+            }
+        }
+        if(indexToRemove > -1)
+        {
+            await con.Shutdown();
         }
     }
 
     public async Task Shutdown()
     {
-        Dictionary<string, List<IConnection>> clone = new Dictionary<string, List<IConnection>>();
+        Dictionary<string, List<Item>> clone = new Dictionary<string, List<Item>>();
         lock (this)
         {
             foreach (var addressPool in connections)
             {
-                List<IConnection> connections = new List<IConnection>(addressPool.Value);
+                List<Item> connections = new List<Item>(addressPool.Value);
                 clone.Add(addressPool.Key, connections);
             }
         }
         foreach (var addressPool in clone)
         {
-            foreach (var connection in addressPool.Value)
+            foreach (var item in addressPool.Value)
             {
-                await connection.Shutdown();
+                await item.Connection.Shutdown();
             }
         }
     }

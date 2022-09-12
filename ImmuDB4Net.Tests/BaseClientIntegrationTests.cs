@@ -64,7 +64,7 @@ namespace ImmuDB.Tests
 
         public async Task BaseTearDown()
         {
-            await client!.Connection.Pool.Shutdown();
+            await client!.ConnectionPool.Shutdown();
             if (tmpStateFolder != null)
             {
                 Directory.Delete(tmpStateFolder, true);
