@@ -16,6 +16,7 @@ limitations under the License.
 
 namespace ImmuDB;
 
+using System.Collections.Concurrent;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
@@ -136,11 +137,20 @@ public partial class ImmuClient
         stateHolder.DeploymentInfoCheck = builder.DeploymentInfoCheck;
         stateHolder.DeploymentKey = Utils.GenerateShortHash(GrpcAddress);
         stateHolder.DeploymentLabel = GrpcAddress;
+        openSessionHandles.Push(activeSessionSync);
     }
 
+    private ManualResetEvent activeSessionSync = new ManualResetEvent(true);
+
+    private static ConcurrentStack<ManualResetEvent> openSessionHandles = new ConcurrentStack<ManualResetEvent>();
     public static async Task ReleaseSdkResources()
     {
         await RandomAssignConnectionPool.Instance.Shutdown();
+        ManualResetEvent? mre;
+        while (openSessionHandles.TryPop(out mre))
+        {
+            mre.Close();
+        }
     }
 
     private void StartHeartbeat()
@@ -174,21 +184,34 @@ public partial class ImmuClient
     }
 
 
+
     public async Task Open(string username, string password, string defaultdb)
     {
-        if (ActiveSession != null)
+        try
         {
-            throw new InvalidOperationException("please close the existing session before opening a new one");
+            lock (this)
+            {
+                activeSessionSync.WaitOne();
+                activeSessionSync.Reset();
+            }
+            if (ActiveSession != null)
+            {
+                throw new InvalidOperationException("please close the existing session before opening a new one");
+            }
+            Connection = ConnectionPool.Acquire(new ConnectionParameters
+            {
+                Address = GrpcAddress,
+                ShutdownTimeoutInSec = ConnectionShutdownTimeoutInSec
+            });
+            ActiveSession = await SessionManager.OpenSession(Connection, username, password, defaultdb);
+            heartbeatCloseRequested = new ManualResetEvent(false);
+            heartbeatCalled = new ManualResetEvent(false);
+            StartHeartbeat();
         }
-        Connection = ConnectionPool.Acquire(new ConnectionParameters
+        finally
         {
-            Address = GrpcAddress,
-            ShutdownTimeoutInSec = ConnectionShutdownTimeoutInSec
-        });
-        ActiveSession = await SessionManager.OpenSession(Connection, username, password, defaultdb);
-        heartbeatCloseRequested = new ManualResetEvent(false);
-        heartbeatCalled = new ManualResetEvent(false);
-        StartHeartbeat();
+            activeSessionSync.Set();
+        }
     }
 
     public async Task Reconnect()
@@ -203,10 +226,22 @@ public partial class ImmuClient
 
     public async Task Close()
     {
-        StopHeartbeat();
-        await SessionManager.CloseSession(Connection, ActiveSession);
-        ActiveSession = null;
-        await ConnectionPool.Release(Connection);
+        try
+        {
+            lock (this)
+            {
+                activeSessionSync.WaitOne();
+                activeSessionSync.Reset();
+            }
+            StopHeartbeat();
+            await SessionManager.CloseSession(Connection, ActiveSession);
+            ActiveSession = null;
+            await ConnectionPool.Release(Connection);
+        }
+        finally
+        {
+            activeSessionSync.Set();
+        }
     }
 
     public bool IsClosed()

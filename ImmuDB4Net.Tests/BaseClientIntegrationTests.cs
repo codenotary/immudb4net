@@ -68,7 +68,7 @@ namespace ImmuDB.Tests
             if (tmpStateFolder != null)
             {
                 Directory.Delete(tmpStateFolder, true);
-            }
+            }           
         }
         [AssemblyInitialize]
         public static async Task AssemblySetUp(TestContext testContext)
@@ -109,12 +109,12 @@ namespace ImmuDB.Tests
         [AssemblyCleanup]
         public static async Task AssemblyTearDown()
         {
+            await ImmuClient.ReleaseSdkResources();
             if (containerHasStarted)
             {
                 await dockerClient!.Containers.StopContainerAsync(containerId, new ContainerStopParameters() { WaitBeforeKillSeconds = 6 });
                 await dockerClient.Containers.RemoveContainerAsync(containerId, new ContainerRemoveParameters() { Force = true });
-
-            }
+            }            
         }
     }
 }
