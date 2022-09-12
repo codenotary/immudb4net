@@ -55,6 +55,7 @@ public partial class ImmuClient
     private Task? heartbeatTask;
     public bool DeploymentInfoCheck { get; set; } = true;
 
+    internal ImmuStateHolder StateHolder => stateHolder;
 
     public static ImmuClientBuilder NewBuilder()
     {

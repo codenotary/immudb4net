@@ -62,7 +62,7 @@ public class FileImmuStateHolder : ImmuStateHolder
             }
             if (deploymentInfo == null)
             {
-                deploymentInfo = GetDeploymentInfo();
+                deploymentInfo = GetDeploymentInfo(session.ServerUUID);
                 if (deploymentInfo == null)
                 {
                     deploymentInfo = CreateDeploymentInfo(session);
@@ -89,13 +89,61 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
-    internal DeploymentInfoContent? GetDeploymentInfo()
+    internal DeploymentInfoContent? GetDeploymentInfo(string? serverUUID)
     {
-        if (DeploymentKey == null)
+        if (string.IsNullOrEmpty(DeploymentKey))
         {
             throw new InvalidOperationException("you need to set deploymentkey before using GetDeploymentInfo");
         }
-        var completeStatesFolderPath = Path.Combine(statesFolder, DeploymentKey);
+        if (string.IsNullOrEmpty(serverUUID))
+        {
+            return ReadDeploymentKeyBasedDeploymentInfo();
+        }
+        DeploymentInfoContent? deploymentInfo;
+        string? newDeploymentKey;
+        if(TryReadDeploymentInfoOnUuid(serverUUID!, out deploymentInfo, out newDeploymentKey)) {
+            DeploymentKey = newDeploymentKey;
+            return deploymentInfo;
+        }
+        return ReadDeploymentKeyBasedDeploymentInfo();
+    }
+
+    private bool TryReadDeploymentInfoOnUuid(string serverUUID, out DeploymentInfoContent? deploymentInfo, out string? deploymentKey)
+    {
+        string[] dirs = Directory.GetDirectories(statesFolder);
+        foreach (var dir in dirs)
+        {
+            var deploymentInfoPath = Path.Combine(dir, "deploymentinfo.json");
+            if (!File.Exists(deploymentInfoPath))
+            {
+                continue;
+            }
+            try
+            {
+                var loadedDeploymentInfo = JsonSerializer.Deserialize<DeploymentInfoContent>(File.ReadAllText(deploymentInfoPath));
+                if(loadedDeploymentInfo == null)
+                {
+                    continue;
+                }
+                if(string.Equals(serverUUID, loadedDeploymentInfo.ServerUUID, StringComparison.InvariantCultureIgnoreCase)) {
+                    deploymentInfo = loadedDeploymentInfo;
+                    deploymentKey = Path.GetFileName(dir);
+                    return true;
+                }
+            }
+            catch(JsonException)
+            {
+                continue;
+            }
+        }
+        deploymentInfo = null;
+        deploymentKey = null;
+        return false;
+    }
+
+    private DeploymentInfoContent? ReadDeploymentKeyBasedDeploymentInfo()
+    {
+        var completeStatesFolderPath = Path.Combine(statesFolder, DeploymentKey!);
         var deploymentInfoPath = Path.Combine(completeStatesFolderPath, "deploymentinfo.json");
         if (!File.Exists(deploymentInfoPath))
         {
