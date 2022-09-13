@@ -120,15 +120,15 @@ public class RandomAssignConnectionPool : IConnectionPool
                     break;
                 }
             }
-            if(indexToRemove > -1)
-            {
-                poolForAddress.RemoveAt(indexToRemove);
-            }
+            // if(indexToRemove > -1)
+            // {
+            //     poolForAddress.RemoveAt(indexToRemove);
+            // }
         }
-        if(indexToRemove > -1)
-        {
-            await con.Shutdown();
-        }
+        // if(indexToRemove > -1)
+        // {
+        //     await con.Shutdown();
+        // }
     }
 
     public async Task Shutdown()

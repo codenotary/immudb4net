@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Collections.Concurrent;
 using Google.Protobuf.WellKnownTypes;
 using ImmudbProxy;
 
@@ -35,10 +36,11 @@ public class DefaultSessionManager : ISessionManager
             return _instance;
         }
     }
-    private Dictionary<string, Session> sessions = new Dictionary<string, Session>();
+    private ConcurrentDictionary<string, Session> sessions = new ConcurrentDictionary<string, Session>();
 
     public async Task<Session> OpenSession(IConnection connection, string username, string password, string initialDbName)
     {
+        
         OpenSessionRequest openSessionRequest = new OpenSessionRequest()
         {
             Username = Utils.ToByteString(username),
@@ -62,7 +64,7 @@ public class DefaultSessionManager : ISessionManager
             return;
         }
         await connection.Service.CloseSessionAsync(new Empty(), connection.Service.GetHeaders(session));
-        sessions.Remove(session.Id);
+        sessions.TryRemove(session.Id, out _);
     }
 }
 
