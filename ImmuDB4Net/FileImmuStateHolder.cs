@@ -101,7 +101,8 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
         DeploymentInfoContent? deploymentInfo;
         string? newDeploymentKey;
-        if(TryReadDeploymentInfoOnUuid(serverUUID!, out deploymentInfo, out newDeploymentKey)) {
+        if (TryReadDeploymentInfoOnUuid(serverUUID!, out deploymentInfo, out newDeploymentKey))
+        {
             DeploymentKey = newDeploymentKey;
             return deploymentInfo;
         }
@@ -110,6 +111,12 @@ public class FileImmuStateHolder : ImmuStateHolder
 
     private bool TryReadDeploymentInfoOnUuid(string serverUUID, out DeploymentInfoContent? deploymentInfo, out string? deploymentKey)
     {
+        if (!Directory.Exists(statesFolder))
+        {
+            deploymentInfo = null;
+            deploymentKey = null;
+            return false;
+        }
         string[] dirs = Directory.GetDirectories(statesFolder);
         foreach (var dir in dirs)
         {
@@ -121,17 +128,18 @@ public class FileImmuStateHolder : ImmuStateHolder
             try
             {
                 var loadedDeploymentInfo = JsonSerializer.Deserialize<DeploymentInfoContent>(File.ReadAllText(deploymentInfoPath));
-                if(loadedDeploymentInfo == null)
+                if (loadedDeploymentInfo == null)
                 {
                     continue;
                 }
-                if(string.Equals(serverUUID, loadedDeploymentInfo.ServerUUID, StringComparison.InvariantCultureIgnoreCase)) {
+                if (string.Equals(serverUUID, loadedDeploymentInfo.ServerUUID, StringComparison.InvariantCultureIgnoreCase))
+                {
                     deploymentInfo = loadedDeploymentInfo;
                     deploymentKey = Path.GetFileName(dir);
                     return true;
                 }
             }
-            catch(JsonException)
+            catch (JsonException)
             {
                 continue;
             }
