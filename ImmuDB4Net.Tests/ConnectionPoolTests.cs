@@ -35,8 +35,8 @@ public class ConnectionPoolTests
             .build();
 
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 2;
-        ImmuClient.GlobalSettings.TerminateIdleConnectionTimeout = TimeSpan.FromMilliseconds(300);
-        ImmuClient.GlobalSettings.IdleConnectionCheckInterval = TimeSpan.FromSeconds(1);
+        ImmuClient.GlobalSettings.TerminateIdleConnectionTimeout = TimeSpan.FromMilliseconds(1000);
+        ImmuClient.GlobalSettings.IdleConnectionCheckInterval = TimeSpan.FromMilliseconds(300);
         try
         {
             client = await ImmuClient.NewBuilder()
@@ -57,9 +57,11 @@ public class ConnectionPoolTests
             if (client != null)
             {
                 await client.Close();
+                // the connection is not immediately closed, will assert this as well
+                Assert.IsFalse(client.Connection.Released);
             }
         }
-        Thread.Sleep(TimeSpan.FromSeconds(1));
+        Thread.Sleep(TimeSpan.FromMilliseconds(2000));
         Assert.IsTrue(client.Connection.Released);
     }
 }

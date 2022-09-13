@@ -74,8 +74,12 @@ public class RandomAssignConnectionPool : IConnectionPool
 
         public bool ShouldBeTerminated(TimeSpan timeout)
         {
-            TimeSpan ts = DateTime.UtcNow.Subtract(LastChangeTimestamp);
-            return ts.CompareTo(timeout) >= 0;
+            if(refCount > 0)
+            {
+                return false;
+            }
+            TimeSpan currentDiff = DateTime.UtcNow.Subtract(LastChangeTimestamp);
+            return currentDiff.CompareTo(timeout) >= 0;
         }
     }
 
