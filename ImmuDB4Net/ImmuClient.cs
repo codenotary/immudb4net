@@ -48,6 +48,7 @@ public partial class ImmuClient
 
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
     internal object connectionSync = new Object();
+    internal object acquireSync = new Object();
     private IConnection connection;
     internal IConnection Connection
     {
@@ -181,8 +182,6 @@ public partial class ImmuClient
         heartbeatTask = null;
     }
 
-
-
     public async Task Open(string username, string password, string defaultdb)
     {
         try
@@ -203,11 +202,14 @@ public partial class ImmuClient
                     mre.WaitOne(2);
                 }
             }
-            Connection = ConnectionPool.Acquire(new ConnectionParameters
+            lock (acquireSync)
             {
-                Address = GrpcAddress,
-                ShutdownTimeout = ConnectionShutdownTimeout
-            });
+                Connection = ConnectionPool.Acquire(new ConnectionParameters
+                {
+                    Address = GrpcAddress,
+                    ShutdownTimeout = ConnectionShutdownTimeout
+                });
+            }
             ActiveSession = await SessionManager.OpenSession(Connection, username, password, defaultdb);
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
@@ -221,12 +223,15 @@ public partial class ImmuClient
 
     public async Task Reconnect()
     {
-        ConnectionPool.Release(Connection);
-        Connection = ConnectionPool.Acquire(new ConnectionParameters
+        lock (acquireSync)
         {
-            Address = GrpcAddress,
-            ShutdownTimeout = ConnectionShutdownTimeout
-        });
+            ConnectionPool.Release(Connection);
+            Connection = ConnectionPool.Acquire(new ConnectionParameters
+            {
+                Address = GrpcAddress,
+                ShutdownTimeout = ConnectionShutdownTimeout
+            });
+        }
         await Task.Yield();
     }
 
@@ -234,7 +239,7 @@ public partial class ImmuClient
     {
         try
         {
-           using (ManualResetEvent mre = new ManualResetEvent(false))
+            using (ManualResetEvent mre = new ManualResetEvent(false))
             {
                 while (true)
                 {
@@ -248,7 +253,10 @@ public partial class ImmuClient
             StopHeartbeat();
             await SessionManager.CloseSession(Connection, ActiveSession);
             ActiveSession = null;
-            ConnectionPool.Release(Connection);
+            lock (acquireSync)
+            {
+                ConnectionPool.Release(Connection);
+            }
         }
         finally
         {
