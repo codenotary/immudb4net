@@ -22,7 +22,7 @@ public interface IConnectionPool
 {
     int MaxConnectionsPerServer { get; }
     IConnection Acquire(ConnectionParameters cp);
-    Task Release(IConnection con);
+    void Release(IConnection con);
     Task Shutdown();
 }
 
@@ -31,8 +31,12 @@ public interface IConnectionPool
 public class RandomAssignConnectionPool : IConnectionPool
 {
     public int MaxConnectionsPerServer { get; private set; }
+    public TimeSpan TerminateIdleConnectionTimeout { get; private set; }
+    public TimeSpan IdleConnectionCheckInterval { get; private set; }
     private Random random = new Random(Environment.TickCount);
     private ReleasedConnection releasedConnection;
+    private readonly Task cleanupIdleConnections;
+    private ManualResetEvent shutdownRequested = new ManualResetEvent(false);
 
     internal static RandomAssignConnectionPool _instance = new RandomAssignConnectionPool();
     public static IConnectionPool Instance
@@ -45,26 +49,88 @@ public class RandomAssignConnectionPool : IConnectionPool
 
     internal class Item
     {
+        private int refCount;
+
         public Item(IConnection con)
         {
             Connection = con;
             RefCount = 0;
+            LastChangeTimestamp = DateTime.UtcNow;
         }
+
         public IConnection Connection { get; set; }
-        public int RefCount { get; set; }
+        public DateTime LastChangeTimestamp { get; set; }
+        public int RefCount
+        {
+            get => refCount; set
+            {
+                if (refCount != value)
+                {
+                    LastChangeTimestamp = DateTime.UtcNow;
+                    refCount = value;
+                }
+            }
+        }
+
+        public bool ShouldBeTerminated(TimeSpan timeout)
+        {
+            TimeSpan ts = DateTime.UtcNow.Subtract(LastChangeTimestamp);
+            return ts.CompareTo(timeout) >= 0;
+        }
     }
 
     internal RandomAssignConnectionPool()
     {
         MaxConnectionsPerServer = ImmuClient.GlobalSettings.MaxConnectionsPerServer;
+        TerminateIdleConnectionTimeout = ImmuClient.GlobalSettings.TerminateIdleConnectionTimeout;
+        IdleConnectionCheckInterval = ImmuClient.GlobalSettings.IdleConnectionCheckInterval;
+
         this.releasedConnection = new ReleasedConnection();
+
+        cleanupIdleConnections = Task.Factory.StartNew(async () =>
+        {
+            while (true)
+            {
+                if (shutdownRequested.WaitOne(IdleConnectionCheckInterval))
+                {
+                    break;
+                }
+                await CleanupIdleConnections(TerminateIdleConnectionTimeout);
+            }
+        });
+    }
+
+    private async Task CleanupIdleConnections(TimeSpan timeout)
+    {
+        Dictionary<Item, List<Item>> itemsToClose = new Dictionary<Item, List<Item>>();
+        lock (this)
+        {
+            foreach (var addressPool in connections)
+            {
+                foreach(var item in addressPool.Value)
+                {
+                    if(item.ShouldBeTerminated(timeout))
+                    {
+                        itemsToClose.Add(item, addressPool.Value);
+                    }
+                }
+            }
+            foreach(var itemToClose in itemsToClose)
+            {                
+                itemToClose.Value.Remove(itemToClose.Key);
+            }
+        }
+        foreach(var itemToClose in itemsToClose)
+        {
+            await itemToClose.Key.Connection.Shutdown();
+        }
     }
 
     Dictionary<string, List<Item>> connections = new Dictionary<string, List<Item>>();
 
     public IConnection Acquire(ConnectionParameters cp)
     {
-        if(cp == null)
+        if (cp == null)
         {
             throw new ArgumentException("Acquire: ConnectionParameters argument cannot be null");
         }
@@ -97,43 +163,35 @@ public class RandomAssignConnectionPool : IConnectionPool
     /// The method <c>Release</c> is called when the connection specified as argument is no more used by an <c>ImmuClient</c> instance, therefore it
     /// can be closed 
     ///</summary>
-    public async Task Release(IConnection con)
+    public void Release(IConnection con)
     {
         List<Item>? poolForAddress;
-        int indexToRemove = -1;
         lock (this)
         {
-            if (!connections.TryGetValue(con.Address, out poolForAddress)) 
+            if (!connections.TryGetValue(con.Address, out poolForAddress))
             {
                 return;
             }
-            
-            for(int i = 0; i < poolForAddress.Count; i++)
+            for (int i = 0; i < poolForAddress.Count; i++)
             {
-                if((poolForAddress[i].Connection == con) && (poolForAddress[i].RefCount > 0))
+                if ((poolForAddress[i].Connection == con) && (poolForAddress[i].RefCount > 0))
                 {
                     poolForAddress[i].RefCount--;
-                    if(poolForAddress[i].RefCount == 0) 
-                    {
-                        indexToRemove = i;
-                    }
                     break;
                 }
             }
-            // if(indexToRemove > -1)
-            // {
-            //     poolForAddress.RemoveAt(indexToRemove);
-            // }
         }
-        // if(indexToRemove > -1)
-        // {
-        //     await con.Shutdown();
-        // }
-        await Task.Yield();
     }
 
     public async Task Shutdown()
     {
+        shutdownRequested.Set();
+        try
+        {
+            cleanupIdleConnections.Wait();
+        }
+        catch (ObjectDisposedException) { }
+
         Dictionary<string, List<Item>> clone = new Dictionary<string, List<Item>>();
         lock (this)
         {

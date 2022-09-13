@@ -84,8 +84,16 @@ public class FileImmuStateHolder : ImmuStateHolder
             {
                 return null;
             }
-            string contents = File.ReadAllText(stateFilePath);
-            return JsonSerializer.Deserialize<ImmuState>(contents);
+            try
+            {
+                string contents = File.ReadAllText(stateFilePath);
+                return JsonSerializer.Deserialize<ImmuState>(contents);
+            }
+            catch (FileNotFoundException)
+            {
+                // this could happen because of the concurrent access
+                return null;
+            }
         }
     }
 
@@ -153,17 +161,17 @@ public class FileImmuStateHolder : ImmuStateHolder
                 var intermediateMoveStateFile = newStateFile + "_";
                 if (File.Exists(stateHolderFile))
                 {
-                    try 
+                    try
                     {
                         File.Move(stateHolderFile, intermediateMoveStateFile);
                     }
-                    catch(FileNotFoundException) {}
+                    catch (FileNotFoundException) { }
                 }
                 try
                 {
                     File.Move(newStateFile, stateHolderFile);
                 }
-                catch(IOException) {}
+                catch (IOException) { }
                 if (File.Exists(intermediateMoveStateFile))
                 {
                     File.Delete(intermediateMoveStateFile);

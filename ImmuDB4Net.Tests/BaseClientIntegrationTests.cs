@@ -109,7 +109,7 @@ namespace ImmuDB.Tests
         [AssemblyCleanup]
         public static async Task AssemblyTearDown()
         {
-           // await ImmuClient.ReleaseSdkResources();
+            await ImmuClient.ReleaseSdkResources();
             if (containerHasStarted)
             {
                 await dockerClient!.Containers.StopContainerAsync(containerId, new ContainerStopParameters() { WaitBeforeKillSeconds = 6 });

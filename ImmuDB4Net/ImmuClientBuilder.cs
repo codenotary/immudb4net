@@ -53,7 +53,7 @@ public partial class ImmuClient
             HeartbeatInterval = TimeSpan.FromMinutes(1);
             ConnectionPool = RandomAssignConnectionPool.Instance;
             SessionManager = DefaultSessionManager.Instance;
-            ConnectionShutdownTimeoutInSec = 2;
+            ConnectionShutdownTimeout = TimeSpan.FromSeconds(2);
         }
 
         public string GrpcAddress
@@ -65,7 +65,7 @@ public partial class ImmuClient
             }
         }
 
-        public int ConnectionShutdownTimeoutInSec { get; internal set; }
+        public TimeSpan ConnectionShutdownTimeout { get; internal set; }
 
         public ImmuClientBuilder WithStateHolder(ImmuStateHolder stateHolder)
         {

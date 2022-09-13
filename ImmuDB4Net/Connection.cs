@@ -30,7 +30,7 @@ public interface IConnection
 public class ConnectionParameters
 {
     public string Address { get; set; } = "";
-    public int ShutdownTimeoutInSec { get; set; }
+    public TimeSpan ShutdownTimeout { get; set; }
 }
 
 public class Connection : IConnection
@@ -39,7 +39,7 @@ public class Connection : IConnection
     public ImmuService.ImmuServiceClient Service => grpcClient;
     private GrpcChannel? channel;
     public string Address { get; private set; }
-    public int shutdownTimeoutInSec;
+    public TimeSpan shutdownTimeout;
     public bool Released => channel == null;
 
     internal Connection(ConnectionParameters parameters)
@@ -47,7 +47,7 @@ public class Connection : IConnection
         Address = parameters.Address;
         channel = GrpcChannel.ForAddress(Address);
         grpcClient = new ImmuService.ImmuServiceClient(channel);
-        shutdownTimeoutInSec = parameters.ShutdownTimeoutInSec;
+        shutdownTimeout = parameters.ShutdownTimeout;
     }
 
     public async Task Shutdown()
@@ -57,7 +57,7 @@ public class Connection : IConnection
             return;
         }
         Task shutdownTask = channel.ShutdownAsync();
-        await Task.WhenAny(shutdownTask, Task.Delay(TimeSpan.FromSeconds(shutdownTimeoutInSec)));
+        await Task.WhenAny(shutdownTask, Task.Delay(shutdownTimeout));
         channel = null;
     }
 }

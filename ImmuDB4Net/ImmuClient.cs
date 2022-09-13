@@ -33,7 +33,8 @@ public partial class ImmuClient
     private readonly AsymmetricKeyParameter? serverSigningKey;
     private readonly ImmuStateHolder stateHolder;
 
-    public int ConnectionShutdownTimeoutInSec { get; internal set; }
+    public TimeSpan ConnectionShutdownTimeout { get; internal set; }
+    public TimeSpan IdleConnectionCheckInterval { get; internal set; }
     private string currentDb = "defaultdb";
     public string GrpcAddress { get; }
     private static LibraryWideSettings globalSettings = new LibraryWideSettings();
@@ -69,6 +70,7 @@ public partial class ImmuClient
     internal IConnectionPool ConnectionPool { get; set; }
     internal ISessionManager SessionManager { get; set; }
     internal object sessionSync = new Object();
+    internal int sessionSetupInProgress = 0;
     private Session? activeSession;
     private TimeSpan heartbeatInterval;
     private ManualResetEvent? heartbeatCloseRequested;
@@ -101,10 +103,14 @@ public partial class ImmuClient
     public class LibraryWideSettings
     {
         public int MaxConnectionsPerServer { get; set; }
+        public TimeSpan TerminateIdleConnectionTimeout { get; set; }
+        public TimeSpan IdleConnectionCheckInterval { get; set; }
         internal LibraryWideSettings()
         {
-            //this is the default value
+            //these are the default values
             MaxConnectionsPerServer = 2;
+            TerminateIdleConnectionTimeout = TimeSpan.FromSeconds(60);
+            IdleConnectionCheckInterval = TimeSpan.FromSeconds(6);
         }
     }
 
@@ -133,24 +139,16 @@ public partial class ImmuClient
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
-        ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
+        ConnectionShutdownTimeout = builder.ConnectionShutdownTimeout;
         stateHolder.DeploymentInfoCheck = builder.DeploymentInfoCheck;
         stateHolder.DeploymentKey = Utils.GenerateShortHash(GrpcAddress);
         stateHolder.DeploymentLabel = GrpcAddress;
-        openSessionHandles.Push(activeSessionSync);
     }
 
-    private ManualResetEvent activeSessionSync = new ManualResetEvent(true);
 
-    private static ConcurrentStack<ManualResetEvent> openSessionHandles = new ConcurrentStack<ManualResetEvent>();
     public static async Task ReleaseSdkResources()
     {
         await RandomAssignConnectionPool.Instance.Shutdown();
-        ManualResetEvent? mre;
-        while (openSessionHandles.TryPop(out mre))
-        {
-            mre.Close();
-        }
     }
 
     private void StartHeartbeat()
@@ -189,19 +187,26 @@ public partial class ImmuClient
     {
         try
         {
-            lock (this)
-            {
-                activeSessionSync.WaitOne();
-                activeSessionSync.Reset();
-            }
             if (ActiveSession != null)
             {
                 throw new InvalidOperationException("please close the existing session before opening a new one");
             }
+
+            using (ManualResetEvent mre = new ManualResetEvent(false))
+            {
+                while (true)
+                {
+                    if (Interlocked.Exchange(ref sessionSetupInProgress, 1) == 0)
+                    {
+                        break;
+                    }
+                    mre.WaitOne(2);
+                }
+            }
             Connection = ConnectionPool.Acquire(new ConnectionParameters
             {
                 Address = GrpcAddress,
-                ShutdownTimeoutInSec = ConnectionShutdownTimeoutInSec
+                ShutdownTimeout = ConnectionShutdownTimeout
             });
             ActiveSession = await SessionManager.OpenSession(Connection, username, password, defaultdb);
             heartbeatCloseRequested = new ManualResetEvent(false);
@@ -210,37 +215,44 @@ public partial class ImmuClient
         }
         finally
         {
-            activeSessionSync.Set();
+            Interlocked.Exchange(ref sessionSetupInProgress, 0);
         }
     }
 
     public async Task Reconnect()
     {
-        await ConnectionPool.Release(Connection);
+        ConnectionPool.Release(Connection);
         Connection = ConnectionPool.Acquire(new ConnectionParameters
         {
             Address = GrpcAddress,
-            ShutdownTimeoutInSec = ConnectionShutdownTimeoutInSec
+            ShutdownTimeout = ConnectionShutdownTimeout
         });
+        await Task.Yield();
     }
 
     public async Task Close()
     {
         try
         {
-            lock (this)
+           using (ManualResetEvent mre = new ManualResetEvent(false))
             {
-                activeSessionSync.WaitOne();
-                activeSessionSync.Reset();
+                while (true)
+                {
+                    if (Interlocked.Exchange(ref sessionSetupInProgress, 1) == 0)
+                    {
+                        break;
+                    }
+                    mre.WaitOne(2);
+                }
             }
             StopHeartbeat();
             await SessionManager.CloseSession(Connection, ActiveSession);
             ActiveSession = null;
-            await ConnectionPool.Release(Connection);
+            ConnectionPool.Release(Connection);
         }
         finally
         {
-            activeSessionSync.Set();
+            Interlocked.Exchange(ref sessionSetupInProgress, 0);
         }
     }
 
