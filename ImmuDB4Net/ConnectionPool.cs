@@ -38,12 +38,32 @@ public class RandomAssignConnectionPool : IConnectionPool
     private readonly Task cleanupIdleConnections;
     private ManualResetEvent shutdownRequested = new ManualResetEvent(false);
 
-    internal static RandomAssignConnectionPool _instance = new RandomAssignConnectionPool();
+    internal static object instanceSync = new Object();
+    internal static RandomAssignConnectionPool? instance = null;
     public static IConnectionPool Instance
     {
         get
         {
-            return _instance;
+            if(instance == null)
+            {
+                lock(instanceSync)
+                {
+                    if(instance == null)
+                    {
+                        instance = new RandomAssignConnectionPool();
+                    }
+                }
+            }
+            return instance;
+        }
+    }
+
+    internal static async Task ResetInstance()
+    {
+        await Instance.Shutdown();
+        lock(instanceSync)
+        {
+            instance = null;
         }
     }
 
@@ -102,6 +122,15 @@ public class RandomAssignConnectionPool : IConnectionPool
                 await CleanupIdleConnections(TerminateIdleConnectionTimeout);
             }
         });
+    }
+
+    ~RandomAssignConnectionPool()
+    {
+        try
+        {
+            shutdownRequested.Close();
+        }
+        catch(ObjectDisposedException) {}
     }
 
     private async Task CleanupIdleConnections(TimeSpan timeout)
@@ -189,9 +218,9 @@ public class RandomAssignConnectionPool : IConnectionPool
 
     public async Task Shutdown()
     {
-        shutdownRequested.Set();
         try
         {
+            shutdownRequested.Set();
             cleanupIdleConnections.Wait();
         }
         catch (ObjectDisposedException) { }
@@ -201,9 +230,10 @@ public class RandomAssignConnectionPool : IConnectionPool
         {
             foreach (var addressPool in connections)
             {
-                List<Item> connections = new List<Item>(addressPool.Value);
-                clone.Add(addressPool.Key, connections);
+                List<Item> poolConnections = new List<Item>(addressPool.Value);
+                clone.Add(addressPool.Key, poolConnections);
             }
+            connections.Clear();
         }
         foreach (var addressPool in clone)
         {

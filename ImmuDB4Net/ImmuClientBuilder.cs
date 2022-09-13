@@ -108,6 +108,12 @@ public partial class ImmuClient
         {
             this.HeartbeatInterval = heartbeatInterval;
             return this;
+        } 
+        
+        public ImmuClientBuilder WithConnectionShutdownTimeout(TimeSpan timeout)
+        {
+            this.ConnectionShutdownTimeout = timeout;
+            return this;
         }
 
         public ImmuClientBuilder WithServerSigningKey(string publicKeyFileName)

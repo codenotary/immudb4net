@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+
 namespace ImmuDB.Tests;
 
 [TestClass]
@@ -25,6 +26,7 @@ public class ConnectionPoolTests
 
 
     [TestMethod("Idle Connection is closed")]
+    [TestCategory("ConnectionPool")]
     public async Task Test1()
     {
         tmpStateFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
@@ -35,8 +37,9 @@ public class ConnectionPoolTests
             .build();
 
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 2;
-        ImmuClient.GlobalSettings.TerminateIdleConnectionTimeout = TimeSpan.FromMilliseconds(1000);
-        ImmuClient.GlobalSettings.IdleConnectionCheckInterval = TimeSpan.FromMilliseconds(300);
+        ImmuClient.GlobalSettings.TerminateIdleConnectionTimeout = TimeSpan.FromMilliseconds(400);
+        ImmuClient.GlobalSettings.IdleConnectionCheckInterval = TimeSpan.FromMilliseconds(200);
+        await RandomAssignConnectionPool.ResetInstance();
         try
         {
             client = await ImmuClient.NewBuilder()
@@ -45,6 +48,7 @@ public class ConnectionPoolTests
                 .WithServerPort(3325)
                 .WithCredentials("immudb", "immudb")
                 .WithDatabase("defaultdb")
+                .WithConnectionShutdownTimeout(TimeSpan.FromMilliseconds(50))
                 .Open();
             byte[] v0 = new byte[] { 0, 1, 2, 3 };
             byte[] v1 = new byte[] { 3, 2, 1, 0 };
@@ -61,7 +65,7 @@ public class ConnectionPoolTests
                 Assert.IsFalse(client.Connection.Released);
             }
         }
-        Thread.Sleep(TimeSpan.FromMilliseconds(2000));
+        Thread.Sleep(TimeSpan.FromMilliseconds(1000));
         Assert.IsTrue(client.Connection.Released);
     }
 }

@@ -33,7 +33,7 @@ public partial class ImmuClient
     private readonly AsymmetricKeyParameter? serverSigningKey;
     private readonly ImmuStateHolder stateHolder;
 
-    public TimeSpan ConnectionShutdownTimeout { get; internal set; }
+    public TimeSpan ConnectionShutdownTimeout { get; set; }
     public TimeSpan IdleConnectionCheckInterval { get; internal set; }
     private string currentDb = "defaultdb";
     public string GrpcAddress { get; }
@@ -1353,7 +1353,7 @@ public partial class ImmuClient
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine("An exception occurred into buildList: {0}", e);
             }
         });
         return result;
