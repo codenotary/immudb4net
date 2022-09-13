@@ -129,6 +129,7 @@ public class RandomAssignConnectionPool : IConnectionPool
         // {
         //     await con.Shutdown();
         // }
+        await Task.Yield();
     }
 
     public async Task Shutdown()

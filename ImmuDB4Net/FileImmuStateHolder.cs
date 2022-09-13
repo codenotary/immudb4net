@@ -163,7 +163,7 @@ public class FileImmuStateHolder : ImmuStateHolder
                 {
                     File.Move(newStateFile, stateHolderFile);
                 }
-                catch(FileNotFoundException) {}
+                catch(IOException) {}
                 if (File.Exists(intermediateMoveStateFile))
                 {
                     File.Delete(intermediateMoveStateFile);
