@@ -94,6 +94,7 @@ public partial class ImmuClient
             }
         }
     }
+    internal ImmuStateHolder StateHolder => stateHolder;
 
     public static ImmuClientBuilder NewBuilder()
     {
