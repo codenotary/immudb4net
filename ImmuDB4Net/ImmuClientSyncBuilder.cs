@@ -19,7 +19,7 @@ using Org.BouncyCastle.Crypto;
 
 
 ///Builder is an inner class that implements the builder pattern for ImmuClient
-public class ImmuClientBuilder
+public class ImmuClientSyncBuilder
 {
     public string ServerUrl { get; private set; }
     public string Username { get; private set; }
@@ -34,13 +34,13 @@ public class ImmuClientBuilder
     internal IConnectionPool ConnectionPool { get; }
     internal ISessionManager SessionManager { get; }
 
-    static ImmuClientBuilder()
+    static ImmuClientSyncBuilder()
     {
         // This is needed for .NET Core 3 and below.
         AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
     }
 
-    public ImmuClientBuilder()
+    public ImmuClientSyncBuilder()
     {
         ServerUrl = "localhost";
         ServerPort = 3322;
@@ -66,76 +66,76 @@ public class ImmuClientBuilder
 
     public TimeSpan ConnectionShutdownTimeout { get; internal set; }
 
-    public ImmuClientBuilder WithStateHolder(ImmuStateHolder stateHolder)
+    public ImmuClientSyncBuilder WithStateHolder(ImmuStateHolder stateHolder)
     {
         StateHolder = stateHolder;
         return this;
     }
 
-    public ImmuClientBuilder CheckDeploymentInfo(bool check)
+    public ImmuClientSyncBuilder CheckDeploymentInfo(bool check)
     {
         this.DeploymentInfoCheck = check;
         return this;
     }
 
-    public ImmuClientBuilder WithCredentials(string username, string password)
+    public ImmuClientSyncBuilder WithCredentials(string username, string password)
     {
         this.Username = username;
         this.Password = password;
         return this;
     }
 
-    public ImmuClientBuilder WithDatabase(string databaseName)
+    public ImmuClientSyncBuilder WithDatabase(string databaseName)
     {
         this.Database = databaseName;
         return this;
     }
 
-    public ImmuClientBuilder WithServerPort(int serverPort)
+    public ImmuClientSyncBuilder WithServerPort(int serverPort)
     {
         this.ServerPort = serverPort;
         return this;
     }
 
-    public ImmuClientBuilder WithServerUrl(string serverUrl)
+    public ImmuClientSyncBuilder WithServerUrl(string serverUrl)
     {
         this.ServerUrl = serverUrl;
         return this;
     }
 
-    public ImmuClientBuilder WithHeartbeatInterval(TimeSpan heartbeatInterval)
+    public ImmuClientSyncBuilder WithHeartbeatInterval(TimeSpan heartbeatInterval)
     {
         this.HeartbeatInterval = heartbeatInterval;
         return this;
     }
 
-    public ImmuClientBuilder WithConnectionShutdownTimeout(TimeSpan timeout)
+    public ImmuClientSyncBuilder WithConnectionShutdownTimeout(TimeSpan timeout)
     {
         this.ConnectionShutdownTimeout = timeout;
         return this;
     }
 
-    public ImmuClientBuilder WithServerSigningKey(string publicKeyFileName)
+    public ImmuClientSyncBuilder WithServerSigningKey(string publicKeyFileName)
     {
         this.ServerSigningKey = ImmuState.GetPublicKeyFromPemFile(publicKeyFileName);
         return this;
     }
 
-    public ImmuClientBuilder WithServerSigningKey(AsymmetricKeyParameter? key)
+    public ImmuClientSyncBuilder WithServerSigningKey(AsymmetricKeyParameter? key)
     {
         this.ServerSigningKey = key;
         return this;
     }
 
-    public ImmuClient Build()
+    public ImmuClientSync Build()
     {
-        return new ImmuClient(this);
+        return new ImmuClientSync(this);
     }
 
-    public async Task<ImmuClient> Open()
+    public ImmuClientSync Open()
     {
-        var immuClient = new ImmuClient(this);
-        await immuClient.Open(this.Username, this.Password, this.Database);
+        var immuClient = new ImmuClientSync(this);
+        immuClient.Open(this.Username, this.Password, this.Database);
         return immuClient;
     }
 }

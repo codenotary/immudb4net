@@ -23,7 +23,8 @@ public interface IConnectionPool
     int MaxConnectionsPerServer { get; }
     IConnection Acquire(ConnectionParameters cp);
     void Release(IConnection con);
-    Task Shutdown();
+    Task ShutdownAsync();
+    void Shutdown();
 }
 
 
@@ -64,7 +65,7 @@ public class RandomAssignConnectionPool : IConnectionPool
         }
         if (localInstance != null)
         {
-            await localInstance.Shutdown();
+            await localInstance.ShutdownAsync();
         }
     }
 
@@ -155,7 +156,7 @@ public class RandomAssignConnectionPool : IConnectionPool
         }
         foreach (var itemToClose in itemsToClose)
         {
-            await itemToClose.Key.Connection.Shutdown();
+            await itemToClose.Key.Connection.ShutdownAsync();
         }
     }
 
@@ -216,7 +217,7 @@ public class RandomAssignConnectionPool : IConnectionPool
         }
     }
 
-    public async Task Shutdown()
+    public async Task ShutdownAsync()
     {
         try
         {
@@ -239,7 +240,35 @@ public class RandomAssignConnectionPool : IConnectionPool
         {
             foreach (var item in addressPool.Value)
             {
-                await item.Connection.Shutdown();
+                await item.Connection.ShutdownAsync();
+            }
+        }
+    }    
+    
+    public void Shutdown()
+    {
+        try
+        {
+            shutdownRequested.Set();
+            cleanupIdleConnections.Wait();
+        }
+        catch (ObjectDisposedException) { }
+
+        Dictionary<string, List<Item>> clone = new Dictionary<string, List<Item>>();
+        lock (this)
+        {
+            foreach (var addressPool in connections)
+            {
+                List<Item> poolConnections = new List<Item>(addressPool.Value);
+                clone.Add(addressPool.Key, poolConnections);
+            }
+            connections.Clear();
+        }
+        foreach (var addressPool in clone)
+        {
+            foreach (var item in addressPool.Value)
+            {
+                item.Connection.Shutdown();
             }
         }
     }

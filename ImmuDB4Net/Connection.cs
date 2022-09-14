@@ -23,7 +23,8 @@ public interface IConnection
 {
     string Address { get; }
     ImmuService.ImmuServiceClient Service { get; }
-    Task Shutdown();
+    Task ShutdownAsync();
+    void Shutdown();
     bool Released { get; }
 }
 
@@ -50,7 +51,7 @@ public class Connection : IConnection
         shutdownTimeout = parameters.ShutdownTimeout;
     }
 
-    public async Task Shutdown()
+    public async Task ShutdownAsync()
     {
         if (channel == null)
         {
@@ -58,6 +59,34 @@ public class Connection : IConnection
         }
         Task shutdownTask = channel.ShutdownAsync();
         await Task.WhenAny(shutdownTask, Task.Delay(shutdownTimeout));
+        channel = null;
+    }
+
+    public void Shutdown()
+    {
+        if (channel == null)
+        {
+            return;
+        }
+        Task shutdownTask;
+        using (ManualResetEvent mre = new ManualResetEvent(false))
+        {
+            shutdownTask = Task.Factory.StartNew(async () =>
+            {
+                try
+                {
+                    if (channel != null)
+                    {
+                        await channel.ShutdownAsync();
+                    }
+                }
+                finally
+                {
+                    mre.Set();
+                }
+            });
+            mre.WaitOne(shutdownTimeout);
+        }
         channel = null;
     }
 }
@@ -74,8 +103,12 @@ public class ReleasedConnection : IConnection
     public ImmuService.ImmuServiceClient Service => throw new InvalidOperationException("The connection is not established.");
     public string Address { get; private set; }
 
-    public Task Shutdown()
+    public Task ShutdownAsync()
     {
         return Task.CompletedTask;
+    }
+    
+    public void Shutdown()
+    {
     }
 }
