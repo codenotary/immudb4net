@@ -213,4 +213,74 @@ public class BuilderTests
             }
         }
     }
+
+[TestMethod("access the same server at a different grpc address. first on localhost and then 127.0.0.1")]
+ public async Task Test6()
+    {
+        ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
+        ImmuClient? client2 = null;
+        try
+        {
+            client = await ImmuClient.NewBuilder()
+                 .WithServerPort(3325)
+                 .Open();
+            string hashedStateFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "immudb4net",
+                    Utils.GenerateShortHash(client.GrpcAddress));
+            if(Directory.Exists(hashedStateFolder))
+            {
+                Directory.Delete(hashedStateFolder, true);
+            }
+
+            byte[] v = new byte[] { 0, 1, 2, 3 };
+
+            TxHeader hdr1 = await client.VerifiedSet("mykey", v);
+            Assert.IsNotNull(hdr1);
+
+            //the client1 and later client2 deployment keys are read after the state has been saved. later, the state will be synced during open call
+            var client1DeploymentKey = ((FileImmuStateHolder)client.StateHolder).DeploymentKey;
+
+            Entry ventry1 = await client.VerifiedGet("mykey");
+            CollectionAssert.AreEqual(v, ventry1.Value);
+
+            Entry e = await client.GetSinceTx("mykey", hdr1.Id);
+            Assert.IsNotNull(e);
+            CollectionAssert.AreEqual(e.Value, v);
+
+            client2 = await ImmuClient.NewBuilder()
+                 .WithServerUrl("127.0.0.1")
+                 .WithServerPort(3325)
+                 .Open();
+
+            var client2DeploymentKeyInitial = ((FileImmuStateHolder)client2.StateHolder).DeploymentKey;
+            Assert.AreNotEqual(client1DeploymentKey, client2DeploymentKeyInitial);
+          
+            TxHeader hdr2 = await client2.VerifiedSet("mykey", v);
+            Assert.IsNotNull(hdr2);
+
+            var client2DeploymentKey = ((FileImmuStateHolder)client2.StateHolder).DeploymentKey;
+
+            Entry ventry2 = await client2.VerifiedGet("mykey");
+            CollectionAssert.AreEqual(v, ventry2.Value);
+
+            Entry e2 = await client2.GetSinceTx("mykey", hdr2.Id);
+            Assert.IsNotNull(e2);
+            CollectionAssert.AreEqual(e.Value, v);
+
+            Assert.AreEqual(client1DeploymentKey, client2DeploymentKey);
+
+        }
+        finally
+        {
+            if (client != null)
+            {
+                await client.Close();
+            }
+            if (client2 != null)
+            {
+                await client2.Close();
+            }
+        }
+    }
 }
