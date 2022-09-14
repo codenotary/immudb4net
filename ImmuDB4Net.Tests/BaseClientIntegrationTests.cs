@@ -28,7 +28,7 @@ namespace ImmuDB.Tests
         private static bool containerHasStarted = false;
         private static DockerClient? dockerClient;
 
-        public void BaseSetUp()
+        public async Task BaseSetUp()
         {
             tmpStateFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             Directory.CreateDirectory(tmpStateFolder);
@@ -36,6 +36,8 @@ namespace ImmuDB.Tests
             FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
                 .WithStatesFolder(tmpStateFolder)
                 .build();
+
+            await RandomAssignConnectionPool.ResetInstance();
 
             ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
             client = ImmuClient.NewBuilder()
@@ -45,13 +47,14 @@ namespace ImmuDB.Tests
                 .Build();
         }
 
-        public void BaseSetUp(TimeSpan heartbeatInterval)
+        public async Task BaseSetUp(TimeSpan heartbeatInterval)
         {
             tmpStateFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
             Directory.CreateDirectory(tmpStateFolder);
             FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
                 .WithStatesFolder(tmpStateFolder)
                 .build();
+            await RandomAssignConnectionPool.ResetInstance();
 
             ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
             client = ImmuClient.NewBuilder()
@@ -64,11 +67,11 @@ namespace ImmuDB.Tests
 
         public async Task BaseTearDown()
         {
-            await RandomAssignConnectionPool.ResetInstance();
             if (tmpStateFolder != null)
             {
                 Directory.Delete(tmpStateFolder, true);
-            }           
+            }
+            await Task.Yield();
         }
         [AssemblyInitialize]
         public static async Task AssemblySetUp(TestContext testContext)
@@ -114,7 +117,7 @@ namespace ImmuDB.Tests
             {
                 await dockerClient!.Containers.StopContainerAsync(containerId, new ContainerStopParameters() { WaitBeforeKillSeconds = 6 });
                 await dockerClient.Containers.RemoveContainerAsync(containerId, new ContainerRemoveParameters() { Force = true });
-            }            
+            }
         }
     }
 }

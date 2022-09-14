@@ -21,9 +21,9 @@ namespace ImmuDB.Tests;
 public class SessionTests : BaseClientIntTests
 {
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp(TimeSpan.FromSeconds(2));
+        await BaseSetUp(TimeSpan.FromSeconds(2));
     }
 
     [TestCleanup]

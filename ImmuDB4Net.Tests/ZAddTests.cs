@@ -24,9 +24,9 @@ public class ZAddTests : BaseClientIntTests
 {
 
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp();
+        await BaseSetUp();
     }
 
     [TestCleanup]

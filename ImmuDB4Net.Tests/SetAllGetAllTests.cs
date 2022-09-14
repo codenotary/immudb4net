@@ -24,9 +24,9 @@ public class SetAllGetAllTests : BaseClientIntTests
 {
 
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp();
+        await BaseSetUp();
     }
 
     [TestCleanup]
@@ -63,7 +63,7 @@ public class SetAllGetAllTests : BaseClientIntTests
             Assert.Fail("Failed at SetAll.", e);
         }
 
-        List<string> keys = new List<string>() {key1, key2, key3};
+        List<string> keys = new List<string>() { key1, key2, key3 };
         List<Entry> got = await client.GetAll(keys);
 
         Assert.AreEqual(kvs.Count, got.Count);

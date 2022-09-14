@@ -38,8 +38,9 @@ public class ConnectionPoolTests
 
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 2;
         ImmuClient.GlobalSettings.TerminateIdleConnectionTimeout = TimeSpan.FromMilliseconds(400);
-        ImmuClient.GlobalSettings.IdleConnectionCheckInterval = TimeSpan.FromMilliseconds(200);
+        ImmuClient.GlobalSettings.IdleConnectionCheckInterval = TimeSpan.FromMilliseconds(100);
         await RandomAssignConnectionPool.ResetInstance();
+        IConnection? previousConnection = null;
         try
         {
             client = await ImmuClient.NewBuilder()
@@ -55,17 +56,21 @@ public class ConnectionPoolTests
 
             TxHeader hdr0 = await client.Set("k0", v0);
             Assert.IsNotNull(hdr0);
+            previousConnection = client.Connection;
         }
         finally
         {
             if (client != null)
             {
+                
                 await client.Close();
-                // the connection is not immediately closed, will assert this as well
-                Assert.IsFalse(client.Connection.Released);
+                // the connection is not immediately closed, will assert this as well                
+                Assert.IsFalse(previousConnection!.Released);
+                Assert.IsTrue(client.Connection.Released);
+                
             }
         }
         Thread.Sleep(TimeSpan.FromMilliseconds(1000));
-        Assert.IsTrue(client.Connection.Released);
+        Assert.IsTrue(previousConnection.Released);
     }
 }

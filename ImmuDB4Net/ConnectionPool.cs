@@ -44,26 +44,28 @@ public class RandomAssignConnectionPool : IConnectionPool
     {
         get
         {
-            if(instance == null)
+            lock (instanceSync)
             {
-                lock(instanceSync)
+                if (instance == null)
                 {
-                    if(instance == null)
-                    {
-                        instance = new RandomAssignConnectionPool();
-                    }
+                    instance = new RandomAssignConnectionPool();
                 }
+                return instance;
             }
-            return instance;
         }
     }
 
     internal static async Task ResetInstance()
     {
-        await Instance.Shutdown();
-        lock(instanceSync)
+        RandomAssignConnectionPool? localInstance;        
+        lock (instanceSync)
         {
+            localInstance = instance;
             instance = null;
+        }
+        if (localInstance != null)
+        {
+            await localInstance.Shutdown();
         }
     }
 
@@ -94,7 +96,7 @@ public class RandomAssignConnectionPool : IConnectionPool
 
         public bool ShouldBeTerminated(TimeSpan timeout)
         {
-            if(refCount > 0)
+            if (refCount > 0)
             {
                 return false;
             }
@@ -130,7 +132,7 @@ public class RandomAssignConnectionPool : IConnectionPool
         {
             shutdownRequested.Close();
         }
-        catch(ObjectDisposedException) {}
+        catch (ObjectDisposedException) { }
     }
 
     private async Task CleanupIdleConnections(TimeSpan timeout)
@@ -140,20 +142,20 @@ public class RandomAssignConnectionPool : IConnectionPool
         {
             foreach (var addressPool in connections)
             {
-                foreach(var item in addressPool.Value)
+                foreach (var item in addressPool.Value)
                 {
-                    if(item.ShouldBeTerminated(timeout))
+                    if (item.ShouldBeTerminated(timeout))
                     {
                         itemsToClose.Add(item, addressPool.Value);
                     }
                 }
             }
-            foreach(var itemToClose in itemsToClose)
-            {                
+            foreach (var itemToClose in itemsToClose)
+            {
                 itemToClose.Value.Remove(itemToClose.Key);
             }
         }
-        foreach(var itemToClose in itemsToClose)
+        foreach (var itemToClose in itemsToClose)
         {
             await itemToClose.Key.Connection.Shutdown();
         }
