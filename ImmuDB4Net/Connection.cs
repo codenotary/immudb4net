@@ -69,24 +69,14 @@ public class Connection : IConnection
             return;
         }
         Task shutdownTask;
-        using (ManualResetEvent mre = new ManualResetEvent(false))
+        shutdownTask = Task.Factory.StartNew(async () =>
         {
-            shutdownTask = Task.Factory.StartNew(async () =>
+            if (channel != null)
             {
-                try
-                {
-                    if (channel != null)
-                    {
-                        await channel.ShutdownAsync();
-                    }
-                }
-                finally
-                {
-                    mre.Set();
-                }
-            });
-            mre.WaitOne(shutdownTimeout);
-        }
+                await channel.ShutdownAsync();
+            }
+        });
+        shutdownTask.Wait(shutdownTimeout);
         channel = null;
     }
 }
@@ -107,7 +97,7 @@ public class ReleasedConnection : IConnection
     {
         return Task.CompletedTask;
     }
-    
+
     public void Shutdown()
     {
     }
