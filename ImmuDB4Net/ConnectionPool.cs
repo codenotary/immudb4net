@@ -34,7 +34,6 @@ public class RandomAssignConnectionPool : IConnectionPool
     public TimeSpan TerminateIdleConnectionTimeout { get; private set; }
     public TimeSpan IdleConnectionCheckInterval { get; private set; }
     private Random random = new Random(Environment.TickCount);
-    private ReleasedConnection releasedConnection;
     private readonly Task cleanupIdleConnections;
     private ManualResetEvent shutdownRequested = new ManualResetEvent(false);
 
@@ -111,7 +110,6 @@ public class RandomAssignConnectionPool : IConnectionPool
         TerminateIdleConnectionTimeout = ImmuClient.GlobalSettings.TerminateIdleConnectionTimeout;
         IdleConnectionCheckInterval = ImmuClient.GlobalSettings.IdleConnectionCheckInterval;
 
-        this.releasedConnection = new ReleasedConnection();
 
         cleanupIdleConnections = Task.Factory.StartNew(async () =>
         {
