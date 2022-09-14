@@ -24,9 +24,9 @@ namespace ImmuDB.Tests;
 public class BasicClientTests : BaseClientIntTests
 {
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp();
+        await BaseSetUp();
     }
 
     [TestCleanup]

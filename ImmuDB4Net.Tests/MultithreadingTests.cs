@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Collections.Concurrent;
+using System.Text;
+
 namespace ImmuDB.Tests;
 
 [TestClass]
@@ -25,13 +28,13 @@ public class MultithreadingTests : BaseClientIntTests
     /// Gets or sets the test context which provides
     /// information about and functionality for the current test run.
     /// </summary>
-    public TestContext? TestContext {get;set;}
-    
+    public TestContext? TestContext { get; set; }
+
 
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp();
+        await BaseSetUp();
     }
 
     [TestCleanup]
@@ -56,7 +59,7 @@ public class MultithreadingTests : BaseClientIntTests
 
         CountdownEvent cde = new CountdownEvent(threadCount * keyCount);
 
-        var intHolder = new IntHolder() {succededCount = 0};
+        var intHolder = new IntHolder() { succededCount = 0 };
 
         var action = async () =>
         {
@@ -97,5 +100,31 @@ public class MultithreadingTests : BaseClientIntTests
         }
 
         await client.Close();
+    }
+
+    [TestMethod("Multiple open sessions and close sessions")]
+    public void Test2()
+    {
+        ConcurrentStack<ImmuClient> clients = new ConcurrentStack<ImmuClient>();
+        List<Action> actions = new List<Action>();
+        List<Task> tasks = new List<Task>();
+        int threadCount = 10;
+        for(int i = 0; i < threadCount; i++)
+        {
+            actions.Add(async () => {
+                var localclient = await ImmuClient.NewBuilder()
+                    .WithServerPort(3325)
+                    .Open();
+                await localclient.VerifiedSet("key" + i, "val" + i);
+                clients.Push(localclient);
+                Entry readEntry = await localclient.VerifiedGet("key" + i);
+                Assert.AreEqual("val" + i, Encoding.UTF8.GetString(readEntry.Value));
+                await localclient.Close();
+            });
+        }
+        foreach(var action in actions) {
+            tasks.Add(Task.Factory.StartNew(action));
+        }
+        Task.WaitAll(tasks.ToArray());
     }
 }

@@ -84,8 +84,16 @@ public class FileImmuStateHolder : ImmuStateHolder
             {
                 return null;
             }
-            string contents = File.ReadAllText(stateFilePath);
-            return JsonSerializer.Deserialize<ImmuState>(contents);
+            try
+            {
+                string contents = File.ReadAllText(stateFilePath);
+                return JsonSerializer.Deserialize<ImmuState>(contents);
+            }
+            catch (FileNotFoundException)
+            {
+                // this could happen because of the concurrent access
+                return null;
+            }
         }
     }
 
@@ -209,9 +217,17 @@ public class FileImmuStateHolder : ImmuStateHolder
                 var intermediateMoveStateFile = newStateFile + "_";
                 if (File.Exists(stateHolderFile))
                 {
-                    File.Move(stateHolderFile, intermediateMoveStateFile);
+                    try
+                    {
+                        File.Move(stateHolderFile, intermediateMoveStateFile);
+                    }
+                    catch (FileNotFoundException) { }
                 }
-                File.Move(newStateFile, stateHolderFile);
+                try
+                {
+                    File.Move(newStateFile, stateHolderFile);
+                }
+                catch (IOException) { }
                 if (File.Exists(intermediateMoveStateFile))
                 {
                     File.Delete(intermediateMoveStateFile);
@@ -220,8 +236,8 @@ public class FileImmuStateHolder : ImmuStateHolder
             }
             catch (IOException e)
             {
-                Console.WriteLine($"An IOException occurred: {e.ToString()}");
-                throw new InvalidOperationException("Unexpected error " + e);
+                Console.WriteLine($"An IOException occurred: {e.ToString()}.");
+                throw new InvalidOperationException("an IO exception occurred", e);
             }
         }
     }

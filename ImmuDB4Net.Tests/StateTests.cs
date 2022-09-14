@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System.Diagnostics;
 using System.Reflection;
 using Docker.DotNet;
 using Docker.DotNet.Models;
@@ -30,9 +29,9 @@ public class StateTests : BaseClientIntTests
 {
 
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp();
+        await BaseSetUp();
     }
 
     [TestCleanup]

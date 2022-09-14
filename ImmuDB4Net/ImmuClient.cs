@@ -32,7 +32,8 @@ public partial class ImmuClient
     private readonly AsymmetricKeyParameter? serverSigningKey;
     private readonly ImmuStateHolder stateHolder;
 
-    public int ConnectionShutdownTimeoutInSec { get; internal set; }
+    public TimeSpan ConnectionShutdownTimeout { get; set; }
+    public TimeSpan IdleConnectionCheckInterval { get; internal set; }
     private string currentDb = "defaultdb";
     public string GrpcAddress { get; }
     private static LibraryWideSettings globalSettings = new LibraryWideSettings();
@@ -45,16 +46,54 @@ public partial class ImmuClient
     }
 
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
-    internal IConnection Connection { get; set; }
+    internal object connectionSync = new Object();
+    private IConnection connection;
+    internal IConnection Connection
+    {
+        get
+        {
+            lock (connectionSync)
+            {
+                return connection;
+            }
+        }
+
+        set
+        {
+            lock (connectionSync)
+            {
+                connection = value;
+            }
+        }
+    }
     internal IConnectionPool ConnectionPool { get; set; }
     internal ISessionManager SessionManager { get; set; }
-    internal Session? session;
+    internal object sessionSync = new Object();
+    internal int sessionSetupInProgress = 0;
+    private Session? activeSession;
     private TimeSpan heartbeatInterval;
     private ManualResetEvent? heartbeatCloseRequested;
     internal ManualResetEvent? heartbeatCalled;
     private Task? heartbeatTask;
+    private ReleasedConnection releasedConnection = new ReleasedConnection();
     public bool DeploymentInfoCheck { get; set; } = true;
-
+    internal Session? ActiveSession
+    {
+        get
+        {
+            lock (sessionSync)
+            {
+                return activeSession;
+            }
+        }
+        set
+        {
+            lock (sessionSync)
+            {
+                activeSession = value;
+            }
+        }
+    }
     internal ImmuStateHolder StateHolder => stateHolder;
 
     public static ImmuClientBuilder NewBuilder()
@@ -65,10 +104,14 @@ public partial class ImmuClient
     public class LibraryWideSettings
     {
         public int MaxConnectionsPerServer { get; set; }
+        public TimeSpan TerminateIdleConnectionTimeout { get; set; }
+        public TimeSpan IdleConnectionCheckInterval { get; set; }
         internal LibraryWideSettings()
         {
-            //this is the default value
+            //these are the default values
             MaxConnectionsPerServer = 2;
+            TerminateIdleConnectionTimeout = TimeSpan.FromSeconds(60);
+            IdleConnectionCheckInterval = TimeSpan.FromSeconds(6);
         }
     }
 
@@ -91,17 +134,18 @@ public partial class ImmuClient
     {
         ConnectionPool = builder.ConnectionPool;
         GrpcAddress = builder.GrpcAddress;
-        Connection = new ReleasedConnection(ConnectionPool);
+        connection = releasedConnection;
         SessionManager = builder.SessionManager;
         DeploymentInfoCheck = builder.DeploymentInfoCheck;
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
-        ConnectionShutdownTimeoutInSec = builder.ConnectionShutdownTimeoutInSec;
+        ConnectionShutdownTimeout = builder.ConnectionShutdownTimeout;
         stateHolder.DeploymentInfoCheck = builder.DeploymentInfoCheck;
         stateHolder.DeploymentKey = Utils.GenerateShortHash(GrpcAddress);
         stateHolder.DeploymentLabel = GrpcAddress;
     }
+
 
     public static async Task ReleaseSdkResources()
     {
@@ -117,7 +161,7 @@ public partial class ImmuClient
                 if (heartbeatCloseRequested!.WaitOne(heartbeatInterval)) return;
                 try
                 {
-                    await Service.KeepAliveAsync(new Empty(), Service.GetHeaders(session));
+                    await Service.KeepAliveAsync(new Empty(), Service.GetHeaders(ActiveSession));
                     heartbeatCalled?.Set();
                 }
                 catch (RpcException) { }
@@ -138,45 +182,93 @@ public partial class ImmuClient
         heartbeatTask = null;
     }
 
-
     public async Task Open(string username, string password, string defaultdb)
     {
-        if (session != null)
+        try
         {
-            throw new InvalidOperationException("please close the existing session before opening a new one");
+            using (ManualResetEvent mre = new ManualResetEvent(false))
+            {
+                while (true)
+                {
+                    if (Interlocked.Exchange(ref sessionSetupInProgress, 1) == 0)
+                    {
+                        break;
+                    }
+                    mre.WaitOne(2);
+                }
+            }
+            if (ActiveSession != null)
+            {
+                throw new InvalidOperationException("please close the existing session before opening a new one");
+            }
+            Connection = ConnectionPool.Acquire(new ConnectionParameters
+            {
+                Address = GrpcAddress,
+                ShutdownTimeout = ConnectionShutdownTimeout
+            });
+            ActiveSession = await SessionManager.OpenSession(Connection, username, password, defaultdb);
+            heartbeatCloseRequested = new ManualResetEvent(false);
+            heartbeatCalled = new ManualResetEvent(false);
+            StartHeartbeat();
         }
-        Connection = ConnectionPool.Acquire(this);
-        session = await SessionManager.OpenSession(Connection, username, password, defaultdb);
-        heartbeatCloseRequested = new ManualResetEvent(false);
-        heartbeatCalled = new ManualResetEvent(false);
-        StartHeartbeat();
+        finally
+        {
+            Interlocked.Exchange(ref sessionSetupInProgress, 0);
+        }
     }
 
-    public void Reconnect()
+    public async Task Reconnect()
     {
-        Connection.Pool.Release(this);
-        Connection = ConnectionPool.Acquire(this);
+        lock (connectionSync)
+        {
+            ConnectionPool.Release(connection);
+            connection = ConnectionPool.Acquire(new ConnectionParameters
+            {
+                Address = GrpcAddress,
+                ShutdownTimeout = ConnectionShutdownTimeout
+            });
+        }
+        await Task.Yield();
     }
 
     public async Task Close()
     {
-        StopHeartbeat();
-        await SessionManager.CloseSession(Connection, session);
-        session = null;
-        Connection.Pool.Release(this);
+        try
+        {
+            using (ManualResetEvent mre = new ManualResetEvent(false))
+            {
+                while (true)
+                {
+                    if (Interlocked.Exchange(ref sessionSetupInProgress, 1) == 0)
+                    {
+                        break;
+                    }
+                    mre.WaitOne(2);
+                }
+            }
+            StopHeartbeat();
+            await SessionManager.CloseSession(Connection, ActiveSession);
+            ActiveSession = null;
+            lock (connectionSync)
+            {
+                ConnectionPool.Release(connection);
+                connection = releasedConnection;
+            }
+        }
+        finally
+        {
+            Interlocked.Exchange(ref sessionSetupInProgress, 0);
+        }
     }
 
     public bool IsClosed()
     {
-        lock (this)
-        {
-            return Connection.Released;
-        }
+        return Connection.Released;
     }
 
     private void CheckSessionHasBeenOpened()
     {
-        if (session == null)
+        if (ActiveSession == null)
         {
             throw new ArgumentException("Session is null. Make sure you call Open beforehand.");
         }
@@ -188,11 +280,11 @@ public partial class ImmuClient
     {
         lock (stateSync)
         {
-            ImmuState? state = stateHolder.GetState(session, currentDb);
+            ImmuState? state = stateHolder.GetState(ActiveSession, currentDb);
             if (state == null)
             {
                 state = CurrentState();
-                stateHolder.SetState(session!, state);
+                stateHolder.SetState(ActiveSession!, state);
             }
             else
             {
@@ -210,7 +302,7 @@ public partial class ImmuClient
     public ImmuState CurrentState()
     {
         CheckSessionHasBeenOpened();
-        ImmudbProxy.ImmutableState state = Service.CurrentState(new Empty(), Service.GetHeaders(session));
+        ImmudbProxy.ImmutableState state = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
         ImmuState immuState = ImmuState.ValueOf(state);
         if (!immuState.CheckSignature(serverSigningKey))
         {
@@ -231,7 +323,7 @@ public partial class ImmuClient
             Name = database
         };
 
-        await Service.CreateDatabaseV2Async(db, Service.GetHeaders(session));
+        await Service.CreateDatabaseV2Async(db, Service.GetHeaders(ActiveSession));
     }
 
     public async Task UseDatabase(string database)
@@ -241,7 +333,7 @@ public partial class ImmuClient
         {
             DatabaseName = database
         };
-        ImmudbProxy.UseDatabaseReply response = await Service.UseDatabaseAsync(db, Service.GetHeaders(session));
+        ImmudbProxy.UseDatabaseReply response = await Service.UseDatabaseAsync(db, Service.GetHeaders(ActiveSession));
         currentDb = database;
     }
 
@@ -249,7 +341,7 @@ public partial class ImmuClient
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.DatabaseListRequestV2 req = new ImmudbProxy.DatabaseListRequestV2();
-        ImmudbProxy.DatabaseListResponseV2 res = await Service.DatabaseListV2Async(req, Service.GetHeaders(session));
+        ImmudbProxy.DatabaseListResponseV2 res = await Service.DatabaseListV2Async(req, Service.GetHeaders(ActiveSession));
         List<string> list = new List<string>(res.Databases.Count);
         foreach (ImmudbProxy.DatabaseWithSettings db in res.Databases)
         {
@@ -272,7 +364,7 @@ public partial class ImmuClient
         };
         try
         {
-            ImmudbProxy.Entry entry = await Service.GetAsync(req, Service.GetHeaders(session));
+            ImmudbProxy.Entry entry = await Service.GetAsync(req, Service.GetHeaders(ActiveSession));
             return Entry.ValueOf(entry);
         }
         catch (RpcException e)
@@ -309,7 +401,7 @@ public partial class ImmuClient
 
         try
         {
-            vEntry = await Service.VerifiableGetAsync(vGetReq, Service.GetHeaders(session));
+            vEntry = await Service.VerifiableGetAsync(vGetReq, Service.GetHeaders(ActiveSession));
         }
         catch (RpcException e)
         {
@@ -479,7 +571,7 @@ public partial class ImmuClient
 
         try
         {
-            return Entry.ValueOf(await Service.GetAsync(req, Service.GetHeaders(session)));
+            return Entry.ValueOf(await Service.GetAsync(req, Service.GetHeaders(ActiveSession)));
         }
         catch (RpcException e)
         {
@@ -508,7 +600,7 @@ public partial class ImmuClient
 
         try
         {
-            return Entry.ValueOf(await Service.GetAsync(req, Service.GetHeaders(session)));
+            return Entry.ValueOf(await Service.GetAsync(req, Service.GetHeaders(ActiveSession)));
         }
         catch (RpcException e)
         {
@@ -534,7 +626,7 @@ public partial class ImmuClient
         ImmudbProxy.KeyListRequest req = new ImmudbProxy.KeyListRequest();
         req.Keys.AddRange(keysBS);
 
-        ImmudbProxy.Entries entries = await Service.GetAllAsync(req, Service.GetHeaders(session));
+        ImmudbProxy.Entries entries = await Service.GetAllAsync(req, Service.GetHeaders(ActiveSession));
         List<Entry> result = new List<Entry>(entries.Entries_.Count);
 
         foreach (ImmudbProxy.Entry entry in entries.Entries_)
@@ -564,7 +656,7 @@ public partial class ImmuClient
             Desc = desc
         };
 
-        ImmudbProxy.Entries entries = await Service.ScanAsync(req, Service.GetHeaders(session));
+        ImmudbProxy.Entries entries = await Service.ScanAsync(req, Service.GetHeaders(ActiveSession));
         return BuildList(entries);
     }
 
@@ -624,7 +716,7 @@ public partial class ImmuClient
         ImmudbProxy.SetRequest req = new ImmudbProxy.SetRequest();
         req.KVs.Add(kv);
 
-        ImmudbProxy.TxHeader txHdr = await Service.SetAsync(req, Service.GetHeaders(session));
+        ImmudbProxy.TxHeader txHdr = await Service.SetAsync(req, Service.GetHeaders(ActiveSession));
 
         if (txHdr.Nentries != 1)
         {
@@ -656,7 +748,7 @@ public partial class ImmuClient
             request.KVs.Add(kvProxy);
         }
 
-        ImmudbProxy.TxHeader txHdr = await Service.SetAsync(request, Service.GetHeaders(session));
+        ImmudbProxy.TxHeader txHdr = await Service.SetAsync(request, Service.GetHeaders(ActiveSession));
 
         if (txHdr.Nentries != kvList.Count)
         {
@@ -677,7 +769,7 @@ public partial class ImmuClient
             BoundRef = atTx > 0
         };
 
-        ImmudbProxy.TxHeader txHdr = await Service.SetReferenceAsync(req, Service.GetHeaders(session));
+        ImmudbProxy.TxHeader txHdr = await Service.SetReferenceAsync(req, Service.GetHeaders(ActiveSession));
 
         if (txHdr.Nentries != 1)
         {
@@ -738,8 +830,8 @@ public partial class ImmuClient
         };
 
         // using the awaitable VerifiableSetAsync is not ok here, because in the multithreading case it fails. Switched back to synchronous call in this case.
-        
-        var vtx = await Service.VerifiableSetAsync(vSetReq, Service.GetHeaders(session));
+
+        var vtx = await Service.VerifiableSetAsync(vSetReq, Service.GetHeaders(ActiveSession));
 
         int ne = vtx.Tx.Header.Nentries;
 
@@ -823,7 +915,7 @@ public partial class ImmuClient
                     AtTx = atTx,
                     Score = score,
                     BoundRef = atTx > 0
-                }, Service.GetHeaders(session));
+                }, Service.GetHeaders(ActiveSession));
 
         if (txHdr.Nentries != 1)
         {
@@ -862,7 +954,7 @@ public partial class ImmuClient
             ProveSinceTx = state.TxId
         };
 
-        ImmudbProxy.VerifiableTx vtx = await Service.VerifiableZAddAsync(vZAddReq, Service.GetHeaders(session));
+        ImmudbProxy.VerifiableTx vtx = await Service.VerifiableZAddAsync(vZAddReq, Service.GetHeaders(ActiveSession));
 
         if (vtx.Tx.Header.Nentries != 1)
         {
@@ -941,7 +1033,7 @@ public partial class ImmuClient
             Desc = reverse
         };
 
-        ImmudbProxy.ZEntries zEntries = await Service.ZScanAsync(req, Service.GetHeaders(session));
+        ImmudbProxy.ZEntries zEntries = await Service.ZScanAsync(req, Service.GetHeaders(ActiveSession));
         return BuildList(zEntries);
     }
 
@@ -963,7 +1055,7 @@ public partial class ImmuClient
             {
                 Keys = { Utils.ToByteString(key) }
             };
-            return TxHeader.ValueOf(await Service.DeleteAsync(req, Service.GetHeaders(session)));
+            return TxHeader.ValueOf(await Service.DeleteAsync(req, Service.GetHeaders(ActiveSession)));
         }
         catch (RpcException e)
         {
@@ -990,7 +1082,7 @@ public partial class ImmuClient
                 new ImmudbProxy.TxRequest()
                 {
                     Tx = txId
-                }, Service.GetHeaders(session));
+                }, Service.GetHeaders(ActiveSession));
             return Tx.ValueOf(tx);
         }
         catch (RpcException e)
@@ -1018,7 +1110,7 @@ public partial class ImmuClient
 
         try
         {
-            vtx = await Service.VerifiableTxByIdAsync(vTxReq, Service.GetHeaders(session));
+            vtx = await Service.VerifiableTxByIdAsync(vTxReq, Service.GetHeaders(ActiveSession));
         }
         catch (RpcException e)
         {
@@ -1088,7 +1180,7 @@ public partial class ImmuClient
     {
         lock (stateSync)
         {
-            stateHolder.SetState(session!, newState);
+            stateHolder.SetState(ActiveSession!, newState);
         }
     }
 
@@ -1100,7 +1192,7 @@ public partial class ImmuClient
             InitialTx = initialTxId
         };
 
-        ImmudbProxy.TxList txList = await Service.TxScanAsync(req, Service.GetHeaders(session));
+        ImmudbProxy.TxList txList = await Service.TxScanAsync(req, Service.GetHeaders(ActiveSession));
         return buildList(txList);
     }
 
@@ -1112,7 +1204,7 @@ public partial class ImmuClient
             Limit = limit,
             Desc = desc
         };
-        ImmudbProxy.TxList txList = await Service.TxScanAsync(req, Service.GetHeaders(session));
+        ImmudbProxy.TxList txList = await Service.TxScanAsync(req, Service.GetHeaders(ActiveSession));
         return buildList(txList);
     }
 
@@ -1122,7 +1214,7 @@ public partial class ImmuClient
 
     public async Task<bool> HealthCheck()
     {
-        var healthResponse = await Service.HealthAsync(new Empty(), Service.GetHeaders(session));
+        var healthResponse = await Service.HealthAsync(new Empty(), Service.GetHeaders(ActiveSession));
         return healthResponse.Status;
     }
 
@@ -1138,7 +1230,7 @@ public partial class ImmuClient
     public async Task<List<Iam.User>> ListUsers()
     {
         CheckSessionHasBeenOpened();
-        ImmudbProxy.UserList userList = await Service.ListUsersAsync(new Empty(), Service.GetHeaders(session));
+        ImmudbProxy.UserList userList = await Service.ListUsersAsync(new Empty(), Service.GetHeaders(ActiveSession));
         return userList.Users.ToList()
                 .Select(u => new Iam.User(
                     u.User_.ToString(System.Text.Encoding.UTF8),
@@ -1167,7 +1259,7 @@ public partial class ImmuClient
             Database = database
         };
 
-        await Service.CreateUserAsync(createUserRequest, Service.GetHeaders(session));
+        await Service.CreateUserAsync(createUserRequest, Service.GetHeaders(ActiveSession));
     }
 
     public async Task ChangePassword(string user, string oldPassword, string newPassword)
@@ -1180,7 +1272,7 @@ public partial class ImmuClient
             NewPassword = Utils.ToByteString(newPassword),
         };
 
-        await Service.ChangePasswordAsync(changePasswordRequest, Service.GetHeaders(session));
+        await Service.ChangePasswordAsync(changePasswordRequest, Service.GetHeaders(ActiveSession));
     }
 
     //
@@ -1196,13 +1288,13 @@ public partial class ImmuClient
             Synced = synced
         };
 
-        await Service.FlushIndexAsync(req, Service.GetHeaders(session));
+        await Service.FlushIndexAsync(req, Service.GetHeaders(ActiveSession));
     }
 
     public async Task CompactIndex()
     {
         CheckSessionHasBeenOpened();
-        await Service.CompactIndexAsync(new Empty(), Service.GetHeaders(session));
+        await Service.CompactIndexAsync(new Empty(), Service.GetHeaders(ActiveSession));
     }
 
     //
@@ -1225,7 +1317,7 @@ public partial class ImmuClient
                 Limit = limit,
                 Offset = offset,
                 Desc = desc
-            }, Service.GetHeaders(session));
+            }, Service.GetHeaders(ActiveSession));
 
             return BuildList(entries);
         }
@@ -1266,7 +1358,7 @@ public partial class ImmuClient
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine("An exception occurred into buildList: {0}", e);
             }
         });
         return result;
