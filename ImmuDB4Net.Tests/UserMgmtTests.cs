@@ -24,9 +24,9 @@ public class UserMgmtTests : BaseClientIntTests
 {
 
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp();
+        await BaseSetUp();
     }
 
     [TestCleanup]
@@ -68,17 +68,18 @@ public class UserMgmtTests : BaseClientIntTests
         await client.Close();
 
         // Some basic test to temporary (until t1 test above can be used) increase the code coverage.
-        User myUser = new User("myusername") {
+        User myUser = new User("myusername")
+        {
             CreatedAt = "sometimestamp",
             CreatedBy = "me",
             Active = true,
-            Permissions = {Permission.PERMISSION_R}
+            Permissions = { Permission.PERMISSION_R }
         };
-        
+
         Assert.AreEqual(myUser.Name, "myusername", "Usernames are different");
         Assert.AreEqual(myUser.CreatedAt, "sometimestamp", "CreatedAt values are different");
         Assert.AreEqual(myUser.CreatedBy, "me", "CreatedBy values are different");
         Assert.IsTrue(myUser.Active, "User is not active, as expected");
-        CollectionAssert.AreEqual(myUser.Permissions, new List<Permission>() {Permission.PERMISSION_R}, "Permissions are different");
+        CollectionAssert.AreEqual(myUser.Permissions, new List<Permission>() { Permission.PERMISSION_R }, "Permissions are different");
     }
 }

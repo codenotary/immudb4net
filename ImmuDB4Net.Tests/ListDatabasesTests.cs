@@ -21,11 +21,10 @@ public class ListDatabasesTests : BaseClientIntTests
 {
 
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp();
+        await BaseSetUp();
     }
-
     [TestCleanup]
     public async Task TearDown()
     {

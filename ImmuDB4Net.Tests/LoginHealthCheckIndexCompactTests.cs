@@ -23,9 +23,9 @@ public class LoginHealthCheckCompactIndexTests : BaseClientIntTests
 {
 
     [TestInitialize]
-    public void SetUp()
+    public async Task SetUp()
     {
-        BaseSetUp();
+        await BaseSetUp();
     }
 
     [TestCleanup]
