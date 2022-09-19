@@ -1370,18 +1370,19 @@ public partial class ImmuClient : IImmuClient
     // ========== SQL Exec and SQL Query  ==========
     //
 
-    private SQLValue CreateSQLValue(ImmuDBSQLParameter parameter)
+    private ImmudbProxy.SQLValue CreateSQLValue(SQLParameter parameter)
     {
         switch (parameter.ValueType)
         {
             case SqlDbType.SmallInt:
             case SqlDbType.Int:
             case SqlDbType.BigInt:
-                return new SQLValue { N = (long)parameter.Value };
+                return new ImmudbProxy.SQLValue { N = (long)parameter.Value };
             case SqlDbType.Date:
+            case SqlDbType.DateTime:
                 DateTime dt = (DateTime)parameter.Value;
                 long timeMicroseconds = new DateTimeOffset(dt).ToUnixTimeMilliseconds() * 1000;
-                return new SQLValue { Ts = timeMicroseconds };
+                return new ImmudbProxy.SQLValue { Ts = timeMicroseconds };
             case SqlDbType.Text:
             case SqlDbType.NText:
             case SqlDbType.Char:
@@ -1389,46 +1390,92 @@ public partial class ImmuClient : IImmuClient
             case SqlDbType.VarChar:
             case SqlDbType.NVarChar:
             case SqlDbType.Xml:
-                return new SQLValue { Bs = Utils.ToByteString((string)parameter.Value) };
+                return new ImmudbProxy.SQLValue { S = (string)parameter.Value };
             default:
                 throw new NotSupportedException(string.Format("The SQL type {0} is not supported", parameter.ValueType));
         }
     }
 
+    private SQL.SQLValue FromProxySQLValue(ImmudbProxy.SQLValue proxyValue)
+    {
+        switch (proxyValue.ValueCase)
+        {
+            case ImmudbProxy.SQLValue.ValueOneofCase.N:
+                return new SQL.SQLValue(proxyValue.N, SqlDbType.Int);
+            case ImmudbProxy.SQLValue.ValueOneofCase.S:
+                return new SQL.SQLValue(proxyValue.S, SqlDbType.NVarChar);
+            case ImmudbProxy.SQLValue.ValueOneofCase.Ts:
+                var dateTimeArg = DateTimeOffset.FromUnixTimeMilliseconds((long)proxyValue.Ts / 1000);
+                return new SQL.SQLValue(dateTimeArg, SqlDbType.NVarChar);
+            default:
+                throw new NotSupportedException(string.Format("The proxyvalue type {0} is not supported", proxyValue.ValueCase));
+        }
+    }
 
-
-    public async Task<List<SQLExecResultItem>> SQLExec(string sqlStatement, Dictionary<string, ImmuDBSQLParameter>? parameters)
+    public async Task<SQL.SQLExecResult> SQLExec(string sqlStatement, params SQLParameter[] parameters)
     {
         CheckSessionHasBeenOpened();
-        try
+
+        var req = new ImmudbProxy.SQLExecRequest
         {
-            var req = new ImmudbProxy.SQLExecRequest
+            Sql = sqlStatement,
+        };
+        if (parameters != null)
+        {
+            int paramNameCounter = 1;
+            foreach (var entry in parameters)
             {
-                Sql = sqlStatement,
-            };
-            if (parameters != null)
-            {
-                foreach (var entry in parameters)
+                var namedParam = new NamedParam
                 {
-                    var namedParam = new NamedParam
-                    {
-                        Name = entry.Key,
-                        Value = CreateSQLValue(entry.Value)
-                    };
-                    req.Params.Add(namedParam);
-                }
+                    Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry.Name,
+                    Value = CreateSQLValue(entry)
+                };
+                req.Params.Add(namedParam);
             }
-            var result = await Service.SQLExecAsync(req, Service.GetHeaders(ActiveSession));
-            List<SQLExecResultItem> committedTransactions = new List<SQLExecResultItem>();
-            foreach (var item in result.Txs)
-            {
-                committedTransactions.Add(new SQLExecResultItem { TxID = item.Header.BlTxId, UpdatedRowsCount = item.UpdatedRows });
-            }
-            return committedTransactions;
         }
-        catch (RpcException e)
+        var result = await Service.SQLExecAsync(req, Service.GetHeaders(ActiveSession));
+        var sqlResult = new SQL.SQLExecResult();
+        
+        foreach (var item in result.Txs)
         {
-            throw e;
+            sqlResult.Items.Add(new SQLExecResultItem { TxID = item.Header.BlTxId, UpdatedRowsCount = item.UpdatedRows });
         }
+        return sqlResult;
+
+    }
+
+    public async Task<SQL.SQLQueryResult> SQLQuery(string sqlStatement, params SQLParameter[] parameters)
+    {
+        CheckSessionHasBeenOpened();
+        var req = new ImmudbProxy.SQLQueryRequest
+        {
+            Sql = sqlStatement,
+        };
+        if (parameters != null)
+        {
+            int paramNameCounter = 1;
+            foreach (var entry in parameters)
+            {
+               var namedParam = new NamedParam
+                {
+                    Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry.Name,
+                    Value = CreateSQLValue(entry)
+                };
+                req.Params.Add(namedParam);
+            }
+        }
+        var result = await Service.SQLQueryAsync(req, Service.GetHeaders(ActiveSession));
+        SQL.SQLQueryResult queryResult = new SQL.SQLQueryResult();
+        queryResult.Columns.AddRange(result.Columns.Select(x => new SQL.Column(x.Name, x.Type)));
+        foreach (var row in result.Rows)
+        {
+            Dictionary<string, SQL.SQLValue> rowItems = new Dictionary<string, SQL.SQLValue>();
+            for (int i = 0; i < row.Columns.Count; i++)
+            {
+                rowItems.Add(row.Columns[i], FromProxySQLValue(row.Values[i]));
+            }
+            queryResult.Rows.Add(rowItems);
+        }
+        return queryResult;
     }
 }

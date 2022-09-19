@@ -70,7 +70,8 @@ public interface IImmuClient
     Task<TxHeader> SetReference(string key, string referencedKey, ulong atTx);
     Task<TxHeader> SetReference(string key, string referencedKey);
     Task<TxHeader> SetReference(byte[] key, byte[] referencedKey);
-    Task<List<SQLExecResultItem>> SQLExec(string sqlStatement, Dictionary<string, ImmuDBSQLParameter>? parameters);
+    Task<SQL.SQLExecResult> SQLExec(string sqlStatement, params SQLParameter[] parameters);
+    Task<SQL.SQLQueryResult> SQLQuery(string sqlStatement, params SQLParameter[] parameters);
     ImmuState State();
     Task<Tx> TxById(ulong txId);
     Task<List<Tx>> TxScan(ulong initialTxId);

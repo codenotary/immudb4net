@@ -135,12 +135,22 @@ public class BasicClientTests : BaseClientIntTests
         await client.Close();
     }  
     
-    [TestMethod("execute sqlexec")]
+    [TestMethod("execute sqlexec and query")]
     public async Task Test3()
     {
         await client!.Open("immudb", "immudb", "defaultdb");
-        var rsp = await client.SQLExec("CREATE TABLE IF NOT EXISTS logs(id INTEGER AUTO_INCREMENT, created TIMESTAMP, entry VARCHAR, PRIMARY KEY id)", null);
-        Assert.AreEqual(1, rsp.Count);
+        var rspCreate = await client.SQLExec("CREATE TABLE IF NOT EXISTS logs(id INTEGER AUTO_INCREMENT, created TIMESTAMP, entry VARCHAR, PRIMARY KEY id)");        
+        Assert.AreEqual(1, rspCreate.Items.Count);
+        var rspIndex = await client.SQLExec("CREATE INDEX IF NOT EXISTS ON logs(created)");
+        Assert.AreEqual(1, rspIndex.Items.Count);
+        var rspInsert = await client.SQLExec("INSERT INTO logs(created, entry) VALUES($1, $2)", 
+            new SQL.SQLParameter(DateTime.UtcNow),
+            new SQL.SQLParameter("entry1"));
+        var queryResult = await client.SQLQuery("SELECT created, entry FROM LOGS order by created DESC");
+        Assert.AreEqual(2, queryResult.Columns.Count);
+        Assert.AreEqual(1, queryResult.Rows.Count);
+        var sqlVal = queryResult.Rows[0]["(defaultdb.logs.entry)"];
+        Assert.AreEqual("entry1", (string)sqlVal.Value);
         await client.Close();
     }
 }

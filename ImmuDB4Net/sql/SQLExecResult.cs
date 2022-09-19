@@ -21,3 +21,8 @@ public class SQLExecResultItem
     public ulong TxID;
     public uint UpdatedRowsCount;
 }
+
+public class SQLExecResult
+{
+   public List<SQLExecResultItem> Items { get; set; } = new List<SQLExecResultItem>(); 
+}
