@@ -133,5 +133,14 @@ public class BasicClientTests : BaseClientIntTests
         }
 
         await client.Close();
+    }  
+    
+    [TestMethod("execute sqlexec")]
+    public async Task Test3()
+    {
+        await client!.Open("immudb", "immudb", "defaultdb");
+        var rsp = await client.SQLExec("CREATE TABLE IF NOT EXISTS logs(id INTEGER AUTO_INCREMENT, created TIMESTAMP, entry VARCHAR, PRIMARY KEY id)", null);
+        Assert.AreEqual(1, rsp.Count);
+        await client.Close();
     }
 }

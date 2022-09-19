@@ -16,16 +16,18 @@ limitations under the License.
 
 namespace ImmuDB;
 
+using System.Data;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using ImmuDB.Crypto;
 using ImmuDB.Exceptions;
+using ImmuDB.SQL;
 using ImmudbProxy;
 using Org.BouncyCastle.Crypto;
 
-public partial class ImmuClient
+public partial class ImmuClient : IImmuClient
 {
     internal const string AUTH_HEADER = "authorization";
 
@@ -1362,5 +1364,71 @@ public partial class ImmuClient
             }
         });
         return result;
+    }
+
+    //
+    // ========== SQL Exec and SQL Query  ==========
+    //
+
+    private SQLValue CreateSQLValue(ImmuDBSQLParameter parameter)
+    {
+        switch (parameter.ValueType)
+        {
+            case SqlDbType.SmallInt:
+            case SqlDbType.Int:
+            case SqlDbType.BigInt:
+                return new SQLValue { N = (long)parameter.Value };
+            case SqlDbType.Date:
+                DateTime dt = (DateTime)parameter.Value;
+                long timeMicroseconds = new DateTimeOffset(dt).ToUnixTimeMilliseconds() * 1000;
+                return new SQLValue { Ts = timeMicroseconds };
+            case SqlDbType.Text:
+            case SqlDbType.NText:
+            case SqlDbType.Char:
+            case SqlDbType.NChar:
+            case SqlDbType.VarChar:
+            case SqlDbType.NVarChar:
+            case SqlDbType.Xml:
+                return new SQLValue { Bs = Utils.ToByteString((string)parameter.Value) };
+            default:
+                throw new NotSupportedException(string.Format("The SQL type {0} is not supported", parameter.ValueType));
+        }
+    }
+
+
+
+    public async Task<List<SQLExecResultItem>> SQLExec(string sqlStatement, Dictionary<string, ImmuDBSQLParameter>? parameters)
+    {
+        CheckSessionHasBeenOpened();
+        try
+        {
+            var req = new ImmudbProxy.SQLExecRequest
+            {
+                Sql = sqlStatement,
+            };
+            if (parameters != null)
+            {
+                foreach (var entry in parameters)
+                {
+                    var namedParam = new NamedParam
+                    {
+                        Name = entry.Key,
+                        Value = CreateSQLValue(entry.Value)
+                    };
+                    req.Params.Add(namedParam);
+                }
+            }
+            var result = await Service.SQLExecAsync(req, Service.GetHeaders(ActiveSession));
+            List<SQLExecResultItem> committedTransactions = new List<SQLExecResultItem>();
+            foreach (var item in result.Txs)
+            {
+                committedTransactions.Add(new SQLExecResultItem { TxID = item.Header.BlTxId, UpdatedRowsCount = item.UpdatedRows });
+            }
+            return committedTransactions;
+        }
+        catch (RpcException e)
+        {
+            throw e;
+        }
     }
 }
