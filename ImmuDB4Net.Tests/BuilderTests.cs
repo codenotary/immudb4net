@@ -115,13 +115,12 @@ public class BuilderTests
     {
         try
         {
-            client = new ImmuClient("localhost", 3325);
+            client = new ImmuClient("localhost", 3325);            
             await client.Open("immudb", "immudb", "defaultdb");
             TxHeader hdr0 = await client.Set("k0", "v0");
             Assert.IsNotNull(hdr0);
             Entry entry0 = await client.Get("k0");
             Assert.AreEqual(entry0.ToString(), "v0");
-
         }
         finally
         {

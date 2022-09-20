@@ -25,29 +25,27 @@ using ImmuDB.Exceptions;
 using ImmudbProxy;
 using Org.BouncyCastle.Crypto;
 
+
+/// <summary>
+/// Class ImmuClient provides the awaitable API for accessing an ImmuDB server. If synchronous support is needed, use <see cref="ImmuClientSync" class />
+/// </summary>
 public partial class ImmuClient
 {
     internal const string AUTH_HEADER = "authorization";
 
     private readonly AsymmetricKeyParameter? serverSigningKey;
     private readonly ImmuStateHolder stateHolder;
-
-    public TimeSpan ConnectionShutdownTimeout { get; set; }
-    public TimeSpan IdleConnectionCheckInterval { get; internal set; }
+    private IConnection connection;
     private string currentDb = "defaultdb";
-    public string GrpcAddress { get; }
     private static LibraryWideSettings globalSettings = new LibraryWideSettings();
-    public static LibraryWideSettings GlobalSettings
-    {
-        get
-        {
-            return globalSettings;
-        }
-    }
+    private Session? activeSession;
+    private TimeSpan heartbeatInterval;
+    private ManualResetEvent? heartbeatCloseRequested;
+    private Task? heartbeatTask;
+    private ReleasedConnection releasedConnection = new ReleasedConnection();
 
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
     internal object connectionSync = new Object();
-    private IConnection connection;
     internal IConnection Connection
     {
         get
@@ -70,13 +68,9 @@ public partial class ImmuClient
     internal ISessionManager SessionManager { get; set; }
     internal object sessionSync = new Object();
     internal int sessionSetupInProgress = 0;
-    private Session? activeSession;
-    private TimeSpan heartbeatInterval;
-    private ManualResetEvent? heartbeatCloseRequested;
+
     internal ManualResetEvent? heartbeatCalled;
-    private Task? heartbeatTask;
-    private ReleasedConnection releasedConnection = new ReleasedConnection();
-    public bool DeploymentInfoCheck { get; set; } = true;
+
     internal Session? ActiveSession
     {
         get
@@ -96,13 +90,64 @@ public partial class ImmuClient
     }
     internal ImmuStateHolder StateHolder => stateHolder;
 
+    /// <summary>
+    /// Gets or sets the DeploymentInfoCheck flag. If enabled then a check of server authenticity is perform while establishing a new link with the ImmuDB server.
+    /// </summary>
+    /// <value>Default: true</value>
+    public bool DeploymentInfoCheck { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the length of time the <see cref="Shutdown" /> function is allowed to block before it completes.
+    /// </summary>
+    /// <value>Default: 2 sec</value>
+    public TimeSpan ConnectionShutdownTimeout { get; set; }
+
+    /// <summary>
+    /// Gets or sets the length of time interval between periodic checks of idle connections to be closed. 
+    /// </summary>
+    /// <value></value>
+    public TimeSpan IdleConnectionCheckInterval { get; internal set; }
+
+    /// <summary>
+    /// Gets the grpc address of the ImmuDB server
+    /// </summary>
+    /// <value></value>
+    /// <remarks>
+    /// This value is computed from the server url and server port arguments that come either from 
+    /// <see cref="ImmuClientBuilder.Build()" /> or <see cref="ImmuClient.ImmuClient(string, int))" /> constructor
+    /// </remarks>
+    public string GrpcAddress { get; }
+
+    /// <summary>
+    /// Gets the <see cref="LibraryWideSettings" /> object with the process wide settings
+    /// </summary>
+    /// <value></value>
+    public static LibraryWideSettings GlobalSettings
+    {
+        get
+        {
+            return globalSettings;
+        }
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ImmuClientBuilder" /> factory object for <see cref="ImmuClient" /> instances
+    /// </summary>
+    /// <returns>A new instance of <see cref="ImmuClient" /></returns>
     public static ImmuClientBuilder NewBuilder()
     {
         return new ImmuClientBuilder();
     }
 
+    /// <summary>
+    /// This inner class keeps the global settings that are used across all <see cref="ImmuClient" /> instances
+    /// </summary>
     public class LibraryWideSettings
     {
+        /// <summary>
+        /// Gets or sets the 
+        /// </summary>
+        /// <value></value>
         public int MaxConnectionsPerServer { get; set; }
         public TimeSpan TerminateIdleConnectionTimeout { get; set; }
         public TimeSpan IdleConnectionCheckInterval { get; set; }
@@ -115,16 +160,31 @@ public partial class ImmuClient
         }
     }
 
+    /// <summary>
+    /// Initializes a new instance of <see cref="ImmuClient" />. It uses the default value of 'localhost:3322' as ImmuDB server address and port and 'defaultdb' as database name.
+    /// </summary>
+    /// <returns></returns>
     public ImmuClient() : this(NewBuilder())
     {
 
     }
 
+    /// <summary>
+    ///  Initializes a new instance of <see cref="ImmuClient" />. It uses the implicit 'defaultdb' value for the database name.
+    /// </summary>
+    /// <param name="serverUrl">The ImmuDB server address, ex: localhost or http://localhost </param>
+    /// <param name="serverPort">The port where the ImmuDB server listens</param>
     public ImmuClient(string serverUrl, int serverPort)
         : this(NewBuilder().WithServerUrl(serverUrl).WithServerPort(serverPort))
     {
     }
 
+    /// <summary>
+    /// Initializes a new instance of <see cref="ImmuClient" />
+    /// </summary>
+    /// <param name="serverUrl">The ImmuDB server address, ex: localhost or http://localhost </param>
+    /// <param name="serverPort">The port where the ImmuDB server listens</param>
+    /// <param name="database">The name of the ImmuDB server's database to use</param>
     public ImmuClient(string serverUrl, int serverPort, string database)
         : this(NewBuilder().WithServerUrl(serverUrl).WithServerPort(serverPort).WithDatabase(database))
     {
@@ -146,7 +206,10 @@ public partial class ImmuClient
         stateHolder.DeploymentLabel = GrpcAddress;
     }
 
-
+    /// <summary>
+    /// Releases the resources used by the SDK objects. (ex: connection pool resources). As best practice, this method should be call just before the existing process ends.
+    /// </summary>
+    /// <returns></returns>
     public static async Task ReleaseSdkResources()
     {
         await RandomAssignConnectionPool.Instance.Shutdown();
@@ -182,7 +245,14 @@ public partial class ImmuClient
         heartbeatTask = null;
     }
 
-    public async Task Open(string username, string password, string defaultdb)
+    /// <summary>
+    /// Opens a connection to the ImmuDB server or reuses one from the connection pool. It also initiates a session with the forementioned server.
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="password">The username's password</param>
+    /// <param name="databaseName">The database to use</param>
+    /// <returns></returns>
+    public async Task Open(string username, string password, string databaseName)
     {
         try
         {
@@ -206,7 +276,7 @@ public partial class ImmuClient
                 Address = GrpcAddress,
                 ShutdownTimeout = ConnectionShutdownTimeout
             });
-            ActiveSession = await SessionManager.OpenSession(Connection, username, password, defaultdb);
+            ActiveSession = await SessionManager.OpenSession(Connection, username, password, databaseName);
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
             StartHeartbeat();
@@ -217,6 +287,11 @@ public partial class ImmuClient
         }
     }
 
+    /// <summary>
+    /// Releases to the connection pool the established connection and acquires a new one.
+    /// </summary>
+    /// <remarks>The active session not affected.</remarks>
+    /// <returns></returns>
     public async Task Reconnect()
     {
         lock (connectionSync)
@@ -231,6 +306,10 @@ public partial class ImmuClient
         await Task.Yield();
     }
 
+    /// <summary>
+    /// Releases the established connection back to the connection pool and closes the active session
+    /// </summary>
+    /// <returns></returns>
     public async Task Close()
     {
         try
@@ -261,10 +340,11 @@ public partial class ImmuClient
         }
     }
 
-    public bool IsClosed()
-    {
-        return Connection.Released;
-    }
+    /// <summary>
+    /// Gets the status of the connection
+    /// </summary>
+    /// <returns></returns>
+    public bool IsClosed => Connection.Released;
 
     private void CheckSessionHasBeenOpened()
     {
@@ -276,45 +356,59 @@ public partial class ImmuClient
 
     private object stateSync = new Object();
 
-    public ImmuState State()
+    /// <summary>
+    /// Gets the database state data and if not present then it is updated from the server
+    /// </summary>
+    /// <returns></returns>
+    public ImmuState State
     {
-        lock (stateSync)
+        get
         {
-            ImmuState? state = stateHolder.GetState(ActiveSession, currentDb);
-            if (state == null)
+            lock (stateSync)
             {
-                state = CurrentState();
-                stateHolder.SetState(ActiveSession!, state);
+                ImmuState? state = stateHolder.GetState(ActiveSession, currentDb);
+                if (state == null)
+                {
+                    state = CurrentState;
+                    stateHolder.SetState(ActiveSession!, state);
+                }
+                else
+                {
+                    CheckSessionHasBeenOpened();
+                }
+                return state;
             }
-            else
-            {
-                CheckSessionHasBeenOpened();
-            }
-            return state;
         }
     }
 
-    /**
-    * Get the current database state that exists on the server.
-    * It may throw a RuntimeException if server's state signature verification fails
-    * (if this feature is enabled on the client side, at least).
-*/
-    public ImmuState CurrentState()
+    /// <summary>
+    /// Get the current database state that exists on the server. It may throw a RuntimeException if server's state signature verification fails.
+    /// </summary>
+    /// <returns></returns>
+    public ImmuState CurrentState
     {
-        CheckSessionHasBeenOpened();
-        ImmudbProxy.ImmutableState state = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
-        ImmuState immuState = ImmuState.ValueOf(state);
-        if (!immuState.CheckSignature(serverSigningKey))
+        get
         {
-            throw new VerificationException("State signature verification failed");
+            CheckSessionHasBeenOpened();
+            ImmudbProxy.ImmutableState state = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
+            ImmuState immuState = ImmuState.ValueOf(state);
+            if (!immuState.CheckSignature(serverSigningKey))
+            {
+                throw new VerificationException("State signature verification failed");
+            }
+            return immuState;
         }
-        return immuState;
     }
 
     //
     // ========== DATABASE ==========
     //
 
+    /// <summary>
+    /// Creates a new database
+    /// </summary>
+    /// <param name="database">The database name</param>
+    /// <returns></returns>
     public async Task CreateDatabase(string database)
     {
         CheckSessionHasBeenOpened();
@@ -326,6 +420,11 @@ public partial class ImmuClient
         await Service.CreateDatabaseV2Async(db, Service.GetHeaders(ActiveSession));
     }
 
+    /// <summary>
+    /// Changes the selected database
+    /// </summary>
+    /// <param name="database">The newly selected database. It must be an existing one.</param>
+    /// <returns></returns>
     public async Task UseDatabase(string database)
     {
         CheckSessionHasBeenOpened();
@@ -337,6 +436,10 @@ public partial class ImmuClient
         currentDb = database;
     }
 
+    /// <summary>
+    /// Gets the server's database list
+    /// </summary>
+    /// <returns>The server's database list</returns>
     public async Task<List<string>> Databases()
     {
         CheckSessionHasBeenOpened();
@@ -354,6 +457,12 @@ public partial class ImmuClient
     // ========== GET ==========
     //
 
+    /// <summary>
+    /// Retrieves the value for a specific key at a transaction ID.
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction id</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetAtTx(byte[] key, ulong tx)
     {
         CheckSessionHasBeenOpened();
@@ -378,16 +487,33 @@ public partial class ImmuClient
         }
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key and at a transaction ID.
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction id</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> Get(string key, ulong tx)
     {
         return await GetAtTx(Utils.ToByteArray(key), tx);
     }
 
+    /// <summary>
+    /// Retrieves the value for a key
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> Get(string key)
     {
         return await GetAtTx(Utils.ToByteArray(key), 0);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key
+    /// </summary>
+    /// <param name="keyReq">The lookup key, it is composed from the string key and the transaction id</param>
+    /// <param name="state">The local state. One can get the local state by calling <see cref="State" /> property </param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGet(ImmudbProxy.KeyRequest keyReq, ImmuState state)
     {
         CheckSessionHasBeenOpened();
@@ -497,21 +623,43 @@ public partial class ImmuClient
         return Entry.ValueOf(vEntry.Entry);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key. The assumed default TxID is 0
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGet(string key)
     {
         return await VerifiedGetAtTx(key, 0);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key. The assumed default TxID is 0
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGet(byte[] key)
     {
         return await VerifiedGetAtTx(key, 0);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetAtTx(string key, ulong tx)
     {
         return await VerifiedGetAtTx(Utils.ToByteArray(key), tx);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key at a transaction ID
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetAtTx(byte[] key, ulong tx)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -520,14 +668,26 @@ public partial class ImmuClient
             AtTx = tx
         };
 
-        return await VerifiedGet(keyReq, State());
+        return await VerifiedGet(keyReq, State);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key since a transaction ID
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetSinceTx(string key, ulong tx)
     {
         return await VerifiedGetSinceTx(Utils.ToByteArray(key), tx);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key since a transaction ID
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetSinceTx(byte[] key, ulong tx)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -536,14 +696,26 @@ public partial class ImmuClient
             SinceTx = tx
         };
 
-        return await VerifiedGet(keyReq, State());
+        return await VerifiedGet(keyReq, State);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key at a specific revision
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="rev">The revision number</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetAtRevision(string key, long rev)
     {
         return await VerifiedGetAtRevision(Utils.ToByteArray(key), rev);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key at a specific revision
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="rev">The transaction ID</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetAtRevision(byte[] key, long rev)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -552,14 +724,26 @@ public partial class ImmuClient
             AtRevision = rev
         };
 
-        return await VerifiedGet(keyReq, State());
+        return await VerifiedGet(keyReq, State);
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key since a transaction ID
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetSinceTx(string key, ulong tx)
     {
         return await GetSinceTx(Utils.ToByteArray(key), tx);
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key since a transaction ID
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetSinceTx(byte[] key, ulong tx)
     {
         CheckSessionHasBeenOpened();
@@ -584,11 +768,25 @@ public partial class ImmuClient
         }
     }
 
+
+
+    /// <summary>
+    /// Retrieves the value for a specific key at a revision number
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="rev">The revision number</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetAtRevision(string key, long rev)
     {
         return await GetAtRevision(Utils.ToByteArray(key), rev);
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key at a revision number
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="rev">The revision number</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetAtRevision(byte[] key, long rev)
     {
         CheckSessionHasBeenOpened();
@@ -613,6 +811,11 @@ public partial class ImmuClient
         }
     }
 
+    /// <summary>
+    /// Retrieves the values for the specified keys. This is a batch equivalent of Get.
+    /// </summary>
+    /// <param name="keys">The list of lookup keys</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> GetAll(List<string> keys)
     {
         CheckSessionHasBeenOpened();
@@ -641,6 +844,17 @@ public partial class ImmuClient
     // ========== SCAN ==========
     //
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Optional, prefix for the keys</param>
+    /// <param name="seekKey">Optional, initial key for the first entry in the iteration</param>
+    /// <param name="endKey">Optional, end key for the scanning range</param>
+    /// <param name="inclusiveSeek">Optional, default is true, specifies if initial key's value is included</param>
+    /// <param name="inclusiveEnd">Optional, default is true, specifies if end key's value is included</param>
+    /// <param name="limit">Optional, maximum number of of returned items</param>
+    /// <param name="desc">Optional, specifies the sorting order, defaults to Desc</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, bool inclusiveSeek, bool inclusiveEnd,
                             ulong limit, bool desc)
     {
@@ -660,41 +874,99 @@ public partial class ImmuClient
         return BuildList(entries);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(string prefix)
     {
         return await Scan(Utils.ToByteArray(prefix));
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix)
     {
         return await Scan(prefix, 0, false);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies the sorting order</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(string prefix, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies the sorting order</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix, ulong limit, bool desc)
     {
         return await Scan(prefix, new byte[0], limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="seekKey">Initial key for the first entry in the iteration</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies if the sorting order is of descending</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(string prefix, string seekKey, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="seekKey">Initial key for the first entry in the iteration</param>
+    /// <param name="endKey">End key for the scanning range</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies if the sorting order is of descending</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(string prefix, string seekKey, string endKey, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), Utils.ToByteArray(endKey), limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="seekKey">Initial key for the first entry in the iteration</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies if the sorting order is of descending</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, ulong limit, bool desc)
     {
         return await Scan(prefix, seekKey, new byte[0], limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="seekKey">Initial key for the first entry in the iteration</param>
+    /// <param name="endKey">End key for the scanning range</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies if the sorting order is of descending</param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, ulong limit, bool desc)
     {
         return await Scan(prefix, seekKey, endKey, false, false, limit, desc);
@@ -814,7 +1086,7 @@ public partial class ImmuClient
     {
         CheckSessionHasBeenOpened();
 
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
         {
             Key = Utils.ToByteString(key),
@@ -939,7 +1211,7 @@ public partial class ImmuClient
     {
         CheckSessionHasBeenOpened();
 
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.ZAddRequest zAddReq = new ImmudbProxy.ZAddRequest()
         {
             Set = Utils.ToByteString(set),
@@ -1099,7 +1371,7 @@ public partial class ImmuClient
     public async Task<Tx> VerifiedTxById(ulong txId)
     {
         CheckSessionHasBeenOpened();
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.VerifiableTxRequest vTxReq = new ImmudbProxy.VerifiableTxRequest()
         {
             Tx = txId,
