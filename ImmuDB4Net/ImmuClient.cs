@@ -27,7 +27,7 @@ using ImmuDB.SQL;
 using ImmudbProxy;
 using Org.BouncyCastle.Crypto;
 
-public partial class ImmuClient : IImmuClient
+public partial class ImmuClient
 {
     internal const string AUTH_HEADER = "authorization";
 
