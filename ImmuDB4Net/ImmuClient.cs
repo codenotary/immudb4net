@@ -34,7 +34,7 @@ public partial class ImmuClient
     internal const string AUTH_HEADER = "authorization";
 
     private readonly AsymmetricKeyParameter? serverSigningKey;
-    private readonly ImmuStateHolder stateHolder;
+    private readonly IImmuStateHolder stateHolder;
     private IConnection connection;
     private string currentDb = "defaultdb";
     private static LibraryWideSettings globalSettings = new LibraryWideSettings();
@@ -88,7 +88,7 @@ public partial class ImmuClient
             }
         }
     }
-    internal ImmuStateHolder StateHolder
+    internal IImmuStateHolder StateHolder
     {
         get
         {

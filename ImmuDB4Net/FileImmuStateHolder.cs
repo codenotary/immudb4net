@@ -21,7 +21,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using ImmuDB.Exceptions;
 
-public class FileImmuStateHolder : ImmuStateHolder
+public class FileImmuStateHolder : IImmuStateHolder
 {
     internal class DeploymentInfoContent
     {
