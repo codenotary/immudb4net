@@ -69,7 +69,6 @@ public partial class ImmuClientSync
     internal IConnectionPool ConnectionPool { get; set; }
     internal ISessionManager SessionManager { get; set; }
     internal object sessionSync = new Object();
-    internal int sessionSetupInProgress = 0;
     private Session? activeSession;
     private TimeSpan heartbeatInterval;
     private ManualResetEvent? heartbeatCloseRequested;
@@ -183,20 +182,9 @@ public partial class ImmuClientSync
 
     public void Open(string username, string password, string defaultdb)
     {
-        try
+        lock (sessionSync)
         {
-            using (ManualResetEvent mre = new ManualResetEvent(false))
-            {
-                while (true)
-                {
-                    if (Interlocked.Exchange(ref sessionSetupInProgress, 1) == 0)
-                    {
-                        break;
-                    }
-                    mre.WaitOne(2);
-                }
-            }
-            if (ActiveSession != null)
+            if (activeSession != null)
             {
                 throw new InvalidOperationException("please close the existing session before opening a new one");
             }
@@ -205,14 +193,10 @@ public partial class ImmuClientSync
                 Address = GrpcAddress,
                 ShutdownTimeout = ConnectionShutdownTimeout
             });
-            ActiveSession = SessionManager.OpenSession(Connection, username, password, defaultdb);
+            activeSession = SessionManager.OpenSession(Connection, username, password, defaultdb);
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
             StartHeartbeat();
-        }
-        finally
-        {
-            Interlocked.Exchange(ref sessionSetupInProgress, 0);
         }
     }
 
@@ -231,31 +215,16 @@ public partial class ImmuClientSync
 
     public void Close()
     {
-        try
+        lock (sessionSync)
         {
-            using (ManualResetEvent mre = new ManualResetEvent(false))
-            {
-                while (true)
-                {
-                    if (Interlocked.Exchange(ref sessionSetupInProgress, 1) == 0)
-                    {
-                        break;
-                    }
-                    mre.WaitOne(2);
-                }
-            }
             StopHeartbeat();
-            SessionManager.CloseSession(Connection, ActiveSession);
-            ActiveSession = null;
-            lock (connectionSync)
-            {
-                ConnectionPool.Release(connection);
-                connection = releasedConnection;
-            }
+            SessionManager.CloseSession(Connection, activeSession);
+            activeSession = null;
         }
-        finally
+        lock (connectionSync)
         {
-            Interlocked.Exchange(ref sessionSetupInProgress, 0);
+            ConnectionPool.Release(connection);
+            connection = releasedConnection;
         }
     }
 
@@ -292,11 +261,10 @@ public partial class ImmuClientSync
         }
     }
 
-    /**
-    * Get the current database state that exists on the server.
-    * It may throw a RuntimeException if server's state signature verification fails
-    * (if this feature is enabled on the client side, at least).
-*/
+    /// <summary>
+    /// Get the current database state that exists on the server. It may throw a RuntimeException if server's state signature verification fails.
+    /// </summary>
+    /// <returns></returns>
     public ImmuState CurrentState()
     {
         CheckSessionHasBeenOpened();
