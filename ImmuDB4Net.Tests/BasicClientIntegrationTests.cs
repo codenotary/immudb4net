@@ -144,12 +144,12 @@ public class BasicClientTests : BaseClientIntTests
         var rspIndex = await client.SQLExec("CREATE INDEX IF NOT EXISTS ON logs(created)");
         Assert.AreEqual(1, rspIndex.Items.Count);
         var rspInsert = await client.SQLExec("INSERT INTO logs(created, entry) VALUES($1, $2)", 
-            new SQL.SQLParameter(DateTime.UtcNow),
-            new SQL.SQLParameter("entry1"));
+            SQL.SQLParameter.Create(DateTime.UtcNow),
+            SQL.SQLParameter.Create("entry1"));
         var queryResult = await client.SQLQuery("SELECT created, entry FROM LOGS order by created DESC");
         Assert.AreEqual(2, queryResult.Columns.Count);
         Assert.AreEqual(1, queryResult.Rows.Count);
-        var sqlVal = queryResult.Rows[0]["(defaultdb.logs.entry)"];
+        var sqlVal = queryResult.Rows[0]["entry"];
         Assert.AreEqual("entry1", (string)sqlVal.Value);
         await client.Close();
     }

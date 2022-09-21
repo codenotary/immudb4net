@@ -16,12 +16,14 @@ limitations under the License.
 
 namespace ImmuDB;
 
+using System.Data;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using ImmuDB.Crypto;
 using ImmuDB.Exceptions;
+using ImmuDB.SQL;
 using ImmudbProxy;
 using Org.BouncyCastle.Crypto;
 
@@ -1328,5 +1330,153 @@ public partial class ImmuClientSync
             }
         });
         return result;
+    }
+
+    //
+    // ========== SQL Exec and SQL Query  ==========
+    //
+
+    private ImmudbProxy.SQLValue CreateSQLValue(SQLParameter? parameter)
+    {
+        if (parameter == null)
+        {
+            return new ImmudbProxy.SQLValue { Null = NullValue.NullValue };
+        }
+        switch (parameter.ValueType)
+        {
+            case SqlDbType.SmallInt:
+            case SqlDbType.Int:
+            case SqlDbType.BigInt:
+                return new ImmudbProxy.SQLValue { N = (long)parameter.Value };
+            case SqlDbType.Date:
+            case SqlDbType.DateTime:
+                DateTime dt = (DateTime)parameter.Value;
+                long timeMicroseconds = new DateTimeOffset(dt).ToUnixTimeMilliseconds() * 1000;
+                return new ImmudbProxy.SQLValue { Ts = timeMicroseconds };
+            case SqlDbType.Text:
+            case SqlDbType.NText:
+            case SqlDbType.Char:
+            case SqlDbType.NChar:
+            case SqlDbType.VarChar:
+            case SqlDbType.NVarChar:
+            case SqlDbType.Xml:
+                return new ImmudbProxy.SQLValue { S = (string)parameter.Value };
+            default:
+                throw new NotSupportedException(string.Format("The SQL type {0} is not supported", parameter.ValueType));
+        }
+    }
+
+    private SQL.SQLValue FromProxySQLValue(ImmudbProxy.SQLValue proxyValue)
+    {
+        switch (proxyValue.ValueCase)
+        {
+            case ImmudbProxy.SQLValue.ValueOneofCase.Null:
+                return new SQL.SQLValue(proxyValue.Null, SqlDbType.Int);
+            case ImmudbProxy.SQLValue.ValueOneofCase.N:
+                return new SQL.SQLValue(proxyValue.N, SqlDbType.Int);
+            case ImmudbProxy.SQLValue.ValueOneofCase.S:
+                return new SQL.SQLValue(proxyValue.S, SqlDbType.NVarChar);
+            case ImmudbProxy.SQLValue.ValueOneofCase.Ts:
+                var dateTimeArg = DateTimeOffset.FromUnixTimeMilliseconds((long)proxyValue.Ts / 1000);
+                return new SQL.SQLValue(dateTimeArg, SqlDbType.NVarChar);
+            default:
+                throw new NotSupportedException(string.Format("The proxyvalue type {0} is not supported", proxyValue.ValueCase));
+        }
+    }
+
+    /// <summary>
+    /// Executes an SQL statement against the selected database
+    /// </summary>
+    /// <param name="sqlStatement">The SQL statement</param>
+    /// <param name="parameters">a variable number of SQLParameter values</param>
+    /// <returns>A <see cref="SQL.SQLExecResult" /> object containing transaction ids and updated rows count for each transaction</returns>
+    public SQL.SQLExecResult SQLExec(string sqlStatement, params SQLParameter[] parameters)
+    {
+        CheckSessionHasBeenOpened();
+
+        var req = new ImmudbProxy.SQLExecRequest
+        {
+            Sql = sqlStatement,
+        };
+        if (parameters != null)
+        {
+            int paramNameCounter = 1;
+            foreach (var entry in parameters)
+            {
+                if (entry == null)
+                {
+                    req.Params.Add(new NamedParam { Name = string.Format("param{0}", paramNameCounter++), Value = CreateSQLValue(null) });
+                    continue;
+                }
+                var namedParam = new NamedParam
+                {
+                    Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry.Name,
+                    Value = CreateSQLValue(entry)
+                };
+                req.Params.Add(namedParam);
+            }
+        }
+        var result = Service.SQLExec(req, Service.GetHeaders(ActiveSession));
+        var sqlResult = new SQL.SQLExecResult();
+
+        foreach (var item in result.Txs)
+        {
+            sqlResult.Items.Add(new SQLExecResultItem { TxID = item.Header.Id, UpdatedRowsCount = item.UpdatedRows });
+        }
+        return sqlResult;
+
+    }
+
+    /// <summary>
+    /// Executes an SQL Query against the selected database
+    /// </summary>
+    /// <param name="sqlStatement"></param>
+    /// <param name="parameters"></param>
+    /// <returns>A <see cref="SQL.SQLQueryResult" /> object containing the column list and the rows with execution result</returns>
+    public SQL.SQLQueryResult SQLQuery(string sqlStatement, params SQLParameter[] parameters)
+    {
+        CheckSessionHasBeenOpened();
+        var req = new ImmudbProxy.SQLQueryRequest
+        {
+            Sql = sqlStatement,
+        };
+        if (parameters != null)
+        {
+            int paramNameCounter = 1;
+            foreach (var entry in parameters)
+            {
+                if (entry == null)
+                {
+                    req.Params.Add(new NamedParam { Name = string.Format("param{0}", paramNameCounter++), Value = CreateSQLValue(null) });
+                    continue;
+                }
+                var namedParam = new NamedParam
+                {
+                    Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry!.Name,
+                    Value = CreateSQLValue(entry)
+                };
+                req.Params.Add(namedParam);
+            }
+        }
+        var result = Service.SQLQuery(req, Service.GetHeaders(ActiveSession));
+        SQL.SQLQueryResult queryResult = new SQL.SQLQueryResult();
+        queryResult.Columns.AddRange(result.Columns.Select(x =>
+        {
+            var columnName = x.Name.Substring(x.Name.LastIndexOf(".") + 1);
+            columnName = columnName.Remove(columnName.Length - 1, 1);
+            return new SQL.Column(columnName, x.Type);
+        }));
+        foreach (var row in result.Rows)
+        {
+            Dictionary<string, SQL.SQLValue> rowItems = new Dictionary<string, SQL.SQLValue>();
+            for (int i = 0; i < row.Columns.Count; i++)
+            {
+                var columnName = row.Columns[i].Substring(row.Columns[i].LastIndexOf(".") + 1);
+                columnName = columnName.Remove(columnName.Length - 1, 1);
+                rowItems.Add(columnName, FromProxySQLValue(row.Values[i]));
+            }
+            queryResult.Rows.Add(rowItems);
+        }
+        return queryResult;
     }
 }

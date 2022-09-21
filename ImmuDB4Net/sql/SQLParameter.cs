@@ -29,37 +29,66 @@ public class SQLParameter
         Value = value;
         ValueType = SqlDbType.BigInt;
     }
-    
+
     public SQLParameter(int value, string name)
     {
         Name = name;
         Value = value;
         ValueType = SqlDbType.BigInt;
     }
-    
+
     public SQLParameter(string value)
     {
         Value = value;
         ValueType = SqlDbType.NVarChar;
     }
-    
+
     public SQLParameter(string value, string name)
     {
         Name = name;
         Value = value;
         ValueType = SqlDbType.NVarChar;
     }
-    
+
     public SQLParameter(DateTime value)
     {
         Value = value;
         ValueType = SqlDbType.DateTime;
     }
-    
+
     public SQLParameter(DateTime value, string name)
     {
         Name = name;
         Value = value;
         ValueType = SqlDbType.DateTime;
+    }
+
+    public static SQLParameter Create(int value)
+    {
+        return new SQLParameter(value);
+    }
+
+    public static SQLParameter Create(int value, string name)
+    {
+        return new SQLParameter(value, name);
+    }
+
+    public static SQLParameter Create(string value)
+    {
+        return new SQLParameter(value);
+    }
+
+    public static SQLParameter Create(string value, string name)
+    {
+        return new SQLParameter(value, name);
+    }
+    public static SQLParameter Create(DateTime value)
+    {
+        return new SQLParameter(value);
+    }
+
+    public static SQLParameter Create(DateTime value, string name)
+    {
+        return new SQLParameter(value, name);
     }
 }

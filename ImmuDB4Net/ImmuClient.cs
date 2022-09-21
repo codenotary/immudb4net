@@ -1370,8 +1370,12 @@ public partial class ImmuClient
     // ========== SQL Exec and SQL Query  ==========
     //
 
-    private ImmudbProxy.SQLValue CreateSQLValue(SQLParameter parameter)
+    private ImmudbProxy.SQLValue CreateSQLValue(SQLParameter? parameter)
     {
+        if (parameter == null)
+        {
+            return new ImmudbProxy.SQLValue { Null = NullValue.NullValue };
+        }
         switch (parameter.ValueType)
         {
             case SqlDbType.SmallInt:
@@ -1400,6 +1404,8 @@ public partial class ImmuClient
     {
         switch (proxyValue.ValueCase)
         {
+            case ImmudbProxy.SQLValue.ValueOneofCase.Null:
+                return new SQL.SQLValue(proxyValue.Null, SqlDbType.Int);
             case ImmudbProxy.SQLValue.ValueOneofCase.N:
                 return new SQL.SQLValue(proxyValue.N, SqlDbType.Int);
             case ImmudbProxy.SQLValue.ValueOneofCase.S:
@@ -1412,6 +1418,12 @@ public partial class ImmuClient
         }
     }
 
+    /// <summary>
+    /// Executes an SQL statement against the selected database
+    /// </summary>
+    /// <param name="sqlStatement">The SQL statement</param>
+    /// <param name="parameters">a variable number of SQLParameter values</param>
+    /// <returns>A <see cref="SQL.SQLExecResult" /> object containing transaction ids and updated rows count for each transaction</returns>
     public async Task<SQL.SQLExecResult> SQLExec(string sqlStatement, params SQLParameter[] parameters)
     {
         CheckSessionHasBeenOpened();
@@ -1425,6 +1437,11 @@ public partial class ImmuClient
             int paramNameCounter = 1;
             foreach (var entry in parameters)
             {
+                if (entry == null)
+                {
+                    req.Params.Add(new NamedParam { Name = string.Format("param{0}", paramNameCounter++), Value = CreateSQLValue(null) });
+                    continue;
+                }
                 var namedParam = new NamedParam
                 {
                     Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry.Name,
@@ -1435,15 +1452,21 @@ public partial class ImmuClient
         }
         var result = await Service.SQLExecAsync(req, Service.GetHeaders(ActiveSession));
         var sqlResult = new SQL.SQLExecResult();
-        
+
         foreach (var item in result.Txs)
         {
-            sqlResult.Items.Add(new SQLExecResultItem { TxID = item.Header.BlTxId, UpdatedRowsCount = item.UpdatedRows });
+            sqlResult.Items.Add(new SQLExecResultItem { TxID = item.Header.Id, UpdatedRowsCount = item.UpdatedRows });
         }
         return sqlResult;
 
     }
 
+    /// <summary>
+    /// Executes an SQL Query against the selected database
+    /// </summary>
+    /// <param name="sqlStatement"></param>
+    /// <param name="parameters"></param>
+    /// <returns>A <see cref="SQL.SQLQueryResult" /> object containing the column list and the rows with execution result</returns>
     public async Task<SQL.SQLQueryResult> SQLQuery(string sqlStatement, params SQLParameter[] parameters)
     {
         CheckSessionHasBeenOpened();
@@ -1456,9 +1479,14 @@ public partial class ImmuClient
             int paramNameCounter = 1;
             foreach (var entry in parameters)
             {
-               var namedParam = new NamedParam
+                if (entry == null)
                 {
-                    Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry.Name,
+                    req.Params.Add(new NamedParam { Name = string.Format("param{0}", paramNameCounter++), Value = CreateSQLValue(null) });
+                    continue;
+                }
+                var namedParam = new NamedParam
+                {
+                    Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry!.Name,
                     Value = CreateSQLValue(entry)
                 };
                 req.Params.Add(namedParam);
@@ -1466,13 +1494,20 @@ public partial class ImmuClient
         }
         var result = await Service.SQLQueryAsync(req, Service.GetHeaders(ActiveSession));
         SQL.SQLQueryResult queryResult = new SQL.SQLQueryResult();
-        queryResult.Columns.AddRange(result.Columns.Select(x => new SQL.Column(x.Name, x.Type)));
+        queryResult.Columns.AddRange(result.Columns.Select(x =>
+        {
+            var columnName = x.Name.Substring(x.Name.LastIndexOf(".") + 1);
+            columnName = columnName.Remove(columnName.Length - 1, 1);
+            return new SQL.Column(columnName, x.Type);
+        }));
         foreach (var row in result.Rows)
         {
             Dictionary<string, SQL.SQLValue> rowItems = new Dictionary<string, SQL.SQLValue>();
             for (int i = 0; i < row.Columns.Count; i++)
             {
-                rowItems.Add(row.Columns[i], FromProxySQLValue(row.Values[i]));
+                var columnName = row.Columns[i].Substring(row.Columns[i].LastIndexOf(".") + 1);
+                columnName = columnName.Remove(columnName.Length - 1, 1);
+                rowItems.Add(columnName, FromProxySQLValue(row.Values[i]));
             }
             queryResult.Rows.Add(rowItems);
         }
