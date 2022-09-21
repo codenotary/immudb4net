@@ -1120,18 +1120,18 @@ public partial class ImmuClient
     }
 
     /// <summary>
-    /// Adds a tag (reference) to a specific key/value element
+    /// Adds a tag (reference) to a specific key/value element in the selected database
     /// </summary>
-    /// <param name="key"></param>
-    /// <param name="referencedKey"></param>
-    /// <param name="atTx"></param>
-    /// <returns></returns>
-    public async Task<TxHeader> SetReference(byte[] key, byte[] referencedKey, ulong atTx)
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <param name="atTx">Transaction ID</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> SetReference(byte[] reference, byte[] referencedKey, ulong atTx)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.ReferenceRequest req = new ImmudbProxy.ReferenceRequest()
         {
-            Key = Utils.ToByteString(key),
+            Key = Utils.ToByteString(reference),
             ReferencedKey = Utils.ToByteString(referencedKey),
             AtTx = atTx,
             BoundRef = atTx > 0
@@ -1147,37 +1147,74 @@ public partial class ImmuClient
         return TxHeader.ValueOf(txHdr);
     }
 
-    public async Task<TxHeader> SetReference(string key, string referencedKey, ulong atTx)
+    /// <summary>
+    /// Adds a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <param name="atTx">Transaction ID</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> SetReference(string reference, string referencedKey, ulong atTx)
     {
         return await SetReference(
-            Utils.ToByteArray(key),
+            Utils.ToByteArray(reference),
             Utils.ToByteArray(referencedKey),
             atTx);
     }
 
-    public async Task<TxHeader> SetReference(string key, string referencedKey)
+    /// <summary>
+    /// Adds a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> SetReference(string reference, string referencedKey)
     {
         return await SetReference(
-            Utils.ToByteArray(key),
+            Utils.ToByteArray(reference),
             Utils.ToByteArray(referencedKey),
             0);
     }
 
-    public async Task<TxHeader> SetReference(byte[] key, byte[] referencedKey)
+    /// <summary>
+    /// Adds a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> SetReference(byte[] reference, byte[] referencedKey)
     {
-        return await SetReference(key, referencedKey, 0);
+        return await SetReference(reference, referencedKey, 0);
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedSet(string key, byte[] value)
     {
         return await VerifiedSet(Utils.ToByteArray(key), value);
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedSet(string key, string value)
     {
         return await VerifiedSet(Utils.ToByteArray(key), Utils.ToByteArray(value));
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedSet(byte[] key, byte[] value)
     {
         CheckSessionHasBeenOpened();
@@ -1272,6 +1309,14 @@ public partial class ImmuClient
     // ========== Z ==========
     //
 
+    /// <summary>
+    /// Adds a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="atTx">The transaction ID</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> ZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
         CheckSessionHasBeenOpened();
@@ -1293,16 +1338,38 @@ public partial class ImmuClient
         return TxHeader.ValueOf(txHdr);
     }
 
+
+    /// <summary>
+    /// Adds a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> ZAdd(string set, string key, double score)
     {
         return await ZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), score);
     }
 
+    /// <summary>
+    /// Adds a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> ZAdd(byte[] set, byte[] key, double score)
     {
         return await ZAdd(set, key, 0, score);
     }
 
+    /// <summary>
+    /// Adds with authenticity check a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
         CheckSessionHasBeenOpened();
@@ -1371,26 +1438,61 @@ public partial class ImmuClient
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
 
+    /// <summary>
+    /// Adds with authenticity check a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedZAdd(string set, string key, double score)
     {
         return await VerifiedZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), score);
     }
 
+    /// <summary>
+    /// Adds with authenticity check a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedZAdd(byte[] set, byte[] key, double score)
     {
         return await VerifiedZAdd(set, key, 0, score);
     }
 
+    /// <summary>
+    /// Adds with authenticity check a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedZAdd(string set, string key, ulong atTx, double score)
     {
         return await VerifiedZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), atTx, score);
     }
 
+    /// <summary>
+    /// Iterates over the entries added with ZAdd in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="set"></param>
+    /// <param name="limit"></param>
+    /// <param name="reverse"></param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<ZEntry>> ZScan(string set, ulong limit, bool reverse)
     {
         return await ZScan(Utils.ToByteArray(set), limit, reverse);
     }
 
+    /// <summary>
+    /// Iterates over the entries added with ZAdd in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="set"></param>
+    /// <param name="limit"></param>
+    /// <param name="reverse"></param>
+    /// <returns>A list of <see ref="Entry"/> objects.</returns>
     public async Task<List<ZEntry>> ZScan(byte[] set, ulong limit, bool reverse)
     {
         CheckSessionHasBeenOpened();
@@ -1409,11 +1511,21 @@ public partial class ImmuClient
     // ========== DELETE ==========
     //
 
+    /// <summary>
+    /// Deletes a key/value entry
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> Delete(string key)
     {
         return await Delete(Utils.ToByteArray(key));
     }
 
+    /// <summary>
+    /// Deletes a key/value entry
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> Delete(byte[] key)
     {
         CheckSessionHasBeenOpened();
@@ -1441,6 +1553,11 @@ public partial class ImmuClient
     // ========== TX ==========
     //
 
+    /// <summary>
+    /// Gets a transaction information
+    /// </summary>
+    /// <param name="txId">The Transaction ID</param>
+    /// <returns>The transaction information</returns>
     public async Task<Tx> TxById(ulong txId)
     {
         CheckSessionHasBeenOpened();
@@ -1464,6 +1581,11 @@ public partial class ImmuClient
         }
     }
 
+    /// <summary>
+    /// Gets with authenticity check a transaction information
+    /// </summary>
+    /// <param name="txId">The Transaction ID</param>
+    /// <returns>The transaction information</returns>
     public async Task<Tx> VerifiedTxById(ulong txId)
     {
         CheckSessionHasBeenOpened();
@@ -1552,6 +1674,11 @@ public partial class ImmuClient
         }
     }
 
+    /// <summary>
+    /// Iterates over the transactions 
+    /// </summary>
+    /// <param name="initialTxId">Initial transaction ID</param>
+    /// <returns>A list of transactions information</returns>
     public async Task<List<Tx>> TxScan(ulong initialTxId)
     {
         CheckSessionHasBeenOpened();
@@ -1564,6 +1691,11 @@ public partial class ImmuClient
         return buildList(txList);
     }
 
+    /// <summary>
+    /// Iterates over the transactions 
+    /// </summary>
+    /// <param name="initialTxId">Initial transaction ID</param>
+    /// <returns>A list of transactions information</returns>
     public async Task<List<Tx>> TxScan(ulong initialTxId, uint limit, bool desc)
     {
         ImmudbProxy.TxScanRequest req = new ImmudbProxy.TxScanRequest()
@@ -1580,21 +1712,27 @@ public partial class ImmuClient
     // ========== HEALTH ==========
     //
 
+
+    /// <summary>
+    /// Performs a healthcheck query
+    /// </summary>
+    /// <returns>true if healthcheck is successful</returns>
     public async Task<bool> HealthCheck()
     {
         var healthResponse = await Service.HealthAsync(new Empty(), Service.GetHeaders(ActiveSession));
         return healthResponse.Status;
     }
 
-    public bool IsConnected()
-    {
-        return !Connection.Released;
-    }
+    public bool IsConnected => !Connection.Released;
 
     //
     // ========== USER MGMT ==========
     //
 
+    /// <summary>
+    /// Gets the user list
+    /// </summary>
+    /// <returns>The user list</returns>
     public async Task<List<Iam.User>> ListUsers()
     {
         CheckSessionHasBeenOpened();
@@ -1616,12 +1754,20 @@ public partial class ImmuClient
                 .Select(p => (Iam.Permission)p.Permission_).ToList();
     }
 
-    public async Task CreateUser(string user, string password, Iam.Permission permission, string database)
+    /// <summary>
+    /// Creates a user
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="password">The username's password</param>
+    /// <param name="permission">The <see cref="Iam.Permission"/> object</param>
+    /// <param name="database">The database where the user is created</param>
+    /// <returns></returns>
+    public async Task CreateUser(string username, string password, Iam.Permission permission, string database)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.CreateUserRequest createUserRequest = new ImmudbProxy.CreateUserRequest()
         {
-            User = Utils.ToByteString(user),
+            User = Utils.ToByteString(username),
             Password = Utils.ToByteString(password),
             Permission = (uint)permission,
             Database = database
@@ -1630,12 +1776,19 @@ public partial class ImmuClient
         await Service.CreateUserAsync(createUserRequest, Service.GetHeaders(ActiveSession));
     }
 
-    public async Task ChangePassword(string user, string oldPassword, string newPassword)
+    /// <summary>
+    /// Changes a user's password
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="oldPassword">The username's old password</param>
+    /// <param name="newPassword">The new password</param>
+    /// <returns></returns>
+    public async Task ChangePassword(string username, string oldPassword, string newPassword)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.ChangePasswordRequest changePasswordRequest = new ImmudbProxy.ChangePasswordRequest()
         {
-            User = Utils.ToByteString(user),
+            User = Utils.ToByteString(username),
             OldPassword = Utils.ToByteString(oldPassword),
             NewPassword = Utils.ToByteString(newPassword),
         };
@@ -1647,6 +1800,12 @@ public partial class ImmuClient
     // ========== INDEX MGMT ==========
     //
 
+    /// <summary>
+    /// Flushes the index
+    /// </summary>
+    /// <param name="cleanupPercentage">The cleanup percentage</param>
+    /// <param name="synced">Set true for the index flush operation to be synchronous, this may be slower.</param>
+    /// <returns></returns>
     public async Task FlushIndex(float cleanupPercentage, bool synced)
     {
         CheckSessionHasBeenOpened();
@@ -1659,6 +1818,10 @@ public partial class ImmuClient
         await Service.FlushIndexAsync(req, Service.GetHeaders(ActiveSession));
     }
 
+    /// <summary>
+    /// Compacts the index
+    /// </summary>
+    /// <returns></returns>
     public async Task CompactIndex()
     {
         CheckSessionHasBeenOpened();
@@ -1669,6 +1832,14 @@ public partial class ImmuClient
     // ========== HISTORY ==========
     //
 
+    /// <summary>
+    /// Retrieves the value history of a specific key
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="limit">The maximum number of returned items</param>
+    /// <param name="offset">The starting index</param>
+    /// <param name="desc">The sorting order, true for descending</param>
+    /// <returns></returns>
     public async Task<List<Entry>> History(string key, int limit, ulong offset, bool desc)
     {
         return await History(Utils.ToByteArray(key), limit, offset, desc);
