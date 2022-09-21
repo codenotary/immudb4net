@@ -29,7 +29,7 @@ public partial class ImmuClient
         public  int ServerPort { get; private set; }
         public AsymmetricKeyParameter? ServerSigningKey { get; private set; }
         public bool DeploymentInfoCheck { get; private set; }
-        public ImmuStateHolder StateHolder { get; private set; }
+        public IImmuStateHolder StateHolder { get; private set; }
         public TimeSpan HeartbeatInterval {get; set;}
 
         internal IConnectionPool ConnectionPool { get; }

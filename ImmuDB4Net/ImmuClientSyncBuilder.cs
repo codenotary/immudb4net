@@ -28,7 +28,7 @@ public class ImmuClientSyncBuilder
     public int ServerPort { get; private set; }
     public AsymmetricKeyParameter? ServerSigningKey { get; private set; }
     public bool DeploymentInfoCheck { get; private set; }
-    public ImmuStateHolder StateHolder { get; private set; }
+    public IImmuStateHolder StateHolder { get; private set; }
     public TimeSpan HeartbeatInterval { get; set; }
 
     internal IConnectionPool ConnectionPool { get; }
@@ -66,7 +66,7 @@ public class ImmuClientSyncBuilder
 
     public TimeSpan ConnectionShutdownTimeout { get; internal set; }
 
-    public ImmuClientSyncBuilder WithStateHolder(ImmuStateHolder stateHolder)
+    public ImmuClientSyncBuilder WithStateHolder(IImmuStateHolder stateHolder)
     {
         StateHolder = stateHolder;
         return this;

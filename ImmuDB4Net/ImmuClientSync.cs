@@ -30,7 +30,7 @@ public partial class ImmuClientSync
     internal const string AUTH_HEADER = "authorization";
 
     private readonly AsymmetricKeyParameter? serverSigningKey;
-    private readonly ImmuStateHolder stateHolder;
+    private readonly IImmuStateHolder stateHolder;
 
     public TimeSpan ConnectionShutdownTimeout { get; set; }
     public TimeSpan IdleConnectionCheckInterval { get; internal set; }
