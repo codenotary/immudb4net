@@ -19,20 +19,18 @@ using Org.BouncyCastle.Crypto;
 
 public partial class ImmuClient
 {
-    /// <summary>
-    /// Builder class allows the creation of ImmuClient instances
-    /// </summary>
+    ///Builder is an inner class that implements the builder pattern for ImmuClient
     public class ImmuClientBuilder
     {
         public string ServerUrl { get; private set; }
         public string Username { get; private set; }
         public string Password { get; private set; }
         public string Database { get; private set; }
-        public int ServerPort { get; private set; }
+        public  int ServerPort { get; private set; }
         public AsymmetricKeyParameter? ServerSigningKey { get; private set; }
         public bool DeploymentInfoCheck { get; private set; }
-        public IImmuStateHolder StateHolder { get; private set; }
-        public TimeSpan HeartbeatInterval { get; set; }
+        public ImmuStateHolder StateHolder { get; private set; }
+        public TimeSpan HeartbeatInterval {get; set;}
 
         internal IConnectionPool ConnectionPool { get; }
         internal ISessionManager SessionManager { get; }

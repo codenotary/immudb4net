@@ -22,8 +22,10 @@ namespace ImmuDB;
 
 public interface ISessionManager
 {
-    Task<Session> OpenSession(IConnection connection, string username, string password, string initialDbName);
-    Task CloseSession(IConnection connection, Session? session);
+    Task<Session> OpenSessionAsync(IConnection connection, string username, string password, string initialDbName);
+    Session OpenSession(IConnection connection, string username, string password, string initialDbName);
+    Task CloseSessionAsync(IConnection connection, Session? session);
+    void CloseSession(IConnection connection, Session? session);
 }
 
 public class DefaultSessionManager : ISessionManager
@@ -38,7 +40,7 @@ public class DefaultSessionManager : ISessionManager
     }
     private ConcurrentDictionary<string, Session> sessions = new ConcurrentDictionary<string, Session>();
 
-    public async Task<Session> OpenSession(IConnection connection, string username, string password, string initialDbName)
+    public async Task<Session> OpenSessionAsync(IConnection connection, string username, string password, string initialDbName)
     {
         
         OpenSessionRequest openSessionRequest = new OpenSessionRequest()
@@ -56,14 +58,42 @@ public class DefaultSessionManager : ISessionManager
         sessions[result.SessionID] = session;
         return session;
     }
+    
+    public Session OpenSession(IConnection connection, string username, string password, string initialDbName)
+    {
+        
+        OpenSessionRequest openSessionRequest = new OpenSessionRequest()
+        {
+            Username = Utils.ToByteString(username),
+            Password = Utils.ToByteString(password),
+            DatabaseName = initialDbName
+        };
 
-    public async Task CloseSession(IConnection connection, Session? session)
+        var result = connection.Service.OpenSession(openSessionRequest);
+        var session = new Session(result.SessionID, result.ServerUUID)
+        {
+            Kind = TransactionKind.ReadWrite
+        };
+        sessions[result.SessionID] = session;
+        return session;
+    }
+
+    public async Task CloseSessionAsync(IConnection connection, Session? session)
     {
         if (session?.Id == null)
         {
             return;
         }
         await connection.Service.CloseSessionAsync(new Empty(), connection.Service.GetHeaders(session));
+        sessions.TryRemove(session.Id, out _);
+    }
+    public void CloseSession(IConnection connection, Session? session)
+    {
+        if (session?.Id == null)
+        {
+            return;
+        }
+        connection.Service.CloseSession(new Empty(), connection.Service.GetHeaders(session));
         sessions.TryRemove(session.Id, out _);
     }
 }

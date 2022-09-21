@@ -229,7 +229,7 @@ public partial class ImmuClient
     /// <returns></returns>
     public static async Task ReleaseSdkResources()
     {
-        await RandomAssignConnectionPool.Instance.Shutdown();
+        await RandomAssignConnectionPool.Instance.ShutdownAsync();
     }
 
     private void StartHeartbeat()
@@ -341,7 +341,7 @@ public partial class ImmuClient
                 Address = GrpcAddress,
                 ShutdownTimeout = ConnectionShutdownTimeout
             });
-            ActiveSession = await SessionManager.OpenSession(Connection, username, password, databaseName);
+            ActiveSession = await SessionManager.OpenSessionAsync(Connection, username, password, databaseName);
             ValidateLocalState();
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
@@ -392,7 +392,7 @@ public partial class ImmuClient
                 }
             }
             StopHeartbeat();
-            await SessionManager.CloseSession(Connection, ActiveSession);
+            await SessionManager.CloseSessionAsync(Connection, ActiveSession);
             ActiveSession = null;
             lock (connectionSync)
             {
