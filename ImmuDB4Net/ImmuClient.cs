@@ -88,14 +88,31 @@ public partial class ImmuClient
             }
         }
     }
-    internal ImmuStateHolder StateHolder => stateHolder;
+    internal ImmuStateHolder StateHolder
+    {
+        get
+        {
+            return stateHolder;
+        }
+    }
 
     /// <summary>
     /// Gets or sets the DeploymentInfoCheck flag. If enabled then a check of server authenticity is perform while establishing a new link with the ImmuDB server.
     /// </summary>
     /// <value>Default: true</value>
-    public bool DeploymentInfoCheck { get; set; } = true;
+    public bool DeploymentInfoCheck
+    {
+        get
+        {
+            return stateHolder.DeploymentInfoCheck;
+        }
 
+        set
+        {
+
+            stateHolder.DeploymentInfoCheck = value;
+        }
+    }
     /// <summary>
     /// Gets or sets the length of time the <see cref="Shutdown" /> function is allowed to block before it completes.
     /// </summary>
@@ -196,9 +213,9 @@ public partial class ImmuClient
         GrpcAddress = builder.GrpcAddress;
         connection = releasedConnection;
         SessionManager = builder.SessionManager;
-        DeploymentInfoCheck = builder.DeploymentInfoCheck;
         serverSigningKey = builder.ServerSigningKey;
         stateHolder = builder.StateHolder;
+        DeploymentInfoCheck = builder.DeploymentInfoCheck;
         heartbeatInterval = builder.HeartbeatInterval;
         ConnectionShutdownTimeout = builder.ConnectionShutdownTimeout;
         stateHolder.DeploymentInfoCheck = builder.DeploymentInfoCheck;
@@ -245,6 +262,54 @@ public partial class ImmuClient
         heartbeatTask = null;
     }
 
+    private void ValidateLocalState()
+    {
+        lock (stateSync)
+        {
+            var localState = stateHolder.GetState(ActiveSession, currentDb);
+            if (localState == null)
+            {
+                localState = CurrentState;
+                stateHolder.SetState(ActiveSession!, localState);
+            }
+            else
+            {
+                var serverState = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
+                try
+                {
+                    var verifiableTx = Service.VerifiableTxById(new VerifiableTxRequest
+                    {
+                        SinceTx = localState.TxId,
+                        Tx = serverState.TxId,
+                        EntriesSpec = new EntriesSpec
+                        {
+                            //TODO: double check if empty entrytypespec defaults to exclude on the server
+                            SqlEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            },
+                            KvEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            },
+                            ZEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            }
+                        }
+                    }, Service.GetHeaders(ActiveSession));
+                }
+                catch (RpcException e)
+                {
+                    if (e.Message.Contains("tx not found"))
+                    {
+                        throw new VerificationException("The local state validation against the server state failed");
+                    }
+                }
+            }
+        }
+    }
+
     /// <summary>
     /// Opens a connection to the ImmuDB server or reuses one from the connection pool. It also initiates a session with the forementioned server.
     /// </summary>
@@ -275,8 +340,9 @@ public partial class ImmuClient
             {
                 Address = GrpcAddress,
                 ShutdownTimeout = ConnectionShutdownTimeout
-            });            
+            });
             ActiveSession = await SessionManager.OpenSession(Connection, username, password, databaseName);
+            ValidateLocalState();
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
             StartHeartbeat();

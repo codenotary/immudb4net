@@ -209,6 +209,7 @@ public class StateTests : BaseClientIntTests
                             .WithServerUrl("localhost")
                             .WithServerPort(3323)
                             .WithServerSigningKey(assymKey)
+                            .CheckDeploymentInfo(false)
                             .Build();
             }
             catch (Exception e)
