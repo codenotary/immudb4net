@@ -275,7 +275,7 @@ public partial class ImmuClient
             {
                 Address = GrpcAddress,
                 ShutdownTimeout = ConnectionShutdownTimeout
-            });
+            });            
             ActiveSession = await SessionManager.OpenSession(Connection, username, password, databaseName);
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
@@ -976,6 +976,12 @@ public partial class ImmuClient
     // ========== SET ==========
     //
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> Set(byte[] key, byte[] value)
     {
         CheckSessionHasBeenOpened();
@@ -998,16 +1004,33 @@ public partial class ImmuClient
         return TxHeader.ValueOf(txHdr);
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> Set(string key, byte[] value)
     {
         return await Set(Utils.ToByteArray(key), value);
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> Set(string key, string value)
     {
         return await Set(Utils.ToByteArray(key), Utils.ToByteArray(value));
     }
 
+    /// <summary>
+    /// Adds a list of key/value pairs
+    /// </summary>
+    /// <param name="kvList">The list of pairs to be added</param>
+    /// <returns>The transaction information</returns>
     public async Task<TxHeader> SetAll(List<KVPair> kvList)
     {
         CheckSessionHasBeenOpened();
@@ -1030,6 +1053,13 @@ public partial class ImmuClient
         return TxHeader.ValueOf(txHdr);
     }
 
+    /// <summary>
+    /// Adds a tag (reference) to a specific key/value element
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="referencedKey"></param>
+    /// <param name="atTx"></param>
+    /// <returns></returns>
     public async Task<TxHeader> SetReference(byte[] key, byte[] referencedKey, ulong atTx)
     {
         CheckSessionHasBeenOpened();
