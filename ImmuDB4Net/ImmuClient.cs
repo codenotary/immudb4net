@@ -157,27 +157,6 @@ public partial class ImmuClient
     }
 
     /// <summary>
-    /// This inner class keeps the global settings that are used across all <see cref="ImmuClient" /> instances
-    /// </summary>
-    public class LibraryWideSettings
-    {
-        /// <summary>
-        /// Gets or sets the 
-        /// </summary>
-        /// <value></value>
-        public int MaxConnectionsPerServer { get; set; }
-        public TimeSpan TerminateIdleConnectionTimeout { get; set; }
-        public TimeSpan IdleConnectionCheckInterval { get; set; }
-        internal LibraryWideSettings()
-        {
-            //these are the default values
-            MaxConnectionsPerServer = 2;
-            TerminateIdleConnectionTimeout = TimeSpan.FromSeconds(60);
-            IdleConnectionCheckInterval = TimeSpan.FromSeconds(6);
-        }
-    }
-
-    /// <summary>
     /// Initializes a new instance of <see cref="ImmuClient" />. It uses the default value of 'localhost:3322' as ImmuDB server address and port and 'defaultdb' as database name.
     /// </summary>
     /// <returns></returns>
@@ -528,7 +507,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction id</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetAtTx(byte[] key, ulong tx)
     {
         CheckSessionHasBeenOpened();
@@ -558,7 +537,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction id</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> Get(string key, ulong tx)
     {
         return await GetAtTx(Utils.ToByteArray(key), tx);
@@ -568,7 +547,7 @@ public partial class ImmuClient
     /// Retrieves the value for a key
     /// </summary>
     /// <param name="key">The lookup key</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> Get(string key)
     {
         return await GetAtTx(Utils.ToByteArray(key), 0);
@@ -579,7 +558,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="keyReq">The lookup key, it is composed from the string key and the transaction id</param>
     /// <param name="state">The local state. One can get the local state by calling <see cref="State" /> property </param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGet(ImmudbProxy.KeyRequest keyReq, ImmuState state)
     {
         CheckSessionHasBeenOpened();
@@ -693,7 +672,7 @@ public partial class ImmuClient
     /// Retrieves with authenticity check the value for a specific key. The assumed default TxID is 0
     /// </summary>
     /// <param name="key">The lookup key</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGet(string key)
     {
         return await VerifiedGetAtTx(key, 0);
@@ -703,7 +682,7 @@ public partial class ImmuClient
     /// Retrieves with authenticity check the value for a specific key. The assumed default TxID is 0
     /// </summary>
     /// <param name="key">The lookup key</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGet(byte[] key)
     {
         return await VerifiedGetAtTx(key, 0);
@@ -714,7 +693,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction ID</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetAtTx(string key, ulong tx)
     {
         return await VerifiedGetAtTx(Utils.ToByteArray(key), tx);
@@ -725,7 +704,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction ID</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetAtTx(byte[] key, ulong tx)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -742,7 +721,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction ID</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetSinceTx(string key, ulong tx)
     {
         return await VerifiedGetSinceTx(Utils.ToByteArray(key), tx);
@@ -753,7 +732,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction ID</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetSinceTx(byte[] key, ulong tx)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -770,7 +749,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="rev">The revision number</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetAtRevision(string key, long rev)
     {
         return await VerifiedGetAtRevision(Utils.ToByteArray(key), rev);
@@ -781,7 +760,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="rev">The transaction ID</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> VerifiedGetAtRevision(byte[] key, long rev)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -798,7 +777,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction ID</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetSinceTx(string key, ulong tx)
     {
         return await GetSinceTx(Utils.ToByteArray(key), tx);
@@ -809,7 +788,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction ID</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetSinceTx(byte[] key, ulong tx)
     {
         CheckSessionHasBeenOpened();
@@ -841,7 +820,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="rev">The revision number</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetAtRevision(string key, long rev)
     {
         return await GetAtRevision(Utils.ToByteArray(key), rev);
@@ -852,7 +831,7 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="rev">The revision number</param>
-    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public async Task<Entry> GetAtRevision(byte[] key, long rev)
     {
         CheckSessionHasBeenOpened();
@@ -881,7 +860,7 @@ public partial class ImmuClient
     /// Retrieves the values for the specified keys. This is a batch equivalent of Get.
     /// </summary>
     /// <param name="keys">The list of lookup keys</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> GetAll(List<string> keys)
     {
         CheckSessionHasBeenOpened();
@@ -920,7 +899,7 @@ public partial class ImmuClient
     /// <param name="inclusiveEnd">Optional, default is true, specifies if end key's value is included</param>
     /// <param name="limit">Optional, maximum number of of returned items</param>
     /// <param name="desc">Optional, specifies the sorting order, defaults to Desc</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, bool inclusiveSeek, bool inclusiveEnd,
                             ulong limit, bool desc)
     {
@@ -944,7 +923,7 @@ public partial class ImmuClient
     /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
     /// </summary>
     /// <param name="prefix">Prefix of the keys</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(string prefix)
     {
         return await Scan(Utils.ToByteArray(prefix));
@@ -954,7 +933,7 @@ public partial class ImmuClient
     /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
     /// </summary>
     /// <param name="prefix">Prefix of the keys</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix)
     {
         return await Scan(prefix, 0, false);
@@ -966,7 +945,7 @@ public partial class ImmuClient
     /// <param name="prefix">Prefix of the keys</param>
     /// <param name="limit">Maximum number of of returned items</param>
     /// <param name="desc">Specifies the sorting order</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(string prefix, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), limit, desc);
@@ -978,7 +957,7 @@ public partial class ImmuClient
     /// <param name="prefix">Prefix of the keys</param>
     /// <param name="limit">Maximum number of of returned items</param>
     /// <param name="desc">Specifies the sorting order</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix, ulong limit, bool desc)
     {
         return await Scan(prefix, new byte[0], limit, desc);
@@ -991,7 +970,7 @@ public partial class ImmuClient
     /// <param name="seekKey">Initial key for the first entry in the iteration</param>
     /// <param name="limit">Maximum number of of returned items</param>
     /// <param name="desc">Specifies if the sorting order is of descending</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(string prefix, string seekKey, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), limit, desc);
@@ -1005,7 +984,7 @@ public partial class ImmuClient
     /// <param name="endKey">End key for the scanning range</param>
     /// <param name="limit">Maximum number of of returned items</param>
     /// <param name="desc">Specifies if the sorting order is of descending</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(string prefix, string seekKey, string endKey, ulong limit, bool desc)
     {
         return await Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), Utils.ToByteArray(endKey), limit, desc);
@@ -1018,7 +997,7 @@ public partial class ImmuClient
     /// <param name="seekKey">Initial key for the first entry in the iteration</param>
     /// <param name="limit">Maximum number of of returned items</param>
     /// <param name="desc">Specifies if the sorting order is of descending</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, ulong limit, bool desc)
     {
         return await Scan(prefix, seekKey, new byte[0], limit, desc);
@@ -1032,7 +1011,7 @@ public partial class ImmuClient
     /// <param name="endKey">End key for the scanning range</param>
     /// <param name="limit">Maximum number of of returned items</param>
     /// <param name="desc">Specifies if the sorting order is of descending</param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<Entry>> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, ulong limit, bool desc)
     {
         return await Scan(prefix, seekKey, endKey, false, false, limit, desc);
@@ -1480,7 +1459,7 @@ public partial class ImmuClient
     /// <param name="set"></param>
     /// <param name="limit"></param>
     /// <param name="reverse"></param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<ZEntry>> ZScan(string set, ulong limit, bool reverse)
     {
         return await ZScan(Utils.ToByteArray(set), limit, reverse);
@@ -1492,7 +1471,7 @@ public partial class ImmuClient
     /// <param name="set"></param>
     /// <param name="limit"></param>
     /// <param name="reverse"></param>
-    /// <returns>A list of <see ref="Entry"/> objects.</returns>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public async Task<List<ZEntry>> ZScan(byte[] set, ulong limit, bool reverse)
     {
         CheckSessionHasBeenOpened();
@@ -1723,6 +1702,9 @@ public partial class ImmuClient
         return healthResponse.Status;
     }
 
+    /// <summary>
+    /// Gets the Connected status
+    /// </summary>
     public bool IsConnected => !Connection.Released;
 
     //
@@ -1845,6 +1827,14 @@ public partial class ImmuClient
         return await History(Utils.ToByteArray(key), limit, offset, desc);
     }
 
+    /// <summary>
+    /// Retrieves the value history of a specific key
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="limit">The maximum number of returned items</param>
+    /// <param name="offset">The starting index</param>
+    /// <param name="desc">The sorting order, true for descending</param>
+    /// <returns></returns>
     public async Task<List<Entry>> History(byte[] key, int limit, ulong offset, bool desc)
     {
         CheckSessionHasBeenOpened();
