@@ -44,6 +44,7 @@ namespace ImmuDB.Tests
                 .WithStateHolder(stateHolder)
                 .WithServerUrl("localhost")
                 .WithServerPort(3325)
+                .CheckDeploymentInfo(false)
                 .Build();
         }
 
@@ -62,6 +63,7 @@ namespace ImmuDB.Tests
                 .WithServerUrl("localhost")
                 .WithServerPort(3325)
                 .WithHeartbeatInterval(heartbeatInterval)
+                .CheckDeploymentInfo(false)
                 .Build();
         }
 

@@ -94,6 +94,7 @@ public class BuilderTests
         {
             client = await ImmuClient.NewBuilder()
                 .WithServerPort(3325)
+                .CheckDeploymentInfo(false)
                 .Open();
             TxHeader hdr0 = await client.Set("k0", "v0");
             Assert.IsNotNull(hdr0);
@@ -110,40 +111,19 @@ public class BuilderTests
         }
     }
 
-    [TestMethod("simplified initialization with constructor")]
-    public async Task Test3()
-    {
-        try
-        {
-            client = new ImmuClient("localhost", 3325);
-            await client.Open("immudb", "immudb", "defaultdb");
-            TxHeader hdr0 = await client.Set("k0", "v0");
-            Assert.IsNotNull(hdr0);
-            Entry entry0 = await client.Get("k0");
-            Assert.AreEqual(entry0.ToString(), "v0");
-
-        }
-        finally
-        {
-            if (client != null)
-            {
-                await client.Close();
-            }
-        }
-    }
-
-    [TestMethod("StateHolder custom server key")]
+    [TestMethod("simplified initialization and StateHolder server key in ProgramData or .local/shared/ folder")]
     public async Task Test4()
     {
         try
         {
             client = new ImmuClient("localhost", 3325);
+            // same as the above comment
+            client.DeploymentInfoCheck = false;
             await client.Open("immudb", "immudb", "defaultdb");
             TxHeader hdr0 = await client.Set("k0", "v0");
             Assert.IsNotNull(hdr0);
             Entry entry0 = await client.Get("k0");
             Assert.AreEqual(entry0.ToString(), "v0");
-
         }
         finally
         {
@@ -162,12 +142,13 @@ public class BuilderTests
         {
             client = await ImmuClient.NewBuilder()
                  .WithServerPort(3325)
+                 .CheckDeploymentInfo(false)
                  .Open();
             string hashedStateFolder = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "immudb4net",
                     Utils.GenerateShortHash(client.GrpcAddress));
-            if(Directory.Exists(hashedStateFolder))
+            if (Directory.Exists(hashedStateFolder))
             {
                 Directory.Delete(hashedStateFolder, true);
             }
@@ -214,62 +195,30 @@ public class BuilderTests
         }
     }
 
-[TestMethod("access the same server at a different grpc address. first on localhost and then 127.0.0.1")]
- public async Task Test6()
+    [TestMethod("access the same server at a different grpc address. first on localhost and then 127.0.0.1")]
+    public async Task Test6()
     {
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
         ImmuClient? client2 = null;
         try
         {
-            client = await ImmuClient.NewBuilder()
-                 .WithServerPort(3325)
-                 .Open();
+            client = new ImmuClient("localhost", 3325);
             string hashedStateFolder = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                     "immudb4net",
                     Utils.GenerateShortHash(client.GrpcAddress));
-            if(Directory.Exists(hashedStateFolder))
+            if (Directory.Exists(hashedStateFolder))
             {
                 Directory.Delete(hashedStateFolder, true);
             }
-
-            byte[] v = new byte[] { 0, 1, 2, 3 };
-
-            TxHeader hdr1 = await client.VerifiedSet("mykey", v);
-            Assert.IsNotNull(hdr1);
-
-            //the client1 and later client2 deployment keys are read after the state has been saved. later, the state will be synced during open call
+            await client.Open("immudb", "immudb", "defaultdb");
             var client1DeploymentKey = ((FileImmuStateHolder)client.StateHolder).DeploymentKey;
-
-            Entry ventry1 = await client.VerifiedGet("mykey");
-            CollectionAssert.AreEqual(v, ventry1.Value);
-
-            Entry e = await client.GetSinceTx("mykey", hdr1.Id);
-            Assert.IsNotNull(e);
-            CollectionAssert.AreEqual(e.Value, v);
-
             client2 = await ImmuClient.NewBuilder()
                  .WithServerUrl("127.0.0.1")
                  .WithServerPort(3325)
                  .Open();
-
-            var client2DeploymentKeyInitial = ((FileImmuStateHolder)client2.StateHolder).DeploymentKey;
-            Assert.AreNotEqual(client1DeploymentKey, client2DeploymentKeyInitial);
-          
-            TxHeader hdr2 = await client2.VerifiedSet("mykey", v);
-            Assert.IsNotNull(hdr2);
-
             var client2DeploymentKey = ((FileImmuStateHolder)client2.StateHolder).DeploymentKey;
-
-            Entry ventry2 = await client2.VerifiedGet("mykey");
-            CollectionAssert.AreEqual(v, ventry2.Value);
-
-            Entry e2 = await client2.GetSinceTx("mykey", hdr2.Id);
-            Assert.IsNotNull(e2);
-            CollectionAssert.AreEqual(e.Value, v);
-
             Assert.AreEqual(client1DeploymentKey, client2DeploymentKey);
-
         }
         finally
         {
@@ -280,6 +229,32 @@ public class BuilderTests
             if (client2 != null)
             {
                 await client2.Close();
+            }
+        }
+    }
+
+    [TestMethod("state is synchronized when session opens")]
+    public async Task Test7()
+    {
+        try
+        {
+            client = new ImmuClient("localhost", 3325);
+            string hashedStateFolder = Path.Combine(
+                  Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                  "immudb4net",
+                  Utils.GenerateShortHash(client.GrpcAddress));
+            if (Directory.Exists(hashedStateFolder))
+            {
+                Directory.Delete(hashedStateFolder, true);
+            }
+            await client.Open("immudb", "immudb", "defaultdb");
+            Assert.IsTrue(Directory.Exists(hashedStateFolder));
+        }
+        finally
+        {
+            if (client != null)
+            {
+                await client.Close();
             }
         }
     }
