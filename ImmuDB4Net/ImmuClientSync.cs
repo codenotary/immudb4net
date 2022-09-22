@@ -1889,10 +1889,13 @@ public partial class ImmuClientSync
 
         foreach (var item in result.Txs)
         {
+            if(item.Header == null)
+            {
+                continue;
+            }
             sqlResult.Items.Add(new SQLExecResultItem { TxID = item.Header.Id, UpdatedRowsCount = item.UpdatedRows });
         }
         return sqlResult;
-
     }
 
     /// <summary>

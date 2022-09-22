@@ -133,7 +133,29 @@ public class BasicClientTests : BaseClientIntTests
         }
 
         await client.Close();
-    }  
+    }
+
+     [TestMethod("execute open, verifiedset and verifiedget")]
+    public async Task TestSimpleVerifiedSetAndGet()
+    {
+        await client!.Open("immudb", "immudb", "defaultdb");
+
+        byte[] v0 = new byte[] { 0, 1, 2, 3 };
+        byte[] v1 = new byte[] { 3, 2, 1, 0 };
+
+        TxHeader hdr0 = await client.VerifiedSet("k0", v0);
+        Assert.IsNotNull(hdr0);
+
+        Entry ventry0 = await client.VerifiedGet("k0");
+        CollectionAssert.AreEqual(ventry0.Value, v0);
+
+        TxHeader hdr1 = await client.VerifiedSet("key1", "value1");
+        Assert.IsNotNull(hdr1);
+
+        Entry ventry1 = await client.VerifiedGet("key1");
+        Assert.AreEqual("value1", ventry1.ToString());
+        await client.Close();
+    }
     
     [TestMethod("execute sqlexec and query")]
     public async Task Test3()

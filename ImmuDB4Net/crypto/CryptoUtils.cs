@@ -70,6 +70,10 @@ public static class CryptoUtils
     */
     public static byte[] DigestFrom(byte[] digest)
     {
+        if(digest == null)
+        {
+            return new byte[] { };
+        }
         if (digest.Length != Consts.SHA256_SIZE)
         {
             return new byte[] { };
