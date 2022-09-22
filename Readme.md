@@ -4,28 +4,24 @@
 
 ## Contents
 
-- [ImmuDB4Net]
-
-- [ImmuDB4Net - The Official [immudb] Client for .NET ![License](LICENSE)](#immudb4net---the-official-immudb-client-for-net-)
-  - [Contents](#contents)
-  - [1. Introduction](#1-introduction)
-  - [2. Prerequisites](#2-prerequisites)
-  - [3. Installation](#3-installation)
-  - [4. Build locally from sources](#4-build-locally-from-sources)
-  - [5. Supported Versions](#5-supported-versions)
-  - [6. Quickstart](#6-quickstart)
-  - [7. Step-by-step Guide](#7-step-by-step-guide)
-    - [7.1. Creating a Client](#71-creating-a-client)
-    - [7.2. User Sessions](#72-user-sessions)
-    - [7.3. Creating a Database](#73-creating-a-database)
-    - [7.4. Setting the Active Database](#74-setting-the-active-database)
-    - [7.5. Standard Read and Write](#75-standard-read-and-write)
-    - [7.6. Verified or Safe Read and Write](#76-verified-or-safe-read-and-write)
-    - [7.7. Multi-key Read and Write](#77-multi-key-read-and-write)
-    - [7.8. Executing SQL statements and queries](#78-executing-sql-statements-and-queries)
-    - [7.9. Closing the client](#79-closing-the-client)
-  - [8. Building from source](#8-building-from-source)
-  - [9. Contributing](#9-contributing)
+- [1. Introduction](#1-introduction)
+- [2. Prerequisites](#2-prerequisites)
+- [3. Installation](#3-installation)
+- [4. Build locally from sources](#4-build-locally-from-sources)
+- [5. Supported Versions](#5-supported-versions)
+- [6. Quickstart](#6-quickstart)
+- [7. Step-by-step Guide](#7-step-by-step-guide)
+  - [7.1. Creating a Client](#71-creating-a-client)
+  - [7.2. User Sessions](#72-user-sessions)
+  - [7.3. Creating a Database](#73-creating-a-database)
+  - [7.4. Setting the Active Database](#74-setting-the-active-database)
+  - [7.5. Standard Read and Write](#75-standard-read-and-write)
+  - [7.6. Verified or Safe Read and Write](#76-verified-or-safe-read-and-write)
+  - [7.7. Multi-key Read and Write](#77-multi-key-read-and-write)
+  - [7.8. Executing SQL statements and queries](#78-executing-sql-statements-and-queries)
+  - [7.9. Closing the client](#79-closing-the-client)
+- [8. Building from source](#8-building-from-source)
+- [9. Contributing](#9-contributing)
 
 ## 1. Introduction
 
