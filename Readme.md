@@ -59,11 +59,9 @@ ImmuDB4Net supports the [latest immudb server] release, that is 1.3.2 at the tim
 
 ## 6. Quickstart
 
-[Hello Immutable World!] example can be found in `immudb-client-examples` repo.
+[Hello Immutable World!] example can be found in `immudb-client-examples` repo:
 
-[Hello Immutable World!]: https://github.com/codenotary/immudb-client-examples/tree/master/c#
-
-Follow its [README](https://github.com/codenotary/immudb-client-examples/blob/master/c#/README.md) to build and run it.
+[Hello Immutable World!]: https://github.com/codenotary/immudb-client-examples/blob/feat/dotnet-example/dotnet/simple-app
 
 ## 7. Step-by-step Guide
 
@@ -241,7 +239,7 @@ ImmuDB4Net provides `SQLExec` and `SQLQuery` commands and an example of usage is
 
 ### 7.9. Closing the client
 
-Use `Close`, for closing the connection with immudb server . When terminating the process, use the `ImmuClient.ReleaseSdkResources` operation :
+Use `Close`, for closing the connection with immudb server . When terminating the process, use the `ImmuClient.ReleaseSdkResources` function :
 
 ``` C#
     await client.Close();
@@ -255,7 +253,7 @@ Note: After the shutdown, a new client needs to be created to establish a new co
 To build from source you need as prerequisites to clone a local copy of the git repo: <https://github.com/codenotary/immudb4net>
 and then to have installed on the build machine the dotnet 6.0 SDK. Then, from the terminal just run ```dotnet build``` .
 
-In order to successfully execute the integration tests with the command```dotnet test``` to have to install as prerequisites ```docker``` and also to start locally an ImmuDB instance on port 3322. For example, you can run ImmuDB in docker as below:
+In order to successfully execute the integration tests with the command```dotnet test``` you have to install as prerequisites ```docker``` and also to start locally an ImmuDB instance on port 3322. For example, you can run ImmuDB in docker as below:
 
 ``` bash
 docker run -d --name immudb -p 3322:3322 codenotary/immudb:latest
