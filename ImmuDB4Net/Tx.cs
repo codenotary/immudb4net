@@ -71,7 +71,7 @@ public class Tx
         {
             throw new KeyNotFoundException();
         }
-        return Htree.inclusionProof(kindex);
+        return Htree.InclusionProof(kindex);
     }
 
     private int IndexOf(byte[] key)

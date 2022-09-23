@@ -29,9 +29,11 @@ public static class CryptoUtils
     // So we treat this case as in Go.
     private static byte[] SHA256_SUM_OF_NULL = Convert.FromBase64String("47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=");
 
-    /**
-     * This method returns a SHA256 digest of the provided data.
-     */
+    /// <summary>
+    /// This method returns a SHA256 digest of the provided data.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public static byte[] Sha256Sum(byte[] data)
     {
         if ((data == null) || data.Length == 0)
@@ -65,9 +67,11 @@ public static class CryptoUtils
         return result;
     }
 
-    /**
-    * Copy the provided `digest` array into a byte[32] array.
-    */
+    /// <summary>
+    /// Copies the provided `digest` array into a byte[32] array.
+    /// </summary>
+    /// <param name="digest"></param>
+    /// <returns></returns>
     public static byte[] DigestFrom(byte[] digest)
     {
         if(digest == null)

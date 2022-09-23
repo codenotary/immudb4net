@@ -75,10 +75,12 @@ public static class Utils
         Array.Copy(key, 0, refVal, 1 + 8, key.Length);
         return refVal;
     }
-
-    /**
-     * Convert the list of SHA256 (32-length) bytes to a primitive byte[][].
-     */
+    
+    /// <summary>
+    /// Convert the list of SHA256 (32-length) bytes to a primitive byte[][].
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public static byte[][] ConvertSha256ListToBytesArray(RepeatedField<ByteString> data)
     {
         if (data == null)

@@ -18,12 +18,9 @@ using Org.BouncyCastle.Math;
 
 namespace ImmuDB.Crypto;
 
-/**
- * This is a hash tree implementation.
- * It is closely based on the Go version that is part of immudb 0.9 Go SDK.
- *
- * @author dxps
- */
+/// <summary>
+/// This is a hash tree implementation. 
+/// </summary>
 public class HTree
 {
     private byte[][][] levels;
@@ -54,7 +51,7 @@ public class HTree
         {
             levels[l] = new byte[lw >> l][];
         }
-        root = new byte[] {};
+        root = new byte[] { };
     }
 
     public void BuildWith(byte[][] digests)
@@ -112,12 +109,10 @@ public class HTree
         root = levels[l][0];
     }
 
-    /**
-     * Get the root of the tree.
-     *
-     * @return A 32-long array of bytes.
-     * @throws IllegalStateException when internal state (width) is zero.
-     */
+    /// <summary>
+    /// Get the root of the tree.
+    /// </summary>
+    /// <returns>A 32-long array of bytes.</returns>
     public byte[] Root()
     {
         if (width == 0)
@@ -126,15 +121,15 @@ public class HTree
         }
         return root;
     }
-
-    /**
-     * InclusionProof returns the shortest list of additional nodes required to
-     * compute the root. It's an adaption of the algorithm for proof construction
-     * that exists at github.com/codenotary/merkletree.
-     *
-     * @param i Index of the node from which the inclusion proof will be provided.
-     */
-    public InclusionProof inclusionProof(int i)
+    
+    /// <summary>
+    /// InclusionProof returns the shortest list of additional nodes required to
+    /// compute the root. It's an adaption of the algorithm for proof construction
+    /// that exists at github.com/codenotary/merkletree.
+    /// </summary>
+    /// <param name="i">Index of the node from which the inclusion proof will be provided.</param>
+    /// <returns>The <see cref="InclusionProof" /> object</returns>
+    public InclusionProof InclusionProof(int i)
     {
         if (i >= width)
         {
@@ -147,7 +142,7 @@ public class HTree
 
         if (width == 1)
         {
-            return new InclusionProof(i, width, new byte[][] {});
+            return new InclusionProof(i, width, new byte[][] { });
         }
 
         byte[][] terms = new byte[0][];

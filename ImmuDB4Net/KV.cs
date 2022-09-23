@@ -18,9 +18,9 @@ using ImmuDB.Crypto;
 
 namespace ImmuDB;
 
-/**
- * KV represents a key value pair.
- */
+/// <summary>
+/// KV represents a key value pair with metadata
+/// </summary>
 public class KV
 {
     public byte[] Key { get; private set; }

@@ -1,17 +1,18 @@
 namespace ImmuDB;
 
-public static class Consts {
+public static class Consts
+{
 
     // __________ prefixes __________
 
-    /**
-     * HTree's byte prefix of a leaf's digest.
-     */
+    /// <summary>
+    /// HTree's byte prefix of a leaf's digest. 
+    /// </summary>
     public static readonly byte LEAF_PREFIX = 0;
 
-    /**
-     * HTree's byte prefix of a node (non-leaf)'s digest.
-     */
+    /// <summary>
+    /// HTree's byte prefix of a node (non-leaf)'s digest. 
+    /// </summary>
     public static readonly byte NODE_PREFIX = 1;
 
     public static readonly byte SET_KEY_PREFIX = 0;
@@ -22,33 +23,33 @@ public static class Consts {
 
     // __________ sizes & lengths __________
 
-    /**
-     * The size (in bytes) of the data type used for storing the length of a SHA256 checksum.
-     */
+    /// <summary>
+    /// The size (in bytes) of the data type used for storing the length of a SHA256 checksum. 
+    /// </summary>
     public static readonly int SHA256_SIZE = 32;
 
-    /**
-     * The size (in bytes) of the data type used for storing the transaction identifier.
-     */
+    /// <summary>
+    /// The size (in bytes) of the data type used for storing the transaction identifier.
+    /// </summary>
     public static readonly int TX_ID_SIZE = 8;
 
-    /**
-     * The size (in bytes) of the data type used for storing the transaction timestamp.
-     */
+    /// <summary>
+    /// The size (in bytes) of the data type used for storing the transaction timestamp.
+    /// </summary>
     public static readonly int TS_SIZE = 8;
 
-    /**
-     * The size (in bytes) of the data type used for storing the sorted set length.
-     */
+    /// <summary>
+    /// The size (in bytes) of the data type used for storing the sorted set length. 
+    /// </summary>
     public static readonly int SET_LEN_LEN = 8;
 
-    /**
-     * The size (in bytes) of the data type used for storing the score length.
-     */
+    /// <summary>
+    /// The size (in bytes) of the data type used for storing the score length. 
+    /// </summary>
     public static readonly int SCORE_LEN = 8;
 
-    /**
-     * The size (in bytes) of the data type used for storing the length of a key length.
-     */
+    /// <summary>
+    /// The size (in bytes) of the data type used for storing the length of a key length.
+    /// </summary>
     public static readonly int KEY_LEN_LEN = 8;
 }
