@@ -30,7 +30,6 @@ using Org.BouncyCastle.Crypto;
 
 /// <summary>
 /// Class ImmuClient provides the awaitable API for accessing an ImmuDB server. If synchronous support is needed, use <see cref="ImmuClientSync" />
-/// Class ImmuClient provides the awaitable API for accessing an ImmuDB server. If synchronous support is needed, use <see cref="ImmuClientSync" />
 /// </summary>
 public partial class ImmuClient
 {
