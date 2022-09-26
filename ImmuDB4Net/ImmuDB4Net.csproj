@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>10.0</LangVersion>
 		<PackageId>ImmuDB4Net</PackageId>
-		<Version>1.0.5-rc3</Version>
-		<PackageVersion>1.0.5-rc3</PackageVersion>
+		<Version>1.0.5-rc4</Version>
+		<PackageVersion>1.0.5-rc4</PackageVersion>
 		<Authors>CodeNotary engineering</Authors>
 		<Company>CodeNotary Inc.</Company>
 		<RepositoryUrl>https://github.com/codenotary/immudb4net</RepositoryUrl>
@@ -19,6 +19,7 @@
 		<Copyright>CodeNotary Inc.</Copyright>
 		<Owners>CodeNotary Inc.</Owners>
 		<PackageTags>immudb codenotary immutable sbom</PackageTags>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">

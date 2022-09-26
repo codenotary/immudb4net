@@ -27,6 +27,9 @@ using ImmuDB.SQL;
 using ImmudbProxy;
 using Org.BouncyCastle.Crypto;
 
+/// <summary>
+/// Class ImmuClientSync provides the synchronous API for accessing an ImmuDB server. If synchronous support is needed, use <see cref="ImmuClient" />
+/// </summary>
 public partial class ImmuClientSync
 {
     internal const string AUTH_HEADER = "authorization";
@@ -112,7 +115,7 @@ public partial class ImmuClientSync
         }
     }
     /// <summary>
-    /// Gets or sets the length of time the <see cref="Shutdown" /> function is allowed to block before it completes.
+    /// Gets or sets the length of time the <see cref="Close()" /> function is allowed to block before it completes.
     /// </summary>
     /// <value>Default: 2 sec</value>
     public TimeSpan ConnectionShutdownTimeout { get; set; }
@@ -129,7 +132,7 @@ public partial class ImmuClientSync
     /// <value></value>
     /// <remarks>
     /// This value is computed from the server url and server port arguments that come either from 
-    /// <see cref="ImmuClientBuilder.Build()" /> or <see cref="ImmuClient.ImmuClient(string, int))" /> constructor
+    /// <see cref="ImmuClientSyncBuilder.Build()" /> or <see cref="ImmuClientSync(string, int)" /> constructor
     /// </remarks>
     public string GrpcAddress { get; }
 
@@ -191,7 +194,7 @@ public partial class ImmuClientSync
         SessionManager = builder.SessionManager;
         stateHolder = builder.StateHolder;
         DeploymentInfoCheck = builder.DeploymentInfoCheck;
-        serverSigningKey = builder.ServerSigningKey;        
+        serverSigningKey = builder.ServerSigningKey;
         heartbeatInterval = builder.HeartbeatInterval;
         ConnectionShutdownTimeout = builder.ConnectionShutdownTimeout;
         stateHolder.DeploymentInfoCheck = builder.DeploymentInfoCheck;
@@ -245,7 +248,7 @@ public partial class ImmuClientSync
     /// <param name="password">The username's password</param>
     /// <param name="databaseName">The database to use</param>
     /// <returns></returns>
-    public void Open(string username, string password, string defaultdb)
+    public void Open(string username, string password, string databaseName)
     {
         lock (sessionSync)
         {
@@ -258,7 +261,7 @@ public partial class ImmuClientSync
                 Address = GrpcAddress,
                 ShutdownTimeout = ConnectionShutdownTimeout
             });
-            activeSession = SessionManager.OpenSession(Connection, username, password, defaultdb);
+            activeSession = SessionManager.OpenSession(Connection, username, password, databaseName);
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
             StartHeartbeat();
@@ -1256,6 +1259,7 @@ public partial class ImmuClientSync
     /// <param name="set">The set identifier</param>
     /// <param name="key">The lookup key</param>
     /// <param name="score">The score</param>
+    /// <param name="atTx">Transaction ID</param>
     /// <returns>The transaction information</returns>
     public TxHeader VerifiedZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
@@ -1354,6 +1358,7 @@ public partial class ImmuClientSync
     /// </summary>
     /// <param name="set">The set identifier</param>
     /// <param name="key">The lookup key</param>
+    /// <param name="atTx">Transaction ID</param>
     /// <param name="score">The score</param>
     /// <returns>The transaction information</returns>
     public TxHeader VerifiedZAdd(string set, string key, ulong atTx, double score)
@@ -1582,7 +1587,8 @@ public partial class ImmuClientSync
     /// Iterates over the transactions 
     /// </summary>
     /// <param name="initialTxId">Initial transaction ID</param>
-    /// <returns>A list of transactions information</returns>
+    /// <param name="limit">The maximum number of transactions</param>
+    /// <param name="desc">True for descending order</param>    /// <returns>A list of transactions information</returns>
     public List<Tx> TxScan(ulong initialTxId, uint limit, bool desc)
     {
         ImmudbProxy.TxScanRequest req = new ImmudbProxy.TxScanRequest()
@@ -1651,12 +1657,12 @@ public partial class ImmuClientSync
     /// <param name="permission">The <see cref="Iam.Permission"/> object</param>
     /// <param name="database">The database where the user is created</param>
     /// <returns></returns>
-    public void CreateUser(string user, string password, Iam.Permission permission, string database)
+    public void CreateUser(string username, string password, Iam.Permission permission, string database)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.CreateUserRequest createUserRequest = new ImmudbProxy.CreateUserRequest()
         {
-            User = Utils.ToByteString(user),
+            User = Utils.ToByteString(username),
             Password = Utils.ToByteString(password),
             Permission = (uint)permission,
             Database = database
@@ -1672,12 +1678,12 @@ public partial class ImmuClientSync
     /// <param name="oldPassword">The username's old password</param>
     /// <param name="newPassword">The new password</param>
     /// <returns></returns>
-    public void ChangePassword(string user, string oldPassword, string newPassword)
+    public void ChangePassword(string username, string oldPassword, string newPassword)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.ChangePasswordRequest changePasswordRequest = new ImmudbProxy.ChangePasswordRequest()
         {
-            User = Utils.ToByteString(user),
+            User = Utils.ToByteString(username),
             OldPassword = Utils.ToByteString(oldPassword),
             NewPassword = Utils.ToByteString(newPassword),
         };
@@ -1889,7 +1895,7 @@ public partial class ImmuClientSync
 
         foreach (var item in result.Txs)
         {
-            if(item.Header == null)
+            if (item.Header == null)
             {
                 continue;
             }

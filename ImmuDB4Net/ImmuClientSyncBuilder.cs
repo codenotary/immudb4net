@@ -23,15 +23,52 @@ using Org.BouncyCastle.Crypto;
 /// </summary>
 public class ImmuClientSyncBuilder
 {
+/// <summary>
+    /// Gets the server URL, such as localhost or http://localhost
+    /// </summary>
+    /// <value></value>
     public string ServerUrl { get; private set; }
+    /// <summary>
+    /// Gets the username
+    /// </summary>
+    /// <value></value>
     public string Username { get; private set; }
+    /// <summary>
+    /// Gets the password
+    /// </summary>
+    /// <value></value>
     public string Password { get; private set; }
+    /// <summary>
+    /// Gets the database name, such as DefaultDB
+    /// </summary>
+    /// <value></value>
     public string Database { get; private set; }
+    /// <summary>
+    /// Gets the port number, ex: 3322
+    /// </summary>
+    /// <value></value>
     public int ServerPort { get; private set; }
+    /// <summary>
+    /// Gets the public-private key pair
+    /// </summary>
+    /// <value></value>
     public AsymmetricKeyParameter? ServerSigningKey { get; private set; }
+    /// <summary>
+    /// Gets the DeploymentInfoCheck flag. If this flag is set then a check of server authenticity is perform while establishing a new link with the ImmuDB server.
+    /// </summary>
+    /// <value></value>
     public bool DeploymentInfoCheck { get; private set; }
+    /// <summary>
+    /// Gets the StateHolder instance. Default is of type <see cref="FileImmuStateHolder" />
+    /// </summary>
+    /// <value></value>
     public IImmuStateHolder StateHolder { get; private set; }
+    /// <summary>
+    /// Gets or sets the time interval between heartbeat gRPC calls
+    /// </summary>
+    /// <value></value>
     public TimeSpan HeartbeatInterval { get; set; }
+
 
     internal IConnectionPool ConnectionPool { get; }
     internal ISessionManager SessionManager { get; }
@@ -74,7 +111,7 @@ public class ImmuClientSyncBuilder
     }
 
     /// <summary>
-    /// Gets the length of time the <see cref="ImmuClient.Shutdown" /> function is allowed to block before it completes.
+    /// Gets the length of time the <see cref="ImmuClient.Close" /> function is allowed to block before it completes.
     /// </summary>
     /// <value>Default: 2 sec</value>
     public TimeSpan ConnectionShutdownTimeout { get; internal set; }
@@ -159,7 +196,7 @@ public class ImmuClientSyncBuilder
     }
 
     /// <summary>
-    /// Sets the length of time the <see cref="ImmuClientSync.Shutdown" /> function is allowed to block before it completes.
+    /// Sets the length of time the <see cref="ImmuClientSync.Close" /> function is allowed to block before it completes.
     /// </summary>
     /// <param name="timeout"></param>
     /// <returns></returns>

@@ -29,7 +29,8 @@ using Org.BouncyCastle.Crypto;
 
 
 /// <summary>
-/// Class ImmuClient provides the awaitable API for accessing an ImmuDB server. If synchronous support is needed, use <see cref="ImmuClientSync" class />
+/// Class ImmuClient provides the awaitable API for accessing an ImmuDB server. If synchronous support is needed, use <see cref="ImmuClientSync" />
+/// Class ImmuClient provides the awaitable API for accessing an ImmuDB server. If synchronous support is needed, use <see cref="ImmuClientSync" />
 /// </summary>
 public partial class ImmuClient
 {
@@ -116,7 +117,7 @@ public partial class ImmuClient
         }
     }
     /// <summary>
-    /// Gets or sets the length of time the <see cref="Shutdown" /> function is allowed to block before it completes.
+    /// Gets or sets the length of time the <see cref="ImmuClient.Close" /> function is allowed to block before it completes.
     /// </summary>
     /// <value>Default: 2 sec</value>
     public TimeSpan ConnectionShutdownTimeout { get; set; }
@@ -133,7 +134,7 @@ public partial class ImmuClient
     /// <value></value>
     /// <remarks>
     /// This value is computed from the server url and server port arguments that come either from 
-    /// <see cref="ImmuClientBuilder.Build()" /> or <see cref="ImmuClient.ImmuClient(string, int))" /> constructor
+    /// <see cref="ImmuClientBuilder.Build()" /> or <see cref="ImmuClient(string, int)" /> constructor
     /// </remarks>
     public string GrpcAddress { get; }
 
@@ -1349,7 +1350,8 @@ public partial class ImmuClient
     /// </summary>
     /// <param name="set">The set identifier</param>
     /// <param name="key">The lookup key</param>
-    /// <param name="score">The score</param>
+    /// <param name="score">The score</param> 
+    /// <param name="atTx">The transaction ID</param>
     /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
@@ -1449,6 +1451,7 @@ public partial class ImmuClient
     /// <param name="set">The set identifier</param>
     /// <param name="key">The lookup key</param>
     /// <param name="score">The score</param>
+    /// <param name="atTx"></param>
     /// <returns>The transaction information</returns>
     public async Task<TxHeader> VerifiedZAdd(string set, string key, ulong atTx, double score)
     {
@@ -1676,6 +1679,8 @@ public partial class ImmuClient
     /// Iterates over the transactions 
     /// </summary>
     /// <param name="initialTxId">Initial transaction ID</param>
+    /// <param name="limit">The maximum number of transactions</param>
+    /// <param name="desc">True for descending order</param>
     /// <returns>A list of transactions information</returns>
     public async Task<List<Tx>> TxScan(ulong initialTxId, uint limit, bool desc)
     {
