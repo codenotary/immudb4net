@@ -16,18 +16,44 @@ limitations under the License.
 
 namespace ImmuDB.Crypto;
 
+/// <summary>
+/// Represents an inclusion proof
+/// </summary>
 public class InclusionProof
 {
+    /// <summary>
+    /// Gets the Leaf ID
+    /// </summary>
+    /// <value></value>
     public int Leaf {get; private set;}
+    /// <summary>
+    /// Gets the width of the inclusion proof
+    /// </summary>
+    /// <value></value>
     public int Width {get; private set;}
+    /// <summary>
+    /// Gets the terms
+    /// </summary>
+    /// <value></value>
     public byte[][] Terms {get; private set;}
 
+    /// <summary>
+    /// Constructs an inclusion proof
+    /// </summary>
+    /// <param name="leaf">Leaf ID</param>
+    /// <param name="width">The width</param>
+    /// <param name="terms">The terms</param>
     public InclusionProof(int leaf, int width, byte[][] terms) {
         this.Leaf = leaf;
         this.Width = width;
         this.Terms = terms;
     }
 
+    /// <summary>
+    /// Converts from a gRPC InclusionProof
+    /// </summary>
+    /// <param name="proof"></param>
+    /// <returns>The InclusionProof</returns>
     public static InclusionProof ValueOf(ImmudbProxy.InclusionProof proof) {
         return new InclusionProof(proof.Leaf, proof.Width, CryptoUtils.DigestsFrom(proof.Terms));
     }

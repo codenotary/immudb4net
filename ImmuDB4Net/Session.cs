@@ -16,18 +16,46 @@ limitations under the License.
 
 namespace ImmuDB;
 
+/// <summary>
+/// Represents the transaction kind that will be supported in future versions
+/// </summary>
 public enum TransactionKind {
+    /// <summary>
+    /// Read mode
+    /// </summary>
     Read,
+    /// <summary>
+    /// Read and Write mode
+    /// </summary>
     ReadWrite
 }
 
+/// <summary>
+/// Represents a session that has been established after connecting to the server
+/// </summary>
 public class Session
 {
+    /// <summary>
+    /// Gets or sets the transaction kind
+    /// </summary>
     public TransactionKind Kind;
+    /// <summary>
+    /// Gets the session ID
+    /// </summary>
+    /// <value></value>
     public string Id { get; private set; }
+    /// <summary>
+    /// Gets the Server UUID
+    /// </summary>
+    /// <value></value>
     public string ServerUUID { get; private set; }
     internal string? TransactionId { get; set; }
 
+    /// <summary>
+    /// Creates a new session
+    /// </summary>
+    /// <param name="id">The session ID</param>
+    /// <param name="serverUUID">The server UUID</param>
     public Session(string id, string serverUUID) {
         Id = id; 
         ServerUUID = serverUUID;

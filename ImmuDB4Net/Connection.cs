@@ -19,22 +19,55 @@ using ImmudbProxy;
 
 namespace ImmuDB;
 
+/// <summary>
+/// IConnection represents the abstraction for an ImmuClient Connection
+/// </summary>
 public interface IConnection
 {
+    /// <summary>
+    /// Gets the address
+    /// </summary>
+    /// <value></value>
     string Address { get; }
+    /// <summary>
+    /// Reference to the gRPC ImmuServiceClient
+    /// </summary>
+    /// <value></value>
     ImmuService.ImmuServiceClient Service { get; }
+    /// <summary>
+    /// awaitable shutdown of the connection
+    /// </summary>
+    /// <returns></returns>
     Task ShutdownAsync();
+    /// <summary>
+    /// Shutsdown the connection
+    /// </summary>
     void Shutdown();
+    /// <summary>
+    /// Gets the boolean Released status of the connection
+    /// </summary>
+    /// <value></value>
     bool Released { get; }
 }
 
+/// <summary>
+/// Represents the connection parameters
+/// </summary>
 public class ConnectionParameters
 {
+    /// <summary>
+    /// Gets or sets the address
+    /// </summary>
+    /// <value></value>
     public string Address { get; set; } = "";
+    /// <summary>
+    /// Gets or  sets the length of time the connection close operation is allowed to block before it completes.
+    /// </summary>
+    /// <value></value>
     public TimeSpan ShutdownTimeout { get; set; }
 }
 
-public class Connection : IConnection
+internal class Connection : IConnection
 {
     private ImmuService.ImmuServiceClient grpcClient;
     public ImmuService.ImmuServiceClient Service => grpcClient;
@@ -81,7 +114,7 @@ public class Connection : IConnection
     }
 }
 
-public class ReleasedConnection : IConnection
+internal class ReleasedConnection : IConnection
 {
     public bool Released => true;
 

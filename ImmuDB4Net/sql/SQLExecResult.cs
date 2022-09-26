@@ -16,13 +16,29 @@ limitations under the License.
 
 namespace ImmuDB.SQL;
 
+/// <summary>
+/// Represents the data returned from an SQLExec command
+/// </summary>
 public class SQLExecResultItem
 {
+    /// <summary>
+    /// The transaction ID
+    /// </summary>
     public ulong TxID;
+    /// <summary>
+    /// The number of updated rows
+    /// </summary>
     public uint UpdatedRowsCount;
 }
 
+/// <summary>
+/// Represents a list of <see cref="SQLExecResultItem" /> objects
+/// </summary>
 public class SQLExecResult
 {
-   public List<SQLExecResultItem> Items { get; set; } = new List<SQLExecResultItem>(); 
+    /// <summary>
+    /// Gets the items
+    /// </summary>
+    /// <returns></returns>
+    public List<SQLExecResultItem> Items { get; set; } = new List<SQLExecResultItem>();
 }

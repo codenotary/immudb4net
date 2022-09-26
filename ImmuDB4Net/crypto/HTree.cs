@@ -19,7 +19,7 @@ using Org.BouncyCastle.Math;
 namespace ImmuDB.Crypto;
 
 /// <summary>
-/// This is a hash tree implementation. 
+/// A hash tree implementation. 
 /// </summary>
 public class HTree
 {
@@ -28,6 +28,10 @@ public class HTree
     private int width;
     private byte[] root;
 
+    /// <summary>
+    /// The hash tree constructor
+    /// </summary>
+    /// <param name="maxWidth">Max Width</param>
     public HTree(int maxWidth)
     {
         if (maxWidth < 1)
@@ -54,7 +58,7 @@ public class HTree
         root = new byte[] { };
     }
 
-    public void BuildWith(byte[][] digests)
+    internal void BuildWith(byte[][] digests)
     {
 
         if (digests == null || digests.Length == 0)

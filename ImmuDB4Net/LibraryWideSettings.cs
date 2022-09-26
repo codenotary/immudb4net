@@ -26,7 +26,15 @@ public class LibraryWideSettings
     /// </summary>
     /// <value></value>
     public int MaxConnectionsPerServer { get; set; }
+    /// <summary>
+    /// Gets or sets the idle time before a connection is terminated
+    /// </summary>
+    /// <value></value>
     public TimeSpan TerminateIdleConnectionTimeout { get; set; }
+    /// <summary>
+    /// Gets or sets the time interval between checking for idle connections
+    /// </summary>
+    /// <value></value>
     public TimeSpan IdleConnectionCheckInterval { get; set; }
     internal LibraryWideSettings()
     {

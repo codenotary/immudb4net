@@ -49,7 +49,7 @@ public class ZEntry
         return entry;
     }
 
-    public byte[] getEncodedKey()
+    public byte[] GetEncodedKey()
     {
         byte[] encodedKey = Utils.WrapWithPrefix(Key, Consts.SET_KEY_PREFIX);
 
@@ -70,7 +70,7 @@ public class ZEntry
     public byte[] DigestFor(int version)
     {
         KV kv = new KV(
-                    getEncodedKey(),
+                    GetEncodedKey(),
                     null,
                     new byte[] { }
         );

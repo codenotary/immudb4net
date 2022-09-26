@@ -21,7 +21,7 @@ using Google.Protobuf.Collections;
 
 namespace ImmuDB.Crypto;
 
-public static class CryptoUtils
+internal static class CryptoUtils
 {
     // FYI: Interesting enough, Go returns a fixed value for sha256.Sum256(nil) and this value is:
     // [227 176 196 66 152 252 28 20 154 251 244 200 153 111 185 36 39 174 65 228 100 155 147 76 164 149 153 27 120 82 184 85]
@@ -169,7 +169,7 @@ public static class CryptoUtils
         return i == r && root.SequenceEqual(calcRoot);
     }
 
-    public static bool VerifyDualProof(DualProof proof, ulong sourceTxId, ulong targetTxId,
+    internal static bool VerifyDualProof(DualProof proof, ulong sourceTxId, ulong targetTxId,
             byte[] sourceAlh, byte[] targetAlh)
     {
         if (proof == null || proof.SourceTxHeader == null || proof.TargetTxHeader == null

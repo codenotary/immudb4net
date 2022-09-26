@@ -16,12 +16,26 @@ limitations under the License.
 
 namespace ImmuDB.Exceptions;
 
+/// <summary>
+/// The verification Exception class
+/// </summary>
 public class VerificationException : Exception
 {
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="message">Exception message</param>
+    /// <returns></returns>
     public VerificationException(string message) : base(message)
     {
     }
 
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="message">The message</param>
+    /// <param name="cause">The cause</param>
+    /// <returns></returns>
     public VerificationException(string message, Exception cause) : base(message, cause)
     {
     }

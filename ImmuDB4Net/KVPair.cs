@@ -16,16 +16,38 @@ limitations under the License.
 
 namespace ImmuDB;
 
+/// <summary>
+/// Represents a key-value pair
+/// </summary>
 public class KVPair
 {
+    /// <summary>
+    /// The key
+    /// </summary>
+    /// <value></value>
     public byte[] Key { get; private set; }
+    /// <summary>
+    /// The value
+    /// </summary>
+    /// <value></value>
     public byte[] Value { get; private set; }
 
+    /// <summary>
+    /// Creates a new key value pair
+    /// </summary>
+    /// <param name="key">The key</param>
+    /// <param name="value">The value</param>
+    /// <returns></returns>
     public KVPair(string key, byte[] value) :
         this(Utils.ToByteArray(key), value)
     {
     }
 
+    /// <summary>
+    /// Creates a new key value pair
+    /// </summary>
+    /// <param name="key">The key</param>
+    /// <param name="value">The value</param>
     public KVPair(byte[] key, byte[] value)
     {
         this.Key = key;

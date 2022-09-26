@@ -34,7 +34,7 @@ public class ConnectionPoolTests
 
         FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
             .WithStatesFolder(tmpStateFolder)
-            .build();
+            .Build();
 
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 2;
         ImmuClient.GlobalSettings.TerminateIdleConnectionTimeout = TimeSpan.FromMilliseconds(400);

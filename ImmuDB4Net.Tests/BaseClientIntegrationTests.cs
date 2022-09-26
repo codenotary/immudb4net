@@ -35,7 +35,7 @@ namespace ImmuDB.Tests
 
             FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
                 .WithStatesFolder(tmpStateFolder)
-                .build();
+                .Build();
 
             await RandomAssignConnectionPool.ResetInstance();
 
@@ -54,7 +54,7 @@ namespace ImmuDB.Tests
             Directory.CreateDirectory(tmpStateFolder);
             FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
                 .WithStatesFolder(tmpStateFolder)
-                .build();
+                .Build();
             await RandomAssignConnectionPool.ResetInstance();
 
             ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;

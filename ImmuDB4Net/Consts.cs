@@ -1,5 +1,8 @@
 namespace ImmuDB;
 
+/// <summary>
+/// ImmuDB client specific constants
+/// </summary>
 public static class Consts
 {
 
@@ -15,11 +18,11 @@ public static class Consts
     /// </summary>
     public static readonly byte NODE_PREFIX = 1;
 
-    public static readonly byte SET_KEY_PREFIX = 0;
-    public static readonly byte SORTED_SET_KEY_PREFIX = 1;
+    internal static readonly byte SET_KEY_PREFIX = 0;
+    internal static readonly byte SORTED_SET_KEY_PREFIX = 1;
 
-    public static readonly byte PLAIN_VALUE_PREFIX = 0;
-    public static readonly byte REFERENCE_VALUE_PREFIX = 1;
+    internal static readonly byte PLAIN_VALUE_PREFIX = 0;
+    internal static readonly byte REFERENCE_VALUE_PREFIX = 1;
 
     // __________ sizes & lengths __________
 

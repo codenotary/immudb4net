@@ -18,17 +18,43 @@ using System.Data;
 
 namespace ImmuDB.SQL;
 
+/// <summary>
+/// Represents the result data of running an SQL Query statement against ImmuDB
+/// </summary>
 public class SQLQueryResult
 {
-    public List<Column> Columns { get; set; } = new List<Column>();
+    /// <summary>
+    /// Gets the column list
+    /// </summary>
+    /// <returns></returns>
+    public List<Column> Columns { get; private set; } = new List<Column>();
+    /// <summary>
+    /// Gets the row result
+    /// </summary>
+    /// <returns></returns>
     public List<Dictionary<string, SQLValue>> Rows = new List<Dictionary<string, SQLValue>>();
 
 }
 
+/// <summary>
+/// Represents a queryset column
+/// </summary>
 public class Column
 {
+    /// <summary>
+    /// The column name
+    /// </summary>
     public string Name;
+    /// <summary>
+    /// The column type
+    /// </summary>
     public string Type;
+
+    /// <summary>
+    /// Creates a new column
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="type"></param>
     public Column(string name, string type)
     {
         Name = name;
@@ -36,11 +62,28 @@ public class Column
     }
 }
 
+/// <summary>
+/// Represents an SQL value used in <see cref="ImmuClient.SQLExec" /> or <see cref="ImmuClient.SQLQuery" />
+/// </summary>
 public class SQLValue
 {
+    /// <summary>
+    /// Gets or sets the value
+    /// </summary>
+    /// <value></value>
     public object Value { get; set; }
+
+    /// <summary>
+    /// Gets or sets the value type
+    /// </summary>
+    /// <value></value>
     public SqlDbType ValueType { get; set; }
 
+    /// <summary>
+    /// Creates a new instance of SQL Value
+    /// </summary>
+    /// <param name="value">The value</param>
+    /// <param name="valueType">The value type</param>
     public SQLValue(object value, SqlDbType valueType)
     {
         Value = value;

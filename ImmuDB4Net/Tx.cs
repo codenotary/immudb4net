@@ -18,10 +18,25 @@ using ImmuDB.Crypto;
 
 namespace ImmuDB;
 
+/// <summary>
+/// Represents a transaction
+/// </summary>
 public class Tx
 {
+    /// <summary>
+    /// Gets the transaction header
+    /// </summary>
+    /// <value></value>
     public TxHeader Header {get; private set;}
+    /// <summary>
+    /// Get the transaction entries
+    /// </summary>
+    /// <value></value>
     public List<TxEntry> Entries {get; private set;}
+    /// <summary>
+    /// Gets the hash tree of the transaction
+    /// </summary>
+    /// <value></value>
     public HTree Htree {get; private set;}
 
     private Tx(TxHeader header, List<TxEntry> entries, HTree htree)
@@ -31,13 +46,18 @@ public class Tx
         this.Htree = htree;
     }
 
+    /// <summary>
+    /// Converts from a gRPC protobuf Tx instance
+    /// </summary>
+    /// <param name="stx"></param>
+    /// <returns></returns>
     public static Tx ValueOf(ImmudbProxy.Tx stx)
     {
         TxHeader header = TxHeader.ValueOf(stx.Header);
 
         List<TxEntry> entries = new List<TxEntry>(stx.Entries.Count);
 
-        stx.Entries.ToList().ForEach(txe => { entries.Add(TxEntry.valueOf(txe)); });
+        stx.Entries.ToList().ForEach(txe => { entries.Add(TxEntry.ValueOf(txe)); });
 
         HTree hTree = new HTree(entries.Count);
 
@@ -53,7 +73,9 @@ public class Tx
         return tx;
     }
 
-
+    /// <summary>
+    /// Builds the hash tree from the entries
+    /// </summary>
     public void BuildHashTree()
     {
         byte[][] digests = new byte[Entries.Count][];
@@ -64,6 +86,11 @@ public class Tx
         Htree.BuildWith(digests);
     }
 
+    /// <summary>
+    /// Computes the inclusion proof
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public InclusionProof Proof(byte[] key)
     {
         int kindex = IndexOf(key);

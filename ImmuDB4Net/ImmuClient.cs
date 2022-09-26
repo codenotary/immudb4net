@@ -607,7 +607,7 @@ public partial class ImmuClient
             throw new VerificationException("Data is corrupted: entry does not belong to specified key");
         }
 
-        if (entry.Metadata != null && entry.Metadata.Deleted())
+        if (entry.Metadata != null && entry.Metadata.Deleted)
         {
             throw new VerificationException("Data is corrupted: entry is marked as deleted");
         }
@@ -1245,7 +1245,7 @@ public partial class ImmuClient
             Value = Utils.ToByteString(value),
         });
 
-        ImmuDB.Crypto.InclusionProof inclusionProof = tx.Proof(entry.getEncodedKey());
+        ImmuDB.Crypto.InclusionProof inclusionProof = tx.Proof(entry.GetEncodedKey());
 
         if (!CryptoUtils.VerifyInclusion(inclusionProof, entry.DigestFor(txHeader.Version), txHeader.Eh))
         {
@@ -1399,7 +1399,7 @@ public partial class ImmuClient
             Score = score
         });
 
-        Crypto.InclusionProof inclusionProof = tx.Proof(entry.getEncodedKey());
+        Crypto.InclusionProof inclusionProof = tx.Proof(entry.GetEncodedKey());
 
         if (!CryptoUtils.VerifyInclusion(inclusionProof, entry.DigestFor(txHeader.Version), txHeader.Eh))
         {

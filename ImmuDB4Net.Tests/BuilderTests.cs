@@ -32,7 +32,7 @@ public class BuilderTests
 
         FileImmuStateHolder stateHolder = FileImmuStateHolder.NewBuilder()
             .WithStatesFolder(tmpStateFolder)
-            .build();
+            .Build();
 
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
         try

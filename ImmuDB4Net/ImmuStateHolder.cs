@@ -16,11 +16,37 @@ limitations under the License.
 
 namespace ImmuDB;
 
+/// <summary>
+/// Represents the abstraction for the state holder. This allow the creation of custom state holders, such as in a distributed KV or in memory
+/// </summary>
 public interface IImmuStateHolder
 {
+    /// <summary>
+    /// Gets the deployment key
+    /// </summary>
+    /// <value></value>
     string? DeploymentKey { get; internal set; }
+    /// <summary>
+    /// Gets the deployment label, usually the server address
+    /// </summary>
+    /// <value></value>
     string? DeploymentLabel { get; internal set; }
+    /// <summary>
+    /// Gets the DeploymentInfoCheck enabled status
+    /// </summary>
+    /// <value></value>
     bool DeploymentInfoCheck {get; internal set; }
+    /// <summary>
+    /// Gets the immudb database state
+    /// </summary>
+    /// <param name="session">The session object</param>
+    /// <param name="database">The database name</param>
+    /// <returns></returns>
     ImmuState? GetState(Session? session, string database);
+    /// <summary>
+    /// Sets the state of an immudb database
+    /// </summary>
+    /// <param name="session">The session object</param>
+    /// <param name="state">The state to be stored</param>
     void SetState(Session session, ImmuState state);
 }

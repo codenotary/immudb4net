@@ -6,8 +6,8 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>10.0</LangVersion>
 		<PackageId>ImmuDB4Net</PackageId>
-		<Version>1.0.5-rc4</Version>
-		<PackageVersion>1.0.5-rc4</PackageVersion>
+		<Version>1.0.5-rc5</Version>
+		<PackageVersion>1.0.5-rc5</PackageVersion>
 		<Authors>CodeNotary engineering</Authors>
 		<Company>CodeNotary Inc.</Company>
 		<RepositoryUrl>https://github.com/codenotary/immudb4net</RepositoryUrl>

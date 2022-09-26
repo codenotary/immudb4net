@@ -18,15 +18,50 @@ using ImmuDB.Crypto;
 
 namespace ImmuDB;
 
+/// <summary>
+/// Stores the transaction's header information
+/// </summary>
 public class TxHeader
 {
+    /// <summary>
+    /// Gets the version
+    /// </summary>
+    /// <value></value>
     public int Version { get; private set; }
+    /// <summary>
+    /// Gets the transaction id
+    /// </summary>
+    /// <value></value>
     public ulong Id { get; private set; }
+    /// <summary>
+    /// Gets the Previous Alh 
+    /// </summary>
+    /// <value></value>
     public byte[] PrevAlh { get; private set; }
+    /// <summary>
+    /// Gets the timestamp in epoch microseconds
+    /// </summary>
+    /// <value></value>
     public long Ts { get; private set; }
+    /// <summary>
+    /// Gets the count of transaction entries
+    /// </summary>
+    /// <value></value>
     public int NEntries { get; private set; }
+    /// <summary>
+    /// Gets the SHA256 hash value of the hash tree root
+    /// </summary>
+    /// <value></value>
     public byte[] Eh { get; private set; }
+    /// <summary>
+    /// Gets the Bl Transaction ID
+    /// </summary>
+    /// <value></value>
     public ulong BlTxId { get; private set; }
+    /// <summary>
+    /// Gets the Bl Root
+    /// </summary>
+    /// <value></value>
     public byte[] BlRoot { get; private set; }
 
     private static readonly int TS_SIZE = 8;
@@ -48,6 +83,11 @@ public class TxHeader
         this.BlRoot = blRoot;
     }
 
+    /// <summary>
+    /// Converts an gRPC TxHeader to ImmuClient TxHeader
+    /// </summary>
+    /// <param name="hdr"></param>
+    /// <returns></returns>
     public static TxHeader ValueOf(ImmudbProxy.TxHeader hdr)
     {
         return new TxHeader(
@@ -62,6 +102,10 @@ public class TxHeader
         );
     }
 
+    /// <summary>
+    /// Gets the ALH hash code.
+    /// </summary>
+    /// <returns></returns>
     public byte[] Alh()
     {
         // txID + prevAlh + innerHash
