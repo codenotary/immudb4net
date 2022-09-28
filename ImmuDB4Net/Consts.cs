@@ -18,11 +18,24 @@ public static class Consts
     /// </summary>
     public static readonly byte NODE_PREFIX = 1;
 
-    internal static readonly byte SET_KEY_PREFIX = 0;
-    internal static readonly byte SORTED_SET_KEY_PREFIX = 1;
+    /// <summary>
+    /// ZEntry's byte prefix for key
+    /// </summary>
+    public static readonly byte SET_KEY_PREFIX = 0;
+    /// <summary>
+    /// ZEntry's byte prefix for the encoded key
+    /// </summary>
+    public static readonly byte SORTED_SET_KEY_PREFIX = 1;
 
-    internal static readonly byte PLAIN_VALUE_PREFIX = 0;
-    internal static readonly byte REFERENCE_VALUE_PREFIX = 1;
+    /// <summary>
+    /// Entry's value prefix in the digest
+    /// </summary>
+    public static readonly byte PLAIN_VALUE_PREFIX = 0;
+
+    /// <summary>
+    /// Entry's reference value prefix in the digest
+    /// </summary>
+    public static readonly byte REFERENCE_VALUE_PREFIX = 1;
 
     // __________ sizes & lengths __________
 
