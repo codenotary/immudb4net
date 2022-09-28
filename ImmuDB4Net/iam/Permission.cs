@@ -16,11 +16,29 @@ limitations under the License.
 
 namespace ImmuDB.Iam;
 
-public enum Permission 
+/// <summary>
+/// The user permissions enumeration
+/// </summary>
+public enum Permission
 {
+    /// <summary>
+    /// System Administrator permission
+    /// </summary>
     PERMISSION_SYS_ADMIN = 255,
+    /// <summary>
+    /// Administrator permission
+    /// </summary>
     PERMISSION_ADMIN = 254,
+    /// <summary>
+    /// None
+    /// </summary>
     PERMISSION_NONE = 0,
+    /// <summary>
+    /// Read permission
+    /// </summary>
     PERMISSION_R = 1,
+    /// <summary>
+    /// Read-Write permission
+    /// </summary>
     PERMISSION_RW = 2
 }

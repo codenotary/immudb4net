@@ -45,7 +45,7 @@ public class StateTests : BaseClientIntTests
     {
         await client!.Open("immudb", "immudb", "defaultdb");
 
-        ImmuState currState = client.CurrentState;
+        ImmuState currState = client.ServerCurrentState;
         Assert.IsNotNull(currState);
 
         Assembly asm = Assembly.GetExecutingAssembly();
@@ -116,7 +116,7 @@ public class StateTests : BaseClientIntTests
         await client.Open("immudb", "immudb", "defaultdb");
         try
         {
-            _ = client.CurrentState;
+            _ = client.ServerCurrentState;
             Assert.Fail("Signing key provided on the client side only and currentstate should raise verificationexception");
         }
         catch (VerificationException)
@@ -221,7 +221,7 @@ public class StateTests : BaseClientIntTests
             await client.Open("immudb", "immudb", "defaultdb");
             try
             {
-                var state = client.CurrentState;
+                var state = client.ServerCurrentState;
                 Assert.IsNotNull(state);
             }
             catch (VerificationException)

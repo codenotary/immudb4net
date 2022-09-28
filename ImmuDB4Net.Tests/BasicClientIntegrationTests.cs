@@ -35,7 +35,7 @@ public class BasicClientTests : BaseClientIntTests
         await BaseTearDown();
     }
 
- [TestMethod("execute open, set, get and verifiedget")]
+    [TestMethod("execute open, set, get and verifiedget")]
     public async Task BasicTest()
     {
         await client!.Open("immudb", "immudb", "defaultdb");
@@ -43,7 +43,7 @@ public class BasicClientTests : BaseClientIntTests
         await client.Close();
         await client!.Open("immudb", "immudb", "defaultdb");
         await client.Close();
-    }   
+    }
 
     [TestMethod("execute open, set, get and verifiedget")]
     public async Task Test1()
@@ -102,7 +102,7 @@ public class BasicClientTests : BaseClientIntTests
 
         for (int i = 0; i < keys.Count; i++)
         {
-            kvListBuilder.Add(new KVPair(keys[i],values[i]));
+            kvListBuilder.Add(new KVPair(keys[i], values[i]));
         }
 
         try
@@ -135,7 +135,7 @@ public class BasicClientTests : BaseClientIntTests
         await client.Close();
     }
 
-     [TestMethod("execute open, verifiedset and verifiedget")]
+    [TestMethod("execute open, verifiedset and verifiedget")]
     public async Task TestSimpleVerifiedSetAndGet()
     {
         await client!.Open("immudb", "immudb", "defaultdb");
@@ -156,16 +156,16 @@ public class BasicClientTests : BaseClientIntTests
         Assert.AreEqual("value1", ventry1.ToString());
         await client.Close();
     }
-    
+
     [TestMethod("execute sqlexec and query")]
     public async Task Test3()
     {
         await client!.Open("immudb", "immudb", "defaultdb");
-        var rspCreate = await client.SQLExec("CREATE TABLE IF NOT EXISTS logs(id INTEGER AUTO_INCREMENT, created TIMESTAMP, entry VARCHAR, PRIMARY KEY id)");        
+        var rspCreate = await client.SQLExec("CREATE TABLE IF NOT EXISTS logs(id INTEGER AUTO_INCREMENT, created TIMESTAMP, entry VARCHAR, PRIMARY KEY id)");
         Assert.AreEqual(1, rspCreate.Items.Count);
         var rspIndex = await client.SQLExec("CREATE INDEX IF NOT EXISTS ON logs(created)");
         Assert.AreEqual(1, rspIndex.Items.Count);
-        var rspInsert = await client.SQLExec("INSERT INTO logs(created, entry) VALUES($1, $2)", 
+        var rspInsert = await client.SQLExec("INSERT INTO logs(created, entry) VALUES($1, $2)",
             SQL.SQLParameter.Create(DateTime.UtcNow),
             SQL.SQLParameter.Create("entry1"));
         var queryResult = await client.SQLQuery("SELECT created, entry FROM LOGS order by created DESC");

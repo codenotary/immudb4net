@@ -17,6 +17,8 @@ limitations under the License.
 namespace ImmuDB.SQL;
 
 using System.Data;
+using Google.Protobuf.WellKnownTypes;
+using ImmudbProxy;
 
 /// <summary>
 /// Represents an SQL Parameter used in SQLExec or SQLQuery
@@ -167,4 +169,6 @@ public class SQLParameter
     {
         return new SQLParameter(value, name);
     }
+
+    
 }

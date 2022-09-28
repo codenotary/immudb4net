@@ -22,7 +22,7 @@ namespace ImmuDB;
 /// <summary>
 /// IConnection represents the abstraction for an ImmuClient Connection
 /// </summary>
-public interface IConnection
+internal interface IConnection
 {
     /// <summary>
     /// Gets the address

@@ -8,7 +8,7 @@ public sealed partial class Signature
     private static Signature? _defaultInstance;
     private static Object sync = new Object();
 
-    public static Signature DefaultInstance
+    internal static Signature DefaultInstance
     {
         get
         {
@@ -28,7 +28,7 @@ public sealed partial class Entry
 {
     private static Entry? _defaultInstance;
     private static Object sync = new Object();
-    public static Entry DefaultInstance
+    internal static Entry DefaultInstance
     {
         get
         {

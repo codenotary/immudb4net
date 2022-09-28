@@ -178,7 +178,7 @@ public partial class ImmuClientSync
     /// <summary>
     /// Initializes a new instance of <see cref="ImmuClient" />
     /// </summary>
-    /// <param name="serverUrl">The ImmuDB server address, ex: localhost or http://localhost </param>
+    /// <param name="serverUrl">The ImmuDB server address, e.g. localhost or http://localhost </param>
     /// <param name="serverPort">The port where the ImmuDB server listens</param>
     /// <param name="database">The name of the ImmuDB server's database to use</param>
     public ImmuClientSync(string serverUrl, int serverPort, string database)
@@ -203,7 +203,7 @@ public partial class ImmuClientSync
     }
 
     /// <summary>
-    /// Releases the resources used by the SDK objects. (ex: connection pool resources). As best practice, this method should be call just before the existing process ends.
+    /// Releases the resources used by the SDK objects. (e.g. connection pool resources). As best practice, this method should be call just before the existing process ends.
     /// </summary>
     /// <returns></returns>
     public static void ReleaseSdkResources()
@@ -269,9 +269,9 @@ public partial class ImmuClientSync
     }
 
     /// <summary>
-    /// Releases to the connection pool the established connection and acquires a new one.
+    /// Releases the established connection to the connection pool and acquires a new one.
     /// </summary>
-    /// <remarks>The active session not affected.</remarks>
+    /// <remarks>The active session is not affected.</remarks>
     /// <returns></returns>
     public void Reconnect()
     {
@@ -322,41 +322,49 @@ public partial class ImmuClientSync
     private object stateSync = new Object();
 
     /// <summary>
-    /// Gets the database state data and if not present then it is updated from the server
+    /// Gets the database state data and if not present updates it from the server
     /// </summary>
     /// <returns></returns>
-    public ImmuState State()
+    public ImmuState State
     {
-        lock (stateSync)
+        get
         {
-            ImmuState? state = stateHolder.GetState(ActiveSession, currentDb);
-            if (state == null)
+            lock (stateSync)
             {
-                state = CurrentState();
-                stateHolder.SetState(ActiveSession!, state);
+                ImmuState? state = stateHolder.GetState(ActiveSession, currentDb);
+                if (state == null)
+                {
+                    state = ServerCurrentState;
+                    stateHolder.SetState(ActiveSession!, state);
+                }
+                else
+                {
+                    CheckSessionHasBeenOpened();
+                }
+                return state;
             }
-            else
-            {
-                CheckSessionHasBeenOpened();
-            }
-            return state;
         }
     }
 
     /// <summary>
     /// Get the current database state that exists on the server. It may throw a RuntimeException if server's state signature verification fails.
     /// </summary>
-    /// <returns></returns>
-    public ImmuState CurrentState()
+    /// <remarks>The reading of this property does not imply that it also validates against the local state. 
+    /// If the server public key is provided then the a verification with this public key is performed</remarks>
+    /// <returns>An <see cref="ImmuState" /> instance</returns>
+    public ImmuState ServerCurrentState
     {
-        CheckSessionHasBeenOpened();
-        ImmudbProxy.ImmutableState state = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
-        ImmuState immuState = ImmuState.ValueOf(state);
-        if (!immuState.CheckSignature(serverSigningKey))
+        get
         {
-            throw new VerificationException("State signature verification failed");
+            CheckSessionHasBeenOpened();
+            ImmudbProxy.ImmutableState state = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
+            ImmuState immuState = ImmuState.ValueOf(state);
+            if (!immuState.CheckSignature(serverSigningKey))
+            {
+                throw new VerificationException("State signature verification failed");
+            }
+            return immuState;
         }
-        return immuState;
     }
 
     //
@@ -398,6 +406,7 @@ public partial class ImmuClientSync
     /// <summary>
     /// Gets the server's database list
     /// </summary>
+    /// <remarks>The function returns only the name of the databases where the user has access to</remarks>
     /// <returns>The server's database list</returns>
     public List<string> Databases()
     {
@@ -422,7 +431,7 @@ public partial class ImmuClientSync
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction id</param>
     /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
-    public Entry GetAtTx(byte[] key, ulong tx)
+    public Entry Get(byte[] key, ulong tx)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.KeyRequest req = new ImmudbProxy.KeyRequest
@@ -454,7 +463,7 @@ public partial class ImmuClientSync
     /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry Get(string key, ulong tx)
     {
-        return GetAtTx(Utils.ToByteArray(key), tx);
+        return Get(Utils.ToByteArray(key), tx);
     }
 
     /// <summary>
@@ -464,7 +473,7 @@ public partial class ImmuClientSync
     /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry Get(string key)
     {
-        return GetAtTx(Utils.ToByteArray(key), 0);
+        return Get(Utils.ToByteArray(key), 0);
     }
 
     /// <summary>
@@ -627,11 +636,11 @@ public partial class ImmuClientSync
             AtTx = tx
         };
 
-        return VerifiedGet(keyReq, State());
+        return VerifiedGet(keyReq, State);
     }
 
     /// <summary>
-    /// Retrieves with authenticity check the value for a specific key since a transaction ID
+    /// Retrieves with authenticity check the value for a specific key. Changes to the key after given transaction can be ignored.
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction ID</param>
@@ -642,7 +651,7 @@ public partial class ImmuClientSync
     }
 
     /// <summary>
-    /// Retrieves with authenticity check the value for a specific key since a transaction ID
+    /// Retrieves with authenticity check the value for a specific key. Changes to the key after given transaction can be ignored.
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="tx">The transaction ID</param>
@@ -655,7 +664,7 @@ public partial class ImmuClientSync
             SinceTx = tx
         };
 
-        return VerifiedGet(keyReq, State());
+        return VerifiedGet(keyReq, State);
     }
 
     /// <summary>
@@ -683,7 +692,7 @@ public partial class ImmuClientSync
             AtRevision = rev
         };
 
-        return VerifiedGet(keyReq, State());
+        return VerifiedGet(keyReq, State);
     }
 
     /// <summary>
@@ -804,13 +813,14 @@ public partial class ImmuClientSync
     /// <summary>
     /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
     /// </summary>
-    /// <param name="prefix">Optional, prefix for the keys</param>
+    /// <param name="prefix">Prefix for the keys</param>
     /// <param name="seekKey">Optional, initial key for the first entry in the iteration</param>
     /// <param name="endKey">Optional, end key for the scanning range</param>
-    /// <param name="inclusiveSeek">Optional, default is true, specifies if initial key's value is included</param>
-    /// <param name="inclusiveEnd">Optional, default is true, specifies if end key's value is included</param>
-    /// <param name="limit">Optional, maximum number of of returned items</param>
-    /// <param name="desc">Optional, specifies the sorting order, defaults to Desc</param>
+    /// <param name="inclusiveSeek">Optional, default is false, specifies if initial key's value is included</param>
+    /// <param name="inclusiveEnd">Optional, default is false, specifies if end key's value is included</param>
+    /// <param name="limit">Optional, maximum number of of returned items. If the value is 0 then the default server-side limit, typically 1000 is used.
+    /// If the returned result is larger than the maximum server-side limit then an error is returned</param>
+    /// <param name="desc">Optional, specifies the sorting order, defaults to ascending sort</param>
     /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, bool inclusiveSeek, bool inclusiveEnd,
                             ulong limit, bool desc)
@@ -1015,7 +1025,7 @@ public partial class ImmuClientSync
     /// </summary>
     /// <param name="reference">The reference</param>
     /// <param name="referencedKey">The lookup key</param>
-    /// <param name="atTx">Transaction ID</param>
+    /// <param name="atTx">Transaction ID at which the referenced key will be bound at</param>
     /// <returns>The transaction information</returns>
     public TxHeader SetReference(byte[] reference, byte[] referencedKey, ulong atTx)
     {
@@ -1110,7 +1120,7 @@ public partial class ImmuClientSync
     {
         CheckSessionHasBeenOpened();
 
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
         {
             Key = Utils.ToByteString(key),
@@ -1204,7 +1214,7 @@ public partial class ImmuClientSync
     /// Adds a scored key to a set
     /// </summary>
     /// <param name="set">The set identifier</param>
-    /// <param name="key">The lookup key</param>
+    /// <param name="key">The referenced key</param>
     /// <param name="atTx">The transaction ID</param>
     /// <param name="score">The score</param>
     /// <returns>The transaction information</returns>
@@ -1265,7 +1275,7 @@ public partial class ImmuClientSync
     {
         CheckSessionHasBeenOpened();
 
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.ZAddRequest zAddReq = new ImmudbProxy.ZAddRequest()
         {
             Set = Utils.ToByteString(set),
@@ -1369,9 +1379,9 @@ public partial class ImmuClientSync
     /// <summary>
     /// Iterates over the entries added with ZAdd in the selected database and retrieves the values for the matching criteria
     /// </summary>
-    /// <param name="set"></param>
-    /// <param name="limit"></param>
-    /// <param name="reverse"></param>
+    /// <param name="set">The set identifier</param>
+    /// <param name="limit">Maximum number of entries to return</param>
+    /// <param name="reverse">If true, return elements in reversed order</param>
     /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<ZEntry> ZScan(string set, ulong limit, bool reverse)
     {
@@ -1481,7 +1491,7 @@ public partial class ImmuClientSync
     public Tx VerifiedTxById(ulong txId)
     {
         CheckSessionHasBeenOpened();
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.VerifiableTxRequest vTxReq = new ImmudbProxy.VerifiableTxRequest()
         {
             Tx = txId,
@@ -1675,7 +1685,7 @@ public partial class ImmuClientSync
     /// Changes a user's password
     /// </summary>
     /// <param name="username">The username</param>
-    /// <param name="oldPassword">The username's old password</param>
+    /// <param name="oldPassword">The username's old password (only needed when changing sysadmin user's password)</param>
     /// <param name="newPassword">The new password</param>
     /// <returns></returns>
     public void ChangePassword(string username, string oldPassword, string newPassword)
@@ -1698,7 +1708,7 @@ public partial class ImmuClientSync
     /// <summary>
     /// Flushes the index
     /// </summary>
-    /// <param name="cleanupPercentage">The cleanup percentage</param>
+    /// <param name="cleanupPercentage">The percentage of index data to scan for unused disk space</param>
     /// <param name="synced">Set true for the index flush operation to be synchronous, this may be slower.</param>
     /// <returns></returns>
     public void FlushIndex(float cleanupPercentage, bool synced)
@@ -1728,7 +1738,7 @@ public partial class ImmuClientSync
     //
 
     /// <summary>
-    /// Retrieves the value history of a specific key
+    /// Retrieves the history of changes of a specific key
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="limit">The maximum number of returned items</param>
@@ -1741,7 +1751,7 @@ public partial class ImmuClientSync
     }
 
     /// <summary>
-    /// Retrieves the value history of a specific key
+    /// Retrieves the history of changes of a specific key
     /// </summary>
     /// <param name="key">The lookup key</param>
     /// <param name="limit">The maximum number of returned items</param>
@@ -1810,54 +1820,6 @@ public partial class ImmuClientSync
     // ========== SQL Exec and SQL Query  ==========
     //
 
-    private ImmudbProxy.SQLValue CreateSQLValue(SQLParameter? parameter)
-    {
-        if (parameter == null)
-        {
-            return new ImmudbProxy.SQLValue { Null = NullValue.NullValue };
-        }
-        switch (parameter.ValueType)
-        {
-            case SqlDbType.SmallInt:
-            case SqlDbType.Int:
-            case SqlDbType.BigInt:
-                return new ImmudbProxy.SQLValue { N = (long)parameter.Value };
-            case SqlDbType.Date:
-            case SqlDbType.DateTime:
-                DateTime dt = (DateTime)parameter.Value;
-                long timeMicroseconds = new DateTimeOffset(dt).ToUnixTimeMilliseconds() * 1000;
-                return new ImmudbProxy.SQLValue { Ts = timeMicroseconds };
-            case SqlDbType.Text:
-            case SqlDbType.NText:
-            case SqlDbType.Char:
-            case SqlDbType.NChar:
-            case SqlDbType.VarChar:
-            case SqlDbType.NVarChar:
-            case SqlDbType.Xml:
-                return new ImmudbProxy.SQLValue { S = (string)parameter.Value };
-            default:
-                throw new NotSupportedException(string.Format("The SQL type {0} is not supported", parameter.ValueType));
-        }
-    }
-
-    private SQL.SQLValue FromProxySQLValue(ImmudbProxy.SQLValue proxyValue)
-    {
-        switch (proxyValue.ValueCase)
-        {
-            case ImmudbProxy.SQLValue.ValueOneofCase.Null:
-                return new SQL.SQLValue(proxyValue.Null, SqlDbType.Int);
-            case ImmudbProxy.SQLValue.ValueOneofCase.N:
-                return new SQL.SQLValue(proxyValue.N, SqlDbType.Int);
-            case ImmudbProxy.SQLValue.ValueOneofCase.S:
-                return new SQL.SQLValue(proxyValue.S, SqlDbType.NVarChar);
-            case ImmudbProxy.SQLValue.ValueOneofCase.Ts:
-                var dateTimeArg = DateTimeOffset.FromUnixTimeMilliseconds((long)proxyValue.Ts / 1000);
-                return new SQL.SQLValue(dateTimeArg, SqlDbType.NVarChar);
-            default:
-                throw new NotSupportedException(string.Format("The proxyvalue type {0} is not supported", proxyValue.ValueCase));
-        }
-    }
-
     /// <summary>
     /// Executes an SQL statement against the selected database
     /// </summary>
@@ -1874,21 +1836,7 @@ public partial class ImmuClientSync
         };
         if (parameters != null)
         {
-            int paramNameCounter = 1;
-            foreach (var entry in parameters)
-            {
-                if (entry == null)
-                {
-                    req.Params.Add(new NamedParam { Name = string.Format("param{0}", paramNameCounter++), Value = CreateSQLValue(null) });
-                    continue;
-                }
-                var namedParam = new NamedParam
-                {
-                    Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry.Name,
-                    Value = CreateSQLValue(entry)
-                };
-                req.Params.Add(namedParam);
-            }
+            req.Params.Add(SQL.Converters.ToNamedParams(parameters));
         }
         var result = Service.SQLExec(req, Service.GetHeaders(ActiveSession));
         var sqlResult = new SQL.SQLExecResult();
@@ -1919,21 +1867,7 @@ public partial class ImmuClientSync
         };
         if (parameters != null)
         {
-            int paramNameCounter = 1;
-            foreach (var entry in parameters)
-            {
-                if (entry == null)
-                {
-                    req.Params.Add(new NamedParam { Name = string.Format("param{0}", paramNameCounter++), Value = CreateSQLValue(null) });
-                    continue;
-                }
-                var namedParam = new NamedParam
-                {
-                    Name = string.IsNullOrEmpty(entry.Name) ? string.Format("param{0}", paramNameCounter++) : entry!.Name,
-                    Value = CreateSQLValue(entry)
-                };
-                req.Params.Add(namedParam);
-            }
+            req.Params.Add(SQL.Converters.ToNamedParams(parameters));
         }
         var result = Service.SQLQuery(req, Service.GetHeaders(ActiveSession));
         SQL.SQLQueryResult queryResult = new SQL.SQLQueryResult();
@@ -1950,7 +1884,7 @@ public partial class ImmuClientSync
             {
                 var columnName = row.Columns[i].Substring(row.Columns[i].LastIndexOf(".") + 1);
                 columnName = columnName.Remove(columnName.Length - 1, 1);
-                rowItems.Add(columnName, FromProxySQLValue(row.Values[i]));
+                rowItems.Add(columnName, SQL.Converters.FromProxySQLValue(row.Values[i]));
             }
             queryResult.Rows.Add(rowItems);
         }

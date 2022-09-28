@@ -16,23 +16,42 @@ limitations under the License.
 
 namespace ImmuDB;
 
+/// <summary>
+/// Represents a (scored key : value) entry 
+/// </summary>
 public class ZEntry
 {
-
     private static int setLenLen = 8;
     private static int scoreLen = 8;
     private static int keyLenLen = 8;
     private static int txIDLen = 8;
 
+    /// <summary>
+    /// Gets the set
+    /// </summary>
+    /// <value></value>
     public byte[] Set { get; private set; }
 
+    /// <summary>
+    /// Gets the key
+    /// </summary>
+    /// <value></value>
     public byte[] Key { get; private set; }
 
+    /// <summary>
+    /// Gets the <see cref="Entry" /> instance
+    /// </summary>
+    /// <value></value>
     public Entry Entry { get; private set; }
 
+    /// <summary>
+    /// Gets the score value
+    /// </summary>
+    /// <value></value>
     public double Score { get; private set; }
 
-    public ulong AtTx;
+
+    internal ulong AtTx;
 
     private ZEntry(byte[] key, byte[] set, Entry entry)
     {
@@ -41,6 +60,11 @@ public class ZEntry
         Entry = entry;
     }
 
+    /// <summary>
+    /// Converts from a gRPC Protobuf ZEntry object
+    /// </summary>
+    /// <param name="e"></param>
+    /// <returns></returns>
     public static ZEntry ValueOf(ImmudbProxy.ZEntry e)
     {
         ZEntry entry = new ZEntry(e.Key.ToByteArray(), e.Set.ToByteArray(), ImmuDB.Entry.ValueOf(e.Entry ?? ImmudbProxy.Entry.DefaultInstance));
@@ -49,6 +73,10 @@ public class ZEntry
         return entry;
     }
 
+    /// <summary>
+    /// Provides the instance's encoded content
+    /// </summary>
+    /// <returns></returns>
     public byte[] GetEncodedKey()
     {
         byte[] encodedKey = Utils.WrapWithPrefix(Key, Consts.SET_KEY_PREFIX);
@@ -67,6 +95,11 @@ public class ZEntry
         return Utils.WrapWithPrefix(zKey.ToArray(), Consts.SORTED_SET_KEY_PREFIX);
     }
 
+    /// <summary>
+    /// Provides the digest for a specific version 
+    /// </summary>
+    /// <param name="version">The version</param>
+    /// <returns></returns>
     public byte[] DigestFor(int version)
     {
         KV kv = new KV(
