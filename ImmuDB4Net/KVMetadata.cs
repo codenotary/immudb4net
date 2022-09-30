@@ -154,7 +154,7 @@ public class KVMetadata
             {
                 throw new InvalidOperationException("no expiration time set");
             }
-            return  DateTimeOffset.FromUnixTimeSeconds(((ExpiresAtAttribute)attributes[expiresAtAttrCode]).ExpiresAt).DateTime;
+            return DateTimeOffset.FromUnixTimeSeconds(((ExpiresAtAttribute)attributes[expiresAtAttrCode]).ExpiresAt).DateTime;
         }
     }
 
@@ -214,6 +214,7 @@ public class ExpiresAtAttribute : MetadataAttribute
     /// </summary>
     /// <value></value>
     public long ExpiresAt { get; set; }
+    
     /// <summary>
     /// Creates an instance of ExpiresAtAttribute
     /// </summary>
@@ -221,6 +222,15 @@ public class ExpiresAtAttribute : MetadataAttribute
     public ExpiresAtAttribute(long expiresAt)
     {
         this.ExpiresAt = expiresAt;
+    }
+    
+    /// <summary>
+    /// Creates an instance of ExpiresAtAttribute
+    /// </summary>
+    /// <param name="expiresAt">The expiration time</param>
+    public ExpiresAtAttribute(DateTime expiresAt)
+    {
+        this.ExpiresAt = new DateTimeOffset(expiresAt).ToUnixTimeSeconds();
     }
 
     /// <summary>
