@@ -251,7 +251,6 @@ public partial class ImmuClientSync
                         Tx = serverState.TxId,
                         EntriesSpec = new EntriesSpec
                         {
-                            //TODO: double check if empty entrytypespec defaults to exclude on the server
                             SqlEntriesSpec = new EntryTypeSpec
                             {
                                 Action = EntryTypeAction.Exclude,
@@ -266,7 +265,39 @@ public partial class ImmuClientSync
                             }
                         }
                     }, Service.GetHeaders(ActiveSession));
-                    
+                    Crypto.DualProof dualProof = Crypto.DualProof.ValueOf(verifiableTx.DualProof);
+
+                    ulong sourceId;
+                    ulong targetId;
+                    byte[] sourceAlh;
+                    byte[] targetAlh;
+                    if (localState.TxId <= serverState.TxId)
+                    {
+                        sourceId = localState.TxId;
+                        sourceAlh = CryptoUtils.DigestFrom(localState.TxHash);
+                        targetId = serverState.TxId;
+                        targetAlh = dualProof.TargetTxHeader.Alh();
+                    }
+                    else
+                    {
+                        sourceId = serverState.TxId;
+                        sourceAlh = dualProof.SourceTxHeader.Alh();
+                        targetId = localState.TxId;
+                        targetAlh = CryptoUtils.DigestFrom(localState.TxHash);
+                    }
+                    if (localState.TxId > 0)
+                    {
+                        if (!CryptoUtils.VerifyDualProof(
+                                Crypto.DualProof.ValueOf(verifiableTx.DualProof),
+                                sourceId,
+                                targetId,
+                                sourceAlh,
+                                targetAlh
+                        ))
+                        {
+                            throw new VerificationException("Data is corrupted (dual proof verification failed for the local state).");
+                        }
+                    }
                 }
                 catch (RpcException e)
                 {
@@ -278,7 +309,6 @@ public partial class ImmuClientSync
             }
         }
     }
-
 
     /// <summary>
     /// Opens a connection to the ImmuDB server or reuses one from the connection pool. It also initiates a session with the forementioned server.

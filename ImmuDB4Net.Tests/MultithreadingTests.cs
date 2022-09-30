@@ -16,6 +16,7 @@ limitations under the License.
 
 using System.Collections.Concurrent;
 using System.Text;
+using ImmuDB.Exceptions;
 
 namespace ImmuDB.Tests;
 
@@ -51,7 +52,7 @@ public class MultithreadingTests : BaseClientIntTests
     [TestMethod("Multithreaded with key overlap")]
     public async Task Test1()
     {
-        TestContext!.WriteLine("Start test");
+        TestContext!.WriteLine("Start test1");
         await client!.Open("immudb", "immudb", "defaultdb");
 
         int threadCount = 10;
@@ -103,28 +104,105 @@ public class MultithreadingTests : BaseClientIntTests
     }
 
     [TestMethod("Multiple open sessions and close sessions")]
-    public void Test2()
+    public void ImmuClientSyncMultipleInstances()
     {
-        ConcurrentStack<ImmuClient> clients = new ConcurrentStack<ImmuClient>();
+        TestContext!.WriteLine("Start test2");
+        string hashedStateFolder = Path.Combine(
+               Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+               "immudb4net",
+               Utils.GenerateShortHash("http://localhost:3325"));
+        if (Directory.Exists(hashedStateFolder))
+        {
+            Directory.Delete(hashedStateFolder, true);
+        }
+
+        ConcurrentStack<ImmuClientSync> clients = new ConcurrentStack<ImmuClientSync>();
         List<Action> actions = new List<Action>();
         List<Task> tasks = new List<Task>();
         int threadCount = 10;
-        for(int i = 0; i < threadCount; i++)
+        for (int i = 0; i < threadCount; i++)
         {
-            actions.Add(async () => {
-                var localclient = await ImmuClient.NewBuilder()
-                    .WithServerPort(3325)
-                    .Open();
-                await localclient.VerifiedSet("key" + i, "val" + i);
+            var i1 = i;
+            actions.Add(() =>
+            {
+                var localclient = ImmuClientSync.NewBuilder()
+                 .WithServerPort(3325)
+                 .Open();
                 clients.Push(localclient);
-                Entry readEntry = await localclient.VerifiedGet("key" + i);
-                Assert.AreEqual("val" + i, Encoding.UTF8.GetString(readEntry.Value));
+                localclient.VerifiedSet("key" + i1, "val" + i1);
+                Entry readEntry = localclient.VerifiedGet("key" + i1);
+                Assert.AreEqual("val" + i1, Encoding.UTF8.GetString(readEntry.Value));
+                localclient.Close();
+            });
+        }
+        foreach (var action in actions)
+        {
+            tasks.Add(Task.Factory.StartNew(action));
+        }
+        try
+        {
+            Task.WaitAll(tasks.ToArray());
+        }
+        catch (AggregateException e)
+        {
+            TestContext!.WriteLine("\nThe following exceptions have been thrown by WaitAll():");
+            for (int j = 0; j < e.InnerExceptions.Count; j++)
+            {
+                TestContext!.WriteLine("\n-------------------------------------------------\n{0}", e.InnerExceptions[j].ToString());
+            }
+        }
+        TestContext!.WriteLine("Done.");
+    }
+
+    [TestMethod("Multiple open sessions and close sessions")]
+    public async Task ImmuClientMultipleInstances()
+    {
+        TestContext!.WriteLine("Start test2");
+        string hashedStateFolder = Path.Combine(
+               Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+               "immudb4net",
+               Utils.GenerateShortHash("http://localhost:3325"));
+        if (Directory.Exists(hashedStateFolder))
+        {
+            Directory.Delete(hashedStateFolder, true);
+        }
+
+        ConcurrentStack<ImmuClient> clients = new ConcurrentStack<ImmuClient>();
+        List<Func<Task>> actions = new List<Func<Task>>();
+        List<Task> tasks = new List<Task>();
+        int threadCount = 10;
+        for (int i = 0; i < threadCount; i++)
+        {
+            var i1 = i;
+            actions.Add(async () =>
+            {
+                var localclient = await ImmuClient.NewBuilder()
+                 .WithServerPort(3325)
+                 .Open();
+                clients.Push(localclient);
+                await localclient.VerifiedSet("key" + i1, "val" + i1);
+                Entry readEntry = await localclient.VerifiedGet("key" + i1);
+                Assert.AreEqual("val" + i1, Encoding.UTF8.GetString(readEntry.Value));
                 await localclient.Close();
             });
         }
-        foreach(var action in actions) {
+        foreach (var action in actions)
+        {
             tasks.Add(Task.Factory.StartNew(action));
         }
-        Task.WaitAll(tasks.ToArray());
+        try
+        {
+            await Task.WhenAll(tasks.ToArray());
+        }
+        catch (AggregateException e)
+        {
+            TestContext!.WriteLine("\nThe following exceptions have been thrown by WaitAll():");
+            for (int j = 0; j < e.InnerExceptions.Count; j++)
+            {
+                TestContext!.WriteLine("\n-------------------------------------------------\n{0}", e.InnerExceptions[j].ToString());
+            }
+        }
+
+        TestContext!.WriteLine("Done.");
     }
 }

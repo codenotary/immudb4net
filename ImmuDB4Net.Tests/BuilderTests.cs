@@ -92,6 +92,16 @@ public class BuilderTests
     {
         try
         {
+
+            string hashedStateFolder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "immudb4net",
+                    Utils.GenerateShortHash("http://localhost:3325"));
+            if (Directory.Exists(hashedStateFolder))
+            {
+                Directory.Delete(hashedStateFolder, true);
+            }
+
             client = await ImmuClient.NewBuilder()
                 .WithServerPort(3325)
                 .CheckDeploymentInfo(false)
@@ -116,6 +126,15 @@ public class BuilderTests
     {
         try
         {
+            string hashedStateFolder = Path.Combine(
+                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                 "immudb4net",
+                 Utils.GenerateShortHash("http://localhost:3325"));
+            if (Directory.Exists(hashedStateFolder))
+            {
+                Directory.Delete(hashedStateFolder, true);
+            }
+
             client = new ImmuClient("localhost", 3325);
             // same as the above comment
             client.DeploymentInfoCheck = false;
@@ -140,18 +159,19 @@ public class BuilderTests
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
         try
         {
-            client = await ImmuClient.NewBuilder()
-                 .WithServerPort(3325)
-                 .CheckDeploymentInfo(false)
-                 .Open();
             string hashedStateFolder = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "immudb4net",
-                    Utils.GenerateShortHash(client.GrpcAddress));
+                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                 "immudb4net",
+                 Utils.GenerateShortHash("http://localhost:3325"));
             if (Directory.Exists(hashedStateFolder))
             {
                 Directory.Delete(hashedStateFolder, true);
             }
+
+            client = await ImmuClient.NewBuilder()
+                 .WithServerPort(3325)
+                 .CheckDeploymentInfo(false)
+                 .Open();
 
             byte[] v0 = new byte[] { 0, 1, 2, 3 };
             byte[] v1 = new byte[] { 3, 2, 1, 0 };
@@ -256,6 +276,51 @@ public class BuilderTests
             {
                 await client.Close();
             }
+        }
+    }
+
+    [TestMethod("two clients open and close")]
+    public async Task Test8()
+    {
+        ImmuClient? client2 = null;
+        try
+        {
+            client = new ImmuClient("localhost", 3325);
+            string hashedStateFolder = Path.Combine(
+                  Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                  "immudb4net",
+                  Utils.GenerateShortHash(client.GrpcAddress));
+            if (Directory.Exists(hashedStateFolder))
+            {
+                Directory.Delete(hashedStateFolder, true);
+            }
+            await client.Open("immudb", "immudb", "defaultdb");
+            Assert.IsTrue(Directory.Exists(hashedStateFolder));
+            byte[] v2 = new byte[] { 0, 1, 2, 3 };
+
+            TxHeader hdr2 = await client.VerifiedSet("k2", v2);
+            Assert.IsNotNull(hdr2);
+
+            Entry ventry2 = await client.VerifiedGet("k2");
+            CollectionAssert.AreEqual(v2, ventry2.Value);
+            await client.Close();
+
+            client2 = new ImmuClient("localhost", 3325);
+            await client2.Open("immudb", "immudb", "defaultdb");
+
+            Entry ventrycl2 = await client2.VerifiedGet("k2");
+            CollectionAssert.AreEqual(v2, ventrycl2.Value);
+        }
+        finally
+        {
+            if (client2 != null)
+            {
+                await client2.Close();
+            }
+            // if (client != null)
+            // {
+            //     await client.Close();
+            // }
         }
     }
 }

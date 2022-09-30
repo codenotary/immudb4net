@@ -90,6 +90,14 @@ public class SyncTests
     [TestMethod("simplified initialization")]
     public void Test2()
     {
+        string hashedStateFolder = Path.Combine(
+              Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+              "immudb4net",
+              Utils.GenerateShortHash("http://localhost:3325"));
+        if (Directory.Exists(hashedStateFolder))
+        {
+            Directory.Delete(hashedStateFolder, true);
+        }
         try
         {
             client = ImmuClientSync.NewBuilder()
@@ -113,6 +121,14 @@ public class SyncTests
     [TestMethod("simplified initialization with constructor")]
     public void Test3()
     {
+        string hashedStateFolder = Path.Combine(
+               Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+               "immudb4net",
+               Utils.GenerateShortHash("http://localhost:3325"));
+        if (Directory.Exists(hashedStateFolder))
+        {
+            Directory.Delete(hashedStateFolder, true);
+        }
         try
         {
             client = new ImmuClientSync("localhost", 3325);
@@ -135,6 +151,14 @@ public class SyncTests
     [TestMethod("StateHolder custom server key")]
     public void Test4()
     {
+        string hashedStateFolder = Path.Combine(
+               Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+               "immudb4net",
+               Utils.GenerateShortHash("http://localhost:3325"));
+        if (Directory.Exists(hashedStateFolder))
+        {
+            Directory.Delete(hashedStateFolder, true);
+        }
         try
         {
             client = new ImmuClientSync("localhost", 3325);
@@ -158,19 +182,20 @@ public class SyncTests
     public void Test5()
     {
         ImmuClient.GlobalSettings.MaxConnectionsPerServer = 3;
+        string hashedStateFolder = Path.Combine(
+               Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+               "immudb4net",
+               Utils.GenerateShortHash("http://localhost:3325"));
+        if (Directory.Exists(hashedStateFolder))
+        {
+            Directory.Delete(hashedStateFolder, true);
+        }
+
         try
         {
             client = ImmuClientSync.NewBuilder()
                  .WithServerPort(3325)
                  .Open();
-            string hashedStateFolder = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                    "immudb4net",
-                    Utils.GenerateShortHash(client.GrpcAddress));
-            if(Directory.Exists(hashedStateFolder))
-            {
-                Directory.Delete(hashedStateFolder, true);
-            }
 
             byte[] v0 = new byte[] { 0, 1, 2, 3 };
             byte[] v1 = new byte[] { 3, 2, 1, 0 };
