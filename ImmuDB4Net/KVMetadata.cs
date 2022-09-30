@@ -143,10 +143,10 @@ public class KVMetadata
     }
 
     /// <summary>
-    /// Gets the expiration time in epoch microsecond
+    /// Gets the expiration time
     /// </summary>
     /// <value></value>
-    public long ExpirationTime
+    public DateTime ExpirationTime
     {
         get
         {
@@ -154,8 +154,7 @@ public class KVMetadata
             {
                 throw new InvalidOperationException("no expiration time set");
             }
-
-            return ((ExpiresAtAttribute)attributes[expiresAtAttrCode]).ExpiresAt;
+            return  DateTimeOffset.FromUnixTimeSeconds(((ExpiresAtAttribute)attributes[expiresAtAttrCode]).ExpiresAt).DateTime;
         }
     }
 
@@ -218,7 +217,7 @@ public class ExpiresAtAttribute : MetadataAttribute
     /// <summary>
     /// Creates an instance of ExpiresAtAttribute
     /// </summary>
-    /// <param name="expiresAt">The expiration time specified in epoch microseconds</param>
+    /// <param name="expiresAt">The expiration time specified in epoch seconds</param>
     public ExpiresAtAttribute(long expiresAt)
     {
         this.ExpiresAt = expiresAt;

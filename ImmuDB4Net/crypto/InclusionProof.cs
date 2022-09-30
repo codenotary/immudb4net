@@ -27,7 +27,7 @@ public class InclusionProof
     /// <value></value>
     public int Leaf {get; private set;}
     /// <summary>
-    /// Gets the width of the inclusion proof
+    /// Gets the width of the Merkle Tree
     /// </summary>
     /// <value></value>
     public int Width {get; private set;}
