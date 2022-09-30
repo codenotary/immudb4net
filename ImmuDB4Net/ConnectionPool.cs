@@ -18,7 +18,7 @@ limitations under the License.
 namespace ImmuDB;
 
 
-public interface IConnectionPool
+internal interface IConnectionPool
 {
     int MaxConnectionsPerServer { get; }
     IConnection Acquire(ConnectionParameters cp);
@@ -29,7 +29,7 @@ public interface IConnectionPool
 
 
 
-public class RandomAssignConnectionPool : IConnectionPool
+internal class RandomAssignConnectionPool : IConnectionPool
 {
     public int MaxConnectionsPerServer { get; private set; }
     public TimeSpan TerminateIdleConnectionTimeout { get; private set; }

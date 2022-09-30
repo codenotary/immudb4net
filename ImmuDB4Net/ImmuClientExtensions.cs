@@ -29,7 +29,7 @@ namespace ImmudbProxy
             private Metadata headers = new Metadata();
             private Object headersSync = new Object();
 
-            public Metadata GetHeaders(Session? session)
+            internal Metadata GetHeaders(Session? session)
             {
                 var mdata = new Metadata();
                 if (session?.Id != null)

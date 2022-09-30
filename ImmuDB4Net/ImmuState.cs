@@ -22,15 +22,41 @@ using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
 
+/// <summary>
+/// Represents the database state data
+/// </summary>
 public class ImmuState
 {
     private const string HASH_ENCRYPTION_ALGORITHM = "SHA256withECDSA";
 
+    /// <summary>
+    /// Gets or sets the database name
+    /// </summary>
+    /// <value></value>
     public string Database { get; set; }
+    /// <summary>
+    /// Gets or sets the Transaction ID
+    /// </summary>
+    /// <value></value>
     public ulong TxId { get; set; }
+    /// <summary>
+    /// Gets or sets transaction hash
+    /// </summary>
+    /// <value></value>
     public byte[] TxHash { get; set; }
+    /// <summary>
+    /// Gets or sets the signature array. This can be checked by using <see cref="CheckSignature" /> function
+    /// </summary>
+    /// <value></value>
     public byte[] Signature { get; set; }
 
+    /// <summary>
+    /// Creates an ImmuState object
+    /// </summary>
+    /// <param name="database">The database name</param>
+    /// <param name="txId">The transaction ID</param>
+    /// <param name="txHash">The transaction hash</param>
+    /// <param name="signature">The signature</param>
     public ImmuState(string database, ulong txId, byte[] txHash, byte[] signature)
     {
         this.Database = database;
@@ -39,6 +65,11 @@ public class ImmuState
         this.Signature = signature;
     }
 
+    /// <summary>
+    /// Checks the signature
+    /// </summary>
+    /// <param name="publicKey">The public/private key</param>
+    /// <returns>True if the check succeeded</returns>
     public bool CheckSignature(AsymmetricKeyParameter? publicKey)
     {
         if (publicKey == null)

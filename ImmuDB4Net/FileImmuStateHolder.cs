@@ -21,7 +21,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using ImmuDB.Exceptions;
 
-public class FileImmuStateHolder : ImmuStateHolder
+/// <summary>
+/// Stores the local state of an ImmuDB database in a file
+/// </summary>
+public class FileImmuStateHolder : IImmuStateHolder
 {
     internal class DeploymentInfoContent
     {
@@ -33,21 +36,51 @@ public class FileImmuStateHolder : ImmuStateHolder
 
     private string statesFolder;
 
+    /// <summary>
+    /// The folder where the state info is stored
+    /// </summary>
     public string StatesFolder => statesFolder;
+    /// <summary>
+    /// Gets or sets the deployment key
+    /// </summary>
+    /// <value></value>
     public string? DeploymentKey { get; set; }
+    /// <summary>
+    /// Gets or sets the deployment label, usually the address
+    /// </summary>
+    /// <value></value>
     public string? DeploymentLabel { get; set; }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <value></value>
     public bool DeploymentInfoCheck { get; set; } = true;
+
     private DeploymentInfoContent? deploymentInfo;
 
+    /// <summary>
+    /// The constructor that uses the builder
+    /// </summary>
+    /// <param name="builder">The builder for FileImmuStateHolder</param>
     public FileImmuStateHolder(Builder builder)
     {
         statesFolder = builder.StatesFolder;
     }
 
+    /// <summary>
+    /// The default constructor that uses builder's default values
+    /// </summary>
+    /// <returns></returns>
     public FileImmuStateHolder() : this(NewBuilder())
     {
     }
 
+    /// <summary>
+    /// Gets the database's state
+    /// </summary>
+    /// <param name="session"></param>
+    /// <param name="dbname"></param>
+    /// <returns></returns>
     public ImmuState? GetState(Session? session, string dbname)
     {
         if (DeploymentKey == null)
@@ -189,6 +222,11 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
+    /// <summary>
+    /// Sets the state
+    /// </summary>
+    /// <param name="session">The current session</param>
+    /// <param name="state">The state</param>
     public void SetState(Session session, ImmuState state)
     {
         if (DeploymentKey == null)
@@ -242,27 +280,50 @@ public class FileImmuStateHolder : ImmuStateHolder
         }
     }
 
+    /// <summary>
+    /// Creates a FileImmuStateHolder builder.
+    /// </summary>
+    /// <returns></returns>
     public static Builder NewBuilder()
     {
         return new Builder();
     }
 
+    /// <summary>
+    /// Represents the builder for the FileImmuStateHolder
+    /// </summary>
     public class Builder
     {
+        /// <summary>
+        /// Gets the folder where the state data is kept
+        /// </summary>
+        /// <value></value>
         public string StatesFolder { get; private set; }
 
+        /// <summary>
+        /// The constructor
+        /// </summary>
         public Builder()
         {
             StatesFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "immudb4net");
         }
 
+        /// <summary>
+        /// Sets the state folder value
+        /// </summary>
+        /// <param name="statesFolder">The states folder path</param>
+        /// <returns></returns>
         public Builder WithStatesFolder(string statesFolder)
         {
             this.StatesFolder = statesFolder;
             return this;
         }
 
-        public FileImmuStateHolder build()
+        /// <summary>
+        /// Creates a <see cref="FileImmuStateHolder" /> instance using the previously set StatesFolder value
+        /// </summary>
+        /// <returns></returns>
+        public FileImmuStateHolder Build()
         {
             return new FileImmuStateHolder(this);
         }

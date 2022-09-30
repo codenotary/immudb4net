@@ -16,7 +16,7 @@ limitations under the License.
 
 namespace ImmuDB.Crypto;
 
-public class DualProof {
+internal class DualProof {
 
     public TxHeader SourceTxHeader {get; private set;}
     public TxHeader TargetTxHeader {get; private set;}

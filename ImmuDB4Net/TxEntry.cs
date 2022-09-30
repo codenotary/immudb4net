@@ -18,12 +18,30 @@ using ImmuDB.Crypto;
 
 namespace ImmuDB;
 
+/// <summary>
+/// Represents A transaction entry that belongs to a <see cref="Tx" /> class
+/// </summary>
 public class TxEntry
 {
-
+    /// <summary>
+    /// Gets the key
+    /// </summary>
+    /// <value></value>
     public byte[] Key {get; private set;}
+    /// <summary>
+    /// The transaction metadata
+    /// </summary>
+    /// <value></value>
     public KVMetadata Metadata {get; private set;}
+    /// <summary>
+    /// The VLength parameter
+    /// </summary>
+    /// <value></value>
     public int VLength {get; private set;}
+    /// <summary>
+    /// The hash value
+    /// </summary>
+    /// <value></value>
     public byte[] HVal {get; private set;}
 
     private TxEntry(byte[] key, KVMetadata metadata, int vLength, byte[] hVal)
@@ -36,7 +54,12 @@ public class TxEntry
         this.HVal = hVal;
     }
 
-    public static TxEntry valueOf(ImmudbProxy.TxEntry txe)
+    /// <summary>
+    /// Converts from a gRPC protobuf TxEntry instance
+    /// </summary>
+    /// <param name="txe"></param>
+    /// <returns></returns>
+    public static TxEntry ValueOf(ImmudbProxy.TxEntry txe)
     {
         KVMetadata md = new KVMetadata();
 
@@ -53,6 +76,11 @@ public class TxEntry
                 );
     }
 
+    /// <summary>
+    /// Calculates the digest for a specific version
+    /// </summary>
+    /// <param name="version">The version number</param>
+    /// <returns></returns>
     public byte[] DigestFor(int version)
     {
         switch (version)
@@ -64,6 +92,10 @@ public class TxEntry
         throw new InvalidOperationException("unsupported tx header version");
     }
 
+    /// <summary>
+    /// Calculates the digest for version 0
+    /// </summary>
+    /// <returns></returns>
     public byte[] Digest_v0()
     {
         if (Metadata != null)
@@ -79,6 +111,10 @@ public class TxEntry
         return CryptoUtils.Sha256Sum(b);
     }
 
+    /// <summary>
+    /// Calculates the digest for version 1
+    /// </summary>
+    /// <returns></returns>
     public byte[] Digest_v1()
     {
         byte[] mdbs = new byte[0];

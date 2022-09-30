@@ -15,9 +15,23 @@ limitations under the License.
 */
 namespace ImmuDB;
 
+/// <summary>
+/// Represents the metadata fields
+/// </summary>
 public abstract class MetadataAttribute
 {
+    /// <summary>
+    /// The attribute code size
+    /// </summary>
     public const int AttrCodeSize = 1;
+    /// <summary>
+    /// Gets the code
+    /// </summary>
+    /// <returns></returns>
     public abstract byte Code();
+    /// <summary>
+    /// Serializes to byte arrray
+    /// </summary>
+    /// <returns></returns>
     public abstract byte[] Serialize();
 }

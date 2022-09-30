@@ -21,8 +21,16 @@ using Google.Protobuf.Collections;
 
 namespace ImmuDB;
 
+/// <summary>
+/// Utils is a static class that provides helper functions, like converters
+/// </summary>
 public static class Utils
 {
+    /// <summary>
+    /// Converts a string to gRPC byte string
+    /// </summary>
+    /// <param name="str">The source string</param>
+    /// <returns>The gRPC ByteString </returns>
     public static ByteString ToByteString(string str)
     {
         if (str == null)
@@ -33,6 +41,11 @@ public static class Utils
         return ByteString.CopyFrom(str, Encoding.UTF8);
     }
 
+    /// <summary>
+    /// Converts a string to gRPC byte string
+    /// </summary>
+    /// <param name="b">The source byte array</param>
+    /// <returns>The gRPC ByteString </returns>
     public static ByteString ToByteString(byte[] b)
     {
         if (b == null)
@@ -43,6 +56,11 @@ public static class Utils
         return ByteString.CopyFrom(b);
     }
 
+    /// <summary>
+    /// Converts a string to byte array. Checks for null argument.
+    /// </summary>
+    /// <param name="str">The source string</param>
+    /// <returns>The converted byte array </returns>
     public static byte[] ToByteArray(string str)
     {
         if (str == null)
@@ -53,7 +71,7 @@ public static class Utils
         return Encoding.UTF8.GetBytes(str);
     }
 
-    public static byte[] WrapWithPrefix(byte[] b, byte prefix)
+    internal static byte[] WrapWithPrefix(byte[] b, byte prefix)
     {
         if (b == null)
         {
@@ -65,7 +83,7 @@ public static class Utils
         return wb;
     }
 
-    public static byte[] WrapReferenceValueAt(byte[] key, ulong atTx)
+    internal static byte[] WrapReferenceValueAt(byte[] key, ulong atTx)
     {
         byte[] refVal = new byte[1 + 8 + key.Length];
         refVal[0] = Consts.REFERENCE_VALUE_PREFIX;
@@ -76,9 +94,11 @@ public static class Utils
         return refVal;
     }
 
-    /**
-     * Convert the list of SHA256 (32-length) bytes to a primitive byte[][].
-     */
+    /// <summary>
+    /// Convert the list of SHA256 (32-length) bytes to a primitive byte[][].
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public static byte[][] ConvertSha256ListToBytesArray(RepeatedField<ByteString> data)
     {
         if (data == null)
@@ -96,7 +116,7 @@ public static class Utils
         return result;
     }
 
-    public static void PutUint32(int value, byte[] dest, int destPos)
+    internal static void PutUint32(int value, byte[] dest, int destPos)
     {
         // Considering gRPC's generated code that maps Go's uint32 and int32 to C#'s int,
         // this is basically the version of this Go code:
@@ -109,12 +129,12 @@ public static class Utils
         Array.Copy(valueBytes, 0, dest, destPos, valueBytes.Length);
     }
 
-    public static void PutUint64(ulong value, byte[] dest)
+    internal static void PutUint64(ulong value, byte[] dest)
     {
         PutUint64(value, dest, 0);
     }
 
-    public static void PutUint64(ulong value, byte[] dest, int destPos)
+    internal static void PutUint64(ulong value, byte[] dest, int destPos)
     {
         // Considering gRPC's generated code that maps Go's uint64 and int64 to Java's long,
         // this is basically the Java version of this Go code:
@@ -127,7 +147,7 @@ public static class Utils
         Array.Copy(valueBytes, 0, dest, destPos, valueBytes.Length);
     }
 
-    public static void WriteLittleEndian(BinaryWriter bw, ulong item)
+    internal static void WriteLittleEndian(BinaryWriter bw, ulong item)
     {
         var content = BitConverter.GetBytes(item);
         if (!BitConverter.IsLittleEndian)
@@ -137,7 +157,7 @@ public static class Utils
         bw.Write(content);
     }
 
-    public static void WriteWithBigEndian(BinaryWriter bw, ulong item)
+    internal static void WriteWithBigEndian(BinaryWriter bw, ulong item)
     {
         var content = BitConverter.GetBytes(item);
         if (BitConverter.IsLittleEndian)
@@ -147,7 +167,7 @@ public static class Utils
         bw.Write(content);
     }
 
-    public static void WriteWithBigEndian(BinaryWriter bw, uint item)
+    internal static void WriteWithBigEndian(BinaryWriter bw, uint item)
     {
         var content = BitConverter.GetBytes(item);
         if (BitConverter.IsLittleEndian)
@@ -157,7 +177,7 @@ public static class Utils
         bw.Write(content);
     }
 
-    public static void WriteWithBigEndian(BinaryWriter bw, ushort item)
+    internal static void WriteWithBigEndian(BinaryWriter bw, ushort item)
     {
         var content = BitConverter.GetBytes(item);
         if (BitConverter.IsLittleEndian)
@@ -167,7 +187,7 @@ public static class Utils
         bw.Write(content);
     }
 
-    public static void WriteWithBigEndian(BinaryWriter bw, long item)
+    internal static void WriteWithBigEndian(BinaryWriter bw, long item)
     {
         var content = BitConverter.GetBytes(item);
         if (BitConverter.IsLittleEndian)
@@ -177,7 +197,7 @@ public static class Utils
         bw.Write(content);
     }
 
-    public static void WriteWithBigEndian(BinaryWriter bw, double item)
+    internal static void WriteWithBigEndian(BinaryWriter bw, double item)
     {
         var content = BitConverter.GetBytes(item);
         if (BitConverter.IsLittleEndian)
@@ -187,7 +207,7 @@ public static class Utils
         bw.Write(content);
     }
 
-    public static void WriteWithBigEndian(BinaryWriter bw, short item)
+    internal static void WriteWithBigEndian(BinaryWriter bw, short item)
     {
         var content = BitConverter.GetBytes(item);
         if (BitConverter.IsLittleEndian)
@@ -197,7 +217,7 @@ public static class Utils
         bw.Write(content);
     }
 
-    public static void WriteArray(BinaryWriter bw, byte[]? item)
+    internal static void WriteArray(BinaryWriter bw, byte[]? item)
     {
         if ((item == null) || (item.Length == 0))
         {
@@ -206,7 +226,7 @@ public static class Utils
         bw.Write(item);
     }
 
-    public static string GenerateShortHash(string source)
+    internal static string GenerateShortHash(string source)
     {
         using (SHA256 sha256 = SHA256.Create())
         {

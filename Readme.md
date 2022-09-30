@@ -1,81 +1,71 @@
-# immudb4net [![License](https://img.shields.io/github/license/codenotary/immudb4j)](LICENSE)
-
-
-### The Official [immudb] Client for .NET
+# ImmuDB4Net - The Official [immudb] Client for .NET [![License](https://img.shields.io/github/license/codenotary/immudb4j)](LICENSE)
 
 [immudb]: https://immudb.io/
 
 ## Contents
 
-  - [Introduction](#introduction)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-    - [How to use immudb4net packages from Github Packages](#how-to-use-immudb4net-packages-from-github-packages)
-  - [Supported Versions](#supported-versions)
-  - [Quickstart](#quickstart)
-  - [Step-by-step Guide](#step-by-step-guide)
-    - [Creating a Client](#creating-a-client)
-    - [User Sessions](#user-sessions)
-    - [Creating a Database](#creating-a-database)
-    - [Setting the Active Database](#setting-the-active-database)
-    - [Standard Read and Write](#standard-read-and-write)
-    - [Verified or Safe Read and Write](#verified-or-safe-read-and-write)
-    - [Multi-key Read and Write](#multi-key-read-and-write)
-    - [Closing the client](#closing-the-client)
-  - [Contributing](#contributing)
+- [1. Introduction](#1-introduction)
+- [2. Prerequisites](#2-prerequisites)
+- [3. Installation](#3-installation)
+- [4. Build locally from sources](#4-build-locally-from-sources)
+- [5. Supported Versions](#5-supported-versions)
+- [6. Quickstart](#6-quickstart)
+- [7. Step-by-step Guide](#7-step-by-step-guide)
+  - [7.1. Creating a Client](#71-creating-a-client)
+  - [7.2. User Sessions](#72-user-sessions)
+  - [7.3. Creating a Database](#73-creating-a-database)
+  - [7.4. Setting the Active Database](#74-setting-the-active-database)
+  - [7.5. Standard Read and Write](#75-standard-read-and-write)
+  - [7.6. Verified or Safe Read and Write](#76-verified-or-safe-read-and-write)
+  - [7.7. Multi-key Read and Write](#77-multi-key-read-and-write)
+  - [7.8. Executing SQL statements and queries](#78-executing-sql-statements-and-queries)
+  - [7.9. Closing the client](#79-closing-the-client)
+- [8. Building from source](#8-building-from-source)
+- [9. Contributing](#9-contributing)
 
-## Introduction
+## 1. Introduction
 
-immudb4net implements a [gRPC] immudb client, based on [immudb's official protobuf definition].<br/>
-It exposes a minimal and simple to use API for applications, while the cryptographic verifications and state update protocol implementation 
+ImmuDB4Net implements a [gRPC] immudb client, based on [immudb's official protobuf definition].
+It exposes a minimal and simple to use API for applications, while the cryptographic verifications and state update protocol implementation
 are fully implemented internally by this client.
 
-The latest validated immudb state may be kept in the local file system using default `FileImmuStateHolder`.<br/>
+The latest validated immudb state may be kept in the local file system using default `FileImmuStateHolder`.
 Please read [immudb Research Paper] for details of how immutability is ensured by [immudb].
 
 [gRPC]: https://grpc.io/
 [immudb Research Paper]: https://immudb.io/
-[immudb]: https://immudb.io/
 [immudb's official protobuf definition](https://github.com/codenotary/immudb/blob/master/pkg/api/schema/schema.proto)
 
-## Prerequisites
+## 2. Prerequisites
 
-immudb4net assumes you have access to a running immudb server.<br/>
+ImmuDB4Net assumes you have access to a running immudb server.
 Running `immudb` on your system is very simple, please refer to this [immudb QuickStart](https://docs.immudb.io/master/quickstart.html) page.
 
-## Installation
+## 3. Installation
 
-Include immudb4net as a dependency in your project via Nuget package:
-
-TODO
-
-`immudb4net` is currently hosted on [NuGet.Org]
+Include ImmuDB4Net as a dependency in your project via Nuget package. `ImmuDB4Net` is currently hosted on [NuGet.Org]
 
 [NuGet.Org]: https://nuget.org
 
-## Build locally from sources
+## 4. Build locally from sources
 
 Use ```dotnet build``` to build locally the ImmuDB client assembly.
 
-### How to use immudb4net packages from Github Packages
+## 5. Supported Versions
 
-## Supported Versions
-
-immudb4net supports the [latest immudb server] release, that is 1.3.2 at the time of updating this document.
+ImmuDB4Net supports the [latest immudb server] release, that is 1.3.2 at the time of updating this document.
 
 [latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.3.2
 
-## Quickstart
+## 6. Quickstart
 
-[Hello Immutable World!] example can be found in `immudb-client-examples` repo.
+[Hello Immutable World!] example can be found in `immudb-client-examples` repo:
 
-[Hello Immutable World!]: https://github.com/codenotary/immudb-client-examples/tree/master/c#
+[Hello Immutable World!]: https://github.com/codenotary/immudb-client-examples/blob/feat/dotnet-example/dotnet/simple-app
 
-Follow its [README](https://github.com/codenotary/immudb-client-examples/blob/master/c#/README.md) to build and run it.
+## 7. Step-by-step Guide
 
-## Step-by-step Guide
-
-### Creating a Client
+### 7.1. Creating a Client
 
 The following code snippets show how to create a client.
 
@@ -120,7 +110,7 @@ Customizing the `State Holder`:
                                       .Build();
 ```
 
-### User Sessions
+### 7.2. User Sessions
 
 Use `Open` and `Close` methods to initiate and terminate user sessions:
 
@@ -140,7 +130,7 @@ Use `Open` and `Close` methods to initiate and terminate user sessions:
 
 ```
 
-### Creating a Database
+### 7.3. Creating a Database
 
 Creating a new database is quite simple:
 
@@ -148,7 +138,7 @@ Creating a new database is quite simple:
     await immuClient.CreateDatabase("db1");
 ```
 
-### Setting the Active Database
+### 7.4. Setting the Active Database
 
 Specify the active database with:
 
@@ -156,19 +146,21 @@ Specify the active database with:
     await immuClient.UseDatabase("db1");
 ```
 
-### Standard Read and Write
+### 7.5. Standard Read and Write
 
 immudb provides standard read and write operations that behave as in a standard
 key-value store i.e. no cryptographic verification is involved. Such operations
 may be used when validations can be postponed.
 
 ``` C#
+    await client.Set("k123", "v123");
+    string v = await client.Get("k123").ToString();
+or
     await client.Set("k123", new byte[]{1, 2, 3});
-    
     byte[] v = await client.Get("k123").Value;
 ```
 
-### Verified or Safe Read and Write
+### 7.6. Verified or Safe Read and Write
 
 immudb provides built-in cryptographic verification for any entry. The client
 implements the mathematical validations while the application uses as a standard
@@ -177,8 +169,11 @@ read or write operation:
 ``` C#
     try 
     {
-        await Client.VerifiedSet("k123", new byte[]{1, 2, 3});    
+        await Client.VerifiedSet("k123", new byte[]{1, 2, 3});
         byte[] v = await client.VerifiedGet("k123").Value;
+or
+        await client.VerifiedSet("k123", "v123");
+        string v = await client.VerifiedGet("k123").ToString();
 
     } catch(VerificationException e) {
 
@@ -187,9 +182,9 @@ read or write operation:
     }
 ```
 
-### Multi-key Read and Write
+### 7.7. Multi-key Read and Write
 
-Transactional multi-key read and write operations are supported by immudb and immudb4net.
+Transactional multi-key read and write operations are supported by immudb and ImmuDB4Net.
 
 Atomic multi-key write (all entries are persisted or none):
 
@@ -222,9 +217,29 @@ Atomic multi-key read (all entries are retrieved or none):
     }
 ```
 
-### Closing the client
+### 7.8. Executing SQL statements and queries
 
-Use `Close`, for closing the connection with immudb server . When terminating the process, use the `ImmuClient.ReleaseSdkResources` operation :
+ImmuDB4Net provides `SQLExec` and `SQLQuery` commands and an example of usage is below:
+
+``` C#
+        var client = new ImmuClient();
+        await client.Open("immudb", "immudb", "defaultdb");
+
+        await client.SQLExec("CREATE TABLE IF NOT EXISTS logs(id INTEGER AUTO_INCREMENT, created TIMESTAMP, entry VARCHAR, PRIMARY KEY id)");
+        await client.SQLExec("CREATE INDEX IF NOT EXISTS ON logs(created)");
+        var rspInsert = await client.SQLExec("INSERT INTO logs(created, entry) VALUES($1, $2)",
+                SQLParameter.Create(DateTime.UtcNow),
+                SQLParameter.Create("hello immutable world"));
+        var queryResult = await client.SQLQuery("SELECT created, entry FROM LOGS order by created DESC");
+        var sqlVal = queryResult.Rows[0]["entry"];
+        
+        Console.WriteLine($"The log entry is: {sqlVal.Value}");
+
+```
+
+### 7.9. Closing the client
+
+Use `Close`, for closing the connection with immudb server . When terminating the process, use the `ImmuClient.ReleaseSdkResources` function :
 
 ``` C#
     await client.Close();
@@ -233,18 +248,18 @@ Use `Close`, for closing the connection with immudb server . When terminating th
 
 Note: After the shutdown, a new client needs to be created to establish a new connection.
 
-## Building from source
+## 8. Building from source
 
 To build from source you need as prerequisites to clone a local copy of the git repo: <https://github.com/codenotary/immudb4net>
 and then to have installed on the build machine the dotnet 6.0 SDK. Then, from the terminal just run ```dotnet build``` .
 
-In order to successfully execute the integration tests with the command```dotnet test``` to have to install as prerequisites ```docker``` and also to start locally an ImmuDB instance on port 3322. For example, you can run ImmuDB in docker as below:
+In order to successfully execute the integration tests with the command```dotnet test``` you have to install as prerequisites ```docker``` and also to start locally an ImmuDB instance on port 3322. For example, you can run ImmuDB in docker as below:
 
 ``` bash
 docker run -d --name immudb -p 3322:3322 codenotary/immudb:latest
 ```
 
-## Contributing
+## 9. Contributing
 
 We welcome contributions. Feel free to join the team!
 

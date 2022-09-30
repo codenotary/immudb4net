@@ -16,38 +16,37 @@ limitations under the License.
 
 namespace ImmuDB;
 
+using System.Data;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using ImmuDB.Crypto;
 using ImmuDB.Exceptions;
+using ImmuDB.SQL;
 using ImmudbProxy;
 using Org.BouncyCastle.Crypto;
 
+/// <summary>
+/// Class ImmuClientSync provides the synchronous API for accessing an ImmuDB server. If synchronous support is needed, use <see cref="ImmuClient" />
+/// </summary>
 public partial class ImmuClientSync
 {
     internal const string AUTH_HEADER = "authorization";
 
     private readonly AsymmetricKeyParameter? serverSigningKey;
-    private readonly ImmuStateHolder stateHolder;
-
-    public TimeSpan ConnectionShutdownTimeout { get; set; }
-    public TimeSpan IdleConnectionCheckInterval { get; internal set; }
+    private readonly IImmuStateHolder stateHolder;
+    private IConnection connection;
     private string currentDb = "defaultdb";
-    public string GrpcAddress { get; }
     private static LibraryWideSettings globalSettings = new LibraryWideSettings();
-    public static LibraryWideSettings GlobalSettings
-    {
-        get
-        {
-            return globalSettings;
-        }
-    }
+    private Session? activeSession;
+    private TimeSpan heartbeatInterval;
+    private ManualResetEvent? heartbeatCloseRequested;
+    private Task? heartbeatTask;
+    private ReleasedConnection releasedConnection = new ReleasedConnection();
 
     internal ImmuService.ImmuServiceClient Service { get { return Connection.Service; } }
     internal object connectionSync = new Object();
-    private IConnection connection;
     internal IConnection Connection
     {
         get
@@ -69,13 +68,10 @@ public partial class ImmuClientSync
     internal IConnectionPool ConnectionPool { get; set; }
     internal ISessionManager SessionManager { get; set; }
     internal object sessionSync = new Object();
-    private Session? activeSession;
-    private TimeSpan heartbeatInterval;
-    private ManualResetEvent? heartbeatCloseRequested;
+    internal int sessionSetupInProgress = 0;
+
     internal ManualResetEvent? heartbeatCalled;
-    private Task? heartbeatTask;
-    private ReleasedConnection releasedConnection = new ReleasedConnection();
-    public bool DeploymentInfoCheck { get; set; } = true;
+
     internal Session? ActiveSession
     {
         get
@@ -93,38 +89,89 @@ public partial class ImmuClientSync
             }
         }
     }
+    internal IImmuStateHolder StateHolder
+    {
+        get
+        {
+            return stateHolder;
+        }
+    }
 
+    /// <summary>
+    /// Gets or sets the DeploymentInfoCheck flag. If enabled then a check of server authenticity is perform while establishing a new link with the ImmuDB server.
+    /// </summary>
+    /// <value>Default: true</value>
+    public bool DeploymentInfoCheck
+    {
+        get
+        {
+            return stateHolder.DeploymentInfoCheck;
+        }
+
+        set
+        {
+
+            stateHolder.DeploymentInfoCheck = value;
+        }
+    }
+    /// <summary>
+    /// Gets or sets the length of time the <see cref="Close()" /> function is allowed to block before it completes.
+    /// </summary>
+    /// <value>Default: 2 sec</value>
+    public TimeSpan ConnectionShutdownTimeout { get; set; }
+
+    /// <summary>
+    /// Gets or sets the length of time interval between periodic checks of idle connections to be closed. 
+    /// </summary>
+    /// <value></value>
+    public TimeSpan IdleConnectionCheckInterval { get; internal set; }
+
+    /// <summary>
+    /// Gets the grpc address of the ImmuDB server
+    /// </summary>
+    /// <value></value>
+    /// <remarks>
+    /// This value is computed from the server url and server port arguments that come either from 
+    /// <see cref="ImmuClientSyncBuilder.Build()" /> or <see cref="ImmuClientSync(string, int)" /> constructor
+    /// </remarks>
+    public string GrpcAddress { get; }
+
+    /// <summary>
+    /// Gets the <see cref="LibraryWideSettings" /> object with the process wide settings
+    /// </summary>
+    /// <value></value>
+    public static LibraryWideSettings GlobalSettings
+    {
+        get
+        {
+            return globalSettings;
+        }
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ImmuClientSyncBuilder" /> factory object for <see cref="ImmuClientSync" /> instances
+    /// </summary>
+    /// <returns>A new instance of <see cref="ImmuClientSync" /></returns>
     public static ImmuClientSyncBuilder NewBuilder()
     {
         return new ImmuClientSyncBuilder();
     }
 
-    public class LibraryWideSettings
-    {
-        public int MaxConnectionsPerServer { get; set; }
-        public TimeSpan TerminateIdleConnectionTimeout { get; set; }
-        public TimeSpan IdleConnectionCheckInterval { get; set; }
-        internal LibraryWideSettings()
-        {
-            //these are the default values
-            MaxConnectionsPerServer = 2;
-            TerminateIdleConnectionTimeout = TimeSpan.FromSeconds(60);
-            IdleConnectionCheckInterval = TimeSpan.FromSeconds(6);
-        }
-    }
-
+    /// <summary>
+    /// Initializes a new instance of <see cref="ImmuClientSync" />. It uses the default value of 'localhost:3322' as ImmuDB server address and port and 'defaultdb' as database name.
+    /// </summary>
+    /// <returns></returns>
     public ImmuClientSync() : this(NewBuilder())
     {
 
     }
-
+    /// <summary>
+    ///  Initializes a new instance of <see cref="ImmuClientSync" />. It uses the implicit 'defaultdb' value for the database name.
+    /// </summary>
+    /// <param name="serverUrl">The ImmuDB server address, ex: localhost or http://localhost </param>
+    /// <param name="serverPort">The port where the ImmuDB server listens</param>
     public ImmuClientSync(string serverUrl, int serverPort)
         : this(NewBuilder().WithServerUrl(serverUrl).WithServerPort(serverPort))
-    {
-    }
-
-    public ImmuClientSync(string serverUrl, int serverPort, string database)
-        : this(NewBuilder().WithServerUrl(serverUrl).WithServerPort(serverPort).WithDatabase(database))
     {
     }
 
@@ -134,9 +181,9 @@ public partial class ImmuClientSync
         GrpcAddress = builder.GrpcAddress;
         connection = releasedConnection;
         SessionManager = builder.SessionManager;
+        stateHolder = builder.StateHolder;
         DeploymentInfoCheck = builder.DeploymentInfoCheck;
         serverSigningKey = builder.ServerSigningKey;
-        stateHolder = builder.StateHolder;
         heartbeatInterval = builder.HeartbeatInterval;
         ConnectionShutdownTimeout = builder.ConnectionShutdownTimeout;
         stateHolder.DeploymentInfoCheck = builder.DeploymentInfoCheck;
@@ -144,7 +191,10 @@ public partial class ImmuClientSync
         stateHolder.DeploymentLabel = GrpcAddress;
     }
 
-
+    /// <summary>
+    /// Releases the resources used by the SDK objects. (e.g. connection pool resources). As best practice, this method should be call just before the existing process ends.
+    /// </summary>
+    /// <returns></returns>
     public static void ReleaseSdkResources()
     {
         RandomAssignConnectionPool.Instance.Shutdown();
@@ -180,7 +230,94 @@ public partial class ImmuClientSync
         heartbeatTask = null;
     }
 
-    public void Open(string username, string password, string defaultdb)
+    private void ValidateLocalState()
+    {
+        lock (stateSync)
+        {
+            var localState = stateHolder.GetState(ActiveSession, currentDb);
+            if (localState == null)
+            {
+                localState = ServerCurrentState;
+                stateHolder.SetState(ActiveSession!, localState);
+            }
+            else
+            {
+                var serverState = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
+                try
+                {
+                    var verifiableTx = Service.VerifiableTxById(new VerifiableTxRequest
+                    {
+                        SinceTx = localState.TxId,
+                        Tx = serverState.TxId,
+                        EntriesSpec = new EntriesSpec
+                        {
+                            SqlEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            },
+                            KvEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            },
+                            ZEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            }
+                        }
+                    }, Service.GetHeaders(ActiveSession));
+                    Crypto.DualProof dualProof = Crypto.DualProof.ValueOf(verifiableTx.DualProof);
+
+                    ulong sourceId;
+                    ulong targetId;
+                    byte[] sourceAlh;
+                    byte[] targetAlh;
+                    if (localState.TxId <= serverState.TxId)
+                    {
+                        sourceId = localState.TxId;
+                        sourceAlh = CryptoUtils.DigestFrom(localState.TxHash);
+                        targetId = serverState.TxId;
+                        targetAlh = dualProof.TargetTxHeader.Alh();
+                    }
+                    else
+                    {
+                        sourceId = serverState.TxId;
+                        sourceAlh = dualProof.SourceTxHeader.Alh();
+                        targetId = localState.TxId;
+                        targetAlh = CryptoUtils.DigestFrom(localState.TxHash);
+                    }
+                    if (localState.TxId > 0)
+                    {
+                        if (!CryptoUtils.VerifyDualProof(
+                                Crypto.DualProof.ValueOf(verifiableTx.DualProof),
+                                sourceId,
+                                targetId,
+                                sourceAlh,
+                                targetAlh
+                        ))
+                        {
+                            throw new VerificationException("Data is corrupted (dual proof verification failed for the local state).");
+                        }
+                    }
+                }
+                catch (RpcException e)
+                {
+                    if (e.Message.Contains("tx not found"))
+                    {
+                        throw new VerificationException("The local state validation against the server state failed");
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Opens a connection to the ImmuDB server or reuses one from the connection pool. It also initiates a session with the forementioned server.
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="password">The username's password</param>
+    /// <param name="databaseName">The database to use</param>
+    /// <returns></returns>
+    public void Open(string username, string password, string databaseName)
     {
         lock (sessionSync)
         {
@@ -193,13 +330,20 @@ public partial class ImmuClientSync
                 Address = GrpcAddress,
                 ShutdownTimeout = ConnectionShutdownTimeout
             });
-            activeSession = SessionManager.OpenSession(Connection, username, password, defaultdb);
+            activeSession = SessionManager.OpenSession(Connection, username, password, databaseName);
+            currentDb = databaseName;
+            ValidateLocalState();
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
             StartHeartbeat();
         }
     }
 
+    /// <summary>
+    /// Releases the established connection to the connection pool and acquires a new one.
+    /// </summary>
+    /// <remarks>The active session is not affected.</remarks>
+    /// <returns></returns>
     public void Reconnect()
     {
         lock (connectionSync)
@@ -213,6 +357,10 @@ public partial class ImmuClientSync
         }
     }
 
+    /// <summary>
+    /// Releases the established connection back to the connection pool and closes the active session
+    /// </summary>
+    /// <returns></returns>
     public void Close()
     {
         lock (sessionSync)
@@ -228,10 +376,11 @@ public partial class ImmuClientSync
         }
     }
 
-    public bool IsClosed()
-    {
-        return Connection.Released;
-    }
+    /// <summary>
+    /// Gets the status of the connection
+    /// </summary>
+    /// <returns></returns>
+    public bool IsClosed => Connection.Released;
 
     private void CheckSessionHasBeenOpened()
     {
@@ -243,44 +392,61 @@ public partial class ImmuClientSync
 
     private object stateSync = new Object();
 
-    public ImmuState State()
+    /// <summary>
+    /// Gets the database state data and if not present updates it from the server
+    /// </summary>
+    /// <returns></returns>
+    public ImmuState State
     {
-        lock (stateSync)
+        get
         {
-            ImmuState? state = stateHolder.GetState(ActiveSession, currentDb);
-            if (state == null)
+            lock (stateSync)
             {
-                state = CurrentState();
-                stateHolder.SetState(ActiveSession!, state);
+                ImmuState? state = stateHolder.GetState(ActiveSession, currentDb);
+                if (state == null)
+                {
+                    state = ServerCurrentState;
+                    stateHolder.SetState(ActiveSession!, state);
+                }
+                else
+                {
+                    CheckSessionHasBeenOpened();
+                }
+                return state;
             }
-            else
-            {
-                CheckSessionHasBeenOpened();
-            }
-            return state;
         }
     }
 
     /// <summary>
     /// Get the current database state that exists on the server. It may throw a RuntimeException if server's state signature verification fails.
     /// </summary>
-    /// <returns></returns>
-    public ImmuState CurrentState()
+    /// <remarks>The reading of this property does not imply that it also validates against the local state. 
+    /// If the server public key is provided then the a verification with this public key is performed</remarks>
+    /// <returns>An <see cref="ImmuState" /> instance</returns>
+    public ImmuState ServerCurrentState
     {
-        CheckSessionHasBeenOpened();
-        ImmudbProxy.ImmutableState state = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
-        ImmuState immuState = ImmuState.ValueOf(state);
-        if (!immuState.CheckSignature(serverSigningKey))
+        get
         {
-            throw new VerificationException("State signature verification failed");
+            CheckSessionHasBeenOpened();
+            ImmudbProxy.ImmutableState state = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
+            ImmuState immuState = ImmuState.ValueOf(state);
+            if (!immuState.CheckSignature(serverSigningKey))
+            {
+                throw new VerificationException("State signature verification failed");
+            }
+            return immuState;
         }
-        return immuState;
     }
 
     //
     // ========== DATABASE ==========
     //
 
+    /// <summary>
+    /// Creates a new database
+    /// </summary>
+    /// <param name="database">The database name</param>
+    /// <returns></returns>
     public void CreateDatabase(string database)
     {
         CheckSessionHasBeenOpened();
@@ -292,6 +458,11 @@ public partial class ImmuClientSync
         Service.CreateDatabaseV2(db, Service.GetHeaders(ActiveSession));
     }
 
+    /// <summary>
+    /// Changes the selected database
+    /// </summary>
+    /// <param name="database">The newly selected database. It must be an existing one.</param>
+    /// <returns></returns>
     public void UseDatabase(string database)
     {
         CheckSessionHasBeenOpened();
@@ -303,6 +474,11 @@ public partial class ImmuClientSync
         currentDb = database;
     }
 
+    /// <summary>
+    /// Gets the server's database list
+    /// </summary>
+    /// <remarks>The function returns only the name of the databases where the user has access to</remarks>
+    /// <returns>The server's database list</returns>
     public List<string> Databases()
     {
         CheckSessionHasBeenOpened();
@@ -320,7 +496,13 @@ public partial class ImmuClientSync
     // ========== GET ==========
     //
 
-    public Entry GetAtTx(byte[] key, ulong tx)
+    /// <summary>
+    /// Retrieves the value for a specific key at a transaction ID.
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction id</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
+    public Entry Get(byte[] key, ulong tx)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.KeyRequest req = new ImmudbProxy.KeyRequest
@@ -344,16 +526,33 @@ public partial class ImmuClientSync
         }
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key and at a transaction ID.
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction id</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry Get(string key, ulong tx)
     {
-        return GetAtTx(Utils.ToByteArray(key), tx);
+        return Get(Utils.ToByteArray(key), tx);
     }
 
+    /// <summary>
+    /// Retrieves the value for a key
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry Get(string key)
     {
-        return GetAtTx(Utils.ToByteArray(key), 0);
+        return Get(Utils.ToByteArray(key), 0);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key
+    /// </summary>
+    /// <param name="keyReq">The lookup key, it is composed from the string key and the transaction id</param>
+    /// <param name="state">The local state. One can get the local state by calling <see cref="State" /> property </param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGet(ImmudbProxy.KeyRequest keyReq, ImmuState state)
     {
         CheckSessionHasBeenOpened();
@@ -399,7 +598,7 @@ public partial class ImmuClientSync
             throw new VerificationException("Data is corrupted: entry does not belong to specified key");
         }
 
-        if (entry.Metadata != null && entry.Metadata.Deleted())
+        if (entry.Metadata != null && entry.Metadata.Deleted)
         {
             throw new VerificationException("Data is corrupted: entry is marked as deleted");
         }
@@ -463,21 +662,43 @@ public partial class ImmuClientSync
         return Entry.ValueOf(vEntry.Entry);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key. The assumed default TxID is 0
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>An <see ref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGet(string key)
     {
         return VerifiedGetAtTx(key, 0);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key. The assumed default TxID is 0
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGet(byte[] key)
     {
         return VerifiedGetAtTx(key, 0);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGetAtTx(string key, ulong tx)
     {
         return VerifiedGetAtTx(Utils.ToByteArray(key), tx);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key at a transaction ID
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGetAtTx(byte[] key, ulong tx)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -486,14 +707,26 @@ public partial class ImmuClientSync
             AtTx = tx
         };
 
-        return VerifiedGet(keyReq, State());
+        return VerifiedGet(keyReq, State);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key. Changes to the key after given transaction can be ignored.
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGetSinceTx(string key, ulong tx)
     {
         return VerifiedGetSinceTx(Utils.ToByteArray(key), tx);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key. Changes to the key after given transaction can be ignored.
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGetSinceTx(byte[] key, ulong tx)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -502,14 +735,26 @@ public partial class ImmuClientSync
             SinceTx = tx
         };
 
-        return VerifiedGet(keyReq, State());
+        return VerifiedGet(keyReq, State);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key at a specific revision
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="rev">The revision number</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGetAtRevision(string key, long rev)
     {
         return VerifiedGetAtRevision(Utils.ToByteArray(key), rev);
     }
 
+    /// <summary>
+    /// Retrieves with authenticity check the value for a specific key at a specific revision
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="rev">The transaction ID</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry VerifiedGetAtRevision(byte[] key, long rev)
     {
         ImmudbProxy.KeyRequest keyReq = new ImmudbProxy.KeyRequest()
@@ -518,14 +763,26 @@ public partial class ImmuClientSync
             AtRevision = rev
         };
 
-        return VerifiedGet(keyReq, State());
+        return VerifiedGet(keyReq, State);
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key since a transaction ID
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry GetSinceTx(string key, ulong tx)
     {
         return GetSinceTx(Utils.ToByteArray(key), tx);
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key since a transaction ID
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="tx">The transaction ID</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry GetSinceTx(byte[] key, ulong tx)
     {
         CheckSessionHasBeenOpened();
@@ -550,11 +807,23 @@ public partial class ImmuClientSync
         }
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key at a revision number
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="rev">The revision number</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry GetAtRevision(string key, long rev)
     {
         return GetAtRevision(Utils.ToByteArray(key), rev);
     }
 
+    /// <summary>
+    /// Retrieves the value for a specific key at a revision number
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="rev">The revision number</param>
+    /// <returns>An <see cref="Entry"/> object. Most often the Value field is used.</returns>
     public Entry GetAtRevision(byte[] key, long rev)
     {
         CheckSessionHasBeenOpened();
@@ -579,6 +848,11 @@ public partial class ImmuClientSync
         }
     }
 
+    /// <summary>
+    /// Retrieves the values for the specified keys. This is a batch equivalent of Get.
+    /// </summary>
+    /// <param name="keys">The list of lookup keys</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> GetAll(List<string> keys)
     {
         CheckSessionHasBeenOpened();
@@ -607,6 +881,18 @@ public partial class ImmuClientSync
     // ========== SCAN ==========
     //
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix for the keys</param>
+    /// <param name="seekKey">Optional, initial key for the first entry in the iteration</param>
+    /// <param name="endKey">Optional, end key for the scanning range</param>
+    /// <param name="inclusiveSeek">Optional, default is false, specifies if initial key's value is included</param>
+    /// <param name="inclusiveEnd">Optional, default is false, specifies if end key's value is included</param>
+    /// <param name="limit">Optional, maximum number of of returned items. If the value is 0 then the default server-side limit, typically 1000 is used.
+    /// If the returned result is larger than the maximum server-side limit then an error is returned</param>
+    /// <param name="desc">Optional, specifies the sorting order, defaults to ascending sort</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, bool inclusiveSeek, bool inclusiveEnd,
                             ulong limit, bool desc)
     {
@@ -626,41 +912,99 @@ public partial class ImmuClientSync
         return BuildList(entries);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(string prefix)
     {
         return Scan(Utils.ToByteArray(prefix));
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(byte[] prefix)
     {
         return Scan(prefix, 0, false);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies the sorting order</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(string prefix, ulong limit, bool desc)
     {
         return Scan(Utils.ToByteArray(prefix), limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies the sorting order</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(byte[] prefix, ulong limit, bool desc)
     {
         return Scan(prefix, new byte[0], limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="seekKey">Initial key for the first entry in the iteration</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies if the sorting order is of descending</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(string prefix, string seekKey, ulong limit, bool desc)
     {
         return Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="seekKey">Initial key for the first entry in the iteration</param>
+    /// <param name="endKey">End key for the scanning range</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies if the sorting order is of descending</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(string prefix, string seekKey, string endKey, ulong limit, bool desc)
     {
         return Scan(Utils.ToByteArray(prefix), Utils.ToByteArray(seekKey), Utils.ToByteArray(endKey), limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="seekKey">Initial key for the first entry in the iteration</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies if the sorting order is of descending</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(byte[] prefix, byte[] seekKey, ulong limit, bool desc)
     {
         return Scan(prefix, seekKey, new byte[0], limit, desc);
     }
 
+    /// <summary>
+    /// Iterates over the key/values in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="prefix">Prefix of the keys</param>
+    /// <param name="seekKey">Initial key for the first entry in the iteration</param>
+    /// <param name="endKey">End key for the scanning range</param>
+    /// <param name="limit">Maximum number of of returned items</param>
+    /// <param name="desc">Specifies if the sorting order is of descending</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<Entry> Scan(byte[] prefix, byte[] seekKey, byte[] endKey, ulong limit, bool desc)
     {
         return Scan(prefix, seekKey, endKey, false, false, limit, desc);
@@ -670,6 +1014,12 @@ public partial class ImmuClientSync
     // ========== SET ==========
     //
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public TxHeader Set(byte[] key, byte[] value)
     {
         CheckSessionHasBeenOpened();
@@ -692,16 +1042,33 @@ public partial class ImmuClientSync
         return TxHeader.ValueOf(txHdr);
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public TxHeader Set(string key, byte[] value)
     {
         return Set(Utils.ToByteArray(key), value);
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public TxHeader Set(string key, string value)
     {
         return Set(Utils.ToByteArray(key), Utils.ToByteArray(value));
     }
 
+    /// <summary>
+    /// Adds a list of key/value pairs
+    /// </summary>
+    /// <param name="kvList">The list of pairs to be added</param>
+    /// <returns>The transaction information</returns>
     public TxHeader SetAll(List<KVPair> kvList)
     {
         CheckSessionHasBeenOpened();
@@ -724,12 +1091,19 @@ public partial class ImmuClientSync
         return TxHeader.ValueOf(txHdr);
     }
 
-    public TxHeader SetReference(byte[] key, byte[] referencedKey, ulong atTx)
+    /// <summary>
+    /// Adds a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <param name="atTx">Transaction ID at which the referenced key will be bound at</param>
+    /// <returns>The transaction information</returns>
+    public TxHeader SetReference(byte[] reference, byte[] referencedKey, ulong atTx)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.ReferenceRequest req = new ImmudbProxy.ReferenceRequest()
         {
-            Key = Utils.ToByteString(key),
+            Key = Utils.ToByteString(reference),
             ReferencedKey = Utils.ToByteString(referencedKey),
             AtTx = atTx,
             BoundRef = atTx > 0
@@ -745,42 +1119,79 @@ public partial class ImmuClientSync
         return TxHeader.ValueOf(txHdr);
     }
 
-    public TxHeader SetReference(string key, string referencedKey, ulong atTx)
+    /// <summary>
+    /// Adds a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <param name="atTx">Transaction ID</param>
+    /// <returns>The transaction information</returns>
+    public TxHeader SetReference(string reference, string referencedKey, ulong atTx)
     {
         return SetReference(
-            Utils.ToByteArray(key),
+            Utils.ToByteArray(reference),
             Utils.ToByteArray(referencedKey),
             atTx);
     }
 
-    public TxHeader SetReference(string key, string referencedKey)
+    /// <summary>
+    /// Adds a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <returns>The transaction information</returns>
+    public TxHeader SetReference(string reference, string referencedKey)
     {
         return SetReference(
-            Utils.ToByteArray(key),
+            Utils.ToByteArray(reference),
             Utils.ToByteArray(referencedKey),
             0);
     }
 
-    public TxHeader SetReference(byte[] key, byte[] referencedKey)
+    /// <summary>
+    /// Adds a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <returns>The transaction information</returns>
+    public TxHeader SetReference(byte[] reference, byte[] referencedKey)
     {
-        return SetReference(key, referencedKey, 0);
+        return SetReference(reference, referencedKey, 0);
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public TxHeader VerifiedSet(string key, byte[] value)
     {
         return VerifiedSet(Utils.ToByteArray(key), value);
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public TxHeader VerifiedSet(string key, string value)
     {
         return VerifiedSet(Utils.ToByteArray(key), Utils.ToByteArray(value));
     }
 
+    /// <summary>
+    /// Adds a key/value pair.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <returns>The transaction information</returns>
     public TxHeader VerifiedSet(byte[] key, byte[] value)
     {
         CheckSessionHasBeenOpened();
 
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
         {
             Key = Utils.ToByteString(key),
@@ -824,7 +1235,7 @@ public partial class ImmuClientSync
             Value = Utils.ToByteString(value),
         });
 
-        ImmuDB.Crypto.InclusionProof inclusionProof = tx.Proof(entry.getEncodedKey());
+        ImmuDB.Crypto.InclusionProof inclusionProof = tx.Proof(entry.GetEncodedKey());
 
         if (!CryptoUtils.VerifyInclusion(inclusionProof, entry.DigestFor(txHeader.Version), txHeader.Eh))
         {
@@ -870,6 +1281,14 @@ public partial class ImmuClientSync
     // ========== Z ==========
     //
 
+    /// <summary>
+    /// Adds a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The referenced key</param>
+    /// <param name="atTx">The transaction ID</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public TxHeader ZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
         CheckSessionHasBeenOpened();
@@ -891,21 +1310,43 @@ public partial class ImmuClientSync
         return TxHeader.ValueOf(txHdr);
     }
 
+    /// <summary>
+    /// Adds a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public TxHeader ZAdd(string set, string key, double score)
     {
         return ZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), score);
     }
 
+    /// <summary>
+    /// Adds a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public TxHeader ZAdd(byte[] set, byte[] key, double score)
     {
         return ZAdd(set, key, 0, score);
     }
 
+    /// <summary>
+    /// Adds with authenticity check a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <param name="atTx">Transaction ID</param>
+    /// <returns>The transaction information</returns>
     public TxHeader VerifiedZAdd(byte[] set, byte[] key, ulong atTx, double score)
     {
         CheckSessionHasBeenOpened();
 
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.ZAddRequest zAddReq = new ImmudbProxy.ZAddRequest()
         {
             Set = Utils.ToByteString(set),
@@ -947,7 +1388,7 @@ public partial class ImmuClientSync
             Score = score
         });
 
-        Crypto.InclusionProof inclusionProof = tx.Proof(entry.getEncodedKey());
+        Crypto.InclusionProof inclusionProof = tx.Proof(entry.GetEncodedKey());
 
         if (!CryptoUtils.VerifyInclusion(inclusionProof, entry.DigestFor(txHeader.Version), txHeader.Eh))
         {
@@ -969,26 +1410,62 @@ public partial class ImmuClientSync
         return TxHeader.ValueOf(vtx.Tx.Header);
     }
 
+    /// <summary>
+    /// Adds with authenticity check a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public TxHeader VerifiedZAdd(string set, string key, double score)
     {
         return VerifiedZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), score);
     }
 
+    /// <summary>
+    /// Adds with authenticity check a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public TxHeader VerifiedZAdd(byte[] set, byte[] key, double score)
     {
         return VerifiedZAdd(set, key, 0, score);
     }
 
+    /// <summary>
+    /// Adds with authenticity check a scored key to a set
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="key">The lookup key</param>
+    /// <param name="atTx">Transaction ID</param>
+    /// <param name="score">The score</param>
+    /// <returns>The transaction information</returns>
     public TxHeader VerifiedZAdd(string set, string key, ulong atTx, double score)
     {
         return VerifiedZAdd(Utils.ToByteArray(set), Utils.ToByteArray(key), atTx, score);
     }
 
+    /// <summary>
+    /// Iterates over the entries added with ZAdd in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="set">The set identifier</param>
+    /// <param name="limit">Maximum number of entries to return</param>
+    /// <param name="reverse">If true, return elements in reversed order</param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<ZEntry> ZScan(string set, ulong limit, bool reverse)
     {
         return ZScan(Utils.ToByteArray(set), limit, reverse);
     }
 
+    /// <summary>
+    /// Iterates over the entries added with ZAdd in the selected database and retrieves the values for the matching criteria
+    /// </summary>
+    /// <param name="set"></param>
+    /// <param name="limit"></param>
+    /// <param name="reverse"></param>
+    /// <returns>A list of <see cref="Entry"/> objects.</returns>
     public List<ZEntry> ZScan(byte[] set, ulong limit, bool reverse)
     {
         CheckSessionHasBeenOpened();
@@ -1007,11 +1484,21 @@ public partial class ImmuClientSync
     // ========== DELETE ==========
     //
 
+    /// <summary>
+    /// Deletes a key/value entry
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>The transaction information</returns>
     public TxHeader Delete(string key)
     {
         return Delete(Utils.ToByteArray(key));
     }
 
+    /// <summary>
+    /// Deletes a key/value entry
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <returns>The transaction information</returns>
     public TxHeader Delete(byte[] key)
     {
         CheckSessionHasBeenOpened();
@@ -1039,6 +1526,11 @@ public partial class ImmuClientSync
     // ========== TX ==========
     //
 
+    /// <summary>
+    /// Gets a transaction information
+    /// </summary>
+    /// <param name="txId">The Transaction ID</param>
+    /// <returns>The transaction information</returns>
     public Tx TxById(ulong txId)
     {
         CheckSessionHasBeenOpened();
@@ -1062,10 +1554,15 @@ public partial class ImmuClientSync
         }
     }
 
+    /// <summary>
+    /// Gets with authenticity check a transaction information
+    /// </summary>
+    /// <param name="txId">The Transaction ID</param>
+    /// <returns>The transaction information</returns>
     public Tx VerifiedTxById(ulong txId)
     {
         CheckSessionHasBeenOpened();
-        ImmuState state = State();
+        ImmuState state = State;
         ImmudbProxy.VerifiableTxRequest vTxReq = new ImmudbProxy.VerifiableTxRequest()
         {
             Tx = txId,
@@ -1150,6 +1647,11 @@ public partial class ImmuClientSync
         }
     }
 
+    /// <summary>
+    /// Iterates over the transactions 
+    /// </summary>
+    /// <param name="initialTxId">Initial transaction ID</param>
+    /// <returns>A list of transactions information</returns>
     public List<Tx> TxScan(ulong initialTxId)
     {
         CheckSessionHasBeenOpened();
@@ -1162,6 +1664,12 @@ public partial class ImmuClientSync
         return buildList(txList);
     }
 
+    /// <summary>
+    /// Iterates over the transactions 
+    /// </summary>
+    /// <param name="initialTxId">Initial transaction ID</param>
+    /// <param name="limit">The maximum number of transactions</param>
+    /// <param name="desc">True for descending order</param>    /// <returns>A list of transactions information</returns>
     public List<Tx> TxScan(ulong initialTxId, uint limit, bool desc)
     {
         ImmudbProxy.TxScanRequest req = new ImmudbProxy.TxScanRequest()
@@ -1178,21 +1686,29 @@ public partial class ImmuClientSync
     // ========== HEALTH ==========
     //
 
+    /// <summary>
+    /// Performs a healthcheck query
+    /// </summary>
+    /// <returns>true if healthcheck is successful</returns>
     public bool HealthCheck()
     {
         var healthResponse = Service.Health(new Empty(), Service.GetHeaders(ActiveSession));
         return healthResponse.Status;
     }
 
-    public bool IsConnected()
-    {
-        return !Connection.Released;
-    }
+    /// <summary>
+    /// Gets the connected status
+    /// </summary>
+    public bool IsConnected => !Connection.Released;
 
     //
     // ========== USER MGMT ==========
     //
 
+    /// <summary>
+    /// Gets the user list
+    /// </summary>
+    /// <returns>The user list</returns>
     public List<Iam.User> ListUsers()
     {
         CheckSessionHasBeenOpened();
@@ -1214,12 +1730,20 @@ public partial class ImmuClientSync
                 .Select(p => (Iam.Permission)p.Permission_).ToList();
     }
 
-    public void CreateUser(string user, string password, Iam.Permission permission, string database)
+    /// <summary>
+    /// Creates a user
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="password">The username's password</param>
+    /// <param name="permission">The <see cref="Iam.Permission"/> object</param>
+    /// <param name="database">The database where the user is created</param>
+    /// <returns></returns>
+    public void CreateUser(string username, string password, Iam.Permission permission, string database)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.CreateUserRequest createUserRequest = new ImmudbProxy.CreateUserRequest()
         {
-            User = Utils.ToByteString(user),
+            User = Utils.ToByteString(username),
             Password = Utils.ToByteString(password),
             Permission = (uint)permission,
             Database = database
@@ -1228,12 +1752,19 @@ public partial class ImmuClientSync
         Service.CreateUser(createUserRequest, Service.GetHeaders(ActiveSession));
     }
 
-    public void ChangePassword(string user, string oldPassword, string newPassword)
+    /// <summary>
+    /// Changes a user's password
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="oldPassword">The username's old password (only needed when changing sysadmin user's password)</param>
+    /// <param name="newPassword">The new password</param>
+    /// <returns></returns>
+    public void ChangePassword(string username, string oldPassword, string newPassword)
     {
         CheckSessionHasBeenOpened();
         ImmudbProxy.ChangePasswordRequest changePasswordRequest = new ImmudbProxy.ChangePasswordRequest()
         {
-            User = Utils.ToByteString(user),
+            User = Utils.ToByteString(username),
             OldPassword = Utils.ToByteString(oldPassword),
             NewPassword = Utils.ToByteString(newPassword),
         };
@@ -1245,6 +1776,12 @@ public partial class ImmuClientSync
     // ========== INDEX MGMT ==========
     //
 
+    /// <summary>
+    /// Flushes the index
+    /// </summary>
+    /// <param name="cleanupPercentage">The percentage of index data to scan for unused disk space</param>
+    /// <param name="synced">Set true for the index flush operation to be synchronous, this may be slower.</param>
+    /// <returns></returns>
     public void FlushIndex(float cleanupPercentage, bool synced)
     {
         CheckSessionHasBeenOpened();
@@ -1257,6 +1794,10 @@ public partial class ImmuClientSync
         Service.FlushIndex(req, Service.GetHeaders(ActiveSession));
     }
 
+    /// <summary>
+    /// Compacts the index
+    /// </summary>
+    /// <returns></returns>
     public void CompactIndex()
     {
         CheckSessionHasBeenOpened();
@@ -1267,11 +1808,27 @@ public partial class ImmuClientSync
     // ========== HISTORY ==========
     //
 
+    /// <summary>
+    /// Retrieves the history of changes of a specific key
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="limit">The maximum number of returned items</param>
+    /// <param name="offset">The starting index</param>
+    /// <param name="desc">The sorting order, true for descending</param>
+    /// <returns></returns>
     public List<Entry> History(string key, int limit, ulong offset, bool desc)
     {
         return History(Utils.ToByteArray(key), limit, offset, desc);
     }
 
+    /// <summary>
+    /// Retrieves the history of changes of a specific key
+    /// </summary>
+    /// <param name="key">The lookup key</param>
+    /// <param name="limit">The maximum number of returned items</param>
+    /// <param name="offset">The starting index</param>
+    /// <param name="desc">The sorting order, true for descending</param>
+    /// <returns></returns>
     public List<Entry> History(byte[] key, int limit, ulong offset, bool desc)
     {
         CheckSessionHasBeenOpened();
@@ -1328,5 +1885,80 @@ public partial class ImmuClientSync
             }
         });
         return result;
+    }
+
+    //
+    // ========== SQL Exec and SQL Query  ==========
+    //
+
+    /// <summary>
+    /// Executes an SQL statement against the selected database
+    /// </summary>
+    /// <param name="sqlStatement">The SQL statement</param>
+    /// <param name="parameters">a variable number of SQLParameter values</param>
+    /// <returns>A <see cref="SQL.SQLExecResult" /> object containing transaction ids and updated rows count for each transaction</returns>
+    public SQL.SQLExecResult SQLExec(string sqlStatement, params SQLParameter[] parameters)
+    {
+        CheckSessionHasBeenOpened();
+
+        var req = new ImmudbProxy.SQLExecRequest
+        {
+            Sql = sqlStatement,
+        };
+        if (parameters != null)
+        {
+            req.Params.Add(SQL.Converters.ToNamedParams(parameters));
+        }
+        var result = Service.SQLExec(req, Service.GetHeaders(ActiveSession));
+        var sqlResult = new SQL.SQLExecResult();
+
+        foreach (var item in result.Txs)
+        {
+            if (item.Header == null)
+            {
+                continue;
+            }
+            sqlResult.Items.Add(new SQLExecResultItem { TxID = item.Header.Id, UpdatedRowsCount = item.UpdatedRows });
+        }
+        return sqlResult;
+    }
+
+    /// <summary>
+    /// Executes an SQL Query against the selected database
+    /// </summary>
+    /// <param name="sqlStatement"></param>
+    /// <param name="parameters"></param>
+    /// <returns>A <see cref="SQL.SQLQueryResult" /> object containing the column list and the rows with execution result</returns>
+    public SQL.SQLQueryResult SQLQuery(string sqlStatement, params SQLParameter[] parameters)
+    {
+        CheckSessionHasBeenOpened();
+        var req = new ImmudbProxy.SQLQueryRequest
+        {
+            Sql = sqlStatement,
+        };
+        if (parameters != null)
+        {
+            req.Params.Add(SQL.Converters.ToNamedParams(parameters));
+        }
+        var result = Service.SQLQuery(req, Service.GetHeaders(ActiveSession));
+        SQL.SQLQueryResult queryResult = new SQL.SQLQueryResult();
+        queryResult.Columns.AddRange(result.Columns.Select(x =>
+        {
+            var columnName = x.Name.Substring(x.Name.LastIndexOf(".") + 1);
+            columnName = columnName.Remove(columnName.Length - 1, 1);
+            return new SQL.Column(columnName, x.Type);
+        }));
+        foreach (var row in result.Rows)
+        {
+            Dictionary<string, SQL.SQLValue> rowItems = new Dictionary<string, SQL.SQLValue>();
+            for (int i = 0; i < row.Columns.Count; i++)
+            {
+                var columnName = row.Columns[i].Substring(row.Columns[i].LastIndexOf(".") + 1);
+                columnName = columnName.Remove(columnName.Length - 1, 1);
+                rowItems.Add(columnName, SQL.Converters.FromProxySQLValue(row.Values[i]));
+            }
+            queryResult.Rows.Add(rowItems);
+        }
+        return queryResult;
     }
 }

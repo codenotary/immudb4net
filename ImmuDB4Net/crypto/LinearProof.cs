@@ -16,7 +16,7 @@ limitations under the License.
 
 namespace ImmuDB.Crypto;
 
-public class LinearProof
+internal class LinearProof
 {
 
     public ulong SourceTxId { get; private set; }

@@ -18,18 +18,57 @@ namespace ImmuDB;
 using Org.BouncyCastle.Crypto;
 
 
-///Builder is an inner class that implements the builder pattern for ImmuClient
+/// <summary>
+/// Enables the creation of <see cref="ImmuClientSync" /> instances
+/// </summary>
 public class ImmuClientSyncBuilder
 {
+/// <summary>
+    /// Gets the server URL, such as localhost or http://localhost
+    /// </summary>
+    /// <value></value>
     public string ServerUrl { get; private set; }
+    /// <summary>
+    /// Gets the username
+    /// </summary>
+    /// <value></value>
     public string Username { get; private set; }
+    /// <summary>
+    /// Gets the password
+    /// </summary>
+    /// <value></value>
     public string Password { get; private set; }
+    /// <summary>
+    /// Gets the database name, such as DefaultDB
+    /// </summary>
+    /// <value></value>
     public string Database { get; private set; }
+    /// <summary>
+    /// Gets the port number, ex: 3322
+    /// </summary>
+    /// <value></value>
     public int ServerPort { get; private set; }
+    /// <summary>
+    /// Gets the public-private key pair
+    /// </summary>
+    /// <value></value>
     public AsymmetricKeyParameter? ServerSigningKey { get; private set; }
+    /// <summary>
+    /// Gets the DeploymentInfoCheck flag. If this flag is set then a check of server authenticity is perform while establishing a new link with the ImmuDB server.
+    /// </summary>
+    /// <value></value>
     public bool DeploymentInfoCheck { get; private set; }
-    public ImmuStateHolder StateHolder { get; private set; }
+    /// <summary>
+    /// Gets the StateHolder instance. Default is of type <see cref="FileImmuStateHolder" />
+    /// </summary>
+    /// <value></value>
+    public IImmuStateHolder StateHolder { get; private set; }
+    /// <summary>
+    /// Gets or sets the time interval between heartbeat gRPC calls
+    /// </summary>
+    /// <value></value>
     public TimeSpan HeartbeatInterval { get; set; }
+
 
     internal IConnectionPool ConnectionPool { get; }
     internal ISessionManager SessionManager { get; }
@@ -40,6 +79,9 @@ public class ImmuClientSyncBuilder
         AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
     }
 
+    /// <summary>
+    /// The constructor for ImmuClientSyncBuilder, sets the default values for the fields
+    /// </summary>
     public ImmuClientSyncBuilder()
     {
         ServerUrl = "localhost";
@@ -55,6 +97,10 @@ public class ImmuClientSyncBuilder
         ConnectionShutdownTimeout = TimeSpan.FromSeconds(2);
     }
 
+    /// <summary>
+    /// Gets the GrpcAddress; it is formed from the ServerUrl and ServerPort parameters
+    /// </summary>
+    /// <value></value>
     public string GrpcAddress
     {
         get
@@ -64,20 +110,40 @@ public class ImmuClientSyncBuilder
         }
     }
 
+    /// <summary>
+    /// Gets the length of time the <see cref="ImmuClient.Close" /> function is allowed to block before it completes.
+    /// </summary>
+    /// <value>Default: 2 sec</value>
     public TimeSpan ConnectionShutdownTimeout { get; internal set; }
 
-    public ImmuClientSyncBuilder WithStateHolder(ImmuStateHolder stateHolder)
+    /// <summary>
+    /// Sets a stateholder instance. It could be a custom state holder that implements IImmuStateHolder
+    /// </summary>
+    /// <param name="stateHolder"></param>
+    /// <returns></returns>
+    public ImmuClientSyncBuilder WithStateHolder(IImmuStateHolder stateHolder)
     {
         StateHolder = stateHolder;
         return this;
     }
 
+    /// <summary>
+    /// Sets the CheckDeploymentInfo flag. If this flag is set then a check of server authenticity is perform while establishing a new link with the ImmuDB server.
+    /// </summary>
+    /// <param name="check"></param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder CheckDeploymentInfo(bool check)
     {
         this.DeploymentInfoCheck = check;
         return this;
     }
 
+    /// <summary>
+    /// Sets the credentials
+    /// </summary>
+    /// <param name="username">The username</param>
+    /// <param name="password">The password</param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder WithCredentials(string username, string password)
     {
         this.Username = username;
@@ -85,53 +151,96 @@ public class ImmuClientSyncBuilder
         return this;
     }
 
+    /// <summary>
+    /// Sets the database name
+    /// </summary>
+    /// <param name="databaseName"></param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder WithDatabase(string databaseName)
     {
         this.Database = databaseName;
         return this;
     }
 
+    /// <summary>
+    /// Sets the port number where the ImmuDB listens to
+    /// </summary>
+    /// <param name="serverPort"></param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder WithServerPort(int serverPort)
     {
         this.ServerPort = serverPort;
         return this;
     }
 
+    /// <summary>
+    /// Sets the server URL 
+    /// </summary>
+    /// <param name="serverUrl"></param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder WithServerUrl(string serverUrl)
     {
         this.ServerUrl = serverUrl;
         return this;
     }
 
+    /// <summary>
+    /// Sets the time interval between heartbeat gRPC calls
+    /// </summary>
+    /// <param name="heartbeatInterval"></param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder WithHeartbeatInterval(TimeSpan heartbeatInterval)
     {
         this.HeartbeatInterval = heartbeatInterval;
         return this;
     }
 
+    /// <summary>
+    /// Sets the length of time the <see cref="ImmuClientSync.Close" /> function is allowed to block before it completes.
+    /// </summary>
+    /// <param name="timeout"></param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder WithConnectionShutdownTimeout(TimeSpan timeout)
     {
         this.ConnectionShutdownTimeout = timeout;
         return this;
     }
 
+    /// <summary>
+    /// Sets the file path containing the signing public key of ImmuDB server
+    /// </summary>
+    /// <param name="publicKeyFileName"></param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder WithServerSigningKey(string publicKeyFileName)
     {
         this.ServerSigningKey = ImmuState.GetPublicKeyFromPemFile(publicKeyFileName);
         return this;
     }
 
+    /// <summary>
+    /// Sets the server signing key
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public ImmuClientSyncBuilder WithServerSigningKey(AsymmetricKeyParameter? key)
     {
         this.ServerSigningKey = key;
         return this;
     }
 
+    /// <summary>
+    /// Creates an <see cref="ImmuClientSync" /> instance using the parameters defined in the builder. One can use the builder's fluent interface to define these parameters.
+    /// </summary>
+    /// <returns></returns>
     public ImmuClientSync Build()
     {
         return new ImmuClientSync(this);
     }
 
+    /// <summary>
+    /// Creates an <see cref="ImmuClientSync" /> instance using the parameters from the builder instance and opens a connection to the server.
+    /// </summary>
+    /// <returns></returns>
     public ImmuClientSync Open()
     {
         var immuClient = new ImmuClientSync(this);

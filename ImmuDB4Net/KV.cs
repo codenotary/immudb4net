@@ -18,22 +18,44 @@ using ImmuDB.Crypto;
 
 namespace ImmuDB;
 
-/**
- * KV represents a key value pair.
- */
+/// <summary>
+/// KV represents a key value pair with metadata
+/// </summary>
 public class KV
 {
+    /// <summary>
+    /// Gets the key
+    /// </summary>
+    /// <value></value>
     public byte[] Key { get; private set; }
+    /// <summary>
+    /// Gets the metadata
+    /// </summary>
+    /// <value></value>
     public KVMetadata? Metadata { get; private set; }
+    /// <summary>
+    /// Gets the value
+    /// </summary>
+    /// <value></value>
     public byte[] Value { get; private set; }
 
+    /// <summary>
+    /// Creates a new KV instance
+    /// </summary>
+    /// <param name="key">The key</param>
+    /// <param name="metadata">The metadata</param>
+    /// <param name="value">The value</param>
     public KV(byte[] key, KVMetadata? metadata, byte[] value)
     {
         this.Key = key;
         this.Metadata = metadata;
         this.Value = value;
     }
-
+    /// <summary>
+    /// Computes the digest for a specific version
+    /// </summary>
+    /// <param name="version">The version number</param>
+    /// <returns></returns>
     public byte[] DigestFor(int version)
     {
         switch (version)

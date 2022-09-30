@@ -17,40 +17,30 @@ limitations under the License.
 namespace ImmuDB;
 
 /// <summary>
-/// Represents a key-value pair
+/// This inner class keeps the global settings that are used across all <see cref="ImmuClient" /> instances
 /// </summary>
-public class KVPair
+public class LibraryWideSettings
 {
     /// <summary>
-    /// The key
+    /// Gets or sets the 
     /// </summary>
     /// <value></value>
-    public byte[] Key { get; private set; }
+    public int MaxConnectionsPerServer { get; set; }
     /// <summary>
-    /// The value
+    /// Gets or sets the idle time before a connection is terminated
     /// </summary>
     /// <value></value>
-    public byte[] Value { get; private set; }
-
+    public TimeSpan TerminateIdleConnectionTimeout { get; set; }
     /// <summary>
-    /// Creates a new key value pair
+    /// Gets or sets the time interval between checking for idle connections
     /// </summary>
-    /// <param name="key">The key</param>
-    /// <param name="value">The value</param>
-    /// <returns></returns>
-    public KVPair(string key, byte[] value) :
-        this(Utils.ToByteArray(key), value)
+    /// <value></value>
+    public TimeSpan IdleConnectionCheckInterval { get; set; }
+    internal LibraryWideSettings()
     {
-    }
-
-    /// <summary>
-    /// Creates a new key value pair
-    /// </summary>
-    /// <param name="key">The key</param>
-    /// <param name="value">The value</param>
-    public KVPair(byte[] key, byte[] value)
-    {
-        this.Key = key;
-        this.Value = value;
+        //these are the default values
+        MaxConnectionsPerServer = 2;
+        TerminateIdleConnectionTimeout = TimeSpan.FromSeconds(60);
+        IdleConnectionCheckInterval = TimeSpan.FromSeconds(6);
     }
 }

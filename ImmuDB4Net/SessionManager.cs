@@ -20,7 +20,7 @@ using ImmudbProxy;
 
 namespace ImmuDB;
 
-public interface ISessionManager
+internal interface ISessionManager
 {
     Task<Session> OpenSessionAsync(IConnection connection, string username, string password, string initialDbName);
     Session OpenSession(IConnection connection, string username, string password, string initialDbName);
@@ -28,7 +28,7 @@ public interface ISessionManager
     void CloseSession(IConnection connection, Session? session);
 }
 
-public class DefaultSessionManager : ISessionManager
+internal class DefaultSessionManager : ISessionManager
 {
     internal static DefaultSessionManager _instance = new DefaultSessionManager();
     public static ISessionManager Instance

@@ -17,16 +17,39 @@ using System.Text;
 
 namespace ImmuDB;
 
+/// <summary>
+/// Represents an ImmuDB value, such as the value of a specific key
+/// </summary>
 public class Entry
 {
+    /// <summary>
+    /// Gets the transaction ID
+    /// </summary>
+    /// <value></value>
     public ulong Tx { get; private set; }
 
+    /// <summary>
+    /// Gets the key
+    /// </summary>
+    /// <value></value>
     public byte[] Key { get; private set; }
 
+    /// <summary>
+    /// Gets the value
+    /// </summary>
+    /// <value></value>
     public byte[] Value { get; private set; }
 
+    /// <summary>
+    /// Gets the metadata
+    /// </summary>
+    /// <value></value>
     public KVMetadata? Metadata { get; private set; }
 
+    /// <summary>
+    /// Gets the reference
+    /// </summary>
+    /// <value></value>
     public Reference? ReferencedBy { get; private set; }
 
     private Entry(byte[] key, byte[] value) {
@@ -34,6 +57,10 @@ public class Entry
         Value = value;
     }
 
+    /// <summary>
+    /// Gets the string representation of the value
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         if((Value == null) || (Value.Length == 0)) {
@@ -42,6 +69,11 @@ public class Entry
         return Encoding.UTF8.GetString(Value);
     }
 
+    /// <summary>
+    /// Converts from a gRPC entry
+    /// </summary>
+    /// <param name="e"></param>
+    /// <returns></returns>
     public static Entry ValueOf(ImmudbProxy.Entry e)
     {
         ImmudbProxy.Entry proxyInst = e ?? ImmudbProxy.Entry.DefaultInstance;
@@ -61,7 +93,11 @@ public class Entry
         return entry;
     }
 
-    public byte[] getEncodedKey()
+    /// <summary>
+    /// Gets the encoded key
+    /// </summary>
+    /// <returns></returns>
+    public byte[] GetEncodedKey()
     {
         if (ReferencedBy == null)
         {
@@ -71,6 +107,11 @@ public class Entry
         return Utils.WrapWithPrefix(ReferencedBy.Key, Consts.SET_KEY_PREFIX);
     }
 
+    /// <summary>
+    /// Gets the digest for a version
+    /// </summary>
+    /// <param name="version">The version</param>
+    /// <returns></returns>
     public byte[] DigestFor(int version)
     {
         KV kv;
@@ -78,7 +119,7 @@ public class Entry
         if (ReferencedBy == null)
         {
             kv = new KV(
-                    getEncodedKey(),
+                    GetEncodedKey(),
                     Metadata,
                     Utils.WrapWithPrefix(Value, Consts.PLAIN_VALUE_PREFIX)
             );
@@ -86,7 +127,7 @@ public class Entry
         else
         {
             kv = new KV(
-                    getEncodedKey(),
+                    GetEncodedKey(),
                     ReferencedBy.Metadata,
                     Utils.WrapReferenceValueAt(Utils.WrapWithPrefix(Key, Consts.SET_KEY_PREFIX), ReferencedBy.AtTx)
             );

@@ -16,8 +16,15 @@ limitations under the License.
 
 namespace ImmuDB.Exceptions;
 
+/// <summary>
+/// Transaction Not Found Exception class
+/// </summary>
 public class TxNotFoundException : Exception
 {
+    /// <summary>
+    /// The constructor
+    /// </summary>
+    /// <returns></returns>
     public TxNotFoundException() : base()
     {
     }

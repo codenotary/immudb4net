@@ -16,8 +16,15 @@ limitations under the License.
 
 namespace ImmuDB.Exceptions;
 
+/// <summary>
+/// Represents a CorruptedDataException
+/// </summary>
 public class CorruptedDataException : Exception
 {
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <returns></returns>
     public CorruptedDataException() : base()
     {
     }

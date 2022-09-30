@@ -45,7 +45,7 @@ public class StateTests : BaseClientIntTests
     {
         await client!.Open("immudb", "immudb", "defaultdb");
 
-        ImmuState currState = client.CurrentState();
+        ImmuState currState = client.ServerCurrentState;
         Assert.IsNotNull(currState);
 
         Assembly asm = Assembly.GetExecutingAssembly();
@@ -80,81 +80,9 @@ public class StateTests : BaseClientIntTests
         }
     }
 
-    [TestMethod("currentState with server signature checking, but only on the client side")]
-    public async Task Test2()
-    {
-        Assembly asm = Assembly.GetExecutingAssembly();
-        string resourceName = "ImmuDB4Net.Tests.resources.test_public_key.pem";
-        AsymmetricKeyParameter assymKey;
-        ImmuClient client;
-        try
-        {
-            using (Stream? stream = asm.GetManifestResourceStream(resourceName))
-            {
-                if (stream == null)
-                {
-                    Assert.Fail("Could not read resource");
-                }
-                using (TextReader tr = new StreamReader(stream))
-                {
-                    PemReader pemReader = new PemReader(tr);
-                    assymKey = (AsymmetricKeyParameter)pemReader.ReadObject();
-                }
-            }
-            client = ImmuClient.NewBuilder()
-                        .WithServerUrl("localhost")
-                        .WithServerPort(3325)
-                        .WithServerSigningKey(assymKey)
-                        .Build();
-        }
-        catch (Exception e)
-        {
-            Assert.Fail(string.Format("An exception occurred in StateTests->Test1. {0}", e.ToString()));
-            return;
-        }
-
-        await client.Open("immudb", "immudb", "defaultdb");
-        try
-        {
-            client.CurrentState();
-            Assert.Fail("Signing key provided on the client side only and currentstate should raise verificationexception");
-        }
-        catch (VerificationException)
-        {
-
-        }
-        await client.Close();
-    }
-
-    private string CreatePrivateKeyInTmpFolder()
-    {
-        Assembly asm = Assembly.GetExecutingAssembly();
-        string resourceName = "ImmuDB4Net.Tests.resources.test_private_key.pem";
-        using (Stream? stream = asm.GetManifestResourceStream(resourceName))
-        {
-            if (stream == null)
-            {
-                Assert.Fail("Could not read resource");
-            }
-            using (TextReader tr = new StreamReader(stream))
-            {
-                string content = tr.ReadToEnd();
-                string tmpPath = Path.GetTempFileName();
-                File.WriteAllText(tmpPath, content);
-                var fileInfo = new UnixFileInfo(tmpPath);
-                fileInfo.FileAccessPermissions =
-                    FileAccessPermissions.UserRead | FileAccessPermissions.UserWrite
-                    | FileAccessPermissions.GroupRead
-                    | FileAccessPermissions.OtherRead;
-                return tmpPath;
-            }
-        }
-    }
-
-
-    [TestMethod(@"start docker container with immudb then check currentState with server and client signature checking. In order to successfully run this 
+    [TestMethod(@"start docker container with immudb then check currentState with client and server signature checking, starts with empty state. In order to successfully run this 
     test you need to have docker installed.")]
-    public async Task Test3()
+    public async Task Test2()
     {
         string tmpFile = CreatePrivateKeyInTmpFolder();
         string containerId = "";
@@ -217,10 +145,19 @@ public class StateTests : BaseClientIntTests
                 return;
             }
 
+            string hashedStateFolder = Path.Combine(
+                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                 "immudb4net",
+                 Utils.GenerateShortHash(client.GrpcAddress));
+            if (Directory.Exists(hashedStateFolder))
+            {
+                Directory.Delete(hashedStateFolder, true);
+            }
+
             await client.Open("immudb", "immudb", "defaultdb");
             try
             {
-                var state = client.CurrentState();
+                var state = client.ServerCurrentState;
                 Assert.IsNotNull(state);
             }
             catch (VerificationException)
@@ -240,6 +177,29 @@ public class StateTests : BaseClientIntTests
             }
         }
     }
-
+    private string CreatePrivateKeyInTmpFolder()
+    {
+        Assembly asm = Assembly.GetExecutingAssembly();
+        string resourceName = "ImmuDB4Net.Tests.resources.test_private_key.pem";
+        using (Stream? stream = asm.GetManifestResourceStream(resourceName))
+        {
+            if (stream == null)
+            {
+                Assert.Fail("Could not read resource");
+            }
+            using (TextReader tr = new StreamReader(stream))
+            {
+                string content = tr.ReadToEnd();
+                string tmpPath = Path.GetTempFileName();
+                File.WriteAllText(tmpPath, content);
+                var fileInfo = new UnixFileInfo(tmpPath);
+                fileInfo.FileAccessPermissions =
+                    FileAccessPermissions.UserRead | FileAccessPermissions.UserWrite
+                    | FileAccessPermissions.GroupRead
+                    | FileAccessPermissions.OtherRead;
+                return tmpPath;
+            }
+        }
+    }
 
 }
