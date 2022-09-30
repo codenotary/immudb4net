@@ -177,17 +177,6 @@ public partial class ImmuClient
     {
     }
 
-    /// <summary>
-    /// Initializes a new instance of <see cref="ImmuClient" />
-    /// </summary>
-    /// <param name="serverUrl">The ImmuDB server address, e.g. localhost or http://localhost </param>
-    /// <param name="serverPort">The port where the ImmuDB server listens</param>
-    /// <param name="database">The name of the ImmuDB server's database to use</param>
-    public ImmuClient(string serverUrl, int serverPort, string database)
-        : this(NewBuilder().WithServerUrl(serverUrl).WithServerPort(serverPort).WithDatabase(database))
-    {
-    }
-
     internal ImmuClient(ImmuClientBuilder builder)
     {
         ConnectionPool = builder.ConnectionPool;
@@ -279,6 +268,7 @@ public partial class ImmuClient
                             }
                         }
                     }, Service.GetHeaders(ActiveSession));
+                    
                 }
                 catch (RpcException e)
                 {
@@ -323,6 +313,7 @@ public partial class ImmuClient
                 ShutdownTimeout = ConnectionShutdownTimeout
             });
             ActiveSession = await SessionManager.OpenSessionAsync(Connection, username, password, databaseName);
+            currentDb = databaseName;
             ValidateLocalState();
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);

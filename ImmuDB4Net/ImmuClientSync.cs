@@ -175,17 +175,6 @@ public partial class ImmuClientSync
     {
     }
 
-    /// <summary>
-    /// Initializes a new instance of <see cref="ImmuClient" />
-    /// </summary>
-    /// <param name="serverUrl">The ImmuDB server address, e.g. localhost or http://localhost </param>
-    /// <param name="serverPort">The port where the ImmuDB server listens</param>
-    /// <param name="database">The name of the ImmuDB server's database to use</param>
-    public ImmuClientSync(string serverUrl, int serverPort, string database)
-        : this(NewBuilder().WithServerUrl(serverUrl).WithServerPort(serverPort).WithDatabase(database))
-    {
-    }
-
     internal ImmuClientSync(ImmuClientSyncBuilder builder)
     {
         ConnectionPool = builder.ConnectionPool;
@@ -241,6 +230,56 @@ public partial class ImmuClientSync
         heartbeatTask = null;
     }
 
+    private void ValidateLocalState()
+    {
+        lock (stateSync)
+        {
+            var localState = stateHolder.GetState(ActiveSession, currentDb);
+            if (localState == null)
+            {
+                localState = ServerCurrentState;
+                stateHolder.SetState(ActiveSession!, localState);
+            }
+            else
+            {
+                var serverState = Service.CurrentState(new Empty(), Service.GetHeaders(ActiveSession));
+                try
+                {
+                    var verifiableTx = Service.VerifiableTxById(new VerifiableTxRequest
+                    {
+                        SinceTx = localState.TxId,
+                        Tx = serverState.TxId,
+                        EntriesSpec = new EntriesSpec
+                        {
+                            //TODO: double check if empty entrytypespec defaults to exclude on the server
+                            SqlEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            },
+                            KvEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            },
+                            ZEntriesSpec = new EntryTypeSpec
+                            {
+                                Action = EntryTypeAction.Exclude,
+                            }
+                        }
+                    }, Service.GetHeaders(ActiveSession));
+                    
+                }
+                catch (RpcException e)
+                {
+                    if (e.Message.Contains("tx not found"))
+                    {
+                        throw new VerificationException("The local state validation against the server state failed");
+                    }
+                }
+            }
+        }
+    }
+
+
     /// <summary>
     /// Opens a connection to the ImmuDB server or reuses one from the connection pool. It also initiates a session with the forementioned server.
     /// </summary>
@@ -262,6 +301,8 @@ public partial class ImmuClientSync
                 ShutdownTimeout = ConnectionShutdownTimeout
             });
             activeSession = SessionManager.OpenSession(Connection, username, password, databaseName);
+            currentDb = databaseName;
+            ValidateLocalState();
             heartbeatCloseRequested = new ManualResetEvent(false);
             heartbeatCalled = new ManualResetEvent(false);
             StartHeartbeat();
