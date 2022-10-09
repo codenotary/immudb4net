@@ -1100,6 +1100,65 @@ public partial class ImmuClient
     }
 
     /// <summary>
+    /// Adds a key/value pair that expires at a specific moment in time.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <param name="expiresAt">The datetime when the key expires</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> ExpirableSet(byte[] key, byte[] value, DateTime expiresAt)
+    {
+        CheckSessionHasBeenOpened();
+        ImmudbProxy.KeyValue kv = new ImmudbProxy.KeyValue()
+        {
+            Key = Utils.ToByteString(key),
+            Value = Utils.ToByteString(value),
+            Metadata = new ImmudbProxy.KVMetadata {
+                Expiration = new Expiration {
+                    ExpiresAt = new DateTimeOffset(expiresAt).ToUnixTimeSeconds()
+                }
+            }
+        };
+
+        ImmudbProxy.SetRequest req = new ImmudbProxy.SetRequest();
+        req.KVs.Add(kv);
+
+        ImmudbProxy.TxHeader txHdr = await Service.SetAsync(req, Service.GetHeaders(ActiveSession));
+
+        if (txHdr.Nentries != 1)
+        {
+            throw new CorruptedDataException();
+        }
+
+        return TxHeader.ValueOf(txHdr);
+    }
+
+    /// <summary>
+    /// Adds a key/value pair that expires at a specific moment in time.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <param name="expiresAt">The datetime when the key expires</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> ExpirableSet(string key, byte[] value, DateTime expiresAt)
+    {
+        return await ExpirableSet(Utils.ToByteArray(key), value, expiresAt);
+    }
+
+    /// <summary>
+    /// Adds a key/value pair that expires at a specific moment in time.
+    /// </summary>
+    /// <param name="key">The key to be added</param>
+    /// <param name="value">The value to be added</param>
+    /// <param name="expiresAt">The datetime when the key expires</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> ExpirableSet(string key, string value, DateTime expiresAt)
+    {
+        return await ExpirableSet(Utils.ToByteArray(key), Utils.ToByteArray(value), expiresAt);
+    }
+
+
+    /// <summary>
     /// Adds a list of key/value pairs
     /// </summary>
     /// <param name="kvList">The list of pairs to be added</param>
