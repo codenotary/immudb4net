@@ -53,9 +53,9 @@ Use ```dotnet build``` to build locally the ImmuDB client assembly.
 
 ## 5. Supported Versions
 
-ImmuDB4Net supports the [latest immudb server] release, that is 1.3.2 at the time of updating this document.
+ImmuDB4Net supports the [latest immudb server] release, that is 1.4.0 at the time of updating this document.
 
-[latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.3.2
+[latest immudb server]: https://github.com/codenotary/immudb/releases/tag/v1.4.0
 
 ## 6. Quickstart
 
