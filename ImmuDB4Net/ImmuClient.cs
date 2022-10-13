@@ -16,7 +16,6 @@ limitations under the License.
 
 namespace ImmuDB;
 
-using System.Data;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
@@ -1113,8 +1112,10 @@ public partial class ImmuClient
         {
             Key = Utils.ToByteString(key),
             Value = Utils.ToByteString(value),
-            Metadata = new ImmudbProxy.KVMetadata {
-                Expiration = new Expiration {
+            Metadata = new ImmudbProxy.KVMetadata
+            {
+                Expiration = new Expiration
+                {
                     ExpiresAt = new DateTimeOffset(expiresAt).ToUnixTimeSeconds()
                 }
             }
@@ -1203,8 +1204,6 @@ public partial class ImmuClient
             BoundRef = atTx > 0
         };
 
-        
-
         ImmudbProxy.TxHeader txHdr = await Service.SetReferenceAsync(req, Service.GetHeaders(ActiveSession));
 
         if (txHdr.Nentries != 1)
@@ -1253,6 +1252,92 @@ public partial class ImmuClient
     public async Task<TxHeader> SetReference(byte[] reference, byte[] referencedKey)
     {
         return await SetReference(reference, referencedKey, 0);
+    }
+
+    /// <summary>
+    /// Adds with authenticity check a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> VerifiedSetReference(string reference, string referencedKey) {
+        return await VerifiedSetReference(
+            Utils.ToByteArray(reference), 
+            Utils.ToByteArray(referencedKey), 
+            0);
+    }
+    
+    /// <summary>
+    /// Adds with authenticity check a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> VerifiedSetReference(byte[] reference, byte[] referencedKey) {
+        return await VerifiedSetReference(reference, referencedKey, 0);
+    }
+
+    /// <summary>
+    /// Adds with authenticity check a tag (reference) to a specific key/value element in the selected database
+    /// </summary>
+    /// <param name="reference">The reference</param>
+    /// <param name="referencedKey">The lookup key</param>
+    /// <param name="atTx">Transaction ID at which the referenced key will be bound at</param>
+    /// <returns>The transaction information</returns>
+    public async Task<TxHeader> VerifiedSetReference(byte[] reference, byte[] referencedKey, ulong atTx)
+    {
+        CheckSessionHasBeenOpened();
+
+        ImmuState state = State;
+       
+        ImmudbProxy.VerifiableReferenceRequest req = new ImmudbProxy.VerifiableReferenceRequest()
+        {
+            ReferenceRequest = new ReferenceRequest
+            {
+                Key = Utils.ToByteString(reference),
+                ReferencedKey = Utils.ToByteString(referencedKey),
+                AtTx = atTx,
+                BoundRef = atTx > 0
+            },
+            ProveSinceTx = state.TxId
+        };
+
+        ImmudbProxy.VerifiableTx verifiableTx = await Service.VerifiableSetReferenceAsync(req, Service.GetHeaders(ActiveSession));
+
+        if (verifiableTx.Tx.Header.Nentries != 1)
+        {
+            throw new CorruptedDataException();
+        }
+
+        Tx tx;
+        try
+        {
+            tx = Tx.ValueOf(verifiableTx.Tx);
+        }
+        catch (Exception e)
+        {
+            throw new VerificationException("Failed to extract the transaction.", e);
+        }
+
+        TxHeader txHeader = tx.Header;
+
+        EntrySpec spec = new EntrySpec(reference, null, referencedKey, atTx);
+        ImmuDB.Crypto.InclusionProof inclusionProof = tx.Proof(spec.GetEncodedKey());
+
+        if (!CryptoUtils.VerifyInclusion(inclusionProof, spec.DigestFor(txHeader.Version), txHeader.Eh))
+        {
+            throw new VerificationException("Data is corrupted (verify inclusion failed)");
+        }
+
+        ImmuState newState = VerifyDualProof(verifiableTx, tx, state);
+
+        if (!newState.CheckSignature(serverSigningKey))
+        {
+            throw new VerificationException("State signature verification failed");
+        }
+
+        UpdateState(newState);
+        return TxHeader.ValueOf(verifiableTx.Tx.Header);
     }
 
     /// <summary>

@@ -35,7 +35,7 @@ public class ReferenceTests : BaseClientIntegrationTests
         await BaseTearDown();
     }
 
-    [TestMethod("set, setreference and getreference")]
+    [TestMethod("set, setreference and verifiedsetreference")]
     public async Task Test1()
     {
         await client!.Open("immudb", "immudb", "defaultdb");
@@ -55,6 +55,7 @@ public class ReferenceTests : BaseClientIntegrationTests
 
         byte[] ref1Key = Encoding.UTF8.GetBytes("ref1_to_testRef");
         byte[] ref2Key = Encoding.UTF8.GetBytes("ref2_to_testRef");
+        byte[] ref3Key = Encoding.UTF8.GetBytes("ref3_to_testRef");
 
         TxHeader? ref1TxHdr = null;
         try
@@ -66,6 +67,17 @@ public class ReferenceTests : BaseClientIntegrationTests
             Assert.Fail("Failed at setReference", e);
         }
         Assert.IsNotNull(ref1TxHdr);
+
+        TxHeader? verifedRefTxHdr = null;
+        try
+        {
+            verifedRefTxHdr = await client.VerifiedSetReference(ref3Key, key);
+        }
+        catch (CorruptedDataException e)
+        {
+            Assert.Fail("Failed at verifiedSetReference", e);
+        }
+        Assert.IsNotNull(verifedRefTxHdr);
 
         TxHeader? ref2TxHdr = null;
         try

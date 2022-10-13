@@ -26,7 +26,8 @@ public class Reference
     /// <value></value>
     public KVMetadata? Metadata { get; private set; }
 
-    private Reference(byte[] key) {
+    private Reference(byte[] key)
+    {
         Key = key;
     }
 
@@ -48,4 +49,31 @@ public class Reference
 
         return reference;
     }
+
+
+    /// <summary>
+    /// Gets the encoded key
+    /// </summary>
+    /// <returns></returns>
+    public byte[] GetEncodedKey()
+    {
+        return Utils.WrapWithPrefix(Key, Consts.SET_KEY_PREFIX);
+    }
+
+    /// <summary>
+    /// Gets the digest for a version
+    /// </summary>
+    /// <param name="version">The version</param>
+    /// <returns></returns>
+    public byte[] DigestFor(int version)
+    {
+        KV kv = new KV(
+            GetEncodedKey(),
+            Metadata,
+            Utils.WrapReferenceValueAt(Utils.WrapWithPrefix(Key, Consts.SET_KEY_PREFIX), AtTx));
+
+        return kv.DigestFor(version);
+    }
+
+    
 }
