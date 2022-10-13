@@ -25,7 +25,7 @@ using Org.BouncyCastle.OpenSsl;
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class StateTests : BaseClientIntTests
+public class StateTests : BaseClientIntegrationTests
 {
 
     [TestInitialize]

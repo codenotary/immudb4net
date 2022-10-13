@@ -1203,6 +1203,8 @@ public partial class ImmuClient
             BoundRef = atTx > 0
         };
 
+        
+
         ImmudbProxy.TxHeader txHdr = await Service.SetReferenceAsync(req, Service.GetHeaders(ActiveSession));
 
         if (txHdr.Nentries != 1)

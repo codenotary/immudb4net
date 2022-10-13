@@ -17,7 +17,7 @@ limitations under the License.
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class ListDatabasesTests : BaseClientIntTests
+public class ListDatabasesTests : BaseClientIntegrationTests
 {
 
     [TestInitialize]

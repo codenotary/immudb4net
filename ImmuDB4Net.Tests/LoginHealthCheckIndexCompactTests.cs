@@ -19,7 +19,7 @@ using Grpc.Core;
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class LoginHealthCheckCompactIndexTests : BaseClientIntTests
+public class LoginHealthCheckCompactIndexTests : BaseClientIntegrationTests
 {
 
     [TestInitialize]

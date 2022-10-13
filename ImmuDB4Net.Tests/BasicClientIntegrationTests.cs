@@ -21,7 +21,7 @@ using ImmuDB.Exceptions;
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class BasicClientTests : BaseClientIntTests
+public class BasicClientIntegrationTests : BaseClientIntegrationTests
 {
     [TestInitialize]
     public async Task SetUp()
@@ -172,9 +172,17 @@ public class BasicClientTests : BaseClientIntTests
         CollectionAssert.AreEqual(ventry0.Value, v0);
 
         await client.ExpirableSet("key1", "value1", DateTime.Now.AddDays(1));
-
         Entry ventry1 = await client.VerifiedGet("key1");
         Assert.AreEqual("value1", ventry1.ToString());
+
+        await client.ExpirableSet("key2", "value2", DateTime.Now.AddDays(-1));
+        try 
+        {
+            Entry ventry2 = await client.VerifiedGet("tempkey");
+            Assert.Fail("tempkey should not be present");
+        }
+        catch(KeyNotFoundException) {
+        }
         await client.Close();
     }
 

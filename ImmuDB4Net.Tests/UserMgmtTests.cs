@@ -20,7 +20,7 @@ using ImmuDB.Iam;
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class UserMgmtTests : BaseClientIntTests
+public class UserMgmtTests : BaseClientIntegrationTests
 {
 
     [TestInitialize]
