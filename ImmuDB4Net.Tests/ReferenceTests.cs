@@ -20,7 +20,7 @@ using ImmuDB.Exceptions;
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class ReferenceTests : BaseClientIntTests
+public class ReferenceTests : BaseClientIntegrationTests
 {
 
     [TestInitialize]
@@ -28,7 +28,7 @@ public class ReferenceTests : BaseClientIntTests
     {
         await BaseSetUp();
     }
-    
+
     [TestCleanup]
     public async Task TearDown()
     {
@@ -44,9 +44,12 @@ public class ReferenceTests : BaseClientIntTests
         byte[] val = Encoding.UTF8.GetBytes("abc");
 
         TxHeader? setTxHdr = null;
-        try {
+        try
+        {
             setTxHdr = await client.Set(key, val);
-        } catch (CorruptedDataException e) {
+        }
+        catch (CorruptedDataException e)
+        {
             Assert.Fail("Failed at set.", e);
         }
 
@@ -54,17 +57,23 @@ public class ReferenceTests : BaseClientIntTests
         byte[] ref2Key = Encoding.UTF8.GetBytes("ref2_to_testRef");
 
         TxHeader? ref1TxHdr = null;
-        try {
+        try
+        {
             ref1TxHdr = await client.SetReference(ref1Key, key);
-        } catch (CorruptedDataException e) {
+        }
+        catch (CorruptedDataException e)
+        {
             Assert.Fail("Failed at setReference", e);
         }
         Assert.IsNotNull(ref1TxHdr);
 
         TxHeader? ref2TxHdr = null;
-        try {
+        try
+        {
             ref2TxHdr = await client.SetReference(ref2Key, key, setTxHdr.Id);
-        } catch (CorruptedDataException e) {
+        }
+        catch (CorruptedDataException e)
+        {
             Assert.Fail("Failed at setReferenceAt.", e);
         }
         Assert.IsNotNull(ref2TxHdr);

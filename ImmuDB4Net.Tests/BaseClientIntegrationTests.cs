@@ -20,7 +20,7 @@ using Docker.DotNet.Models;
 namespace ImmuDB.Tests
 {
     [TestClass]
-    public class BaseClientIntTests
+    public class BaseClientIntegrationTests
     {
         public ImmuClient? client;
         private string? tmpStateFolder;

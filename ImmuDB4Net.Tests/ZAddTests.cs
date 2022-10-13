@@ -20,7 +20,7 @@ using ImmuDB.Exceptions;
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class ZAddTests : BaseClientIntTests
+public class ZAddTests : BaseClientIntegrationTests
 {
 
     [TestInitialize]

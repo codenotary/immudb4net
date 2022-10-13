@@ -119,337 +119,362 @@ namespace ImmudbProxy {
             "KAsyGS5pbW11ZGIuc2NoZW1hLlNldFJlcXVlc3QSFAoMcHJvdmVTaW5jZVR4",
             "GAIgASgEIlsKFFZlcmlmaWFibGVHZXRSZXF1ZXN0Ei0KCmtleVJlcXVlc3QY",
             "ASABKAsyGS5pbW11ZGIuc2NoZW1hLktleVJlcXVlc3QSFAoMcHJvdmVTaW5j",
-            "ZVR4GAIgASgEIjEKDkhlYWx0aFJlc3BvbnNlEg4KBnN0YXR1cxgBIAEoCBIP",
-            "Cgd2ZXJzaW9uGAIgASgJIlEKFkRhdGFiYXNlSGVhbHRoUmVzcG9uc2USFwoP",
-            "cGVuZGluZ1JlcXVlc3RzGAEgASgNEh4KFmxhc3RSZXF1ZXN0Q29tcGxldGVk",
-            "QXQYAiABKAMiZwoOSW1tdXRhYmxlU3RhdGUSCgoCZGIYASABKAkSDAoEdHhJ",
-            "ZBgCIAEoBBIOCgZ0eEhhc2gYAyABKAwSKwoJc2lnbmF0dXJlGAQgASgLMhgu",
-            "aW1tdWRiLnNjaGVtYS5TaWduYXR1cmUimgEKEFJlZmVyZW5jZVJlcXVlc3QS",
-            "CwoDa2V5GAEgASgMEhUKDXJlZmVyZW5jZWRLZXkYAiABKAwSDAoEYXRUeBgD",
-            "IAEoBBIQCghib3VuZFJlZhgEIAEoCBIOCgZub1dhaXQYBSABKAgSMgoNcHJl",
-            "Y29uZGl0aW9ucxgGIAMoCzIbLmltbXVkYi5zY2hlbWEuUHJlY29uZGl0aW9u",
-            "Im0KGlZlcmlmaWFibGVSZWZlcmVuY2VSZXF1ZXN0EjkKEHJlZmVyZW5jZVJl",
-            "cXVlc3QYASABKAsyHy5pbW11ZGIuc2NoZW1hLlJlZmVyZW5jZVJlcXVlc3QS",
-            "FAoMcHJvdmVTaW5jZVR4GAIgASgEImYKC1pBZGRSZXF1ZXN0EgsKA3NldBgB",
-            "IAEoDBINCgVzY29yZRgCIAEoARILCgNrZXkYAyABKAwSDAoEYXRUeBgEIAEo",
-            "BBIQCghib3VuZFJlZhgFIAEoCBIOCgZub1dhaXQYBiABKAgiFgoFU2NvcmUS",
-            "DQoFc2NvcmUYASABKAEihgIKDFpTY2FuUmVxdWVzdBILCgNzZXQYASABKAwS",
-            "DwoHc2Vla0tleRgCIAEoDBIRCglzZWVrU2NvcmUYAyABKAESEAoIc2Vla0F0",
-            "VHgYBCABKAQSFQoNaW5jbHVzaXZlU2VlaxgFIAEoCBINCgVsaW1pdBgGIAEo",
-            "BBIMCgRkZXNjGAcgASgIEiYKCG1pblNjb3JlGAggASgLMhQuaW1tdWRiLnNj",
-            "aGVtYS5TY29yZRImCghtYXhTY29yZRgJIAEoCzIULmltbXVkYi5zY2hlbWEu",
-            "U2NvcmUSDwoHc2luY2VUeBgKIAEoBBIOCgZub1dhaXQYCyABKAgSDgoGb2Zm",
-            "c2V0GAwgASgEIlsKDkhpc3RvcnlSZXF1ZXN0EgsKA2tleRgBIAEoDBIOCgZv",
-            "ZmZzZXQYAiABKAQSDQoFbGltaXQYAyABKAUSDAoEZGVzYxgEIAEoCBIPCgdz",
-            "aW5jZVR4GAUgASgEIl4KFVZlcmlmaWFibGVaQWRkUmVxdWVzdBIvCgt6QWRk",
-            "UmVxdWVzdBgBIAEoCzIaLmltbXVkYi5zY2hlbWEuWkFkZFJlcXVlc3QSFAoM",
-            "cHJvdmVTaW5jZVR4GAIgASgEIosBCglUeFJlcXVlc3QSCgoCdHgYASABKAQS",
-            "LwoLZW50cmllc1NwZWMYAiABKAsyGi5pbW11ZGIuc2NoZW1hLkVudHJpZXNT",
-            "cGVjEg8KB3NpbmNlVHgYAyABKAQSDgoGbm9XYWl0GAQgASgIEiAKGGtlZXBS",
-            "ZWZlcmVuY2VzVW5yZXNvbHZlZBgFIAEoCCKsAQoLRW50cmllc1NwZWMSMwoN",
-            "a3ZFbnRyaWVzU3BlYxgBIAEoCzIcLmltbXVkYi5zY2hlbWEuRW50cnlUeXBl",
-            "U3BlYxIyCgx6RW50cmllc1NwZWMYAiABKAsyHC5pbW11ZGIuc2NoZW1hLkVu",
-            "dHJ5VHlwZVNwZWMSNAoOc3FsRW50cmllc1NwZWMYAyABKAsyHC5pbW11ZGIu",
-            "c2NoZW1hLkVudHJ5VHlwZVNwZWMiPwoNRW50cnlUeXBlU3BlYxIuCgZhY3Rp",
-            "b24YASABKA4yHi5pbW11ZGIuc2NoZW1hLkVudHJ5VHlwZUFjdGlvbiKrAQoT",
-            "VmVyaWZpYWJsZVR4UmVxdWVzdBIKCgJ0eBgBIAEoBBIUCgxwcm92ZVNpbmNl",
-            "VHgYAiABKAQSLwoLZW50cmllc1NwZWMYAyABKAsyGi5pbW11ZGIuc2NoZW1h",
-            "LkVudHJpZXNTcGVjEg8KB3NpbmNlVHgYBCABKAQSDgoGbm9XYWl0GAUgASgI",
-            "EiAKGGtlZXBSZWZlcmVuY2VzVW5yZXNvbHZlZBgGIAEoCCKRAQoNVHhTY2Fu",
-            "UmVxdWVzdBIRCglpbml0aWFsVHgYASABKAQSDQoFbGltaXQYAiABKA0SDAoE",
-            "ZGVzYxgDIAEoCBIvCgtlbnRyaWVzU3BlYxgEIAEoCzIaLmltbXVkYi5zY2hl",
-            "bWEuRW50cmllc1NwZWMSDwoHc2luY2VUeBgFIAEoBBIOCgZub1dhaXQYBiAB",
-            "KAgiKAoGVHhMaXN0Eh4KA3R4cxgBIAMoCzIRLmltbXVkYi5zY2hlbWEuVHgi",
-            "HQoPRXhwb3J0VHhSZXF1ZXN0EgoKAnR4GAEgASgEIiAKCERhdGFiYXNlEhQK",
-            "DGRhdGFiYXNlTmFtZRgBIAEoCSKbAgoQRGF0YWJhc2VTZXR0aW5ncxIUCgxk",
-            "YXRhYmFzZU5hbWUYASABKAkSDwoHcmVwbGljYRgCIAEoCBIWCg5tYXN0ZXJE",
-            "YXRhYmFzZRgDIAEoCRIVCg1tYXN0ZXJBZGRyZXNzGAQgASgJEhIKCm1hc3Rl",
-            "clBvcnQYBSABKA0SGAoQZm9sbG93ZXJVc2VybmFtZRgGIAEoCRIYChBmb2xs",
-            "b3dlclBhc3N3b3JkGAcgASgJEhAKCGZpbGVTaXplGAggASgNEhEKCW1heEtl",
-            "eUxlbhgJIAEoDRITCgttYXhWYWx1ZUxlbhgKIAEoDRIUCgxtYXhUeEVudHJp",
-            "ZXMYCyABKA0SGQoRZXhjbHVkZUNvbW1pdFRpbWUYDCABKAgidQoVQ3JlYXRl",
-            "RGF0YWJhc2VSZXF1ZXN0EgwKBG5hbWUYASABKAkSOQoIc2V0dGluZ3MYAiAB",
-            "KAsyJy5pbW11ZGIuc2NoZW1hLkRhdGFiYXNlTnVsbGFibGVTZXR0aW5ncxIT",
-            "CgtpZk5vdEV4aXN0cxgDIAEoCCJ5ChZDcmVhdGVEYXRhYmFzZVJlc3BvbnNl",
-            "EgwKBG5hbWUYASABKAkSOQoIc2V0dGluZ3MYAiABKAsyJy5pbW11ZGIuc2No",
-            "ZW1hLkRhdGFiYXNlTnVsbGFibGVTZXR0aW5ncxIWCg5hbHJlYWR5RXhpc3Rl",
-            "ZBgDIAEoCCJkChVVcGRhdGVEYXRhYmFzZVJlcXVlc3QSEAoIZGF0YWJhc2UY",
-            "ASABKAkSOQoIc2V0dGluZ3MYAiABKAsyJy5pbW11ZGIuc2NoZW1hLkRhdGFi",
-            "YXNlTnVsbGFibGVTZXR0aW5ncyJlChZVcGRhdGVEYXRhYmFzZVJlc3BvbnNl",
-            "EhAKCGRhdGFiYXNlGAEgASgJEjkKCHNldHRpbmdzGAIgASgLMicuaW1tdWRi",
-            "LnNjaGVtYS5EYXRhYmFzZU51bGxhYmxlU2V0dGluZ3MiGQoXRGF0YWJhc2VT",
-            "ZXR0aW5nc1JlcXVlc3QiZwoYRGF0YWJhc2VTZXR0aW5nc1Jlc3BvbnNlEhAK",
-            "CGRhdGFiYXNlGAEgASgJEjkKCHNldHRpbmdzGAIgASgLMicuaW1tdWRiLnNj",
-            "aGVtYS5EYXRhYmFzZU51bGxhYmxlU2V0dGluZ3MiHwoOTnVsbGFibGVVaW50",
-            "MzISDQoFdmFsdWUYASABKA0iHwoOTnVsbGFibGVVaW50NjQSDQoFdmFsdWUY",
-            "ASABKAQiHgoNTnVsbGFibGVGbG9hdBINCgV2YWx1ZRgBIAEoAiIdCgxOdWxs",
-            "YWJsZUJvb2wSDQoFdmFsdWUYASABKAgiHwoOTnVsbGFibGVTdHJpbmcSDQoF",
-            "dmFsdWUYASABKAki7gYKGERhdGFiYXNlTnVsbGFibGVTZXR0aW5ncxJHChNy",
-            "ZXBsaWNhdGlvblNldHRpbmdzGAIgASgLMiouaW1tdWRiLnNjaGVtYS5SZXBs",
-            "aWNhdGlvbk51bGxhYmxlU2V0dGluZ3MSLwoIZmlsZVNpemUYCCABKAsyHS5p",
-            "bW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjAKCW1heEtleUxlbhgJIAEo",
-            "CzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISMgoLbWF4VmFsdWVM",
-            "ZW4YCiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjMKDG1h",
-            "eFR4RW50cmllcxgLIAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50",
-            "MzISNgoRZXhjbHVkZUNvbW1pdFRpbWUYDCABKAsyGy5pbW11ZGIuc2NoZW1h",
-            "Lk51bGxhYmxlQm9vbBI1Cg5tYXhDb25jdXJyZW5jeRgNIAEoCzIdLmltbXVk",
-            "Yi5zY2hlbWEuTnVsbGFibGVVaW50MzISNwoQbWF4SU9Db25jdXJyZW5jeRgO",
-            "IAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISNQoOdHhMb2dD",
-            "YWNoZVNpemUYDyABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMy",
-            "EjkKEnZMb2dNYXhPcGVuZWRGaWxlcxgQIAEoCzIdLmltbXVkYi5zY2hlbWEu",
-            "TnVsbGFibGVVaW50MzISOgoTdHhMb2dNYXhPcGVuZWRGaWxlcxgRIAEoCzId",
-            "LmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISPgoXY29tbWl0TG9nTWF4",
-            "T3BlbmVkRmlsZXMYEiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWlu",
-            "dDMyEjsKDWluZGV4U2V0dGluZ3MYEyABKAsyJC5pbW11ZGIuc2NoZW1hLklu",
-            "ZGV4TnVsbGFibGVTZXR0aW5ncxI7ChR3cml0ZVR4SGVhZGVyVmVyc2lvbhgU",
-            "IAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISLQoIYXV0b2xv",
-            "YWQYFSABKAsyGy5pbW11ZGIuc2NoZW1hLk51bGxhYmxlQm9vbCLdAgobUmVw",
-            "bGljYXRpb25OdWxsYWJsZVNldHRpbmdzEiwKB3JlcGxpY2EYASABKAsyGy5p",
-            "bW11ZGIuc2NoZW1hLk51bGxhYmxlQm9vbBI1Cg5tYXN0ZXJEYXRhYmFzZRgC",
-            "IAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVTdHJpbmcSNAoNbWFzdGVy",
-            "QWRkcmVzcxgDIAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVTdHJpbmcS",
-            "MQoKbWFzdGVyUG9ydBgEIAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVV",
-            "aW50MzISNwoQZm9sbG93ZXJVc2VybmFtZRgFIAEoCzIdLmltbXVkYi5zY2hl",
-            "bWEuTnVsbGFibGVTdHJpbmcSNwoQZm9sbG93ZXJQYXNzd29yZBgGIAEoCzId",
-            "LmltbXVkYi5zY2hlbWEuTnVsbGFibGVTdHJpbmcihgYKFUluZGV4TnVsbGFi",
-            "bGVTZXR0aW5ncxI1Cg5mbHVzaFRocmVzaG9sZBgBIAEoCzIdLmltbXVkYi5z",
-            "Y2hlbWEuTnVsbGFibGVVaW50MzISNAoNc3luY1RocmVzaG9sZBgCIAEoCzId",
-            "LmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISMAoJY2FjaGVTaXplGAMg",
-            "ASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQzMhIyCgttYXhOb2Rl",
-            "U2l6ZRgEIAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISOQoS",
-            "bWF4QWN0aXZlU25hcHNob3RzGAUgASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxs",
-            "YWJsZVVpbnQzMhI5ChJyZW5ld1NuYXBSb290QWZ0ZXIYBiABKAsyHS5pbW11",
-            "ZGIuc2NoZW1hLk51bGxhYmxlVWludDY0EjUKDmNvbXBhY3Rpb25UaGxkGAcg",
-            "ASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQzMhI8ChVkZWxheUR1",
-            "cmluZ0NvbXBhY3Rpb24YCCABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxl",
-            "VWludDMyEj0KFm5vZGVzTG9nTWF4T3BlbmVkRmlsZXMYCSABKAsyHS5pbW11",
-            "ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEj8KGGhpc3RvcnlMb2dNYXhPcGVu",
-            "ZWRGaWxlcxgKIAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzIS",
-            "PgoXY29tbWl0TG9nTWF4T3BlbmVkRmlsZXMYCyABKAsyHS5pbW11ZGIuc2No",
-            "ZW1hLk51bGxhYmxlVWludDMyEjYKD2ZsdXNoQnVmZmVyU2l6ZRgMIAEoCzId",
-            "LmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISNwoRY2xlYW51cFBlcmNl",
-            "bnRhZ2UYDSABKAsyHC5pbW11ZGIuc2NoZW1hLk51bGxhYmxlRmxvYXQiJwoT",
-            "TG9hZERhdGFiYXNlUmVxdWVzdBIQCghkYXRhYmFzZRgBIAEoCSIoChRMb2Fk",
-            "RGF0YWJhc2VSZXNwb25zZRIQCghkYXRhYmFzZRgBIAEoCSIpChVVbmxvYWRE",
-            "YXRhYmFzZVJlcXVlc3QSEAoIZGF0YWJhc2UYASABKAkiKgoWVW5sb2FkRGF0",
-            "YWJhc2VSZXNwb25zZRIQCghkYXRhYmFzZRgBIAEoCSIpChVEZWxldGVEYXRh",
-            "YmFzZVJlcXVlc3QSEAoIZGF0YWJhc2UYASABKAkiKgoWRGVsZXRlRGF0YWJh",
-            "c2VSZXNwb25zZRIQCghkYXRhYmFzZRgBIAEoCSI+ChFGbHVzaEluZGV4UmVx",
-            "dWVzdBIZChFjbGVhbnVwUGVyY2VudGFnZRgBIAEoAhIOCgZzeW5jZWQYAiAB",
-            "KAgiJgoSRmx1c2hJbmRleFJlc3BvbnNlEhAKCGRhdGFiYXNlGAEgASgJIhoK",
-            "BVRhYmxlEhEKCXRhYmxlTmFtZRgBIAEoCSJoCg1TUUxHZXRSZXF1ZXN0Eg0K",
-            "BXRhYmxlGAEgASgJEikKCHBrVmFsdWVzGAIgAygLMhcuaW1tdWRiLnNjaGVt",
-            "YS5TUUxWYWx1ZRIMCgRhdFR4GAMgASgEEg8KB3NpbmNlVHgYBCABKAQiZAoX",
-            "VmVyaWZpYWJsZVNRTEdldFJlcXVlc3QSMwoNc3FsR2V0UmVxdWVzdBgBIAEo",
-            "CzIcLmltbXVkYi5zY2hlbWEuU1FMR2V0UmVxdWVzdBIUCgxwcm92ZVNpbmNl",
-            "VHgYAiABKAQiXwoIU1FMRW50cnkSCgoCdHgYASABKAQSCwoDa2V5GAIgASgM",
-            "Eg0KBXZhbHVlGAMgASgMEisKCG1ldGFkYXRhGAQgASgLMhkuaW1tdWRiLnNj",
-            "aGVtYS5LVk1ldGFkYXRhIt0FChJWZXJpZmlhYmxlU1FMRW50cnkSKQoIc3Fs",
-            "RW50cnkYASABKAsyFy5pbW11ZGIuc2NoZW1hLlNRTEVudHJ5EjEKDHZlcmlm",
-            "aWFibGVUeBgCIAEoCzIbLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJsZVR4EjUK",
-            "DmluY2x1c2lvblByb29mGAMgASgLMh0uaW1tdWRiLnNjaGVtYS5JbmNsdXNp",
-            "b25Qcm9vZhISCgpEYXRhYmFzZUlkGAQgASgNEg8KB1RhYmxlSWQYBSABKA0S",
-            "DQoFUEtJRHMYECADKA0SSQoMQ29sTmFtZXNCeUlkGAggAygLMjMuaW1tdWRi",
-            "LnNjaGVtYS5WZXJpZmlhYmxlU1FMRW50cnkuQ29sTmFtZXNCeUlkRW50cnkS",
-            "SQoMQ29sSWRzQnlOYW1lGAkgAygLMjMuaW1tdWRiLnNjaGVtYS5WZXJpZmlh",
-            "YmxlU1FMRW50cnkuQ29sSWRzQnlOYW1lRW50cnkSSQoMQ29sVHlwZXNCeUlk",
-            "GAogAygLMjMuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlU1FMRW50cnkuQ29s",
-            "VHlwZXNCeUlkRW50cnkSRQoKQ29sTGVuQnlJZBgLIAMoCzIxLmltbXVkYi5z",
-            "Y2hlbWEuVmVyaWZpYWJsZVNRTEVudHJ5LkNvbExlbkJ5SWRFbnRyeRozChFD",
-            "b2xOYW1lc0J5SWRFbnRyeRILCgNrZXkYASABKA0SDQoFdmFsdWUYAiABKAk6",
-            "AjgBGjMKEUNvbElkc0J5TmFtZUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1",
-            "ZRgCIAEoDToCOAEaMwoRQ29sVHlwZXNCeUlkRW50cnkSCwoDa2V5GAEgASgN",
-            "Eg0KBXZhbHVlGAIgASgJOgI4ARoxCg9Db2xMZW5CeUlkRW50cnkSCwoDa2V5",
-            "GAEgASgNEg0KBXZhbHVlGAIgASgFOgI4AUoECAYQByIhChBVc2VEYXRhYmFz",
-            "ZVJlcGx5Eg0KBXRva2VuGAEgASgJIoIBChdDaGFuZ2VQZXJtaXNzaW9uUmVx",
-            "dWVzdBIvCgZhY3Rpb24YASABKA4yHy5pbW11ZGIuc2NoZW1hLlBlcm1pc3Np",
-            "b25BY3Rpb24SEAoIdXNlcm5hbWUYAiABKAkSEAoIZGF0YWJhc2UYAyABKAkS",
-            "EgoKcGVybWlzc2lvbhgEIAEoDSI4ChRTZXRBY3RpdmVVc2VyUmVxdWVzdBIO",
-            "CgZhY3RpdmUYASABKAgSEAoIdXNlcm5hbWUYAiABKAkiQgoURGF0YWJhc2VM",
-            "aXN0UmVzcG9uc2USKgoJZGF0YWJhc2VzGAEgAygLMhcuaW1tdWRiLnNjaGVt",
-            "YS5EYXRhYmFzZSIXChVEYXRhYmFzZUxpc3RSZXF1ZXN0VjIiUAoWRGF0YWJh",
-            "c2VMaXN0UmVzcG9uc2VWMhI2CglkYXRhYmFzZXMYASADKAsyIy5pbW11ZGIu",
-            "c2NoZW1hLkRhdGFiYXNlV2l0aFNldHRpbmdzIm8KFERhdGFiYXNlV2l0aFNl",
-            "dHRpbmdzEgwKBG5hbWUYASABKAkSOQoIc2V0dGluZ3MYAiABKAsyJy5pbW11",
-            "ZGIuc2NoZW1hLkRhdGFiYXNlTnVsbGFibGVTZXR0aW5ncxIOCgZsb2FkZWQY",
-            "AyABKAgiGAoFQ2h1bmsSDwoHY29udGVudBgBIAEoDCI5ChJVc2VTbmFwc2hv",
-            "dFJlcXVlc3QSDwoHc2luY2VUeBgBIAEoBBISCgphc0JlZm9yZVR4GAIgASgE",
-            "IlgKDlNRTEV4ZWNSZXF1ZXN0EgsKA3NxbBgBIAEoCRIpCgZwYXJhbXMYAiAD",
-            "KAsyGS5pbW11ZGIuc2NoZW1hLk5hbWVkUGFyYW0SDgoGbm9XYWl0GAMgASgI",
-            "ImAKD1NRTFF1ZXJ5UmVxdWVzdBILCgNzcWwYASABKAkSKQoGcGFyYW1zGAIg",
-            "AygLMhkuaW1tdWRiLnNjaGVtYS5OYW1lZFBhcmFtEhUKDXJldXNlU25hcHNo",
-            "b3QYAyABKAgiQgoKTmFtZWRQYXJhbRIMCgRuYW1lGAEgASgJEiYKBXZhbHVl",
-            "GAIgASgLMhcuaW1tdWRiLnNjaGVtYS5TUUxWYWx1ZSJOCg1TUUxFeGVjUmVz",
-            "dWx0EioKA3R4cxgFIAMoCzIdLmltbXVkYi5zY2hlbWEuQ29tbWl0dGVkU1FM",
-            "VHgSEQoJb25nb2luZ1R4GAYgASgIIo0DCg5Db21taXR0ZWRTUUxUeBInCgZo",
-            "ZWFkZXIYASABKAsyFy5pbW11ZGIuc2NoZW1hLlR4SGVhZGVyEhMKC3VwZGF0",
-            "ZWRSb3dzGAIgASgNEksKD2xhc3RJbnNlcnRlZFBLcxgDIAMoCzIyLmltbXVk",
-            "Yi5zY2hlbWEuQ29tbWl0dGVkU1FMVHguTGFzdEluc2VydGVkUEtzRW50cnkS",
-            "TQoQZmlyc3RJbnNlcnRlZFBLcxgEIAMoCzIzLmltbXVkYi5zY2hlbWEuQ29t",
-            "bWl0dGVkU1FMVHguRmlyc3RJbnNlcnRlZFBLc0VudHJ5Gk8KFExhc3RJbnNl",
-            "cnRlZFBLc0VudHJ5EgsKA2tleRgBIAEoCRImCgV2YWx1ZRgCIAEoCzIXLmlt",
-            "bXVkYi5zY2hlbWEuU1FMVmFsdWU6AjgBGlAKFUZpcnN0SW5zZXJ0ZWRQS3NF",
-            "bnRyeRILCgNrZXkYASABKAkSJgoFdmFsdWUYAiABKAsyFy5pbW11ZGIuc2No",
-            "ZW1hLlNRTFZhbHVlOgI4ASJaCg5TUUxRdWVyeVJlc3VsdBImCgdjb2x1bW5z",
-            "GAIgAygLMhUuaW1tdWRiLnNjaGVtYS5Db2x1bW4SIAoEcm93cxgBIAMoCzIS",
-            "LmltbXVkYi5zY2hlbWEuUm93IiQKBkNvbHVtbhIMCgRuYW1lGAEgASgJEgwK",
-            "BHR5cGUYAiABKAkiPwoDUm93Eg8KB2NvbHVtbnMYASADKAkSJwoGdmFsdWVz",
-            "GAIgAygLMhcuaW1tdWRiLnNjaGVtYS5TUUxWYWx1ZSKCAQoIU1FMVmFsdWUS",
-            "KgoEbnVsbBgBIAEoDjIaLmdvb2dsZS5wcm90b2J1Zi5OdWxsVmFsdWVIABIL",
-            "CgFuGAIgASgDSAASCwoBcxgDIAEoCUgAEgsKAWIYBCABKAhIABIMCgJicxgF",
-            "IAEoDEgAEgwKAnRzGAYgASgDSABCBwoFdmFsdWUiMwoMTmV3VHhSZXF1ZXN0",
-            "EiMKBG1vZGUYASABKA4yFS5pbW11ZGIuc2NoZW1hLlR4TW9kZSImCg1OZXdU",
-            "eFJlc3BvbnNlEhUKDXRyYW5zYWN0aW9uSUQYASABKAkiKAoJRXJyb3JJbmZv",
-            "EgwKBGNvZGUYASABKAkSDQoFY2F1c2UYAiABKAkiGgoJRGVidWdJbmZvEg0K",
-            "BXN0YWNrGAEgASgJIiAKCVJldHJ5SW5mbxITCgtyZXRyeV9kZWxheRgBIAEo",
-            "BSpLCg9FbnRyeVR5cGVBY3Rpb24SCwoHRVhDTFVERRAAEg8KC09OTFlfRElH",
-            "RVNUEAESDQoJUkFXX1ZBTFVFEAISCwoHUkVTT0xWRRADKikKEFBlcm1pc3Np",
-            "b25BY3Rpb24SCQoFR1JBTlQQABIKCgZSRVZPS0UQASo0CgZUeE1vZGUSDAoI",
-            "UmVhZE9ubHkQABINCglXcml0ZU9ubHkQARINCglSZWFkV3JpdGUQAjLpMQoL",
-            "SW1tdVNlcnZpY2USUAoJTGlzdFVzZXJzEhYuZ29vZ2xlLnByb3RvYnVmLkVt",
-            "cHR5GhcuaW1tdWRiLnNjaGVtYS5Vc2VyTGlzdCISgtPkkwIMEgovdXNlci9s",
-            "aXN0ElgKCkNyZWF0ZVVzZXISIC5pbW11ZGIuc2NoZW1hLkNyZWF0ZVVzZXJS",
-            "ZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IhCC0+STAgoiBS91c2Vy",
-            "OgEqEnAKDkNoYW5nZVBhc3N3b3JkEiQuaW1tdWRiLnNjaGVtYS5DaGFuZ2VQ",
-            "YXNzd29yZFJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiIILT5JMC",
-            "GiIVL3VzZXIvcGFzc3dvcmQvY2hhbmdlOgEqEnUKEENoYW5nZVBlcm1pc3Np",
-            "b24SJi5pbW11ZGIuc2NoZW1hLkNoYW5nZVBlcm1pc3Npb25SZXF1ZXN0GhYu",
-            "Z29vZ2xlLnByb3RvYnVmLkVtcHR5IiGC0+STAhsiFi91c2VyL2NoYW5nZXBl",
-            "cm1pc3Npb246ASoSbAoNU2V0QWN0aXZlVXNlchIjLmltbXVkYi5zY2hlbWEu",
-            "U2V0QWN0aXZlVXNlclJlcXVlc3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHki",
-            "HoLT5JMCGCITL3VzZXIvc2V0YWN0aXZlVXNlcjoBKhJKChBVcGRhdGVBdXRo",
-            "Q29uZmlnEhkuaW1tdWRiLnNjaGVtYS5BdXRoQ29uZmlnGhYuZ29vZ2xlLnBy",
-            "b3RvYnVmLkVtcHR5IgOIAgESSgoQVXBkYXRlTVRMU0NvbmZpZxIZLmltbXVk",
-            "Yi5zY2hlbWEuTVRMU0NvbmZpZxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSID",
-            "iAIBElYKC09wZW5TZXNzaW9uEiEuaW1tdWRiLnNjaGVtYS5PcGVuU2Vzc2lv",
-            "blJlcXVlc3QaIi5pbW11ZGIuc2NoZW1hLk9wZW5TZXNzaW9uUmVzcG9uc2Ui",
-            "ABJACgxDbG9zZVNlc3Npb24SFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFi5n",
-            "b29nbGUucHJvdG9idWYuRW1wdHkiABI9CglLZWVwQWxpdmUSFi5nb29nbGUu",
-            "cHJvdG9idWYuRW1wdHkaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiABJECgVO",
-            "ZXdUeBIbLmltbXVkYi5zY2hlbWEuTmV3VHhSZXF1ZXN0GhwuaW1tdWRiLnNj",
-            "aGVtYS5OZXdUeFJlc3BvbnNlIgASQQoGQ29tbWl0EhYuZ29vZ2xlLnByb3Rv",
-            "YnVmLkVtcHR5Gh0uaW1tdWRiLnNjaGVtYS5Db21taXR0ZWRTUUxUeCIAEjwK",
-            "CFJvbGxiYWNrEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhYuZ29vZ2xlLnBy",
-            "b3RvYnVmLkVtcHR5IgASRAoJVHhTUUxFeGVjEh0uaW1tdWRiLnNjaGVtYS5T",
-            "UUxFeGVjUmVxdWVzdBoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIAEk0KClR4",
-            "U1FMUXVlcnkSHi5pbW11ZGIuc2NoZW1hLlNRTFF1ZXJ5UmVxdWVzdBodLmlt",
-            "bXVkYi5zY2hlbWEuU1FMUXVlcnlSZXN1bHQiABJYCgVMb2dpbhIbLmltbXVk",
-            "Yi5zY2hlbWEuTG9naW5SZXF1ZXN0GhwuaW1tdWRiLnNjaGVtYS5Mb2dpblJl",
-            "c3BvbnNlIhSIAgGC0+STAgsiBi9sb2dpbjoBKhJPCgZMb2dvdXQSFi5nb29n",
-            "bGUucHJvdG9idWYuRW1wdHkaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiFYgC",
-            "AYLT5JMCDCIHL2xvZ291dDoBKhJNCgNTZXQSGS5pbW11ZGIuc2NoZW1hLlNl",
-            "dFJlcXVlc3QaFy5pbW11ZGIuc2NoZW1hLlR4SGVhZGVyIhKC0+STAgwiBy9k",
-            "Yi9zZXQ6ASoScAoNVmVyaWZpYWJsZVNldBIjLmltbXVkYi5zY2hlbWEuVmVy",
-            "aWZpYWJsZVNldFJlcXVlc3QaGy5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVU",
-            "eCIdgtPkkwIXIhIvZGIvdmVyaWZpYWJsZS9zZXQ6ASoSTQoDR2V0EhkuaW1t",
-            "dWRiLnNjaGVtYS5LZXlSZXF1ZXN0GhQuaW1tdWRiLnNjaGVtYS5FbnRyeSIV",
-            "gtPkkwIPEg0vZGIvZ2V0L3trZXl9EnMKDVZlcmlmaWFibGVHZXQSIy5pbW11",
-            "ZGIuc2NoZW1hLlZlcmlmaWFibGVHZXRSZXF1ZXN0Gh4uaW1tdWRiLnNjaGVt",
-            "YS5WZXJpZmlhYmxlRW50cnkiHYLT5JMCFyISL2RiL3ZlcmlmaWFibGUvZ2V0",
-            "OgEqEloKBkRlbGV0ZRIgLmltbXVkYi5zY2hlbWEuRGVsZXRlS2V5c1JlcXVl",
-            "c3QaFy5pbW11ZGIuc2NoZW1hLlR4SGVhZGVyIhWC0+STAg8iCi9kYi9kZWxl",
-            "dGU6ASoSVgoGR2V0QWxsEh0uaW1tdWRiLnNjaGVtYS5LZXlMaXN0UmVxdWVz",
-            "dBoWLmltbXVkYi5zY2hlbWEuRW50cmllcyIVgtPkkwIPIgovZGIvZ2V0YWxs",
-            "OgEqElkKB0V4ZWNBbGwSHS5pbW11ZGIuc2NoZW1hLkV4ZWNBbGxSZXF1ZXN0",
-            "GhcuaW1tdWRiLnNjaGVtYS5UeEhlYWRlciIWgtPkkwIQIgsvZGIvZXhlY2Fs",
-            "bDoBKhJPCgRTY2FuEhouaW1tdWRiLnNjaGVtYS5TY2FuUmVxdWVzdBoWLmlt",
-            "bXVkYi5zY2hlbWEuRW50cmllcyITgtPkkwINIggvZGIvc2NhbjoBKhJYCgVD",
-            "b3VudBIYLmltbXVkYi5zY2hlbWEuS2V5UHJlZml4GhkuaW1tdWRiLnNjaGVt",
-            "YS5FbnRyeUNvdW50IhqC0+STAhQSEi9kYi9jb3VudC97cHJlZml4fRJTCghD",
-            "b3VudEFsbBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRoZLmltbXVkYi5zY2hl",
-            "bWEuRW50cnlDb3VudCIUgtPkkwIOEgwvZGIvY291bnRhbGwSSgoGVHhCeUlk",
-            "EhguaW1tdWRiLnNjaGVtYS5UeFJlcXVlc3QaES5pbW11ZGIuc2NoZW1hLlR4",
-            "IhOC0+STAg0SCy9kYi90eC97dHh9EnMKEFZlcmlmaWFibGVUeEJ5SWQSIi5p",
-            "bW11ZGIuc2NoZW1hLlZlcmlmaWFibGVUeFJlcXVlc3QaGy5pbW11ZGIuc2No",
-            "ZW1hLlZlcmlmaWFibGVUeCIegtPkkwIYEhYvZGIvdmVyaWZpYWJsZS90eC97",
-            "dHh9ElAKBlR4U2NhbhIcLmltbXVkYi5zY2hlbWEuVHhTY2FuUmVxdWVzdBoV",
-            "LmltbXVkYi5zY2hlbWEuVHhMaXN0IhGC0+STAgsiBi9kYi90eDoBKhJYCgdI",
-            "aXN0b3J5Eh0uaW1tdWRiLnNjaGVtYS5IaXN0b3J5UmVxdWVzdBoWLmltbXVk",
-            "Yi5zY2hlbWEuRW50cmllcyIWgtPkkwIQIgsvZGIvaGlzdG9yeToBKhJQCgZI",
-            "ZWFsdGgSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaHS5pbW11ZGIuc2NoZW1h",
-            "LkhlYWx0aFJlc3BvbnNlIg+C0+STAgkSBy9oZWFsdGgSYwoORGF0YWJhc2VI",
-            "ZWFsdGgSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaJS5pbW11ZGIuc2NoZW1h",
-            "LkRhdGFiYXNlSGVhbHRoUmVzcG9uc2UiEoLT5JMCDBIKL2RiL2hlYWx0aBJY",
-            "CgxDdXJyZW50U3RhdGUSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaHS5pbW11",
-            "ZGIuc2NoZW1hLkltbXV0YWJsZVN0YXRlIhGC0+STAgsSCS9kYi9zdGF0ZRJl",
-            "CgxTZXRSZWZlcmVuY2USHy5pbW11ZGIuc2NoZW1hLlJlZmVyZW5jZVJlcXVl",
-            "c3QaFy5pbW11ZGIuc2NoZW1hLlR4SGVhZGVyIhuC0+STAhUiEC9kYi9zZXRy",
-            "ZWZlcmVuY2U6ASoSiAEKFlZlcmlmaWFibGVTZXRSZWZlcmVuY2USKS5pbW11",
-            "ZGIuc2NoZW1hLlZlcmlmaWFibGVSZWZlcmVuY2VSZXF1ZXN0GhsuaW1tdWRi",
-            "LnNjaGVtYS5WZXJpZmlhYmxlVHgiJoLT5JMCICIbL2RiL3ZlcmlmaWFibGUv",
-            "c2V0cmVmZXJlbmNlOgEqElAKBFpBZGQSGi5pbW11ZGIuc2NoZW1hLlpBZGRS",
-            "ZXF1ZXN0GhcuaW1tdWRiLnNjaGVtYS5UeEhlYWRlciITgtPkkwINIggvZGIv",
-            "emFkZDoBKhJzCg5WZXJpZmlhYmxlWkFkZBIkLmltbXVkYi5zY2hlbWEuVmVy",
-            "aWZpYWJsZVpBZGRSZXF1ZXN0GhsuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxl",
-            "VHgiHoLT5JMCGCITL2RiL3ZlcmlmaWFibGUvemFkZDoBKhJTCgVaU2NhbhIb",
-            "LmltbXVkYi5zY2hlbWEuWlNjYW5SZXF1ZXN0GhcuaW1tdWRiLnNjaGVtYS5a",
-            "RW50cmllcyIUgtPkkwIOIgkvZGIvenNjYW46ASoSWwoOQ3JlYXRlRGF0YWJh",
-            "c2USFy5pbW11ZGIuc2NoZW1hLkRhdGFiYXNlGhYuZ29vZ2xlLnByb3RvYnVm",
-            "LkVtcHR5IhiIAgGC0+STAg8iCi9kYi9jcmVhdGU6ASoSawoSQ3JlYXRlRGF0",
-            "YWJhc2VXaXRoEh8uaW1tdWRiLnNjaGVtYS5EYXRhYmFzZVNldHRpbmdzGhYu",
-            "Z29vZ2xlLnByb3RvYnVmLkVtcHR5IhyIAgGC0+STAhMiDi9kYi9jcmVhdGV3",
-            "aXRoOgEqEnkKEENyZWF0ZURhdGFiYXNlVjISJC5pbW11ZGIuc2NoZW1hLkNy",
-            "ZWF0ZURhdGFiYXNlUmVxdWVzdBolLmltbXVkYi5zY2hlbWEuQ3JlYXRlRGF0",
-            "YWJhc2VSZXNwb25zZSIYgtPkkwISIg0vZGIvY3JlYXRlL3YyOgEqEmwKDExv",
-            "YWREYXRhYmFzZRIiLmltbXVkYi5zY2hlbWEuTG9hZERhdGFiYXNlUmVxdWVz",
-            "dBojLmltbXVkYi5zY2hlbWEuTG9hZERhdGFiYXNlUmVzcG9uc2UiE4LT5JMC",
-            "DSIIL2RiL2xvYWQ6ASoSdAoOVW5sb2FkRGF0YWJhc2USJC5pbW11ZGIuc2No",
-            "ZW1hLlVubG9hZERhdGFiYXNlUmVxdWVzdBolLmltbXVkYi5zY2hlbWEuVW5s",
-            "b2FkRGF0YWJhc2VSZXNwb25zZSIVgtPkkwIPIgovZGIvdW5sb2FkOgEqEnQK",
-            "DkRlbGV0ZURhdGFiYXNlEiQuaW1tdWRiLnNjaGVtYS5EZWxldGVEYXRhYmFz",
-            "ZVJlcXVlc3QaJS5pbW11ZGIuc2NoZW1hLkRlbGV0ZURhdGFiYXNlUmVzcG9u",
-            "c2UiFYLT5JMCDyIKL2RiL2RlbGV0ZToBKhJjCgxEYXRhYmFzZUxpc3QSFi5n",
-            "b29nbGUucHJvdG9idWYuRW1wdHkaIy5pbW11ZGIuc2NoZW1hLkRhdGFiYXNl",
-            "TGlzdFJlc3BvbnNlIhaIAgGC0+STAg0iCC9kYi9saXN0OgEqEnUKDkRhdGFi",
-            "YXNlTGlzdFYyEiQuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZUxpc3RSZXF1ZXN0",
-            "VjIaJS5pbW11ZGIuc2NoZW1hLkRhdGFiYXNlTGlzdFJlc3BvbnNlVjIiFoLT",
-            "5JMCECILL2RiL2xpc3QvdjI6ASoSZwoLVXNlRGF0YWJhc2USFy5pbW11ZGIu",
-            "c2NoZW1hLkRhdGFiYXNlGh8uaW1tdWRiLnNjaGVtYS5Vc2VEYXRhYmFzZVJl",
-            "cGx5Ih6C0+STAhgSFi9kYi91c2Uve2RhdGFiYXNlTmFtZX0SYwoOVXBkYXRl",
-            "RGF0YWJhc2USHy5pbW11ZGIuc2NoZW1hLkRhdGFiYXNlU2V0dGluZ3MaFi5n",
-            "b29nbGUucHJvdG9idWYuRW1wdHkiGIgCAYLT5JMCDyIKL2RiL3VwZGF0ZToB",
-            "KhJ5ChBVcGRhdGVEYXRhYmFzZVYyEiQuaW1tdWRiLnNjaGVtYS5VcGRhdGVE",
-            "YXRhYmFzZVJlcXVlc3QaJS5pbW11ZGIuc2NoZW1hLlVwZGF0ZURhdGFiYXNl",
-            "UmVzcG9uc2UiGILT5JMCEiINL2RiL3VwZGF0ZS92MjoBKhJqChNHZXREYXRh",
-            "YmFzZVNldHRpbmdzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh8uaW1tdWRi",
-            "LnNjaGVtYS5EYXRhYmFzZVNldHRpbmdzIhqIAgGC0+STAhEiDC9kYi9zZXR0",
-            "aW5nczoBKhKEAQoVR2V0RGF0YWJhc2VTZXR0aW5nc1YyEiYuaW1tdWRiLnNj",
-            "aGVtYS5EYXRhYmFzZVNldHRpbmdzUmVxdWVzdBonLmltbXVkYi5zY2hlbWEu",
-            "RGF0YWJhc2VTZXR0aW5nc1Jlc3BvbnNlIhqC0+STAhQiDy9kYi9zZXR0aW5n",
-            "cy92MjoBKhJpCgpGbHVzaEluZGV4EiAuaW1tdWRiLnNjaGVtYS5GbHVzaElu",
-            "ZGV4UmVxdWVzdBohLmltbXVkYi5zY2hlbWEuRmx1c2hJbmRleFJlc3BvbnNl",
-            "IhaC0+STAhASDi9kYi9mbHVzaGluZGV4ElgKDENvbXBhY3RJbmRleBIWLmdv",
-            "b2dsZS5wcm90b2J1Zi5FbXB0eRoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIY",
-            "gtPkkwISEhAvZGIvY29tcGFjdGluZGV4EkAKCXN0cmVhbUdldBIZLmltbXVk",
-            "Yi5zY2hlbWEuS2V5UmVxdWVzdBoULmltbXVkYi5zY2hlbWEuQ2h1bmsiADAB",
-            "Ej4KCXN0cmVhbVNldBIULmltbXVkYi5zY2hlbWEuQ2h1bmsaFy5pbW11ZGIu",
-            "c2NoZW1hLlR4SGVhZGVyIgAoARJUChNzdHJlYW1WZXJpZmlhYmxlR2V0EiMu",
-            "aW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlR2V0UmVxdWVzdBoULmltbXVkYi5z",
-            "Y2hlbWEuQ2h1bmsiADABEkwKE3N0cmVhbVZlcmlmaWFibGVTZXQSFC5pbW11",
-            "ZGIuc2NoZW1hLkNodW5rGhsuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlVHgi",
-            "ACgBEkIKCnN0cmVhbVNjYW4SGi5pbW11ZGIuc2NoZW1hLlNjYW5SZXF1ZXN0",
-            "GhQuaW1tdWRiLnNjaGVtYS5DaHVuayIAMAESRAoLc3RyZWFtWlNjYW4SGy5p",
-            "bW11ZGIuc2NoZW1hLlpTY2FuUmVxdWVzdBoULmltbXVkYi5zY2hlbWEuQ2h1",
-            "bmsiADABEkgKDXN0cmVhbUhpc3RvcnkSHS5pbW11ZGIuc2NoZW1hLkhpc3Rv",
-            "cnlSZXF1ZXN0GhQuaW1tdWRiLnNjaGVtYS5DaHVuayIAMAESQgoNc3RyZWFt",
-            "RXhlY0FsbBIULmltbXVkYi5zY2hlbWEuQ2h1bmsaFy5pbW11ZGIuc2NoZW1h",
-            "LlR4SGVhZGVyIgAoARJECghleHBvcnRUeBIeLmltbXVkYi5zY2hlbWEuRXhw",
-            "b3J0VHhSZXF1ZXN0GhQuaW1tdWRiLnNjaGVtYS5DaHVuayIAMAESQAoLcmVw",
-            "bGljYXRlVHgSFC5pbW11ZGIuc2NoZW1hLkNodW5rGhcuaW1tdWRiLnNjaGVt",
-            "YS5UeEhlYWRlciIAKAESXgoHU1FMRXhlYxIdLmltbXVkYi5zY2hlbWEuU1FM",
-            "RXhlY1JlcXVlc3QaHC5pbW11ZGIuc2NoZW1hLlNRTEV4ZWNSZXN1bHQiFoLT",
-            "5JMCECILL2RiL3NxbGV4ZWM6ASoSYgoIU1FMUXVlcnkSHi5pbW11ZGIuc2No",
-            "ZW1hLlNRTFF1ZXJ5UmVxdWVzdBodLmltbXVkYi5zY2hlbWEuU1FMUXVlcnlS",
-            "ZXN1bHQiF4LT5JMCESIML2RiL3NxbHF1ZXJ5OgEqElsKCkxpc3RUYWJsZXMS",
-            "Fi5nb29nbGUucHJvdG9idWYuRW1wdHkaHS5pbW11ZGIuc2NoZW1hLlNRTFF1",
-            "ZXJ5UmVzdWx0IhaC0+STAhASDi9kYi90YWJsZS9saXN0ElsKDURlc2NyaWJl",
-            "VGFibGUSFC5pbW11ZGIuc2NoZW1hLlRhYmxlGh0uaW1tdWRiLnNjaGVtYS5T",
-            "UUxRdWVyeVJlc3VsdCIVgtPkkwIPIgovZGIvdGFibGVzOgEqEn8KEFZlcmlm",
-            "aWFibGVTUUxHZXQSJi5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVTUUxHZXRS",
-            "ZXF1ZXN0GiEuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlU1FMRW50cnkiIILT",
-            "5JMCGiIVL2RiL3ZlcmlmaWFibGUvc3FsZ2V0OgEqQjtaK2dpdGh1Yi5jb20v",
-            "Y29kZW5vdGFyeS9pbW11ZGIvcGtnL2FwaS9zY2hlbWGqAgtJbW11ZGJQcm94",
-            "eWIGcHJvdG8z"));
+            "ZVR4GAIgASgEIhMKEVNlcnZlckluZm9SZXF1ZXN0IiUKElNlcnZlckluZm9S",
+            "ZXNwb25zZRIPCgd2ZXJzaW9uGAEgASgJIjEKDkhlYWx0aFJlc3BvbnNlEg4K",
+            "BnN0YXR1cxgBIAEoCBIPCgd2ZXJzaW9uGAIgASgJIlEKFkRhdGFiYXNlSGVh",
+            "bHRoUmVzcG9uc2USFwoPcGVuZGluZ1JlcXVlc3RzGAEgASgNEh4KFmxhc3RS",
+            "ZXF1ZXN0Q29tcGxldGVkQXQYAiABKAMinQEKDkltbXV0YWJsZVN0YXRlEgoK",
+            "AmRiGAEgASgJEgwKBHR4SWQYAiABKAQSDgoGdHhIYXNoGAMgASgMEisKCXNp",
+            "Z25hdHVyZRgEIAEoCzIYLmltbXVkYi5zY2hlbWEuU2lnbmF0dXJlEhgKEHBy",
+            "ZWNvbW1pdHRlZFR4SWQYBSABKAQSGgoScHJlY29tbWl0dGVkVHhIYXNoGAYg",
+            "ASgMIpoBChBSZWZlcmVuY2VSZXF1ZXN0EgsKA2tleRgBIAEoDBIVCg1yZWZl",
+            "cmVuY2VkS2V5GAIgASgMEgwKBGF0VHgYAyABKAQSEAoIYm91bmRSZWYYBCAB",
+            "KAgSDgoGbm9XYWl0GAUgASgIEjIKDXByZWNvbmRpdGlvbnMYBiADKAsyGy5p",
+            "bW11ZGIuc2NoZW1hLlByZWNvbmRpdGlvbiJtChpWZXJpZmlhYmxlUmVmZXJl",
+            "bmNlUmVxdWVzdBI5ChByZWZlcmVuY2VSZXF1ZXN0GAEgASgLMh8uaW1tdWRi",
+            "LnNjaGVtYS5SZWZlcmVuY2VSZXF1ZXN0EhQKDHByb3ZlU2luY2VUeBgCIAEo",
+            "BCJmCgtaQWRkUmVxdWVzdBILCgNzZXQYASABKAwSDQoFc2NvcmUYAiABKAES",
+            "CwoDa2V5GAMgASgMEgwKBGF0VHgYBCABKAQSEAoIYm91bmRSZWYYBSABKAgS",
+            "DgoGbm9XYWl0GAYgASgIIhYKBVNjb3JlEg0KBXNjb3JlGAEgASgBIoYCCgxa",
+            "U2NhblJlcXVlc3QSCwoDc2V0GAEgASgMEg8KB3NlZWtLZXkYAiABKAwSEQoJ",
+            "c2Vla1Njb3JlGAMgASgBEhAKCHNlZWtBdFR4GAQgASgEEhUKDWluY2x1c2l2",
+            "ZVNlZWsYBSABKAgSDQoFbGltaXQYBiABKAQSDAoEZGVzYxgHIAEoCBImCght",
+            "aW5TY29yZRgIIAEoCzIULmltbXVkYi5zY2hlbWEuU2NvcmUSJgoIbWF4U2Nv",
+            "cmUYCSABKAsyFC5pbW11ZGIuc2NoZW1hLlNjb3JlEg8KB3NpbmNlVHgYCiAB",
+            "KAQSDgoGbm9XYWl0GAsgASgIEg4KBm9mZnNldBgMIAEoBCJbCg5IaXN0b3J5",
+            "UmVxdWVzdBILCgNrZXkYASABKAwSDgoGb2Zmc2V0GAIgASgEEg0KBWxpbWl0",
+            "GAMgASgFEgwKBGRlc2MYBCABKAgSDwoHc2luY2VUeBgFIAEoBCJeChVWZXJp",
+            "ZmlhYmxlWkFkZFJlcXVlc3QSLwoLekFkZFJlcXVlc3QYASABKAsyGi5pbW11",
+            "ZGIuc2NoZW1hLlpBZGRSZXF1ZXN0EhQKDHByb3ZlU2luY2VUeBgCIAEoBCKL",
+            "AQoJVHhSZXF1ZXN0EgoKAnR4GAEgASgEEi8KC2VudHJpZXNTcGVjGAIgASgL",
+            "MhouaW1tdWRiLnNjaGVtYS5FbnRyaWVzU3BlYxIPCgdzaW5jZVR4GAMgASgE",
+            "Eg4KBm5vV2FpdBgEIAEoCBIgChhrZWVwUmVmZXJlbmNlc1VucmVzb2x2ZWQY",
+            "BSABKAgirAEKC0VudHJpZXNTcGVjEjMKDWt2RW50cmllc1NwZWMYASABKAsy",
+            "HC5pbW11ZGIuc2NoZW1hLkVudHJ5VHlwZVNwZWMSMgoMekVudHJpZXNTcGVj",
+            "GAIgASgLMhwuaW1tdWRiLnNjaGVtYS5FbnRyeVR5cGVTcGVjEjQKDnNxbEVu",
+            "dHJpZXNTcGVjGAMgASgLMhwuaW1tdWRiLnNjaGVtYS5FbnRyeVR5cGVTcGVj",
+            "Ij8KDUVudHJ5VHlwZVNwZWMSLgoGYWN0aW9uGAEgASgOMh4uaW1tdWRiLnNj",
+            "aGVtYS5FbnRyeVR5cGVBY3Rpb24iqwEKE1ZlcmlmaWFibGVUeFJlcXVlc3QS",
+            "CgoCdHgYASABKAQSFAoMcHJvdmVTaW5jZVR4GAIgASgEEi8KC2VudHJpZXNT",
+            "cGVjGAMgASgLMhouaW1tdWRiLnNjaGVtYS5FbnRyaWVzU3BlYxIPCgdzaW5j",
+            "ZVR4GAQgASgEEg4KBm5vV2FpdBgFIAEoCBIgChhrZWVwUmVmZXJlbmNlc1Vu",
+            "cmVzb2x2ZWQYBiABKAgikQEKDVR4U2NhblJlcXVlc3QSEQoJaW5pdGlhbFR4",
+            "GAEgASgEEg0KBWxpbWl0GAIgASgNEgwKBGRlc2MYAyABKAgSLwoLZW50cmll",
+            "c1NwZWMYBCABKAsyGi5pbW11ZGIuc2NoZW1hLkVudHJpZXNTcGVjEg8KB3Np",
+            "bmNlVHgYBSABKAQSDgoGbm9XYWl0GAYgASgIIigKBlR4TGlzdBIeCgN0eHMY",
+            "ASADKAsyES5pbW11ZGIuc2NoZW1hLlR4Im0KD0V4cG9ydFR4UmVxdWVzdBIK",
+            "CgJ0eBgBIAEoBBIZChFhbGxvd1ByZUNvbW1pdHRlZBgCIAEoCBIzCg1mb2xs",
+            "b3dlclN0YXRlGAMgASgLMhwuaW1tdWRiLnNjaGVtYS5Gb2xsb3dlclN0YXRl",
+            "In0KDUZvbGxvd2VyU3RhdGUSDAoEVVVJRBgBIAEoCRIVCg1jb21taXR0ZWRU",
+            "eElEGAIgASgEEhQKDGNvbW1pdHRlZEFsaBgDIAEoDBIYChBwcmVjb21taXR0",
+            "ZWRUeElEGAQgASgEEhcKD3ByZWNvbW1pdHRlZEFsaBgFIAEoDCIgCghEYXRh",
+            "YmFzZRIUCgxkYXRhYmFzZU5hbWUYASABKAkimwIKEERhdGFiYXNlU2V0dGlu",
+            "Z3MSFAoMZGF0YWJhc2VOYW1lGAEgASgJEg8KB3JlcGxpY2EYAiABKAgSFgoO",
+            "bWFzdGVyRGF0YWJhc2UYAyABKAkSFQoNbWFzdGVyQWRkcmVzcxgEIAEoCRIS",
+            "CgptYXN0ZXJQb3J0GAUgASgNEhgKEGZvbGxvd2VyVXNlcm5hbWUYBiABKAkS",
+            "GAoQZm9sbG93ZXJQYXNzd29yZBgHIAEoCRIQCghmaWxlU2l6ZRgIIAEoDRIR",
+            "CgltYXhLZXlMZW4YCSABKA0SEwoLbWF4VmFsdWVMZW4YCiABKA0SFAoMbWF4",
+            "VHhFbnRyaWVzGAsgASgNEhkKEWV4Y2x1ZGVDb21taXRUaW1lGAwgASgIInUK",
+            "FUNyZWF0ZURhdGFiYXNlUmVxdWVzdBIMCgRuYW1lGAEgASgJEjkKCHNldHRp",
+            "bmdzGAIgASgLMicuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZU51bGxhYmxlU2V0",
+            "dGluZ3MSEwoLaWZOb3RFeGlzdHMYAyABKAgieQoWQ3JlYXRlRGF0YWJhc2VS",
+            "ZXNwb25zZRIMCgRuYW1lGAEgASgJEjkKCHNldHRpbmdzGAIgASgLMicuaW1t",
+            "dWRiLnNjaGVtYS5EYXRhYmFzZU51bGxhYmxlU2V0dGluZ3MSFgoOYWxyZWFk",
+            "eUV4aXN0ZWQYAyABKAgiZAoVVXBkYXRlRGF0YWJhc2VSZXF1ZXN0EhAKCGRh",
+            "dGFiYXNlGAEgASgJEjkKCHNldHRpbmdzGAIgASgLMicuaW1tdWRiLnNjaGVt",
+            "YS5EYXRhYmFzZU51bGxhYmxlU2V0dGluZ3MiZQoWVXBkYXRlRGF0YWJhc2VS",
+            "ZXNwb25zZRIQCghkYXRhYmFzZRgBIAEoCRI5CghzZXR0aW5ncxgCIAEoCzIn",
+            "LmltbXVkYi5zY2hlbWEuRGF0YWJhc2VOdWxsYWJsZVNldHRpbmdzIhkKF0Rh",
+            "dGFiYXNlU2V0dGluZ3NSZXF1ZXN0ImcKGERhdGFiYXNlU2V0dGluZ3NSZXNw",
+            "b25zZRIQCghkYXRhYmFzZRgBIAEoCRI5CghzZXR0aW5ncxgCIAEoCzInLmlt",
+            "bXVkYi5zY2hlbWEuRGF0YWJhc2VOdWxsYWJsZVNldHRpbmdzIh8KDk51bGxh",
+            "YmxlVWludDMyEg0KBXZhbHVlGAEgASgNIh8KDk51bGxhYmxlVWludDY0Eg0K",
+            "BXZhbHVlGAEgASgEIh4KDU51bGxhYmxlRmxvYXQSDQoFdmFsdWUYASABKAIi",
+            "HQoMTnVsbGFibGVCb29sEg0KBXZhbHVlGAEgASgIIh8KDk51bGxhYmxlU3Ry",
+            "aW5nEg0KBXZhbHVlGAEgASgJIiUKFE51bGxhYmxlTWlsbGlzZWNvbmRzEg0K",
+            "BXZhbHVlGAEgASgDItIIChhEYXRhYmFzZU51bGxhYmxlU2V0dGluZ3MSRwoT",
+            "cmVwbGljYXRpb25TZXR0aW5ncxgCIAEoCzIqLmltbXVkYi5zY2hlbWEuUmVw",
+            "bGljYXRpb25OdWxsYWJsZVNldHRpbmdzEi8KCGZpbGVTaXplGAggASgLMh0u",
+            "aW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQzMhIwCgltYXhLZXlMZW4YCSAB",
+            "KAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjIKC21heFZhbHVl",
+            "TGVuGAogASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQzMhIzCgxt",
+            "YXhUeEVudHJpZXMYCyABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWlu",
+            "dDMyEjYKEWV4Y2x1ZGVDb21taXRUaW1lGAwgASgLMhsuaW1tdWRiLnNjaGVt",
+            "YS5OdWxsYWJsZUJvb2wSNQoObWF4Q29uY3VycmVuY3kYDSABKAsyHS5pbW11",
+            "ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjcKEG1heElPQ29uY3VycmVuY3kY",
+            "DiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjUKDnR4TG9n",
+            "Q2FjaGVTaXplGA8gASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQz",
+            "MhI5ChJ2TG9nTWF4T3BlbmVkRmlsZXMYECABKAsyHS5pbW11ZGIuc2NoZW1h",
+            "Lk51bGxhYmxlVWludDMyEjoKE3R4TG9nTWF4T3BlbmVkRmlsZXMYESABKAsy",
+            "HS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEj4KF2NvbW1pdExvZ01h",
+            "eE9wZW5lZEZpbGVzGBIgASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVp",
+            "bnQzMhI7Cg1pbmRleFNldHRpbmdzGBMgASgLMiQuaW1tdWRiLnNjaGVtYS5J",
+            "bmRleE51bGxhYmxlU2V0dGluZ3MSOwoUd3JpdGVUeEhlYWRlclZlcnNpb24Y",
+            "FCABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEi0KCGF1dG9s",
+            "b2FkGBUgASgLMhsuaW1tdWRiLnNjaGVtYS5OdWxsYWJsZUJvb2wSNQoOcmVh",
+            "ZFR4UG9vbFNpemUYFiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWlu",
+            "dDMyEjoKDXN5bmNGcmVxdWVuY3kYFyABKAsyIy5pbW11ZGIuc2NoZW1hLk51",
+            "bGxhYmxlTWlsbGlzZWNvbmRzEjYKD3dyaXRlQnVmZmVyU2l6ZRgYIAEoCzId",
+            "LmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISNwoLYWh0U2V0dGluZ3MY",
+            "GSABKAsyIi5pbW11ZGIuc2NoZW1hLkFIVE51bGxhYmxlU2V0dGluZ3MigwUK",
+            "G1JlcGxpY2F0aW9uTnVsbGFibGVTZXR0aW5ncxIsCgdyZXBsaWNhGAEgASgL",
+            "MhsuaW1tdWRiLnNjaGVtYS5OdWxsYWJsZUJvb2wSNQoObWFzdGVyRGF0YWJh",
+            "c2UYAiABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlU3RyaW5nEjQKDW1h",
+            "c3RlckFkZHJlc3MYAyABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlU3Ry",
+            "aW5nEjEKCm1hc3RlclBvcnQYBCABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxh",
+            "YmxlVWludDMyEjcKEGZvbGxvd2VyVXNlcm5hbWUYBSABKAsyHS5pbW11ZGIu",
+            "c2NoZW1hLk51bGxhYmxlU3RyaW5nEjcKEGZvbGxvd2VyUGFzc3dvcmQYBiAB",
+            "KAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlU3RyaW5nEjQKD3N5bmNSZXBs",
+            "aWNhdGlvbhgHIAEoCzIbLmltbXVkYi5zY2hlbWEuTnVsbGFibGVCb29sEjQK",
+            "DXN5bmNGb2xsb3dlcnMYCCABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxl",
+            "VWludDMyEjsKFHByZWZldGNoVHhCdWZmZXJTaXplGAkgASgLMh0uaW1tdWRi",
+            "LnNjaGVtYS5OdWxsYWJsZVVpbnQzMhJDChxyZXBsaWNhdGlvbkNvbW1pdENv",
+            "bmN1cnJlbmN5GAogASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQz",
+            "MhI2ChFBbGxvd1R4RGlzY2FyZGluZxgLIAEoCzIbLmltbXVkYi5zY2hlbWEu",
+            "TnVsbGFibGVCb29sIoYGChVJbmRleE51bGxhYmxlU2V0dGluZ3MSNQoOZmx1",
+            "c2hUaHJlc2hvbGQYASABKAsyHS5pbW11ZGIuc2NoZW1hLk51bGxhYmxlVWlu",
+            "dDMyEjQKDXN5bmNUaHJlc2hvbGQYAiABKAsyHS5pbW11ZGIuc2NoZW1hLk51",
+            "bGxhYmxlVWludDMyEjAKCWNhY2hlU2l6ZRgDIAEoCzIdLmltbXVkYi5zY2hl",
+            "bWEuTnVsbGFibGVVaW50MzISMgoLbWF4Tm9kZVNpemUYBCABKAsyHS5pbW11",
+            "ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEjkKEm1heEFjdGl2ZVNuYXBzaG90",
+            "cxgFIAEoCzIdLmltbXVkYi5zY2hlbWEuTnVsbGFibGVVaW50MzISOQoScmVu",
+            "ZXdTbmFwUm9vdEFmdGVyGAYgASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJs",
+            "ZVVpbnQ2NBI1Cg5jb21wYWN0aW9uVGhsZBgHIAEoCzIdLmltbXVkYi5zY2hl",
+            "bWEuTnVsbGFibGVVaW50MzISPAoVZGVsYXlEdXJpbmdDb21wYWN0aW9uGAgg",
+            "ASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQzMhI9ChZub2Rlc0xv",
+            "Z01heE9wZW5lZEZpbGVzGAkgASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJs",
+            "ZVVpbnQzMhI/ChhoaXN0b3J5TG9nTWF4T3BlbmVkRmlsZXMYCiABKAsyHS5p",
+            "bW11ZGIuc2NoZW1hLk51bGxhYmxlVWludDMyEj4KF2NvbW1pdExvZ01heE9w",
+            "ZW5lZEZpbGVzGAsgASgLMh0uaW1tdWRiLnNjaGVtYS5OdWxsYWJsZVVpbnQz",
+            "MhI2Cg9mbHVzaEJ1ZmZlclNpemUYDCABKAsyHS5pbW11ZGIuc2NoZW1hLk51",
+            "bGxhYmxlVWludDMyEjcKEWNsZWFudXBQZXJjZW50YWdlGA0gASgLMhwuaW1t",
+            "dWRiLnNjaGVtYS5OdWxsYWJsZUZsb2F0IoMBChNBSFROdWxsYWJsZVNldHRp",
+            "bmdzEjQKDXN5bmNUaHJlc2hvbGQYASABKAsyHS5pbW11ZGIuc2NoZW1hLk51",
+            "bGxhYmxlVWludDMyEjYKD3dyaXRlQnVmZmVyU2l6ZRgCIAEoCzIdLmltbXVk",
+            "Yi5zY2hlbWEuTnVsbGFibGVVaW50MzIiJwoTTG9hZERhdGFiYXNlUmVxdWVz",
+            "dBIQCghkYXRhYmFzZRgBIAEoCSIoChRMb2FkRGF0YWJhc2VSZXNwb25zZRIQ",
+            "CghkYXRhYmFzZRgBIAEoCSIpChVVbmxvYWREYXRhYmFzZVJlcXVlc3QSEAoI",
+            "ZGF0YWJhc2UYASABKAkiKgoWVW5sb2FkRGF0YWJhc2VSZXNwb25zZRIQCghk",
+            "YXRhYmFzZRgBIAEoCSIpChVEZWxldGVEYXRhYmFzZVJlcXVlc3QSEAoIZGF0",
+            "YWJhc2UYASABKAkiKgoWRGVsZXRlRGF0YWJhc2VSZXNwb25zZRIQCghkYXRh",
+            "YmFzZRgBIAEoCSI+ChFGbHVzaEluZGV4UmVxdWVzdBIZChFjbGVhbnVwUGVy",
+            "Y2VudGFnZRgBIAEoAhIOCgZzeW5jZWQYAiABKAgiJgoSRmx1c2hJbmRleFJl",
+            "c3BvbnNlEhAKCGRhdGFiYXNlGAEgASgJIhoKBVRhYmxlEhEKCXRhYmxlTmFt",
+            "ZRgBIAEoCSJoCg1TUUxHZXRSZXF1ZXN0Eg0KBXRhYmxlGAEgASgJEikKCHBr",
+            "VmFsdWVzGAIgAygLMhcuaW1tdWRiLnNjaGVtYS5TUUxWYWx1ZRIMCgRhdFR4",
+            "GAMgASgEEg8KB3NpbmNlVHgYBCABKAQiZAoXVmVyaWZpYWJsZVNRTEdldFJl",
+            "cXVlc3QSMwoNc3FsR2V0UmVxdWVzdBgBIAEoCzIcLmltbXVkYi5zY2hlbWEu",
+            "U1FMR2V0UmVxdWVzdBIUCgxwcm92ZVNpbmNlVHgYAiABKAQiXwoIU1FMRW50",
+            "cnkSCgoCdHgYASABKAQSCwoDa2V5GAIgASgMEg0KBXZhbHVlGAMgASgMEisK",
+            "CG1ldGFkYXRhGAQgASgLMhkuaW1tdWRiLnNjaGVtYS5LVk1ldGFkYXRhIt0F",
+            "ChJWZXJpZmlhYmxlU1FMRW50cnkSKQoIc3FsRW50cnkYASABKAsyFy5pbW11",
+            "ZGIuc2NoZW1hLlNRTEVudHJ5EjEKDHZlcmlmaWFibGVUeBgCIAEoCzIbLmlt",
+            "bXVkYi5zY2hlbWEuVmVyaWZpYWJsZVR4EjUKDmluY2x1c2lvblByb29mGAMg",
+            "ASgLMh0uaW1tdWRiLnNjaGVtYS5JbmNsdXNpb25Qcm9vZhISCgpEYXRhYmFz",
+            "ZUlkGAQgASgNEg8KB1RhYmxlSWQYBSABKA0SDQoFUEtJRHMYECADKA0SSQoM",
+            "Q29sTmFtZXNCeUlkGAggAygLMjMuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxl",
+            "U1FMRW50cnkuQ29sTmFtZXNCeUlkRW50cnkSSQoMQ29sSWRzQnlOYW1lGAkg",
+            "AygLMjMuaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlU1FMRW50cnkuQ29sSWRz",
+            "QnlOYW1lRW50cnkSSQoMQ29sVHlwZXNCeUlkGAogAygLMjMuaW1tdWRiLnNj",
+            "aGVtYS5WZXJpZmlhYmxlU1FMRW50cnkuQ29sVHlwZXNCeUlkRW50cnkSRQoK",
+            "Q29sTGVuQnlJZBgLIAMoCzIxLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJsZVNR",
+            "TEVudHJ5LkNvbExlbkJ5SWRFbnRyeRozChFDb2xOYW1lc0J5SWRFbnRyeRIL",
+            "CgNrZXkYASABKA0SDQoFdmFsdWUYAiABKAk6AjgBGjMKEUNvbElkc0J5TmFt",
+            "ZUVudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoDToCOAEaMwoRQ29s",
+            "VHlwZXNCeUlkRW50cnkSCwoDa2V5GAEgASgNEg0KBXZhbHVlGAIgASgJOgI4",
+            "ARoxCg9Db2xMZW5CeUlkRW50cnkSCwoDa2V5GAEgASgNEg0KBXZhbHVlGAIg",
+            "ASgFOgI4AUoECAYQByIhChBVc2VEYXRhYmFzZVJlcGx5Eg0KBXRva2VuGAEg",
+            "ASgJIoIBChdDaGFuZ2VQZXJtaXNzaW9uUmVxdWVzdBIvCgZhY3Rpb24YASAB",
+            "KA4yHy5pbW11ZGIuc2NoZW1hLlBlcm1pc3Npb25BY3Rpb24SEAoIdXNlcm5h",
+            "bWUYAiABKAkSEAoIZGF0YWJhc2UYAyABKAkSEgoKcGVybWlzc2lvbhgEIAEo",
+            "DSI4ChRTZXRBY3RpdmVVc2VyUmVxdWVzdBIOCgZhY3RpdmUYASABKAgSEAoI",
+            "dXNlcm5hbWUYAiABKAkiQgoURGF0YWJhc2VMaXN0UmVzcG9uc2USKgoJZGF0",
+            "YWJhc2VzGAEgAygLMhcuaW1tdWRiLnNjaGVtYS5EYXRhYmFzZSIXChVEYXRh",
+            "YmFzZUxpc3RSZXF1ZXN0VjIiUAoWRGF0YWJhc2VMaXN0UmVzcG9uc2VWMhI2",
+            "CglkYXRhYmFzZXMYASADKAsyIy5pbW11ZGIuc2NoZW1hLkRhdGFiYXNlV2l0",
+            "aFNldHRpbmdzIm8KFERhdGFiYXNlV2l0aFNldHRpbmdzEgwKBG5hbWUYASAB",
+            "KAkSOQoIc2V0dGluZ3MYAiABKAsyJy5pbW11ZGIuc2NoZW1hLkRhdGFiYXNl",
+            "TnVsbGFibGVTZXR0aW5ncxIOCgZsb2FkZWQYAyABKAgiGAoFQ2h1bmsSDwoH",
+            "Y29udGVudBgBIAEoDCI5ChJVc2VTbmFwc2hvdFJlcXVlc3QSDwoHc2luY2VU",
+            "eBgBIAEoBBISCgphc0JlZm9yZVR4GAIgASgEIlgKDlNRTEV4ZWNSZXF1ZXN0",
+            "EgsKA3NxbBgBIAEoCRIpCgZwYXJhbXMYAiADKAsyGS5pbW11ZGIuc2NoZW1h",
+            "Lk5hbWVkUGFyYW0SDgoGbm9XYWl0GAMgASgIImAKD1NRTFF1ZXJ5UmVxdWVz",
+            "dBILCgNzcWwYASABKAkSKQoGcGFyYW1zGAIgAygLMhkuaW1tdWRiLnNjaGVt",
+            "YS5OYW1lZFBhcmFtEhUKDXJldXNlU25hcHNob3QYAyABKAgiQgoKTmFtZWRQ",
+            "YXJhbRIMCgRuYW1lGAEgASgJEiYKBXZhbHVlGAIgASgLMhcuaW1tdWRiLnNj",
+            "aGVtYS5TUUxWYWx1ZSJOCg1TUUxFeGVjUmVzdWx0EioKA3R4cxgFIAMoCzId",
+            "LmltbXVkYi5zY2hlbWEuQ29tbWl0dGVkU1FMVHgSEQoJb25nb2luZ1R4GAYg",
+            "ASgIIo0DCg5Db21taXR0ZWRTUUxUeBInCgZoZWFkZXIYASABKAsyFy5pbW11",
+            "ZGIuc2NoZW1hLlR4SGVhZGVyEhMKC3VwZGF0ZWRSb3dzGAIgASgNEksKD2xh",
+            "c3RJbnNlcnRlZFBLcxgDIAMoCzIyLmltbXVkYi5zY2hlbWEuQ29tbWl0dGVk",
+            "U1FMVHguTGFzdEluc2VydGVkUEtzRW50cnkSTQoQZmlyc3RJbnNlcnRlZFBL",
+            "cxgEIAMoCzIzLmltbXVkYi5zY2hlbWEuQ29tbWl0dGVkU1FMVHguRmlyc3RJ",
+            "bnNlcnRlZFBLc0VudHJ5Gk8KFExhc3RJbnNlcnRlZFBLc0VudHJ5EgsKA2tl",
+            "eRgBIAEoCRImCgV2YWx1ZRgCIAEoCzIXLmltbXVkYi5zY2hlbWEuU1FMVmFs",
+            "dWU6AjgBGlAKFUZpcnN0SW5zZXJ0ZWRQS3NFbnRyeRILCgNrZXkYASABKAkS",
+            "JgoFdmFsdWUYAiABKAsyFy5pbW11ZGIuc2NoZW1hLlNRTFZhbHVlOgI4ASJa",
+            "Cg5TUUxRdWVyeVJlc3VsdBImCgdjb2x1bW5zGAIgAygLMhUuaW1tdWRiLnNj",
+            "aGVtYS5Db2x1bW4SIAoEcm93cxgBIAMoCzISLmltbXVkYi5zY2hlbWEuUm93",
+            "IiQKBkNvbHVtbhIMCgRuYW1lGAEgASgJEgwKBHR5cGUYAiABKAkiPwoDUm93",
+            "Eg8KB2NvbHVtbnMYASADKAkSJwoGdmFsdWVzGAIgAygLMhcuaW1tdWRiLnNj",
+            "aGVtYS5TUUxWYWx1ZSKCAQoIU1FMVmFsdWUSKgoEbnVsbBgBIAEoDjIaLmdv",
+            "b2dsZS5wcm90b2J1Zi5OdWxsVmFsdWVIABILCgFuGAIgASgDSAASCwoBcxgD",
+            "IAEoCUgAEgsKAWIYBCABKAhIABIMCgJicxgFIAEoDEgAEgwKAnRzGAYgASgD",
+            "SABCBwoFdmFsdWUiMwoMTmV3VHhSZXF1ZXN0EiMKBG1vZGUYASABKA4yFS5p",
+            "bW11ZGIuc2NoZW1hLlR4TW9kZSImCg1OZXdUeFJlc3BvbnNlEhUKDXRyYW5z",
+            "YWN0aW9uSUQYASABKAkiKAoJRXJyb3JJbmZvEgwKBGNvZGUYASABKAkSDQoF",
+            "Y2F1c2UYAiABKAkiGgoJRGVidWdJbmZvEg0KBXN0YWNrGAEgASgJIiAKCVJl",
+            "dHJ5SW5mbxITCgtyZXRyeV9kZWxheRgBIAEoBSpLCg9FbnRyeVR5cGVBY3Rp",
+            "b24SCwoHRVhDTFVERRAAEg8KC09OTFlfRElHRVNUEAESDQoJUkFXX1ZBTFVF",
+            "EAISCwoHUkVTT0xWRRADKikKEFBlcm1pc3Npb25BY3Rpb24SCQoFR1JBTlQQ",
+            "ABIKCgZSRVZPS0UQASo0CgZUeE1vZGUSDAoIUmVhZE9ubHkQABINCglXcml0",
+            "ZU9ubHkQARINCglSZWFkV3JpdGUQAjLRMgoLSW1tdVNlcnZpY2USUAoJTGlz",
+            "dFVzZXJzEhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5GhcuaW1tdWRiLnNjaGVt",
+            "YS5Vc2VyTGlzdCISgtPkkwIMEgovdXNlci9saXN0ElgKCkNyZWF0ZVVzZXIS",
+            "IC5pbW11ZGIuc2NoZW1hLkNyZWF0ZVVzZXJSZXF1ZXN0GhYuZ29vZ2xlLnBy",
+            "b3RvYnVmLkVtcHR5IhCC0+STAgoiBS91c2VyOgEqEnAKDkNoYW5nZVBhc3N3",
+            "b3JkEiQuaW1tdWRiLnNjaGVtYS5DaGFuZ2VQYXNzd29yZFJlcXVlc3QaFi5n",
+            "b29nbGUucHJvdG9idWYuRW1wdHkiIILT5JMCGiIVL3VzZXIvcGFzc3dvcmQv",
+            "Y2hhbmdlOgEqEnUKEENoYW5nZVBlcm1pc3Npb24SJi5pbW11ZGIuc2NoZW1h",
+            "LkNoYW5nZVBlcm1pc3Npb25SZXF1ZXN0GhYuZ29vZ2xlLnByb3RvYnVmLkVt",
+            "cHR5IiGC0+STAhsiFi91c2VyL2NoYW5nZXBlcm1pc3Npb246ASoSbAoNU2V0",
+            "QWN0aXZlVXNlchIjLmltbXVkYi5zY2hlbWEuU2V0QWN0aXZlVXNlclJlcXVl",
+            "c3QaFi5nb29nbGUucHJvdG9idWYuRW1wdHkiHoLT5JMCGCITL3VzZXIvc2V0",
+            "YWN0aXZlVXNlcjoBKhJKChBVcGRhdGVBdXRoQ29uZmlnEhkuaW1tdWRiLnNj",
+            "aGVtYS5BdXRoQ29uZmlnGhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgOIAgES",
+            "SgoQVXBkYXRlTVRMU0NvbmZpZxIZLmltbXVkYi5zY2hlbWEuTVRMU0NvbmZp",
+            "ZxoWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eSIDiAIBElYKC09wZW5TZXNzaW9u",
+            "EiEuaW1tdWRiLnNjaGVtYS5PcGVuU2Vzc2lvblJlcXVlc3QaIi5pbW11ZGIu",
+            "c2NoZW1hLk9wZW5TZXNzaW9uUmVzcG9uc2UiABJACgxDbG9zZVNlc3Npb24S",
+            "Fi5nb29nbGUucHJvdG9idWYuRW1wdHkaFi5nb29nbGUucHJvdG9idWYuRW1w",
+            "dHkiABI9CglLZWVwQWxpdmUSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaFi5n",
+            "b29nbGUucHJvdG9idWYuRW1wdHkiABJECgVOZXdUeBIbLmltbXVkYi5zY2hl",
+            "bWEuTmV3VHhSZXF1ZXN0GhwuaW1tdWRiLnNjaGVtYS5OZXdUeFJlc3BvbnNl",
+            "IgASQQoGQ29tbWl0EhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5Gh0uaW1tdWRi",
+            "LnNjaGVtYS5Db21taXR0ZWRTUUxUeCIAEjwKCFJvbGxiYWNrEhYuZ29vZ2xl",
+            "LnByb3RvYnVmLkVtcHR5GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IgASRAoJ",
+            "VHhTUUxFeGVjEh0uaW1tdWRiLnNjaGVtYS5TUUxFeGVjUmVxdWVzdBoWLmdv",
+            "b2dsZS5wcm90b2J1Zi5FbXB0eSIAEk0KClR4U1FMUXVlcnkSHi5pbW11ZGIu",
+            "c2NoZW1hLlNRTFF1ZXJ5UmVxdWVzdBodLmltbXVkYi5zY2hlbWEuU1FMUXVl",
+            "cnlSZXN1bHQiABJYCgVMb2dpbhIbLmltbXVkYi5zY2hlbWEuTG9naW5SZXF1",
+            "ZXN0GhwuaW1tdWRiLnNjaGVtYS5Mb2dpblJlc3BvbnNlIhSIAgGC0+STAgsi",
+            "Bi9sb2dpbjoBKhJPCgZMb2dvdXQSFi5nb29nbGUucHJvdG9idWYuRW1wdHka",
+            "Fi5nb29nbGUucHJvdG9idWYuRW1wdHkiFYgCAYLT5JMCDCIHL2xvZ291dDoB",
+            "KhJNCgNTZXQSGS5pbW11ZGIuc2NoZW1hLlNldFJlcXVlc3QaFy5pbW11ZGIu",
+            "c2NoZW1hLlR4SGVhZGVyIhKC0+STAgwiBy9kYi9zZXQ6ASoScAoNVmVyaWZp",
+            "YWJsZVNldBIjLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJsZVNldFJlcXVlc3Qa",
+            "Gy5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVUeCIdgtPkkwIXIhIvZGIvdmVy",
+            "aWZpYWJsZS9zZXQ6ASoSTQoDR2V0EhkuaW1tdWRiLnNjaGVtYS5LZXlSZXF1",
+            "ZXN0GhQuaW1tdWRiLnNjaGVtYS5FbnRyeSIVgtPkkwIPEg0vZGIvZ2V0L3tr",
+            "ZXl9EnMKDVZlcmlmaWFibGVHZXQSIy5pbW11ZGIuc2NoZW1hLlZlcmlmaWFi",
+            "bGVHZXRSZXF1ZXN0Gh4uaW1tdWRiLnNjaGVtYS5WZXJpZmlhYmxlRW50cnki",
+            "HYLT5JMCFyISL2RiL3ZlcmlmaWFibGUvZ2V0OgEqEloKBkRlbGV0ZRIgLmlt",
+            "bXVkYi5zY2hlbWEuRGVsZXRlS2V5c1JlcXVlc3QaFy5pbW11ZGIuc2NoZW1h",
+            "LlR4SGVhZGVyIhWC0+STAg8iCi9kYi9kZWxldGU6ASoSVgoGR2V0QWxsEh0u",
+            "aW1tdWRiLnNjaGVtYS5LZXlMaXN0UmVxdWVzdBoWLmltbXVkYi5zY2hlbWEu",
+            "RW50cmllcyIVgtPkkwIPIgovZGIvZ2V0YWxsOgEqElkKB0V4ZWNBbGwSHS5p",
+            "bW11ZGIuc2NoZW1hLkV4ZWNBbGxSZXF1ZXN0GhcuaW1tdWRiLnNjaGVtYS5U",
+            "eEhlYWRlciIWgtPkkwIQIgsvZGIvZXhlY2FsbDoBKhJPCgRTY2FuEhouaW1t",
+            "dWRiLnNjaGVtYS5TY2FuUmVxdWVzdBoWLmltbXVkYi5zY2hlbWEuRW50cmll",
+            "cyITgtPkkwINIggvZGIvc2NhbjoBKhJYCgVDb3VudBIYLmltbXVkYi5zY2hl",
+            "bWEuS2V5UHJlZml4GhkuaW1tdWRiLnNjaGVtYS5FbnRyeUNvdW50IhqC0+ST",
+            "AhQSEi9kYi9jb3VudC97cHJlZml4fRJTCghDb3VudEFsbBIWLmdvb2dsZS5w",
+            "cm90b2J1Zi5FbXB0eRoZLmltbXVkYi5zY2hlbWEuRW50cnlDb3VudCIUgtPk",
+            "kwIOEgwvZGIvY291bnRhbGwSSgoGVHhCeUlkEhguaW1tdWRiLnNjaGVtYS5U",
+            "eFJlcXVlc3QaES5pbW11ZGIuc2NoZW1hLlR4IhOC0+STAg0SCy9kYi90eC97",
+            "dHh9EnMKEFZlcmlmaWFibGVUeEJ5SWQSIi5pbW11ZGIuc2NoZW1hLlZlcmlm",
+            "aWFibGVUeFJlcXVlc3QaGy5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVUeCIe",
+            "gtPkkwIYEhYvZGIvdmVyaWZpYWJsZS90eC97dHh9ElAKBlR4U2NhbhIcLmlt",
+            "bXVkYi5zY2hlbWEuVHhTY2FuUmVxdWVzdBoVLmltbXVkYi5zY2hlbWEuVHhM",
+            "aXN0IhGC0+STAgsiBi9kYi90eDoBKhJYCgdIaXN0b3J5Eh0uaW1tdWRiLnNj",
+            "aGVtYS5IaXN0b3J5UmVxdWVzdBoWLmltbXVkYi5zY2hlbWEuRW50cmllcyIW",
+            "gtPkkwIQIgsvZGIvaGlzdG9yeToBKhJmCgpTZXJ2ZXJJbmZvEiAuaW1tdWRi",
+            "LnNjaGVtYS5TZXJ2ZXJJbmZvUmVxdWVzdBohLmltbXVkYi5zY2hlbWEuU2Vy",
+            "dmVySW5mb1Jlc3BvbnNlIhOC0+STAg0SCy9zZXJ2ZXJpbmZvElAKBkhlYWx0",
+            "aBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRodLmltbXVkYi5zY2hlbWEuSGVh",
+            "bHRoUmVzcG9uc2UiD4LT5JMCCRIHL2hlYWx0aBJjCg5EYXRhYmFzZUhlYWx0",
+            "aBIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRolLmltbXVkYi5zY2hlbWEuRGF0",
+            "YWJhc2VIZWFsdGhSZXNwb25zZSISgtPkkwIMEgovZGIvaGVhbHRoElgKDEN1",
+            "cnJlbnRTdGF0ZRIWLmdvb2dsZS5wcm90b2J1Zi5FbXB0eRodLmltbXVkYi5z",
+            "Y2hlbWEuSW1tdXRhYmxlU3RhdGUiEYLT5JMCCxIJL2RiL3N0YXRlEmUKDFNl",
+            "dFJlZmVyZW5jZRIfLmltbXVkYi5zY2hlbWEuUmVmZXJlbmNlUmVxdWVzdBoX",
+            "LmltbXVkYi5zY2hlbWEuVHhIZWFkZXIiG4LT5JMCFSIQL2RiL3NldHJlZmVy",
+            "ZW5jZToBKhKIAQoWVmVyaWZpYWJsZVNldFJlZmVyZW5jZRIpLmltbXVkYi5z",
+            "Y2hlbWEuVmVyaWZpYWJsZVJlZmVyZW5jZVJlcXVlc3QaGy5pbW11ZGIuc2No",
+            "ZW1hLlZlcmlmaWFibGVUeCImgtPkkwIgIhsvZGIvdmVyaWZpYWJsZS9zZXRy",
+            "ZWZlcmVuY2U6ASoSUAoEWkFkZBIaLmltbXVkYi5zY2hlbWEuWkFkZFJlcXVl",
+            "c3QaFy5pbW11ZGIuc2NoZW1hLlR4SGVhZGVyIhOC0+STAg0iCC9kYi96YWRk",
+            "OgEqEnMKDlZlcmlmaWFibGVaQWRkEiQuaW1tdWRiLnNjaGVtYS5WZXJpZmlh",
+            "YmxlWkFkZFJlcXVlc3QaGy5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVUeCIe",
+            "gtPkkwIYIhMvZGIvdmVyaWZpYWJsZS96YWRkOgEqElMKBVpTY2FuEhsuaW1t",
+            "dWRiLnNjaGVtYS5aU2NhblJlcXVlc3QaFy5pbW11ZGIuc2NoZW1hLlpFbnRy",
+            "aWVzIhSC0+STAg4iCS9kYi96c2NhbjoBKhJbCg5DcmVhdGVEYXRhYmFzZRIX",
+            "LmltbXVkYi5zY2hlbWEuRGF0YWJhc2UaFi5nb29nbGUucHJvdG9idWYuRW1w",
+            "dHkiGIgCAYLT5JMCDyIKL2RiL2NyZWF0ZToBKhJrChJDcmVhdGVEYXRhYmFz",
+            "ZVdpdGgSHy5pbW11ZGIuc2NoZW1hLkRhdGFiYXNlU2V0dGluZ3MaFi5nb29n",
+            "bGUucHJvdG9idWYuRW1wdHkiHIgCAYLT5JMCEyIOL2RiL2NyZWF0ZXdpdGg6",
+            "ASoSeQoQQ3JlYXRlRGF0YWJhc2VWMhIkLmltbXVkYi5zY2hlbWEuQ3JlYXRl",
+            "RGF0YWJhc2VSZXF1ZXN0GiUuaW1tdWRiLnNjaGVtYS5DcmVhdGVEYXRhYmFz",
+            "ZVJlc3BvbnNlIhiC0+STAhIiDS9kYi9jcmVhdGUvdjI6ASoSbAoMTG9hZERh",
+            "dGFiYXNlEiIuaW1tdWRiLnNjaGVtYS5Mb2FkRGF0YWJhc2VSZXF1ZXN0GiMu",
+            "aW1tdWRiLnNjaGVtYS5Mb2FkRGF0YWJhc2VSZXNwb25zZSITgtPkkwINIggv",
+            "ZGIvbG9hZDoBKhJ0Cg5VbmxvYWREYXRhYmFzZRIkLmltbXVkYi5zY2hlbWEu",
+            "VW5sb2FkRGF0YWJhc2VSZXF1ZXN0GiUuaW1tdWRiLnNjaGVtYS5VbmxvYWRE",
+            "YXRhYmFzZVJlc3BvbnNlIhWC0+STAg8iCi9kYi91bmxvYWQ6ASoSdAoORGVs",
+            "ZXRlRGF0YWJhc2USJC5pbW11ZGIuc2NoZW1hLkRlbGV0ZURhdGFiYXNlUmVx",
+            "dWVzdBolLmltbXVkYi5zY2hlbWEuRGVsZXRlRGF0YWJhc2VSZXNwb25zZSIV",
+            "gtPkkwIPIgovZGIvZGVsZXRlOgEqEmMKDERhdGFiYXNlTGlzdBIWLmdvb2ds",
+            "ZS5wcm90b2J1Zi5FbXB0eRojLmltbXVkYi5zY2hlbWEuRGF0YWJhc2VMaXN0",
+            "UmVzcG9uc2UiFogCAYLT5JMCDSIIL2RiL2xpc3Q6ASoSdQoORGF0YWJhc2VM",
+            "aXN0VjISJC5pbW11ZGIuc2NoZW1hLkRhdGFiYXNlTGlzdFJlcXVlc3RWMhol",
+            "LmltbXVkYi5zY2hlbWEuRGF0YWJhc2VMaXN0UmVzcG9uc2VWMiIWgtPkkwIQ",
+            "IgsvZGIvbGlzdC92MjoBKhJnCgtVc2VEYXRhYmFzZRIXLmltbXVkYi5zY2hl",
+            "bWEuRGF0YWJhc2UaHy5pbW11ZGIuc2NoZW1hLlVzZURhdGFiYXNlUmVwbHki",
+            "HoLT5JMCGBIWL2RiL3VzZS97ZGF0YWJhc2VOYW1lfRJjCg5VcGRhdGVEYXRh",
+            "YmFzZRIfLmltbXVkYi5zY2hlbWEuRGF0YWJhc2VTZXR0aW5ncxoWLmdvb2ds",
+            "ZS5wcm90b2J1Zi5FbXB0eSIYiAIBgtPkkwIPIgovZGIvdXBkYXRlOgEqEnkK",
+            "EFVwZGF0ZURhdGFiYXNlVjISJC5pbW11ZGIuc2NoZW1hLlVwZGF0ZURhdGFi",
+            "YXNlUmVxdWVzdBolLmltbXVkYi5zY2hlbWEuVXBkYXRlRGF0YWJhc2VSZXNw",
+            "b25zZSIYgtPkkwISIg0vZGIvdXBkYXRlL3YyOgEqEmoKE0dldERhdGFiYXNl",
+            "U2V0dGluZ3MSFi5nb29nbGUucHJvdG9idWYuRW1wdHkaHy5pbW11ZGIuc2No",
+            "ZW1hLkRhdGFiYXNlU2V0dGluZ3MiGogCAYLT5JMCESIML2RiL3NldHRpbmdz",
+            "OgEqEoQBChVHZXREYXRhYmFzZVNldHRpbmdzVjISJi5pbW11ZGIuc2NoZW1h",
+            "LkRhdGFiYXNlU2V0dGluZ3NSZXF1ZXN0GicuaW1tdWRiLnNjaGVtYS5EYXRh",
+            "YmFzZVNldHRpbmdzUmVzcG9uc2UiGoLT5JMCFCIPL2RiL3NldHRpbmdzL3Yy",
+            "OgEqEmkKCkZsdXNoSW5kZXgSIC5pbW11ZGIuc2NoZW1hLkZsdXNoSW5kZXhS",
+            "ZXF1ZXN0GiEuaW1tdWRiLnNjaGVtYS5GbHVzaEluZGV4UmVzcG9uc2UiFoLT",
+            "5JMCEBIOL2RiL2ZsdXNoaW5kZXgSWAoMQ29tcGFjdEluZGV4EhYuZ29vZ2xl",
+            "LnByb3RvYnVmLkVtcHR5GhYuZ29vZ2xlLnByb3RvYnVmLkVtcHR5IhiC0+ST",
+            "AhISEC9kYi9jb21wYWN0aW5kZXgSQAoJc3RyZWFtR2V0EhkuaW1tdWRiLnNj",
+            "aGVtYS5LZXlSZXF1ZXN0GhQuaW1tdWRiLnNjaGVtYS5DaHVuayIAMAESPgoJ",
+            "c3RyZWFtU2V0EhQuaW1tdWRiLnNjaGVtYS5DaHVuaxoXLmltbXVkYi5zY2hl",
+            "bWEuVHhIZWFkZXIiACgBElQKE3N0cmVhbVZlcmlmaWFibGVHZXQSIy5pbW11",
+            "ZGIuc2NoZW1hLlZlcmlmaWFibGVHZXRSZXF1ZXN0GhQuaW1tdWRiLnNjaGVt",
+            "YS5DaHVuayIAMAESTAoTc3RyZWFtVmVyaWZpYWJsZVNldBIULmltbXVkYi5z",
+            "Y2hlbWEuQ2h1bmsaGy5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVUeCIAKAES",
+            "QgoKc3RyZWFtU2NhbhIaLmltbXVkYi5zY2hlbWEuU2NhblJlcXVlc3QaFC5p",
+            "bW11ZGIuc2NoZW1hLkNodW5rIgAwARJECgtzdHJlYW1aU2NhbhIbLmltbXVk",
+            "Yi5zY2hlbWEuWlNjYW5SZXF1ZXN0GhQuaW1tdWRiLnNjaGVtYS5DaHVuayIA",
+            "MAESSAoNc3RyZWFtSGlzdG9yeRIdLmltbXVkYi5zY2hlbWEuSGlzdG9yeVJl",
+            "cXVlc3QaFC5pbW11ZGIuc2NoZW1hLkNodW5rIgAwARJCCg1zdHJlYW1FeGVj",
+            "QWxsEhQuaW1tdWRiLnNjaGVtYS5DaHVuaxoXLmltbXVkYi5zY2hlbWEuVHhI",
+            "ZWFkZXIiACgBEkQKCGV4cG9ydFR4Eh4uaW1tdWRiLnNjaGVtYS5FeHBvcnRU",
+            "eFJlcXVlc3QaFC5pbW11ZGIuc2NoZW1hLkNodW5rIgAwARJACgtyZXBsaWNh",
+            "dGVUeBIULmltbXVkYi5zY2hlbWEuQ2h1bmsaFy5pbW11ZGIuc2NoZW1hLlR4",
+            "SGVhZGVyIgAoARJeCgdTUUxFeGVjEh0uaW1tdWRiLnNjaGVtYS5TUUxFeGVj",
+            "UmVxdWVzdBocLmltbXVkYi5zY2hlbWEuU1FMRXhlY1Jlc3VsdCIWgtPkkwIQ",
+            "IgsvZGIvc3FsZXhlYzoBKhJiCghTUUxRdWVyeRIeLmltbXVkYi5zY2hlbWEu",
+            "U1FMUXVlcnlSZXF1ZXN0Gh0uaW1tdWRiLnNjaGVtYS5TUUxRdWVyeVJlc3Vs",
+            "dCIXgtPkkwIRIgwvZGIvc3FscXVlcnk6ASoSWwoKTGlzdFRhYmxlcxIWLmdv",
+            "b2dsZS5wcm90b2J1Zi5FbXB0eRodLmltbXVkYi5zY2hlbWEuU1FMUXVlcnlS",
+            "ZXN1bHQiFoLT5JMCEBIOL2RiL3RhYmxlL2xpc3QSWwoNRGVzY3JpYmVUYWJs",
+            "ZRIULmltbXVkYi5zY2hlbWEuVGFibGUaHS5pbW11ZGIuc2NoZW1hLlNRTFF1",
+            "ZXJ5UmVzdWx0IhWC0+STAg8iCi9kYi90YWJsZXM6ASoSfwoQVmVyaWZpYWJs",
+            "ZVNRTEdldBImLmltbXVkYi5zY2hlbWEuVmVyaWZpYWJsZVNRTEdldFJlcXVl",
+            "c3QaIS5pbW11ZGIuc2NoZW1hLlZlcmlmaWFibGVTUUxFbnRyeSIggtPkkwIa",
+            "IhUvZGIvdmVyaWZpYWJsZS9zcWxnZXQ6ASpCO1orZ2l0aHViLmNvbS9jb2Rl",
+            "bm90YXJ5L2ltbXVkYi9wa2cvYXBpL3NjaGVtYaoCC0ltbXVkYlByb3h5YgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Api.AnnotationsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.EmptyReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.StructReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ImmudbProxy.EntryTypeAction), typeof(global::ImmudbProxy.PermissionAction), typeof(global::ImmudbProxy.TxMode), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -498,9 +523,11 @@ namespace ImmudbProxy {
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DeleteKeysRequest), global::ImmudbProxy.DeleteKeysRequest.Parser, new[]{ "Keys", "SinceTx", "NoWait" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableSetRequest), global::ImmudbProxy.VerifiableSetRequest.Parser, new[]{ "SetRequest", "ProveSinceTx" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableGetRequest), global::ImmudbProxy.VerifiableGetRequest.Parser, new[]{ "KeyRequest", "ProveSinceTx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ServerInfoRequest), global::ImmudbProxy.ServerInfoRequest.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ServerInfoResponse), global::ImmudbProxy.ServerInfoResponse.Parser, new[]{ "Version" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.HealthResponse), global::ImmudbProxy.HealthResponse.Parser, new[]{ "Status", "Version" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseHealthResponse), global::ImmudbProxy.DatabaseHealthResponse.Parser, new[]{ "PendingRequests", "LastRequestCompletedAt" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ImmutableState), global::ImmudbProxy.ImmutableState.Parser, new[]{ "Db", "TxId", "TxHash", "Signature" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ImmutableState), global::ImmudbProxy.ImmutableState.Parser, new[]{ "Db", "TxId", "TxHash", "Signature", "PrecommittedTxId", "PrecommittedTxHash" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ReferenceRequest), global::ImmudbProxy.ReferenceRequest.Parser, new[]{ "Key", "ReferencedKey", "AtTx", "BoundRef", "NoWait", "Preconditions" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableReferenceRequest), global::ImmudbProxy.VerifiableReferenceRequest.Parser, new[]{ "ReferenceRequest", "ProveSinceTx" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ZAddRequest), global::ImmudbProxy.ZAddRequest.Parser, new[]{ "Set", "Score", "Key", "AtTx", "BoundRef", "NoWait" }, null, null, null, null),
@@ -514,7 +541,8 @@ namespace ImmudbProxy {
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.VerifiableTxRequest), global::ImmudbProxy.VerifiableTxRequest.Parser, new[]{ "Tx", "ProveSinceTx", "EntriesSpec", "SinceTx", "NoWait", "KeepReferencesUnresolved" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.TxScanRequest), global::ImmudbProxy.TxScanRequest.Parser, new[]{ "InitialTx", "Limit", "Desc", "EntriesSpec", "SinceTx", "NoWait" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.TxList), global::ImmudbProxy.TxList.Parser, new[]{ "Txs" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ExportTxRequest), global::ImmudbProxy.ExportTxRequest.Parser, new[]{ "Tx" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ExportTxRequest), global::ImmudbProxy.ExportTxRequest.Parser, new[]{ "Tx", "AllowPreCommitted", "FollowerState" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.FollowerState), global::ImmudbProxy.FollowerState.Parser, new[]{ "UUID", "CommittedTxID", "CommittedAlh", "PrecommittedTxID", "PrecommittedAlh" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.Database), global::ImmudbProxy.Database.Parser, new[]{ "DatabaseName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseSettings), global::ImmudbProxy.DatabaseSettings.Parser, new[]{ "DatabaseName", "Replica", "MasterDatabase", "MasterAddress", "MasterPort", "FollowerUsername", "FollowerPassword", "FileSize", "MaxKeyLen", "MaxValueLen", "MaxTxEntries", "ExcludeCommitTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.CreateDatabaseRequest), global::ImmudbProxy.CreateDatabaseRequest.Parser, new[]{ "Name", "Settings", "IfNotExists" }, null, null, null, null),
@@ -528,9 +556,11 @@ namespace ImmudbProxy {
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableFloat), global::ImmudbProxy.NullableFloat.Parser, new[]{ "Value" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableBool), global::ImmudbProxy.NullableBool.Parser, new[]{ "Value" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableString), global::ImmudbProxy.NullableString.Parser, new[]{ "Value" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseNullableSettings), global::ImmudbProxy.DatabaseNullableSettings.Parser, new[]{ "ReplicationSettings", "FileSize", "MaxKeyLen", "MaxValueLen", "MaxTxEntries", "ExcludeCommitTime", "MaxConcurrency", "MaxIOConcurrency", "TxLogCacheSize", "VLogMaxOpenedFiles", "TxLogMaxOpenedFiles", "CommitLogMaxOpenedFiles", "IndexSettings", "WriteTxHeaderVersion", "Autoload" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ReplicationNullableSettings), global::ImmudbProxy.ReplicationNullableSettings.Parser, new[]{ "Replica", "MasterDatabase", "MasterAddress", "MasterPort", "FollowerUsername", "FollowerPassword" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.NullableMilliseconds), global::ImmudbProxy.NullableMilliseconds.Parser, new[]{ "Value" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.DatabaseNullableSettings), global::ImmudbProxy.DatabaseNullableSettings.Parser, new[]{ "ReplicationSettings", "FileSize", "MaxKeyLen", "MaxValueLen", "MaxTxEntries", "ExcludeCommitTime", "MaxConcurrency", "MaxIOConcurrency", "TxLogCacheSize", "VLogMaxOpenedFiles", "TxLogMaxOpenedFiles", "CommitLogMaxOpenedFiles", "IndexSettings", "WriteTxHeaderVersion", "Autoload", "ReadTxPoolSize", "SyncFrequency", "WriteBufferSize", "AhtSettings" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.ReplicationNullableSettings), global::ImmudbProxy.ReplicationNullableSettings.Parser, new[]{ "Replica", "MasterDatabase", "MasterAddress", "MasterPort", "FollowerUsername", "FollowerPassword", "SyncReplication", "SyncFollowers", "PrefetchTxBufferSize", "ReplicationCommitConcurrency", "AllowTxDiscarding" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.IndexNullableSettings), global::ImmudbProxy.IndexNullableSettings.Parser, new[]{ "FlushThreshold", "SyncThreshold", "CacheSize", "MaxNodeSize", "MaxActiveSnapshots", "RenewSnapRootAfter", "CompactionThld", "DelayDuringCompaction", "NodesLogMaxOpenedFiles", "HistoryLogMaxOpenedFiles", "CommitLogMaxOpenedFiles", "FlushBufferSize", "CleanupPercentage" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.AHTNullableSettings), global::ImmudbProxy.AHTNullableSettings.Parser, new[]{ "SyncThreshold", "WriteBufferSize" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.LoadDatabaseRequest), global::ImmudbProxy.LoadDatabaseRequest.Parser, new[]{ "Database" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.LoadDatabaseResponse), global::ImmudbProxy.LoadDatabaseResponse.Parser, new[]{ "Database" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ImmudbProxy.UnloadDatabaseRequest), global::ImmudbProxy.UnloadDatabaseRequest.Parser, new[]{ "Database" }, null, null, null, null),
@@ -574,20 +604,47 @@ namespace ImmudbProxy {
   }
   #region Enums
   public enum EntryTypeAction {
+    /// <summary>
+    /// Exclude entries from the result
+    /// </summary>
     [pbr::OriginalName("EXCLUDE")] Exclude = 0,
+    /// <summary>
+    /// Provide keys in raw (unparsed) form and only the digest of the value
+    /// </summary>
     [pbr::OriginalName("ONLY_DIGEST")] OnlyDigest = 1,
+    /// <summary>
+    /// Provide keys and values in raw form
+    /// </summary>
     [pbr::OriginalName("RAW_VALUE")] RawValue = 2,
+    /// <summary>
+    /// Provide parsed keys and values and resolve values if needed
+    /// </summary>
     [pbr::OriginalName("RESOLVE")] Resolve = 3,
   }
 
   public enum PermissionAction {
+    /// <summary>
+    /// Grant permission
+    /// </summary>
     [pbr::OriginalName("GRANT")] Grant = 0,
+    /// <summary>
+    /// Revoke permission
+    /// </summary>
     [pbr::OriginalName("REVOKE")] Revoke = 1,
   }
 
   public enum TxMode {
+    /// <summary>
+    /// Read-only transaction
+    /// </summary>
     [pbr::OriginalName("ReadOnly")] ReadOnly = 0,
+    /// <summary>
+    /// Write-only transaction
+    /// </summary>
     [pbr::OriginalName("WriteOnly")] WriteOnly = 1,
+    /// <summary>
+    /// Read-write transaction
+    /// </summary>
     [pbr::OriginalName("ReadWrite")] ReadWrite = 2,
   }
 
@@ -831,6 +888,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -843,6 +903,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "permission" field.</summary>
     public const int Permission_FieldNumber = 2;
     private uint permission_;
+    /// <summary>
+    /// Permission, 1 - read permission, 2 - read+write permission, 254 - admin, 255 - sysadmin
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint Permission_ {
@@ -1060,6 +1123,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "user" field.</summary>
     public const int User_FieldNumber = 1;
     private pb::ByteString user_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Username
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString User_ {
@@ -1074,6 +1140,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Permission> _repeated_permissions_codec
         = pb::FieldCodec.ForMessage(26, global::ImmudbProxy.Permission.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Permission> permissions_ = new pbc::RepeatedField<global::ImmudbProxy.Permission>();
+    /// <summary>
+    /// List of permissions for the user
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Permission> Permissions {
@@ -1083,6 +1152,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "createdby" field.</summary>
     public const int CreatedbyFieldNumber = 4;
     private string createdby_ = "";
+    /// <summary>
+    /// Name of the creator user
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Createdby {
@@ -1095,6 +1167,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "createdat" field.</summary>
     public const int CreatedatFieldNumber = 5;
     private string createdat_ = "";
+    /// <summary>
+    /// Time when the user was created
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Createdat {
@@ -1107,6 +1182,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "active" field.</summary>
     public const int ActiveFieldNumber = 6;
     private bool active_;
+    /// <summary>
+    /// Flag indicating whether the user is active or not
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Active {
@@ -1384,6 +1462,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.User> _repeated_users_codec
         = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.User.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.User> users_ = new pbc::RepeatedField<global::ImmudbProxy.User>();
+    /// <summary>
+    /// List of users
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.User> Users {
@@ -1563,6 +1644,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "user" field.</summary>
     public const int UserFieldNumber = 1;
     private pb::ByteString user_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Username
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString User {
@@ -1575,6 +1659,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "password" field.</summary>
     public const int PasswordFieldNumber = 2;
     private pb::ByteString password_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Login password
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Password {
@@ -1587,6 +1674,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "permission" field.</summary>
     public const int PermissionFieldNumber = 3;
     private uint permission_;
+    /// <summary>
+    /// Permission, 1 - read permission, 2 - read+write permission, 254 - admin
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint Permission {
@@ -1599,6 +1689,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 4;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -1860,6 +1953,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "user" field.</summary>
     public const int UserFieldNumber = 1;
     private pb::ByteString user_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Username
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString User {
@@ -2051,6 +2147,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "user" field.</summary>
     public const int UserFieldNumber = 1;
     private pb::ByteString user_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Username
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString User {
@@ -2063,6 +2162,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "oldPassword" field.</summary>
     public const int OldPasswordFieldNumber = 2;
     private pb::ByteString oldPassword_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Old password
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString OldPassword {
@@ -2075,6 +2177,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "newPassword" field.</summary>
     public const int NewPasswordFieldNumber = 3;
     private pb::ByteString newPassword_ = pb::ByteString.Empty;
+    /// <summary>
+    /// New password
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString NewPassword {
@@ -2313,6 +2418,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "user" field.</summary>
     public const int UserFieldNumber = 1;
     private pb::ByteString user_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Username
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString User {
@@ -2325,6 +2433,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "password" field.</summary>
     public const int PasswordFieldNumber = 2;
     private pb::ByteString password_ = pb::ByteString.Empty;
+    /// <summary>
+    /// User's password
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Password {
@@ -2539,6 +2650,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "token" field.</summary>
     public const int TokenFieldNumber = 1;
     private string token_ = "";
+    /// <summary>
+    /// Deprecated: use session-based authentication
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Token {
@@ -2551,6 +2665,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "warning" field.</summary>
     public const int WarningFieldNumber = 2;
     private pb::ByteString warning_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Optional: additional warning message sent to the user (e.g. request to change the password)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Warning {
@@ -2717,6 +2834,9 @@ namespace ImmudbProxy {
 
   }
 
+  /// <summary>
+  /// DEPRECATED
+  /// </summary>
   public sealed partial class AuthConfig : pb::IMessage<AuthConfig>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2906,6 +3026,9 @@ namespace ImmudbProxy {
 
   }
 
+  /// <summary>
+  /// DEPRECATED
+  /// </summary>
   public sealed partial class MTLSConfig : pb::IMessage<MTLSConfig>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3144,6 +3267,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "username" field.</summary>
     public const int UsernameFieldNumber = 1;
     private pb::ByteString username_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Username
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Username {
@@ -3156,6 +3282,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "password" field.</summary>
     public const int PasswordFieldNumber = 2;
     private pb::ByteString password_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Password
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Password {
@@ -3168,6 +3297,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "databaseName" field.</summary>
     public const int DatabaseNameFieldNumber = 3;
     private string databaseName_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string DatabaseName {
@@ -3406,6 +3538,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sessionID" field.</summary>
     public const int SessionIDFieldNumber = 1;
     private string sessionID_ = "";
+    /// <summary>
+    /// Id of the new session
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string SessionID {
@@ -3418,6 +3553,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "serverUUID" field.</summary>
     public const int ServerUUIDFieldNumber = 2;
     private string serverUUID_ = "";
+    /// <summary>
+    /// UUID of the server
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string ServerUUID {
@@ -3925,6 +4063,9 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static partial class Types {
+      /// <summary>
+      /// Only succeed if given key exists
+      /// </summary>
       public sealed partial class KeyMustExistPrecondition : pb::IMessage<KeyMustExistPrecondition>
       #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
           , pb::IBufferMessage
@@ -3972,6 +4113,9 @@ namespace ImmudbProxy {
         /// <summary>Field number for the "key" field.</summary>
         public const int KeyFieldNumber = 1;
         private pb::ByteString key_ = pb::ByteString.Empty;
+        /// <summary>
+        /// key to check
+        /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public pb::ByteString Key {
@@ -4114,6 +4258,9 @@ namespace ImmudbProxy {
 
       }
 
+      /// <summary>
+      /// Only succeed if given key does not exists
+      /// </summary>
       public sealed partial class KeyMustNotExistPrecondition : pb::IMessage<KeyMustNotExistPrecondition>
       #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
           , pb::IBufferMessage
@@ -4161,6 +4308,9 @@ namespace ImmudbProxy {
         /// <summary>Field number for the "key" field.</summary>
         public const int KeyFieldNumber = 1;
         private pb::ByteString key_ = pb::ByteString.Empty;
+        /// <summary>
+        /// key to check
+        /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public pb::ByteString Key {
@@ -4303,6 +4453,9 @@ namespace ImmudbProxy {
 
       }
 
+      /// <summary>
+      /// Only succeed if given key was not modified after given transaction
+      /// </summary>
       public sealed partial class KeyNotModifiedAfterTXPrecondition : pb::IMessage<KeyNotModifiedAfterTXPrecondition>
       #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
           , pb::IBufferMessage
@@ -4351,6 +4504,9 @@ namespace ImmudbProxy {
         /// <summary>Field number for the "key" field.</summary>
         public const int KeyFieldNumber = 1;
         private pb::ByteString key_ = pb::ByteString.Empty;
+        /// <summary>
+        /// key to check
+        /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public pb::ByteString Key {
@@ -4363,6 +4519,9 @@ namespace ImmudbProxy {
         /// <summary>Field number for the "txID" field.</summary>
         public const int TxIDFieldNumber = 2;
         private ulong txID_;
+        /// <summary>
+        /// transaction id to check against
+        /// </summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public ulong TxID {
@@ -4859,6 +5018,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "tx" field.</summary>
     public const int TxFieldNumber = 1;
     private ulong tx_;
+    /// <summary>
+    /// Transaction id at which the target value was set (i.e. not the reference transaction id)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Tx {
@@ -4871,6 +5033,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 2;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Key of the target value (i.e. not the reference entry)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -4883,6 +5048,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 3;
     private pb::ByteString value_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Value
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Value {
@@ -4895,6 +5063,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "referencedBy" field.</summary>
     public const int ReferencedByFieldNumber = 4;
     private global::ImmudbProxy.Reference referencedBy_;
+    /// <summary>
+    /// If the request was for a reference, this field will keep information about the reference entry
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Reference ReferencedBy {
@@ -4907,6 +5078,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 5;
     private global::ImmudbProxy.KVMetadata metadata_;
+    /// <summary>
+    /// Metadata of the target entry (i.e. not the reference entry)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.KVMetadata Metadata {
@@ -4919,6 +5093,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "expired" field.</summary>
     public const int ExpiredFieldNumber = 6;
     private bool expired_;
+    /// <summary>
+    /// If set to true, this entry has expired and the value is not retrieved
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Expired {
@@ -4931,6 +5108,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "revision" field.</summary>
     public const int RevisionFieldNumber = 7;
     private ulong revision_;
+    /// <summary>
+    /// Key's revision, in case of GetAt it will be 0
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Revision {
@@ -5286,6 +5466,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "tx" field.</summary>
     public const int TxFieldNumber = 1;
     private ulong tx_;
+    /// <summary>
+    /// Transaction if when the reference key was set
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Tx {
@@ -5298,6 +5481,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 2;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Reference key
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -5310,6 +5496,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "atTx" field.</summary>
     public const int AtTxFieldNumber = 3;
     private ulong atTx_;
+    /// <summary>
+    /// At which transaction the key is bound, 0 if reference is not bound and should read the most recent reference
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong AtTx {
@@ -5322,6 +5511,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 4;
     private global::ImmudbProxy.KVMetadata metadata_;
+    /// <summary>
+    /// Metadata of the reference entry
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.KVMetadata Metadata {
@@ -5334,6 +5526,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "revision" field.</summary>
     public const int RevisionFieldNumber = 5;
     private ulong revision_;
+    /// <summary>
+    /// Revision of the reference entry
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Revision {
@@ -5638,6 +5833,9 @@ namespace ImmudbProxy {
 
     /// <summary>Field number for the "kv" field.</summary>
     public const int KvFieldNumber = 1;
+    /// <summary>
+    /// Modify / add simple KV value
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.KeyValue Kv {
@@ -5650,6 +5848,9 @@ namespace ImmudbProxy {
 
     /// <summary>Field number for the "zAdd" field.</summary>
     public const int ZAddFieldNumber = 2;
+    /// <summary>
+    /// Modify / add sorted set entry
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.ZAddRequest ZAdd {
@@ -5662,6 +5863,9 @@ namespace ImmudbProxy {
 
     /// <summary>Field number for the "ref" field.</summary>
     public const int RefFieldNumber = 3;
+    /// <summary>
+    /// Modify / add reference
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.ReferenceRequest Ref {
@@ -5970,6 +6174,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Op> _repeated_operations_codec
         = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Op.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Op> operations_ = new pbc::RepeatedField<global::ImmudbProxy.Op>();
+    /// <summary>
+    /// List of operations to perform
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Op> Operations {
@@ -5979,6 +6186,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 2;
     private bool noWait_;
+    /// <summary>
+    /// If set to true, do not wait for indexing to process this transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -5993,6 +6203,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Precondition> _repeated_preconditions_codec
         = pb::FieldCodec.ForMessage(26, global::ImmudbProxy.Precondition.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Precondition> preconditions_ = new pbc::RepeatedField<global::ImmudbProxy.Precondition>();
+    /// <summary>
+    /// Preconditions to check
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Precondition> Preconditions {
@@ -6209,6 +6422,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Entry> _repeated_entries_codec
         = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Entry.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Entry> entries_ = new pbc::RepeatedField<global::ImmudbProxy.Entry>();
+    /// <summary>
+    /// List of entries
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Entry> Entries_ {
@@ -6389,6 +6605,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "set" field.</summary>
     public const int SetFieldNumber = 1;
     private pb::ByteString set_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Name of the sorted set
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Set {
@@ -6401,6 +6620,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 2;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Referenced key
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -6413,6 +6635,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "entry" field.</summary>
     public const int EntryFieldNumber = 3;
     private global::ImmudbProxy.Entry entry_;
+    /// <summary>
+    /// Referenced entry
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Entry Entry {
@@ -6425,6 +6650,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "score" field.</summary>
     public const int ScoreFieldNumber = 4;
     private double score_;
+    /// <summary>
+    /// Sorted set element's score
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public double Score {
@@ -6437,6 +6665,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "atTx" field.</summary>
     public const int AtTxFieldNumber = 5;
     private ulong atTx_;
+    /// <summary>
+    /// At which transaction the key is bound,
+    /// 0 if reference is not bound and should read the most recent reference
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong AtTx {
@@ -6918,6 +7150,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "seekKey" field.</summary>
     public const int SeekKeyFieldNumber = 1;
     private pb::ByteString seekKey_ = pb::ByteString.Empty;
+    /// <summary>
+    /// If not empty, continue scan at (when inclusiveSeek == true)
+    /// or after (when inclusiveSeek == false) that key
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString SeekKey {
@@ -6930,6 +7166,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "endKey" field.</summary>
     public const int EndKeyFieldNumber = 7;
     private pb::ByteString endKey_ = pb::ByteString.Empty;
+    /// <summary>
+    /// stop at (when inclusiveEnd == true)
+    /// or before (when inclusiveEnd == false) that key
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString EndKey {
@@ -6942,6 +7182,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "prefix" field.</summary>
     public const int PrefixFieldNumber = 2;
     private pb::ByteString prefix_ = pb::ByteString.Empty;
+    /// <summary>
+    /// search for entries with this prefix only
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Prefix {
@@ -6954,6 +7197,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "desc" field.</summary>
     public const int DescFieldNumber = 3;
     private bool desc_;
+    /// <summary>
+    /// If set to true, sort items in descending order
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Desc {
@@ -6966,6 +7212,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "limit" field.</summary>
     public const int LimitFieldNumber = 4;
     private ulong limit_;
+    /// <summary>
+    /// maximum number of entries to get, if not specified, the default value is used
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Limit {
@@ -6978,6 +7227,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 5;
     private ulong sinceTx_;
+    /// <summary>
+    /// If non-zero, only require transactions up to this transaction to be
+    /// indexed, newer transaction may still be pending
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -6990,6 +7243,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 6;
     private bool noWait_;
+    /// <summary>
+    /// If set to true, do not wait for indexing to be done before finishing this call
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -7033,7 +7289,7 @@ namespace ImmudbProxy {
     public const int OffsetFieldNumber = 10;
     private ulong offset_;
     /// <summary>
-    /// Specify the initial entry to be returned by excluding the initial set of entries		// If set to true, results will include endKey if needed
+    /// Specify the initial entry to be returned by excluding the initial set of entries
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -8052,6 +8308,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 1;
     private ulong id_;
+    /// <summary>
+    /// Transaction ID
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Id {
@@ -8064,6 +8323,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "prevAlh" field.</summary>
     public const int PrevAlhFieldNumber = 2;
     private pb::ByteString prevAlh_ = pb::ByteString.Empty;
+    /// <summary>
+    /// State value (Accumulative Hash - Alh) of the previous transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString PrevAlh {
@@ -8076,6 +8338,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "ts" field.</summary>
     public const int TsFieldNumber = 3;
     private long ts_;
+    /// <summary>
+    /// Unix timestamp of the transaction (in seconds)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public long Ts {
@@ -8088,6 +8353,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "nentries" field.</summary>
     public const int NentriesFieldNumber = 4;
     private int nentries_;
+    /// <summary>
+    /// Number of entries in a transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int Nentries {
@@ -8100,6 +8368,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "eH" field.</summary>
     public const int EHFieldNumber = 5;
     private pb::ByteString eH_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Entries Hash - cumulative hash of all entries in the transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString EH {
@@ -8112,6 +8383,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "blTxId" field.</summary>
     public const int BlTxIdFieldNumber = 6;
     private ulong blTxId_;
+    /// <summary>
+    /// Binary linking tree transaction ID
+    /// (ID of last transaction already in the main Merkle Tree)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong BlTxId {
@@ -8124,6 +8399,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "blRoot" field.</summary>
     public const int BlRootFieldNumber = 7;
     private pb::ByteString blRoot_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Binary linking tree root (Root hash of the Merkle Tree)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString BlRoot {
@@ -8136,6 +8414,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "version" field.</summary>
     public const int VersionFieldNumber = 8;
     private int version_;
+    /// <summary>
+    /// Header version
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int Version {
@@ -8148,6 +8429,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 9;
     private global::ImmudbProxy.TxMetadata metadata_;
+    /// <summary>
+    /// Transaction metadata
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.TxMetadata Metadata {
@@ -8491,6 +8775,9 @@ namespace ImmudbProxy {
 
   }
 
+  /// <summary>
+  /// TxMetadata contains metadata set to whole transaction
+  /// </summary>
   public sealed partial class TxMetadata : pb::IMessage<TxMetadata>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8643,6 +8930,9 @@ namespace ImmudbProxy {
 
   }
 
+  /// <summary>
+  /// LinearProof contains the linear part of the proof (outside the main Merkle Tree)
+  /// </summary>
   public sealed partial class LinearProof : pb::IMessage<LinearProof>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8692,6 +8982,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sourceTxId" field.</summary>
     public const int SourceTxIdFieldNumber = 1;
     private ulong sourceTxId_;
+    /// <summary>
+    /// Starting transaction of the proof
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SourceTxId {
@@ -8704,6 +8997,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "TargetTxId" field.</summary>
     public const int TargetTxIdFieldNumber = 2;
     private ulong targetTxId_;
+    /// <summary>
+    /// End transaction of the proof
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong TargetTxId {
@@ -8718,6 +9014,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_terms_codec
         = pb::FieldCodec.ForBytes(26);
     private readonly pbc::RepeatedField<pb::ByteString> terms_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    /// List of terms (inner hashes of transaction entries)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<pb::ByteString> Terms {
@@ -8895,6 +9194,9 @@ namespace ImmudbProxy {
 
   }
 
+  /// <summary>
+  /// DualProof contains inclusion and consistency proofs for dual Merkle-Tree + Linear proofs
+  /// </summary>
   public sealed partial class DualProof : pb::IMessage<DualProof>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8948,6 +9250,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sourceTxHeader" field.</summary>
     public const int SourceTxHeaderFieldNumber = 1;
     private global::ImmudbProxy.TxHeader sourceTxHeader_;
+    /// <summary>
+    /// Header of the source (earlier) transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.TxHeader SourceTxHeader {
@@ -8960,6 +9265,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "targetTxHeader" field.</summary>
     public const int TargetTxHeaderFieldNumber = 2;
     private global::ImmudbProxy.TxHeader targetTxHeader_;
+    /// <summary>
+    /// Header of the target (latter) transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.TxHeader TargetTxHeader {
@@ -8974,6 +9282,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_inclusionProof_codec
         = pb::FieldCodec.ForBytes(26);
     private readonly pbc::RepeatedField<pb::ByteString> inclusionProof_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    /// Inclusion proof of the source transaction hash in the main Merkle Tree
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<pb::ByteString> InclusionProof {
@@ -8985,6 +9296,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_consistencyProof_codec
         = pb::FieldCodec.ForBytes(34);
     private readonly pbc::RepeatedField<pb::ByteString> consistencyProof_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    /// Consistency proof between Merkle Trees in the source and target transactions
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<pb::ByteString> ConsistencyProof {
@@ -8994,6 +9308,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "targetBlTxAlh" field.</summary>
     public const int TargetBlTxAlhFieldNumber = 5;
     private pb::ByteString targetBlTxAlh_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Accumulative hash (Alh) of the last transaction that's part of the target Merkle Tree
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString TargetBlTxAlh {
@@ -9008,6 +9325,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_lastInclusionProof_codec
         = pb::FieldCodec.ForBytes(50);
     private readonly pbc::RepeatedField<pb::ByteString> lastInclusionProof_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    /// Inclusion proof of the targetBlTxAlh in the target Merkle Tree
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<pb::ByteString> LastInclusionProof {
@@ -9017,6 +9337,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "linearProof" field.</summary>
     public const int LinearProofFieldNumber = 7;
     private global::ImmudbProxy.LinearProof linearProof_;
+    /// <summary>
+    /// Linear proof starting from targetBlTxAlh to the final state value
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.LinearProof LinearProof {
@@ -9350,6 +9673,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "header" field.</summary>
     public const int HeaderFieldNumber = 1;
     private global::ImmudbProxy.TxHeader header_;
+    /// <summary>
+    /// Transaction header
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.TxHeader Header {
@@ -9364,6 +9690,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.TxEntry> _repeated_entries_codec
         = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.TxEntry.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.TxEntry> entries_ = new pbc::RepeatedField<global::ImmudbProxy.TxEntry>();
+    /// <summary>
+    /// Raw entry values
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.TxEntry> Entries {
@@ -9375,6 +9704,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Entry> _repeated_kvEntries_codec
         = pb::FieldCodec.ForMessage(26, global::ImmudbProxy.Entry.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Entry> kvEntries_ = new pbc::RepeatedField<global::ImmudbProxy.Entry>();
+    /// <summary>
+    /// KV entries in the transaction (parsed)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Entry> KvEntries {
@@ -9386,6 +9718,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.ZEntry> _repeated_zEntries_codec
         = pb::FieldCodec.ForMessage(34, global::ImmudbProxy.ZEntry.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.ZEntry> zEntries_ = new pbc::RepeatedField<global::ImmudbProxy.ZEntry>();
+    /// <summary>
+    /// Sorted Set entries in the transaction (parsed)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.ZEntry> ZEntries {
@@ -9627,6 +9962,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 1;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Raw key value (contains 1-byte prefix for kind of the key)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -9639,6 +9977,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "hValue" field.</summary>
     public const int HValueFieldNumber = 2;
     private pb::ByteString hValue_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Value hash
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString HValue {
@@ -9651,6 +9992,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "vLen" field.</summary>
     public const int VLenFieldNumber = 3;
     private int vLen_;
+    /// <summary>
+    /// Value length
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int VLen {
@@ -9663,6 +10007,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 4;
     private global::ImmudbProxy.KVMetadata metadata_;
+    /// <summary>
+    /// Entry metadata
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.KVMetadata Metadata {
@@ -9676,7 +10023,8 @@ namespace ImmudbProxy {
     public const int ValueFieldNumber = 5;
     private pb::ByteString value_ = pb::ByteString.Empty;
     /// <summary>
-    /// value must be ignored when len(value) == 0 and vLen > 0. Otherwise, sha256(value) must be equal to hValue
+    /// value, must be ignored when len(value) == 0 and vLen > 0.
+    /// Otherwise sha256(value) must be equal to hValue.
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -9974,6 +10322,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "deleted" field.</summary>
     public const int DeletedFieldNumber = 1;
     private bool deleted_;
+    /// <summary>
+    /// True if this entry denotes a logical deletion
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Deleted {
@@ -9986,6 +10337,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "expiration" field.</summary>
     public const int ExpirationFieldNumber = 2;
     private global::ImmudbProxy.Expiration expiration_;
+    /// <summary>
+    /// Entry expiration information
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Expiration Expiration {
@@ -9998,6 +10352,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "nonIndexable" field.</summary>
     public const int NonIndexableFieldNumber = 3;
     private bool nonIndexable_;
+    /// <summary>
+    /// If set to true, this entry will not be indexed and will only be accessed through GetAt calls
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NonIndexable {
@@ -10244,6 +10601,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "expiresAt" field.</summary>
     public const int ExpiresAtFieldNumber = 1;
     private long expiresAt_;
+    /// <summary>
+    /// Entry expiration time (unix timestamp in seconds)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public long ExpiresAt {
@@ -10435,6 +10795,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "tx" field.</summary>
     public const int TxFieldNumber = 1;
     private global::ImmudbProxy.Tx tx_;
+    /// <summary>
+    /// Transaction to verify
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Tx Tx {
@@ -10447,6 +10810,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "dualProof" field.</summary>
     public const int DualProofFieldNumber = 2;
     private global::ImmudbProxy.DualProof dualProof_;
+    /// <summary>
+    /// Proof for the transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.DualProof DualProof {
@@ -10459,6 +10825,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "signature" field.</summary>
     public const int SignatureFieldNumber = 3;
     private global::ImmudbProxy.Signature signature_;
+    /// <summary>
+    /// Signature for the new state value
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Signature Signature {
@@ -10725,6 +11094,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "entry" field.</summary>
     public const int EntryFieldNumber = 1;
     private global::ImmudbProxy.Entry entry_;
+    /// <summary>
+    /// Entry to verify
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Entry Entry {
@@ -10737,6 +11109,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "verifiableTx" field.</summary>
     public const int VerifiableTxFieldNumber = 2;
     private global::ImmudbProxy.VerifiableTx verifiableTx_;
+    /// <summary>
+    /// Transaction to verify
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.VerifiableTx VerifiableTx {
@@ -10749,6 +11124,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "inclusionProof" field.</summary>
     public const int InclusionProofFieldNumber = 3;
     private global::ImmudbProxy.InclusionProof inclusionProof_;
+    /// <summary>
+    /// Proof for inclusion of the entry within the transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.InclusionProof InclusionProof {
@@ -11015,6 +11393,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "leaf" field.</summary>
     public const int LeafFieldNumber = 1;
     private int leaf_;
+    /// <summary>
+    /// Index of the leaf for which the proof is generated
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int Leaf {
@@ -11027,6 +11408,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "width" field.</summary>
     public const int WidthFieldNumber = 2;
     private int width_;
+    /// <summary>
+    /// Width of the tree at the leaf level
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int Width {
@@ -11041,6 +11425,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_terms_codec
         = pb::FieldCodec.ForBytes(26);
     private readonly pbc::RepeatedField<pb::ByteString> terms_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    /// Proof terms (selected hashes from the tree)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<pb::ByteString> Terms {
@@ -11269,6 +11656,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.KeyValue> _repeated_kVs_codec
         = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.KeyValue.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.KeyValue> kVs_ = new pbc::RepeatedField<global::ImmudbProxy.KeyValue>();
+    /// <summary>
+    /// List of KV entries to set
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.KeyValue> KVs {
@@ -11278,6 +11668,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 2;
     private bool noWait_;
+    /// <summary>
+    /// If set to true, do not wait for indexer to index ne entries
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -11292,6 +11685,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Precondition> _repeated_preconditions_codec
         = pb::FieldCodec.ForMessage(26, global::ImmudbProxy.Precondition.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Precondition> preconditions_ = new pbc::RepeatedField<global::ImmudbProxy.Precondition>();
+    /// <summary>
+    /// Preconditions to be met to perform the write
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Precondition> Preconditions {
@@ -11510,6 +11906,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 1;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Key to query for
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -11523,7 +11922,7 @@ namespace ImmudbProxy {
     public const int AtTxFieldNumber = 2;
     private ulong atTx_;
     /// <summary>
-    /// if > 0, query for the value exactly at given transaction
+    /// If > 0, query for the value exactly at given transaction
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -11538,7 +11937,8 @@ namespace ImmudbProxy {
     public const int SinceTxFieldNumber = 3;
     private ulong sinceTx_;
     /// <summary>
-    /// if 0 (and nowait=false), wait for the index to be up=to-date
+    /// If 0 (and noWait=false), wait for the index to be up-to-date,
+    /// If > 0 (and noWait=false), wait for at lest the sinceTx transaction to be indexed
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -11553,7 +11953,7 @@ namespace ImmudbProxy {
     public const int NoWaitFieldNumber = 4;
     private bool noWait_;
     /// <summary>
-    /// if set to true - do not wait for any indexing update considering only the currently indexed state
+    /// If set to true - do not wait for any indexing update considering only the currently indexed state
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -11568,8 +11968,8 @@ namespace ImmudbProxy {
     public const int AtRevisionFieldNumber = 5;
     private long atRevision_;
     /// <summary>
-    /// if > 0, get the nth version of the value, 1 being the first version, 2 being the second and so on
-    /// if &lt; 0, get the historical nth value of the key, -1 being the previous version, -2 being the one before and so on
+    /// If > 0, get the nth version of the value, 1 being the first version, 2 being the second and so on
+    /// If &lt; 0, get the historical nth value of the key, -1 being the previous version, -2 being the one before and so on
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -11859,6 +12259,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_keys_codec
         = pb::FieldCodec.ForBytes(10);
     private readonly pbc::RepeatedField<pb::ByteString> keys_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    /// List of keys to query for
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<pb::ByteString> Keys {
@@ -11868,6 +12271,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 2;
     private ulong sinceTx_;
+    /// <summary>
+    /// If 0, wait for index to be up-to-date,
+    /// If > 0, wait for at least sinceTx transaction to be indexed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -12075,6 +12482,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_keys_codec
         = pb::FieldCodec.ForBytes(10);
     private readonly pbc::RepeatedField<pb::ByteString> keys_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    /// List of keys to delete logically
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<pb::ByteString> Keys {
@@ -12084,6 +12494,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 2;
     private ulong sinceTx_;
+    /// <summary>
+    /// If 0, wait for index to be up-to-date,
+    /// If > 0, wait for at least sinceTx transaction to be indexed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -12096,6 +12510,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 3;
     private bool noWait_;
+    /// <summary>
+    /// If set to true, do not wait for the indexer to index this operation
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -12324,6 +12741,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "setRequest" field.</summary>
     public const int SetRequestFieldNumber = 1;
     private global::ImmudbProxy.SetRequest setRequest_;
+    /// <summary>
+    /// Keys to set
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.SetRequest SetRequest {
@@ -12336,6 +12756,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "proveSinceTx" field.</summary>
     public const int ProveSinceTxFieldNumber = 2;
     private ulong proveSinceTx_;
+    /// <summary>
+    /// When generating the proof, generate consistency proof with state from this transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong ProveSinceTx {
@@ -12559,6 +12982,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "keyRequest" field.</summary>
     public const int KeyRequestFieldNumber = 1;
     private global::ImmudbProxy.KeyRequest keyRequest_;
+    /// <summary>
+    /// Key to read
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.KeyRequest KeyRequest {
@@ -12571,6 +12997,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "proveSinceTx" field.</summary>
     public const int ProveSinceTxFieldNumber = 2;
     private ulong proveSinceTx_;
+    /// <summary>
+    /// When generating the proof, generate consistency proof with state from this transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong ProveSinceTx {
@@ -12746,6 +13175,356 @@ namespace ImmudbProxy {
 
   }
 
+  /// <summary>
+  /// ServerInfoRequest exists to provide extensibility for rpc ServerInfo.
+  /// </summary>
+  public sealed partial class ServerInfoRequest : pb::IMessage<ServerInfoRequest>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ServerInfoRequest> _parser = new pb::MessageParser<ServerInfoRequest>(() => new ServerInfoRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<ServerInfoRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[43]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ServerInfoRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ServerInfoRequest(ServerInfoRequest other) : this() {
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ServerInfoRequest Clone() {
+      return new ServerInfoRequest(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as ServerInfoRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(ServerInfoRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(ServerInfoRequest other) {
+      if (other == null) {
+        return;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+        }
+      }
+    }
+    #endif
+
+  }
+
+  /// <summary>
+  /// ServerInfoResponse contains information about the server instance.
+  /// </summary>
+  public sealed partial class ServerInfoResponse : pb::IMessage<ServerInfoResponse>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ServerInfoResponse> _parser = new pb::MessageParser<ServerInfoResponse>(() => new ServerInfoResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<ServerInfoResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[44]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ServerInfoResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ServerInfoResponse(ServerInfoResponse other) : this() {
+      version_ = other.version_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ServerInfoResponse Clone() {
+      return new ServerInfoResponse(this);
+    }
+
+    /// <summary>Field number for the "version" field.</summary>
+    public const int VersionFieldNumber = 1;
+    private string version_ = "";
+    /// <summary>
+    /// The version of the server instance.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Version {
+      get { return version_; }
+      set {
+        version_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as ServerInfoResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(ServerInfoResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Version != other.Version) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Version.Length != 0) hash ^= Version.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Version.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Version);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Version.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Version);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Version.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(ServerInfoResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Version.Length != 0) {
+        Version = other.Version;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Version = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Version = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class HealthResponse : pb::IMessage<HealthResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12760,7 +13539,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[43]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[45]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12794,6 +13573,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "status" field.</summary>
     public const int StatusFieldNumber = 1;
     private bool status_;
+    /// <summary>
+    /// If true, server considers itself to be healthy
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Status {
@@ -12806,6 +13588,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "version" field.</summary>
     public const int VersionFieldNumber = 2;
     private string version_ = "";
+    /// <summary>
+    /// The version of the server instance
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Version {
@@ -12986,7 +13771,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[44]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[46]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13020,6 +13805,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "pendingRequests" field.</summary>
     public const int PendingRequestsFieldNumber = 1;
     private uint pendingRequests_;
+    /// <summary>
+    /// Number of requests currently being executed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint PendingRequests {
@@ -13032,6 +13820,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "lastRequestCompletedAt" field.</summary>
     public const int LastRequestCompletedAtFieldNumber = 2;
     private long lastRequestCompletedAt_;
+    /// <summary>
+    /// Timestamp at which the last request was completed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public long LastRequestCompletedAt {
@@ -13212,7 +14003,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[45]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[47]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13236,6 +14027,8 @@ namespace ImmudbProxy {
       txId_ = other.txId_;
       txHash_ = other.txHash_;
       signature_ = other.signature_ != null ? other.signature_.Clone() : null;
+      precommittedTxId_ = other.precommittedTxId_;
+      precommittedTxHash_ = other.precommittedTxHash_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -13248,6 +14041,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "db" field.</summary>
     public const int DbFieldNumber = 1;
     private string db_ = "";
+    /// <summary>
+    /// The db name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Db {
@@ -13260,6 +14056,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "txId" field.</summary>
     public const int TxIdFieldNumber = 2;
     private ulong txId_;
+    /// <summary>
+    /// Id of the most recent transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong TxId {
@@ -13272,6 +14071,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "txHash" field.</summary>
     public const int TxHashFieldNumber = 3;
     private pb::ByteString txHash_ = pb::ByteString.Empty;
+    /// <summary>
+    /// State of the most recent transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString TxHash {
@@ -13284,12 +14086,45 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "signature" field.</summary>
     public const int SignatureFieldNumber = 4;
     private global::ImmudbProxy.Signature signature_;
+    /// <summary>
+    /// Signature of the hash
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Signature Signature {
       get { return signature_; }
       set {
         signature_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "precommittedTxId" field.</summary>
+    public const int PrecommittedTxIdFieldNumber = 5;
+    private ulong precommittedTxId_;
+    /// <summary>
+    /// Id of the most recent precommitted transaction
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong PrecommittedTxId {
+      get { return precommittedTxId_; }
+      set {
+        precommittedTxId_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "precommittedTxHash" field.</summary>
+    public const int PrecommittedTxHashFieldNumber = 6;
+    private pb::ByteString precommittedTxHash_ = pb::ByteString.Empty;
+    /// <summary>
+    /// State of the most recent precommitted transaction
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pb::ByteString PrecommittedTxHash {
+      get { return precommittedTxHash_; }
+      set {
+        precommittedTxHash_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -13312,6 +14147,8 @@ namespace ImmudbProxy {
       if (TxId != other.TxId) return false;
       if (TxHash != other.TxHash) return false;
       if (!object.Equals(Signature, other.Signature)) return false;
+      if (PrecommittedTxId != other.PrecommittedTxId) return false;
+      if (PrecommittedTxHash != other.PrecommittedTxHash) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -13323,6 +14160,8 @@ namespace ImmudbProxy {
       if (TxId != 0UL) hash ^= TxId.GetHashCode();
       if (TxHash.Length != 0) hash ^= TxHash.GetHashCode();
       if (signature_ != null) hash ^= Signature.GetHashCode();
+      if (PrecommittedTxId != 0UL) hash ^= PrecommittedTxId.GetHashCode();
+      if (PrecommittedTxHash.Length != 0) hash ^= PrecommittedTxHash.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -13357,6 +14196,14 @@ namespace ImmudbProxy {
         output.WriteRawTag(34);
         output.WriteMessage(Signature);
       }
+      if (PrecommittedTxId != 0UL) {
+        output.WriteRawTag(40);
+        output.WriteUInt64(PrecommittedTxId);
+      }
+      if (PrecommittedTxHash.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteBytes(PrecommittedTxHash);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -13383,6 +14230,14 @@ namespace ImmudbProxy {
         output.WriteRawTag(34);
         output.WriteMessage(Signature);
       }
+      if (PrecommittedTxId != 0UL) {
+        output.WriteRawTag(40);
+        output.WriteUInt64(PrecommittedTxId);
+      }
+      if (PrecommittedTxHash.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteBytes(PrecommittedTxHash);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -13404,6 +14259,12 @@ namespace ImmudbProxy {
       }
       if (signature_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Signature);
+      }
+      if (PrecommittedTxId != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(PrecommittedTxId);
+      }
+      if (PrecommittedTxHash.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(PrecommittedTxHash);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -13431,6 +14292,12 @@ namespace ImmudbProxy {
           Signature = new global::ImmudbProxy.Signature();
         }
         Signature.MergeFrom(other.Signature);
+      }
+      if (other.PrecommittedTxId != 0UL) {
+        PrecommittedTxId = other.PrecommittedTxId;
+      }
+      if (other.PrecommittedTxHash.Length != 0) {
+        PrecommittedTxHash = other.PrecommittedTxHash;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -13464,6 +14331,14 @@ namespace ImmudbProxy {
               Signature = new global::ImmudbProxy.Signature();
             }
             input.ReadMessage(Signature);
+            break;
+          }
+          case 40: {
+            PrecommittedTxId = input.ReadUInt64();
+            break;
+          }
+          case 50: {
+            PrecommittedTxHash = input.ReadBytes();
             break;
           }
         }
@@ -13500,6 +14375,14 @@ namespace ImmudbProxy {
             input.ReadMessage(Signature);
             break;
           }
+          case 40: {
+            PrecommittedTxId = input.ReadUInt64();
+            break;
+          }
+          case 50: {
+            PrecommittedTxHash = input.ReadBytes();
+            break;
+          }
         }
       }
     }
@@ -13521,7 +14404,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[46]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[48]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13559,6 +14442,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 1;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Key for the reference
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -13571,6 +14457,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "referencedKey" field.</summary>
     public const int ReferencedKeyFieldNumber = 2;
     private pb::ByteString referencedKey_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Key to be referenced
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString ReferencedKey {
@@ -13583,6 +14472,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "atTx" field.</summary>
     public const int AtTxFieldNumber = 3;
     private ulong atTx_;
+    /// <summary>
+    /// If boundRef == true, id of transaction to bind with the reference
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong AtTx {
@@ -13595,6 +14487,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "boundRef" field.</summary>
     public const int BoundRefFieldNumber = 4;
     private bool boundRef_;
+    /// <summary>
+    /// If true, bind the reference to particular transaction,
+    /// if false, use the most recent value of the key
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool BoundRef {
@@ -13607,6 +14503,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 5;
     private bool noWait_;
+    /// <summary>
+    /// If true, do not wait for the indexer to index this write operation
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -13621,6 +14520,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Precondition> _repeated_preconditions_codec
         = pb::FieldCodec.ForMessage(50, global::ImmudbProxy.Precondition.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Precondition> preconditions_ = new pbc::RepeatedField<global::ImmudbProxy.Precondition>();
+    /// <summary>
+    /// Preconditions to be met to perform the write
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Precondition> Preconditions {
@@ -13884,7 +14786,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[47]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[49]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13918,6 +14820,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "referenceRequest" field.</summary>
     public const int ReferenceRequestFieldNumber = 1;
     private global::ImmudbProxy.ReferenceRequest referenceRequest_;
+    /// <summary>
+    /// Reference data
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.ReferenceRequest ReferenceRequest {
@@ -13930,6 +14835,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "proveSinceTx" field.</summary>
     public const int ProveSinceTxFieldNumber = 2;
     private ulong proveSinceTx_;
+    /// <summary>
+    /// When generating the proof, generate consistency proof with state from this
+    /// transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong ProveSinceTx {
@@ -14119,7 +15028,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[48]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[50]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14157,6 +15066,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "set" field.</summary>
     public const int SetFieldNumber = 1;
     private pb::ByteString set_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Name of the sorted set
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Set {
@@ -14169,6 +15081,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "score" field.</summary>
     public const int ScoreFieldNumber = 2;
     private double score_;
+    /// <summary>
+    /// Score of the new entry
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public double Score {
@@ -14181,6 +15096,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 3;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Referenced key
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -14193,6 +15111,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "atTx" field.</summary>
     public const int AtTxFieldNumber = 4;
     private ulong atTx_;
+    /// <summary>
+    /// If boundRef == true, id of the transaction to bind with the reference
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong AtTx {
@@ -14205,6 +15126,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "boundRef" field.</summary>
     public const int BoundRefFieldNumber = 5;
     private bool boundRef_;
+    /// <summary>
+    /// If true, bind the reference to particular transaction, if false, use the
+    /// most recent value of the key
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool BoundRef {
@@ -14217,6 +15142,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 6;
     private bool noWait_;
+    /// <summary>
+    /// If true, do not wait for the indexer to index this write operation
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -14493,7 +15421,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[49]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[51]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14526,6 +15454,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "score" field.</summary>
     public const int Score_FieldNumber = 1;
     private double score_;
+    /// <summary>
+    /// Entry's score value
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public double Score_ {
@@ -14682,7 +15613,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[50]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[52]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14726,6 +15657,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "set" field.</summary>
     public const int SetFieldNumber = 1;
     private pb::ByteString set_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Name of the sorted set
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Set {
@@ -14738,6 +15672,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "seekKey" field.</summary>
     public const int SeekKeyFieldNumber = 2;
     private pb::ByteString seekKey_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Key to continue the search at
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString SeekKey {
@@ -14750,6 +15687,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "seekScore" field.</summary>
     public const int SeekScoreFieldNumber = 3;
     private double seekScore_;
+    /// <summary>
+    /// Score of the entry to continue the search at
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public double SeekScore {
@@ -14762,6 +15702,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "seekAtTx" field.</summary>
     public const int SeekAtTxFieldNumber = 4;
     private ulong seekAtTx_;
+    /// <summary>
+    /// AtTx of the entry to continue the search at
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SeekAtTx {
@@ -14774,6 +15717,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "inclusiveSeek" field.</summary>
     public const int InclusiveSeekFieldNumber = 5;
     private bool inclusiveSeek_;
+    /// <summary>
+    /// If true, include the entry given with the `seekXXX` attributes, if false,
+    /// skip the entry and start after that one
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool InclusiveSeek {
@@ -14786,6 +15733,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "limit" field.</summary>
     public const int LimitFieldNumber = 6;
     private ulong limit_;
+    /// <summary>
+    /// Maximum number of entries to return, if 0, the default limit will be used
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Limit {
@@ -14798,6 +15748,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "desc" field.</summary>
     public const int DescFieldNumber = 7;
     private bool desc_;
+    /// <summary>
+    /// If true, scan entries in descending order
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Desc {
@@ -14810,6 +15763,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "minScore" field.</summary>
     public const int MinScoreFieldNumber = 8;
     private global::ImmudbProxy.Score minScore_;
+    /// <summary>
+    /// Minimum score of entries to scan
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Score MinScore {
@@ -14822,6 +15778,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxScore" field.</summary>
     public const int MaxScoreFieldNumber = 9;
     private global::ImmudbProxy.Score maxScore_;
+    /// <summary>
+    /// Maximum score of entries to scan
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.Score MaxScore {
@@ -14834,6 +15793,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 10;
     private ulong sinceTx_;
+    /// <summary>
+    /// If > 0, do not wait for the indexer to index all entries, only require
+    /// entries up to sinceTx to be indexed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -14846,6 +15809,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 11;
     private bool noWait_;
+    /// <summary>
+    /// If set to true, do not wait for the indexer to be up to date
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -14859,7 +15825,8 @@ namespace ImmudbProxy {
     public const int OffsetFieldNumber = 12;
     private ulong offset_;
     /// <summary>
-    /// Specify the initial entry to be returned by excluding the initial set of entries
+    /// Specify the index of initial entry to be returned by excluding the initial
+    /// set of entries (alternative to seekXXX attributes)
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -15299,7 +16266,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[51]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[53]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15336,6 +16303,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 1;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Name of the key to query for the history
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -15349,7 +16319,8 @@ namespace ImmudbProxy {
     public const int OffsetFieldNumber = 2;
     private ulong offset_;
     /// <summary>
-    /// Specify the initial entry to be returned by excluding the initial set of entries
+    /// Specify the initial entry to be returned by excluding the initial set of
+    /// entries
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -15363,6 +16334,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "limit" field.</summary>
     public const int LimitFieldNumber = 3;
     private int limit_;
+    /// <summary>
+    /// Maximum number of entries to return
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int Limit {
@@ -15375,6 +16349,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "desc" field.</summary>
     public const int DescFieldNumber = 4;
     private bool desc_;
+    /// <summary>
+    /// If true, search in descending order
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Desc {
@@ -15387,6 +16364,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 5;
     private ulong sinceTx_;
+    /// <summary>
+    /// If > 0, do not wait for the indexer to index all entries, only require
+    /// entries up to sinceTx to be indexed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -15639,7 +16620,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[52]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[54]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15673,6 +16654,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "zAddRequest" field.</summary>
     public const int ZAddRequestFieldNumber = 1;
     private global::ImmudbProxy.ZAddRequest zAddRequest_;
+    /// <summary>
+    /// Data for new sorted set entry
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.ZAddRequest ZAddRequest {
@@ -15685,6 +16669,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "proveSinceTx" field.</summary>
     public const int ProveSinceTxFieldNumber = 2;
     private ulong proveSinceTx_;
+    /// <summary>
+    /// When generating the proof, generate consistency proof with state from this transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong ProveSinceTx {
@@ -15874,7 +16861,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[53]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[55]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15911,6 +16898,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "tx" field.</summary>
     public const int TxFieldNumber = 1;
     private ulong tx_;
+    /// <summary>
+    /// Transaction id to query for
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Tx {
@@ -15923,6 +16913,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "entriesSpec" field.</summary>
     public const int EntriesSpecFieldNumber = 2;
     private global::ImmudbProxy.EntriesSpec entriesSpec_;
+    /// <summary>
+    /// Specification for parsing entries, if empty, entries are returned in raw form
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.EntriesSpec EntriesSpec {
@@ -15935,6 +16928,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 3;
     private ulong sinceTx_;
+    /// <summary>
+    /// If > 0, do not wait for the indexer to index all entries, only require
+    /// entries up to sinceTx to be indexed, will affect resolving references
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -15947,6 +16944,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 4;
     private bool noWait_;
+    /// <summary>
+    /// If set to true, do not wait for the indexer to be up to date
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -15959,6 +16959,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "keepReferencesUnresolved" field.</summary>
     public const int KeepReferencesUnresolvedFieldNumber = 5;
     private bool keepReferencesUnresolved_;
+    /// <summary>
+    /// If set to true, do not resolve references (avoid looking up final values if not needed)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool KeepReferencesUnresolved {
@@ -16220,7 +17223,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[54]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[56]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16255,6 +17258,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "kvEntriesSpec" field.</summary>
     public const int KvEntriesSpecFieldNumber = 1;
     private global::ImmudbProxy.EntryTypeSpec kvEntriesSpec_;
+    /// <summary>
+    /// Specification for parsing KV entries
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.EntryTypeSpec KvEntriesSpec {
@@ -16267,6 +17273,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "zEntriesSpec" field.</summary>
     public const int ZEntriesSpecFieldNumber = 2;
     private global::ImmudbProxy.EntryTypeSpec zEntriesSpec_;
+    /// <summary>
+    /// Specification for parsing sorted set entries
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.EntryTypeSpec ZEntriesSpec {
@@ -16279,6 +17288,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sqlEntriesSpec" field.</summary>
     public const int SqlEntriesSpecFieldNumber = 3;
     private global::ImmudbProxy.EntryTypeSpec sqlEntriesSpec_;
+    /// <summary>
+    /// Specification for parsing SQL entries
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.EntryTypeSpec SqlEntriesSpec {
@@ -16510,7 +17522,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[55]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[57]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16543,6 +17555,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "action" field.</summary>
     public const int ActionFieldNumber = 1;
     private global::ImmudbProxy.EntryTypeAction action_ = global::ImmudbProxy.EntryTypeAction.Exclude;
+    /// <summary>
+    /// Action to perform on entries
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.EntryTypeAction Action {
@@ -16699,7 +17714,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[56]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[58]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -16737,6 +17752,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "tx" field.</summary>
     public const int TxFieldNumber = 1;
     private ulong tx_;
+    /// <summary>
+    /// Transaction ID
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Tx {
@@ -16749,6 +17767,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "proveSinceTx" field.</summary>
     public const int ProveSinceTxFieldNumber = 2;
     private ulong proveSinceTx_;
+    /// <summary>
+    /// When generating the proof, generate consistency proof with state from this
+    /// transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong ProveSinceTx {
@@ -16761,6 +17783,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "entriesSpec" field.</summary>
     public const int EntriesSpecFieldNumber = 3;
     private global::ImmudbProxy.EntriesSpec entriesSpec_;
+    /// <summary>
+    /// Specification of how to parse entries
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.EntriesSpec EntriesSpec {
@@ -16773,6 +17798,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 4;
     private ulong sinceTx_;
+    /// <summary>
+    /// If > 0, do not wait for the indexer to index all entries, only require
+    /// entries up to sinceTx to be indexed, will affect resolving references
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -16785,6 +17814,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 5;
     private bool noWait_;
+    /// <summary>
+    /// If set to true, do not wait for the indexer to be up to date
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -16797,6 +17829,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "keepReferencesUnresolved" field.</summary>
     public const int KeepReferencesUnresolvedFieldNumber = 6;
     private bool keepReferencesUnresolved_;
+    /// <summary>
+    /// If set to true, do not resolve references (avoid looking up final values if not needed)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool KeepReferencesUnresolved {
@@ -17082,7 +18117,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[57]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[59]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17120,6 +18155,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "initialTx" field.</summary>
     public const int InitialTxFieldNumber = 1;
     private ulong initialTx_;
+    /// <summary>
+    /// ID of the transaction where scanning should start
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong InitialTx {
@@ -17132,6 +18170,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "limit" field.</summary>
     public const int LimitFieldNumber = 2;
     private uint limit_;
+    /// <summary>
+    /// Maximum number of transactions to scan, when not specified the default limit is used
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint Limit {
@@ -17144,6 +18185,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "desc" field.</summary>
     public const int DescFieldNumber = 3;
     private bool desc_;
+    /// <summary>
+    /// If set to true, scan transactions in descending order
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Desc {
@@ -17156,6 +18200,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "entriesSpec" field.</summary>
     public const int EntriesSpecFieldNumber = 4;
     private global::ImmudbProxy.EntriesSpec entriesSpec_;
+    /// <summary>
+    /// Specification of how to parse entries
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.EntriesSpec EntriesSpec {
@@ -17168,6 +18215,10 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 5;
     private ulong sinceTx_;
+    /// <summary>
+    /// If > 0, do not wait for the indexer to index all entries, only require
+    /// entries up to sinceTx to be indexed, will affect resolving references
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -17180,6 +18231,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 6;
     private bool noWait_;
+    /// <summary>
+    /// If set to true, do not wait for the indexer to be up to date
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -17465,7 +18519,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[58]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[60]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17500,6 +18554,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Tx> _repeated_txs_codec
         = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Tx.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Tx> txs_ = new pbc::RepeatedField<global::ImmudbProxy.Tx>();
+    /// <summary>
+    /// List of transactions
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Tx> Txs {
@@ -17643,7 +18700,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[59]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[61]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17664,6 +18721,8 @@ namespace ImmudbProxy {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ExportTxRequest(ExportTxRequest other) : this() {
       tx_ = other.tx_;
+      allowPreCommitted_ = other.allowPreCommitted_;
+      followerState_ = other.followerState_ != null ? other.followerState_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -17676,12 +18735,45 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "tx" field.</summary>
     public const int TxFieldNumber = 1;
     private ulong tx_;
+    /// <summary>
+    /// Id of transaction to export
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Tx {
       get { return tx_; }
       set {
         tx_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "allowPreCommitted" field.</summary>
+    public const int AllowPreCommittedFieldNumber = 2;
+    private bool allowPreCommitted_;
+    /// <summary>
+    /// If set to true, non-committed transactions can be exported
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool AllowPreCommitted {
+      get { return allowPreCommitted_; }
+      set {
+        allowPreCommitted_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "followerState" field.</summary>
+    public const int FollowerStateFieldNumber = 3;
+    private global::ImmudbProxy.FollowerState followerState_;
+    /// <summary>
+    /// Used on synchronous replication to notify the master about follower state
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.FollowerState FollowerState {
+      get { return followerState_; }
+      set {
+        followerState_ = value;
       }
     }
 
@@ -17701,6 +18793,8 @@ namespace ImmudbProxy {
         return true;
       }
       if (Tx != other.Tx) return false;
+      if (AllowPreCommitted != other.AllowPreCommitted) return false;
+      if (!object.Equals(FollowerState, other.FollowerState)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -17709,6 +18803,8 @@ namespace ImmudbProxy {
     public override int GetHashCode() {
       int hash = 1;
       if (Tx != 0UL) hash ^= Tx.GetHashCode();
+      if (AllowPreCommitted != false) hash ^= AllowPreCommitted.GetHashCode();
+      if (followerState_ != null) hash ^= FollowerState.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -17731,6 +18827,14 @@ namespace ImmudbProxy {
         output.WriteRawTag(8);
         output.WriteUInt64(Tx);
       }
+      if (AllowPreCommitted != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(AllowPreCommitted);
+      }
+      if (followerState_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(FollowerState);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -17745,6 +18849,14 @@ namespace ImmudbProxy {
         output.WriteRawTag(8);
         output.WriteUInt64(Tx);
       }
+      if (AllowPreCommitted != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(AllowPreCommitted);
+      }
+      if (followerState_ != null) {
+        output.WriteRawTag(26);
+        output.WriteMessage(FollowerState);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -17757,6 +18869,12 @@ namespace ImmudbProxy {
       int size = 0;
       if (Tx != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Tx);
+      }
+      if (AllowPreCommitted != false) {
+        size += 1 + 1;
+      }
+      if (followerState_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(FollowerState);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -17772,6 +18890,15 @@ namespace ImmudbProxy {
       }
       if (other.Tx != 0UL) {
         Tx = other.Tx;
+      }
+      if (other.AllowPreCommitted != false) {
+        AllowPreCommitted = other.AllowPreCommitted;
+      }
+      if (other.followerState_ != null) {
+        if (followerState_ == null) {
+          FollowerState = new global::ImmudbProxy.FollowerState();
+        }
+        FollowerState.MergeFrom(other.FollowerState);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -17792,6 +18919,17 @@ namespace ImmudbProxy {
             Tx = input.ReadUInt64();
             break;
           }
+          case 16: {
+            AllowPreCommitted = input.ReadBool();
+            break;
+          }
+          case 26: {
+            if (followerState_ == null) {
+              FollowerState = new global::ImmudbProxy.FollowerState();
+            }
+            input.ReadMessage(FollowerState);
+            break;
+          }
         }
       }
     #endif
@@ -17809,6 +18947,354 @@ namespace ImmudbProxy {
             break;
           case 8: {
             Tx = input.ReadUInt64();
+            break;
+          }
+          case 16: {
+            AllowPreCommitted = input.ReadBool();
+            break;
+          }
+          case 26: {
+            if (followerState_ == null) {
+              FollowerState = new global::ImmudbProxy.FollowerState();
+            }
+            input.ReadMessage(FollowerState);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class FollowerState : pb::IMessage<FollowerState>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<FollowerState> _parser = new pb::MessageParser<FollowerState>(() => new FollowerState());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<FollowerState> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[62]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FollowerState() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FollowerState(FollowerState other) : this() {
+      uUID_ = other.uUID_;
+      committedTxID_ = other.committedTxID_;
+      committedAlh_ = other.committedAlh_;
+      precommittedTxID_ = other.precommittedTxID_;
+      precommittedAlh_ = other.precommittedAlh_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public FollowerState Clone() {
+      return new FollowerState(this);
+    }
+
+    /// <summary>Field number for the "UUID" field.</summary>
+    public const int UUIDFieldNumber = 1;
+    private string uUID_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string UUID {
+      get { return uUID_; }
+      set {
+        uUID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "committedTxID" field.</summary>
+    public const int CommittedTxIDFieldNumber = 2;
+    private ulong committedTxID_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong CommittedTxID {
+      get { return committedTxID_; }
+      set {
+        committedTxID_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "committedAlh" field.</summary>
+    public const int CommittedAlhFieldNumber = 3;
+    private pb::ByteString committedAlh_ = pb::ByteString.Empty;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pb::ByteString CommittedAlh {
+      get { return committedAlh_; }
+      set {
+        committedAlh_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "precommittedTxID" field.</summary>
+    public const int PrecommittedTxIDFieldNumber = 4;
+    private ulong precommittedTxID_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong PrecommittedTxID {
+      get { return precommittedTxID_; }
+      set {
+        precommittedTxID_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "precommittedAlh" field.</summary>
+    public const int PrecommittedAlhFieldNumber = 5;
+    private pb::ByteString precommittedAlh_ = pb::ByteString.Empty;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pb::ByteString PrecommittedAlh {
+      get { return precommittedAlh_; }
+      set {
+        precommittedAlh_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as FollowerState);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(FollowerState other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (UUID != other.UUID) return false;
+      if (CommittedTxID != other.CommittedTxID) return false;
+      if (CommittedAlh != other.CommittedAlh) return false;
+      if (PrecommittedTxID != other.PrecommittedTxID) return false;
+      if (PrecommittedAlh != other.PrecommittedAlh) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (UUID.Length != 0) hash ^= UUID.GetHashCode();
+      if (CommittedTxID != 0UL) hash ^= CommittedTxID.GetHashCode();
+      if (CommittedAlh.Length != 0) hash ^= CommittedAlh.GetHashCode();
+      if (PrecommittedTxID != 0UL) hash ^= PrecommittedTxID.GetHashCode();
+      if (PrecommittedAlh.Length != 0) hash ^= PrecommittedAlh.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (UUID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(UUID);
+      }
+      if (CommittedTxID != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(CommittedTxID);
+      }
+      if (CommittedAlh.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteBytes(CommittedAlh);
+      }
+      if (PrecommittedTxID != 0UL) {
+        output.WriteRawTag(32);
+        output.WriteUInt64(PrecommittedTxID);
+      }
+      if (PrecommittedAlh.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteBytes(PrecommittedAlh);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (UUID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(UUID);
+      }
+      if (CommittedTxID != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(CommittedTxID);
+      }
+      if (CommittedAlh.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteBytes(CommittedAlh);
+      }
+      if (PrecommittedTxID != 0UL) {
+        output.WriteRawTag(32);
+        output.WriteUInt64(PrecommittedTxID);
+      }
+      if (PrecommittedAlh.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteBytes(PrecommittedAlh);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (UUID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UUID);
+      }
+      if (CommittedTxID != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(CommittedTxID);
+      }
+      if (CommittedAlh.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(CommittedAlh);
+      }
+      if (PrecommittedTxID != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(PrecommittedTxID);
+      }
+      if (PrecommittedAlh.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeBytesSize(PrecommittedAlh);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(FollowerState other) {
+      if (other == null) {
+        return;
+      }
+      if (other.UUID.Length != 0) {
+        UUID = other.UUID;
+      }
+      if (other.CommittedTxID != 0UL) {
+        CommittedTxID = other.CommittedTxID;
+      }
+      if (other.CommittedAlh.Length != 0) {
+        CommittedAlh = other.CommittedAlh;
+      }
+      if (other.PrecommittedTxID != 0UL) {
+        PrecommittedTxID = other.PrecommittedTxID;
+      }
+      if (other.PrecommittedAlh.Length != 0) {
+        PrecommittedAlh = other.PrecommittedAlh;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            UUID = input.ReadString();
+            break;
+          }
+          case 16: {
+            CommittedTxID = input.ReadUInt64();
+            break;
+          }
+          case 26: {
+            CommittedAlh = input.ReadBytes();
+            break;
+          }
+          case 32: {
+            PrecommittedTxID = input.ReadUInt64();
+            break;
+          }
+          case 42: {
+            PrecommittedAlh = input.ReadBytes();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            UUID = input.ReadString();
+            break;
+          }
+          case 16: {
+            CommittedTxID = input.ReadUInt64();
+            break;
+          }
+          case 26: {
+            CommittedAlh = input.ReadBytes();
+            break;
+          }
+          case 32: {
+            PrecommittedTxID = input.ReadUInt64();
+            break;
+          }
+          case 42: {
+            PrecommittedAlh = input.ReadBytes();
             break;
           }
         }
@@ -17832,7 +19318,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[60]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[63]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -17865,6 +19351,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "databaseName" field.</summary>
     public const int DatabaseNameFieldNumber = 1;
     private string databaseName_ = "";
+    /// <summary>
+    /// Name of the database
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string DatabaseName {
@@ -18021,7 +19510,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[61]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[64]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -18065,6 +19554,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "databaseName" field.</summary>
     public const int DatabaseNameFieldNumber = 1;
     private string databaseName_ = "";
+    /// <summary>
+    /// Name of the database
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string DatabaseName {
@@ -18077,6 +19569,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "replica" field.</summary>
     public const int ReplicaFieldNumber = 2;
     private bool replica_;
+    /// <summary>
+    /// If set to true, this database is replicating another database
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Replica {
@@ -18089,6 +19584,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "masterDatabase" field.</summary>
     public const int MasterDatabaseFieldNumber = 3;
     private string masterDatabase_ = "";
+    /// <summary>
+    /// Name of the database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string MasterDatabase {
@@ -18101,6 +19599,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "masterAddress" field.</summary>
     public const int MasterAddressFieldNumber = 4;
     private string masterAddress_ = "";
+    /// <summary>
+    /// Hostname of the immudb instance with database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string MasterAddress {
@@ -18113,6 +19614,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "masterPort" field.</summary>
     public const int MasterPortFieldNumber = 5;
     private uint masterPort_;
+    /// <summary>
+    /// Port of the immudb instance with database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint MasterPort {
@@ -18125,6 +19629,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "followerUsername" field.</summary>
     public const int FollowerUsernameFieldNumber = 6;
     private string followerUsername_ = "";
+    /// <summary>
+    /// Username of the user with read access of the database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string FollowerUsername {
@@ -18137,6 +19644,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "followerPassword" field.</summary>
     public const int FollowerPasswordFieldNumber = 7;
     private string followerPassword_ = "";
+    /// <summary>
+    /// Password of the user with read access of the database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string FollowerPassword {
@@ -18149,6 +19659,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "fileSize" field.</summary>
     public const int FileSizeFieldNumber = 8;
     private uint fileSize_;
+    /// <summary>
+    /// Size of files stored on disk
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint FileSize {
@@ -18161,6 +19674,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxKeyLen" field.</summary>
     public const int MaxKeyLenFieldNumber = 9;
     private uint maxKeyLen_;
+    /// <summary>
+    /// Maximum length of keys
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint MaxKeyLen {
@@ -18173,6 +19689,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxValueLen" field.</summary>
     public const int MaxValueLenFieldNumber = 10;
     private uint maxValueLen_;
+    /// <summary>
+    /// Maximum length of values
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint MaxValueLen {
@@ -18185,6 +19704,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxTxEntries" field.</summary>
     public const int MaxTxEntriesFieldNumber = 11;
     private uint maxTxEntries_;
+    /// <summary>
+    /// Maximum number of entries in a single transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint MaxTxEntries {
@@ -18197,6 +19719,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "excludeCommitTime" field.</summary>
     public const int ExcludeCommitTimeFieldNumber = 12;
     private bool excludeCommitTime_;
+    /// <summary>
+    /// If set to true, do not include commit timestamp in transaction headers
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool ExcludeCommitTime {
@@ -18617,7 +20142,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[62]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[65]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -18652,6 +20177,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 1;
     private string name_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Name {
@@ -18664,6 +20192,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
     private global::ImmudbProxy.DatabaseNullableSettings settings_;
+    /// <summary>
+    /// Database settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.DatabaseNullableSettings Settings {
@@ -18676,6 +20207,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "ifNotExists" field.</summary>
     public const int IfNotExistsFieldNumber = 3;
     private bool ifNotExists_;
+    /// <summary>
+    /// If set to true, do not fail if the database already exists
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool IfNotExists {
@@ -18889,7 +20423,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[63]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[66]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -18924,6 +20458,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 1;
     private string name_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Name {
@@ -18936,6 +20473,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
     private global::ImmudbProxy.DatabaseNullableSettings settings_;
+    /// <summary>
+    /// Current database settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.DatabaseNullableSettings Settings {
@@ -18948,6 +20488,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "alreadyExisted" field.</summary>
     public const int AlreadyExistedFieldNumber = 3;
     private bool alreadyExisted_;
+    /// <summary>
+    /// Set to true if given database already existed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool AlreadyExisted {
@@ -19161,7 +20704,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[64]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[67]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19195,6 +20738,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -19207,6 +20753,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
     private global::ImmudbProxy.DatabaseNullableSettings settings_;
+    /// <summary>
+    /// Updated settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.DatabaseNullableSettings Settings {
@@ -19399,7 +20948,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[65]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[68]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19433,6 +20982,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -19445,6 +20997,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
     private global::ImmudbProxy.DatabaseNullableSettings settings_;
+    /// <summary>
+    /// Current database settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.DatabaseNullableSettings Settings {
@@ -19634,7 +21189,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[66]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[69]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19786,7 +21341,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[67]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[70]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -19820,6 +21375,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -19832,6 +21390,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
     private global::ImmudbProxy.DatabaseNullableSettings settings_;
+    /// <summary>
+    /// Database settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.DatabaseNullableSettings Settings {
@@ -20021,7 +21582,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[68]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[71]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20210,7 +21771,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[69]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[72]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20399,7 +21960,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[70]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[73]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20588,7 +22149,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[71]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[74]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20777,7 +22338,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[72]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[75]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20952,6 +22513,195 @@ namespace ImmudbProxy {
 
   }
 
+  public sealed partial class NullableMilliseconds : pb::IMessage<NullableMilliseconds>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<NullableMilliseconds> _parser = new pb::MessageParser<NullableMilliseconds>(() => new NullableMilliseconds());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<NullableMilliseconds> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[76]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public NullableMilliseconds() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public NullableMilliseconds(NullableMilliseconds other) : this() {
+      value_ = other.value_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public NullableMilliseconds Clone() {
+      return new NullableMilliseconds(this);
+    }
+
+    /// <summary>Field number for the "value" field.</summary>
+    public const int ValueFieldNumber = 1;
+    private long value_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long Value {
+      get { return value_; }
+      set {
+        value_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as NullableMilliseconds);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(NullableMilliseconds other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Value != other.Value) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Value != 0L) hash ^= Value.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Value != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(Value);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Value != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(Value);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Value != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(Value);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(NullableMilliseconds other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Value != 0L) {
+        Value = other.Value;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Value = input.ReadInt64();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Value = input.ReadInt64();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class DatabaseNullableSettings : pb::IMessage<DatabaseNullableSettings>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -20966,7 +22716,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[73]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[77]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -21001,6 +22751,10 @@ namespace ImmudbProxy {
       indexSettings_ = other.indexSettings_ != null ? other.indexSettings_.Clone() : null;
       writeTxHeaderVersion_ = other.writeTxHeaderVersion_ != null ? other.writeTxHeaderVersion_.Clone() : null;
       autoload_ = other.autoload_ != null ? other.autoload_.Clone() : null;
+      readTxPoolSize_ = other.readTxPoolSize_ != null ? other.readTxPoolSize_.Clone() : null;
+      syncFrequency_ = other.syncFrequency_ != null ? other.syncFrequency_.Clone() : null;
+      writeBufferSize_ = other.writeBufferSize_ != null ? other.writeBufferSize_.Clone() : null;
+      ahtSettings_ = other.ahtSettings_ != null ? other.ahtSettings_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -21013,6 +22767,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "replicationSettings" field.</summary>
     public const int ReplicationSettingsFieldNumber = 2;
     private global::ImmudbProxy.ReplicationNullableSettings replicationSettings_;
+    /// <summary>
+    /// Replication settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.ReplicationNullableSettings ReplicationSettings {
@@ -21025,6 +22782,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "fileSize" field.</summary>
     public const int FileSizeFieldNumber = 8;
     private global::ImmudbProxy.NullableUint32 fileSize_;
+    /// <summary>
+    /// Max filesize on disk
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 FileSize {
@@ -21037,6 +22797,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxKeyLen" field.</summary>
     public const int MaxKeyLenFieldNumber = 9;
     private global::ImmudbProxy.NullableUint32 maxKeyLen_;
+    /// <summary>
+    /// Maximum length of keys
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 MaxKeyLen {
@@ -21049,6 +22812,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxValueLen" field.</summary>
     public const int MaxValueLenFieldNumber = 10;
     private global::ImmudbProxy.NullableUint32 maxValueLen_;
+    /// <summary>
+    /// Maximum length of values
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 MaxValueLen {
@@ -21061,6 +22827,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxTxEntries" field.</summary>
     public const int MaxTxEntriesFieldNumber = 11;
     private global::ImmudbProxy.NullableUint32 maxTxEntries_;
+    /// <summary>
+    /// Maximum number of entries in a single transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 MaxTxEntries {
@@ -21073,6 +22842,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "excludeCommitTime" field.</summary>
     public const int ExcludeCommitTimeFieldNumber = 12;
     private global::ImmudbProxy.NullableBool excludeCommitTime_;
+    /// <summary>
+    /// If set to true, do not include commit timestamp in transaction headers
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableBool ExcludeCommitTime {
@@ -21085,6 +22857,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxConcurrency" field.</summary>
     public const int MaxConcurrencyFieldNumber = 13;
     private global::ImmudbProxy.NullableUint32 maxConcurrency_;
+    /// <summary>
+    /// Maximum number of simultaneous commits prepared for write
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 MaxConcurrency {
@@ -21097,6 +22872,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxIOConcurrency" field.</summary>
     public const int MaxIOConcurrencyFieldNumber = 14;
     private global::ImmudbProxy.NullableUint32 maxIOConcurrency_;
+    /// <summary>
+    /// Maximum number of simultaneous IO writes
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 MaxIOConcurrency {
@@ -21109,6 +22887,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "txLogCacheSize" field.</summary>
     public const int TxLogCacheSizeFieldNumber = 15;
     private global::ImmudbProxy.NullableUint32 txLogCacheSize_;
+    /// <summary>
+    /// Size of the LRU cache for transaction logs
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 TxLogCacheSize {
@@ -21121,6 +22902,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "vLogMaxOpenedFiles" field.</summary>
     public const int VLogMaxOpenedFilesFieldNumber = 16;
     private global::ImmudbProxy.NullableUint32 vLogMaxOpenedFiles_;
+    /// <summary>
+    /// Maximum number of simultaneous value files opened
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 VLogMaxOpenedFiles {
@@ -21133,6 +22917,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "txLogMaxOpenedFiles" field.</summary>
     public const int TxLogMaxOpenedFilesFieldNumber = 17;
     private global::ImmudbProxy.NullableUint32 txLogMaxOpenedFiles_;
+    /// <summary>
+    /// Maximum number of simultaneous transaction log files opened
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 TxLogMaxOpenedFiles {
@@ -21145,6 +22932,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "commitLogMaxOpenedFiles" field.</summary>
     public const int CommitLogMaxOpenedFilesFieldNumber = 18;
     private global::ImmudbProxy.NullableUint32 commitLogMaxOpenedFiles_;
+    /// <summary>
+    /// Maximum number of simultaneous commit log files opened
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 CommitLogMaxOpenedFiles {
@@ -21157,6 +22947,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "indexSettings" field.</summary>
     public const int IndexSettingsFieldNumber = 19;
     private global::ImmudbProxy.IndexNullableSettings indexSettings_;
+    /// <summary>
+    /// Index settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.IndexNullableSettings IndexSettings {
@@ -21169,6 +22962,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "writeTxHeaderVersion" field.</summary>
     public const int WriteTxHeaderVersionFieldNumber = 20;
     private global::ImmudbProxy.NullableUint32 writeTxHeaderVersion_;
+    /// <summary>
+    /// Version of transaction header to use (limits available features)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 WriteTxHeaderVersion {
@@ -21181,12 +22977,75 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "autoload" field.</summary>
     public const int AutoloadFieldNumber = 21;
     private global::ImmudbProxy.NullableBool autoload_;
+    /// <summary>
+    /// If set to true, automatically load the database when starting immudb (true by default)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableBool Autoload {
       get { return autoload_; }
       set {
         autoload_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "readTxPoolSize" field.</summary>
+    public const int ReadTxPoolSizeFieldNumber = 22;
+    private global::ImmudbProxy.NullableUint32 readTxPoolSize_;
+    /// <summary>
+    /// Size of the pool of read buffers
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableUint32 ReadTxPoolSize {
+      get { return readTxPoolSize_; }
+      set {
+        readTxPoolSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "syncFrequency" field.</summary>
+    public const int SyncFrequencyFieldNumber = 23;
+    private global::ImmudbProxy.NullableMilliseconds syncFrequency_;
+    /// <summary>
+    /// Fsync frequency during commit process
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableMilliseconds SyncFrequency {
+      get { return syncFrequency_; }
+      set {
+        syncFrequency_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "writeBufferSize" field.</summary>
+    public const int WriteBufferSizeFieldNumber = 24;
+    private global::ImmudbProxy.NullableUint32 writeBufferSize_;
+    /// <summary>
+    /// Size of the in-memory buffer for write operations
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableUint32 WriteBufferSize {
+      get { return writeBufferSize_; }
+      set {
+        writeBufferSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "ahtSettings" field.</summary>
+    public const int AhtSettingsFieldNumber = 25;
+    private global::ImmudbProxy.AHTNullableSettings ahtSettings_;
+    /// <summary>
+    /// Settings of Appendable Hash Tree
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.AHTNullableSettings AhtSettings {
+      get { return ahtSettings_; }
+      set {
+        ahtSettings_ = value;
       }
     }
 
@@ -21220,6 +23079,10 @@ namespace ImmudbProxy {
       if (!object.Equals(IndexSettings, other.IndexSettings)) return false;
       if (!object.Equals(WriteTxHeaderVersion, other.WriteTxHeaderVersion)) return false;
       if (!object.Equals(Autoload, other.Autoload)) return false;
+      if (!object.Equals(ReadTxPoolSize, other.ReadTxPoolSize)) return false;
+      if (!object.Equals(SyncFrequency, other.SyncFrequency)) return false;
+      if (!object.Equals(WriteBufferSize, other.WriteBufferSize)) return false;
+      if (!object.Equals(AhtSettings, other.AhtSettings)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -21242,6 +23105,10 @@ namespace ImmudbProxy {
       if (indexSettings_ != null) hash ^= IndexSettings.GetHashCode();
       if (writeTxHeaderVersion_ != null) hash ^= WriteTxHeaderVersion.GetHashCode();
       if (autoload_ != null) hash ^= Autoload.GetHashCode();
+      if (readTxPoolSize_ != null) hash ^= ReadTxPoolSize.GetHashCode();
+      if (syncFrequency_ != null) hash ^= SyncFrequency.GetHashCode();
+      if (writeBufferSize_ != null) hash ^= WriteBufferSize.GetHashCode();
+      if (ahtSettings_ != null) hash ^= AhtSettings.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -21320,6 +23187,22 @@ namespace ImmudbProxy {
         output.WriteRawTag(170, 1);
         output.WriteMessage(Autoload);
       }
+      if (readTxPoolSize_ != null) {
+        output.WriteRawTag(178, 1);
+        output.WriteMessage(ReadTxPoolSize);
+      }
+      if (syncFrequency_ != null) {
+        output.WriteRawTag(186, 1);
+        output.WriteMessage(SyncFrequency);
+      }
+      if (writeBufferSize_ != null) {
+        output.WriteRawTag(194, 1);
+        output.WriteMessage(WriteBufferSize);
+      }
+      if (ahtSettings_ != null) {
+        output.WriteRawTag(202, 1);
+        output.WriteMessage(AhtSettings);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -21390,6 +23273,22 @@ namespace ImmudbProxy {
         output.WriteRawTag(170, 1);
         output.WriteMessage(Autoload);
       }
+      if (readTxPoolSize_ != null) {
+        output.WriteRawTag(178, 1);
+        output.WriteMessage(ReadTxPoolSize);
+      }
+      if (syncFrequency_ != null) {
+        output.WriteRawTag(186, 1);
+        output.WriteMessage(SyncFrequency);
+      }
+      if (writeBufferSize_ != null) {
+        output.WriteRawTag(194, 1);
+        output.WriteMessage(WriteBufferSize);
+      }
+      if (ahtSettings_ != null) {
+        output.WriteRawTag(202, 1);
+        output.WriteMessage(AhtSettings);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -21444,6 +23343,18 @@ namespace ImmudbProxy {
       }
       if (autoload_ != null) {
         size += 2 + pb::CodedOutputStream.ComputeMessageSize(Autoload);
+      }
+      if (readTxPoolSize_ != null) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(ReadTxPoolSize);
+      }
+      if (syncFrequency_ != null) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(SyncFrequency);
+      }
+      if (writeBufferSize_ != null) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(WriteBufferSize);
+      }
+      if (ahtSettings_ != null) {
+        size += 2 + pb::CodedOutputStream.ComputeMessageSize(AhtSettings);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -21547,6 +23458,30 @@ namespace ImmudbProxy {
         }
         Autoload.MergeFrom(other.Autoload);
       }
+      if (other.readTxPoolSize_ != null) {
+        if (readTxPoolSize_ == null) {
+          ReadTxPoolSize = new global::ImmudbProxy.NullableUint32();
+        }
+        ReadTxPoolSize.MergeFrom(other.ReadTxPoolSize);
+      }
+      if (other.syncFrequency_ != null) {
+        if (syncFrequency_ == null) {
+          SyncFrequency = new global::ImmudbProxy.NullableMilliseconds();
+        }
+        SyncFrequency.MergeFrom(other.SyncFrequency);
+      }
+      if (other.writeBufferSize_ != null) {
+        if (writeBufferSize_ == null) {
+          WriteBufferSize = new global::ImmudbProxy.NullableUint32();
+        }
+        WriteBufferSize.MergeFrom(other.WriteBufferSize);
+      }
+      if (other.ahtSettings_ != null) {
+        if (ahtSettings_ == null) {
+          AhtSettings = new global::ImmudbProxy.AHTNullableSettings();
+        }
+        AhtSettings.MergeFrom(other.AhtSettings);
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -21665,6 +23600,34 @@ namespace ImmudbProxy {
               Autoload = new global::ImmudbProxy.NullableBool();
             }
             input.ReadMessage(Autoload);
+            break;
+          }
+          case 178: {
+            if (readTxPoolSize_ == null) {
+              ReadTxPoolSize = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(ReadTxPoolSize);
+            break;
+          }
+          case 186: {
+            if (syncFrequency_ == null) {
+              SyncFrequency = new global::ImmudbProxy.NullableMilliseconds();
+            }
+            input.ReadMessage(SyncFrequency);
+            break;
+          }
+          case 194: {
+            if (writeBufferSize_ == null) {
+              WriteBufferSize = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(WriteBufferSize);
+            break;
+          }
+          case 202: {
+            if (ahtSettings_ == null) {
+              AhtSettings = new global::ImmudbProxy.AHTNullableSettings();
+            }
+            input.ReadMessage(AhtSettings);
             break;
           }
         }
@@ -21787,6 +23750,34 @@ namespace ImmudbProxy {
             input.ReadMessage(Autoload);
             break;
           }
+          case 178: {
+            if (readTxPoolSize_ == null) {
+              ReadTxPoolSize = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(ReadTxPoolSize);
+            break;
+          }
+          case 186: {
+            if (syncFrequency_ == null) {
+              SyncFrequency = new global::ImmudbProxy.NullableMilliseconds();
+            }
+            input.ReadMessage(SyncFrequency);
+            break;
+          }
+          case 194: {
+            if (writeBufferSize_ == null) {
+              WriteBufferSize = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(WriteBufferSize);
+            break;
+          }
+          case 202: {
+            if (ahtSettings_ == null) {
+              AhtSettings = new global::ImmudbProxy.AHTNullableSettings();
+            }
+            input.ReadMessage(AhtSettings);
+            break;
+          }
         }
       }
     }
@@ -21808,7 +23799,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[74]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[78]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -21834,6 +23825,11 @@ namespace ImmudbProxy {
       masterPort_ = other.masterPort_ != null ? other.masterPort_.Clone() : null;
       followerUsername_ = other.followerUsername_ != null ? other.followerUsername_.Clone() : null;
       followerPassword_ = other.followerPassword_ != null ? other.followerPassword_.Clone() : null;
+      syncReplication_ = other.syncReplication_ != null ? other.syncReplication_.Clone() : null;
+      syncFollowers_ = other.syncFollowers_ != null ? other.syncFollowers_.Clone() : null;
+      prefetchTxBufferSize_ = other.prefetchTxBufferSize_ != null ? other.prefetchTxBufferSize_.Clone() : null;
+      replicationCommitConcurrency_ = other.replicationCommitConcurrency_ != null ? other.replicationCommitConcurrency_.Clone() : null;
+      allowTxDiscarding_ = other.allowTxDiscarding_ != null ? other.allowTxDiscarding_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -21846,6 +23842,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "replica" field.</summary>
     public const int ReplicaFieldNumber = 1;
     private global::ImmudbProxy.NullableBool replica_;
+    /// <summary>
+    /// If set to true, this database is replicating another database
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableBool Replica {
@@ -21858,6 +23857,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "masterDatabase" field.</summary>
     public const int MasterDatabaseFieldNumber = 2;
     private global::ImmudbProxy.NullableString masterDatabase_;
+    /// <summary>
+    /// Name of the database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableString MasterDatabase {
@@ -21870,6 +23872,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "masterAddress" field.</summary>
     public const int MasterAddressFieldNumber = 3;
     private global::ImmudbProxy.NullableString masterAddress_;
+    /// <summary>
+    /// Hostname of the immudb instance with database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableString MasterAddress {
@@ -21882,6 +23887,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "masterPort" field.</summary>
     public const int MasterPortFieldNumber = 4;
     private global::ImmudbProxy.NullableUint32 masterPort_;
+    /// <summary>
+    /// Port of the immudb instance with database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 MasterPort {
@@ -21894,6 +23902,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "followerUsername" field.</summary>
     public const int FollowerUsernameFieldNumber = 5;
     private global::ImmudbProxy.NullableString followerUsername_;
+    /// <summary>
+    /// Username of the user with read access of the database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableString FollowerUsername {
@@ -21906,12 +23917,90 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "followerPassword" field.</summary>
     public const int FollowerPasswordFieldNumber = 6;
     private global::ImmudbProxy.NullableString followerPassword_;
+    /// <summary>
+    /// Password of the user with read access of the database to replicate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableString FollowerPassword {
       get { return followerPassword_; }
       set {
         followerPassword_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "syncReplication" field.</summary>
+    public const int SyncReplicationFieldNumber = 7;
+    private global::ImmudbProxy.NullableBool syncReplication_;
+    /// <summary>
+    /// Enable synchronous replication
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableBool SyncReplication {
+      get { return syncReplication_; }
+      set {
+        syncReplication_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "syncFollowers" field.</summary>
+    public const int SyncFollowersFieldNumber = 8;
+    private global::ImmudbProxy.NullableUint32 syncFollowers_;
+    /// <summary>
+    /// Number of fully synchronized followers
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableUint32 SyncFollowers {
+      get { return syncFollowers_; }
+      set {
+        syncFollowers_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "prefetchTxBufferSize" field.</summary>
+    public const int PrefetchTxBufferSizeFieldNumber = 9;
+    private global::ImmudbProxy.NullableUint32 prefetchTxBufferSize_;
+    /// <summary>
+    /// Maximun number of prefeched transactions
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableUint32 PrefetchTxBufferSize {
+      get { return prefetchTxBufferSize_; }
+      set {
+        prefetchTxBufferSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "replicationCommitConcurrency" field.</summary>
+    public const int ReplicationCommitConcurrencyFieldNumber = 10;
+    private global::ImmudbProxy.NullableUint32 replicationCommitConcurrency_;
+    /// <summary>
+    /// Number of concurrent replications
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableUint32 ReplicationCommitConcurrency {
+      get { return replicationCommitConcurrency_; }
+      set {
+        replicationCommitConcurrency_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "AllowTxDiscarding" field.</summary>
+    public const int AllowTxDiscardingFieldNumber = 11;
+    private global::ImmudbProxy.NullableBool allowTxDiscarding_;
+    /// <summary>
+    /// Allow precommitted transactions to be discarded if the follower diverges from the master
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableBool AllowTxDiscarding {
+      get { return allowTxDiscarding_; }
+      set {
+        allowTxDiscarding_ = value;
       }
     }
 
@@ -21936,6 +24025,11 @@ namespace ImmudbProxy {
       if (!object.Equals(MasterPort, other.MasterPort)) return false;
       if (!object.Equals(FollowerUsername, other.FollowerUsername)) return false;
       if (!object.Equals(FollowerPassword, other.FollowerPassword)) return false;
+      if (!object.Equals(SyncReplication, other.SyncReplication)) return false;
+      if (!object.Equals(SyncFollowers, other.SyncFollowers)) return false;
+      if (!object.Equals(PrefetchTxBufferSize, other.PrefetchTxBufferSize)) return false;
+      if (!object.Equals(ReplicationCommitConcurrency, other.ReplicationCommitConcurrency)) return false;
+      if (!object.Equals(AllowTxDiscarding, other.AllowTxDiscarding)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -21949,6 +24043,11 @@ namespace ImmudbProxy {
       if (masterPort_ != null) hash ^= MasterPort.GetHashCode();
       if (followerUsername_ != null) hash ^= FollowerUsername.GetHashCode();
       if (followerPassword_ != null) hash ^= FollowerPassword.GetHashCode();
+      if (syncReplication_ != null) hash ^= SyncReplication.GetHashCode();
+      if (syncFollowers_ != null) hash ^= SyncFollowers.GetHashCode();
+      if (prefetchTxBufferSize_ != null) hash ^= PrefetchTxBufferSize.GetHashCode();
+      if (replicationCommitConcurrency_ != null) hash ^= ReplicationCommitConcurrency.GetHashCode();
+      if (allowTxDiscarding_ != null) hash ^= AllowTxDiscarding.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -21991,6 +24090,26 @@ namespace ImmudbProxy {
         output.WriteRawTag(50);
         output.WriteMessage(FollowerPassword);
       }
+      if (syncReplication_ != null) {
+        output.WriteRawTag(58);
+        output.WriteMessage(SyncReplication);
+      }
+      if (syncFollowers_ != null) {
+        output.WriteRawTag(66);
+        output.WriteMessage(SyncFollowers);
+      }
+      if (prefetchTxBufferSize_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(PrefetchTxBufferSize);
+      }
+      if (replicationCommitConcurrency_ != null) {
+        output.WriteRawTag(82);
+        output.WriteMessage(ReplicationCommitConcurrency);
+      }
+      if (allowTxDiscarding_ != null) {
+        output.WriteRawTag(90);
+        output.WriteMessage(AllowTxDiscarding);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -22025,6 +24144,26 @@ namespace ImmudbProxy {
         output.WriteRawTag(50);
         output.WriteMessage(FollowerPassword);
       }
+      if (syncReplication_ != null) {
+        output.WriteRawTag(58);
+        output.WriteMessage(SyncReplication);
+      }
+      if (syncFollowers_ != null) {
+        output.WriteRawTag(66);
+        output.WriteMessage(SyncFollowers);
+      }
+      if (prefetchTxBufferSize_ != null) {
+        output.WriteRawTag(74);
+        output.WriteMessage(PrefetchTxBufferSize);
+      }
+      if (replicationCommitConcurrency_ != null) {
+        output.WriteRawTag(82);
+        output.WriteMessage(ReplicationCommitConcurrency);
+      }
+      if (allowTxDiscarding_ != null) {
+        output.WriteRawTag(90);
+        output.WriteMessage(AllowTxDiscarding);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -22052,6 +24191,21 @@ namespace ImmudbProxy {
       }
       if (followerPassword_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(FollowerPassword);
+      }
+      if (syncReplication_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SyncReplication);
+      }
+      if (syncFollowers_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SyncFollowers);
+      }
+      if (prefetchTxBufferSize_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PrefetchTxBufferSize);
+      }
+      if (replicationCommitConcurrency_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ReplicationCommitConcurrency);
+      }
+      if (allowTxDiscarding_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(AllowTxDiscarding);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -22101,6 +24255,36 @@ namespace ImmudbProxy {
         }
         FollowerPassword.MergeFrom(other.FollowerPassword);
       }
+      if (other.syncReplication_ != null) {
+        if (syncReplication_ == null) {
+          SyncReplication = new global::ImmudbProxy.NullableBool();
+        }
+        SyncReplication.MergeFrom(other.SyncReplication);
+      }
+      if (other.syncFollowers_ != null) {
+        if (syncFollowers_ == null) {
+          SyncFollowers = new global::ImmudbProxy.NullableUint32();
+        }
+        SyncFollowers.MergeFrom(other.SyncFollowers);
+      }
+      if (other.prefetchTxBufferSize_ != null) {
+        if (prefetchTxBufferSize_ == null) {
+          PrefetchTxBufferSize = new global::ImmudbProxy.NullableUint32();
+        }
+        PrefetchTxBufferSize.MergeFrom(other.PrefetchTxBufferSize);
+      }
+      if (other.replicationCommitConcurrency_ != null) {
+        if (replicationCommitConcurrency_ == null) {
+          ReplicationCommitConcurrency = new global::ImmudbProxy.NullableUint32();
+        }
+        ReplicationCommitConcurrency.MergeFrom(other.ReplicationCommitConcurrency);
+      }
+      if (other.allowTxDiscarding_ != null) {
+        if (allowTxDiscarding_ == null) {
+          AllowTxDiscarding = new global::ImmudbProxy.NullableBool();
+        }
+        AllowTxDiscarding.MergeFrom(other.AllowTxDiscarding);
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -22156,6 +24340,41 @@ namespace ImmudbProxy {
               FollowerPassword = new global::ImmudbProxy.NullableString();
             }
             input.ReadMessage(FollowerPassword);
+            break;
+          }
+          case 58: {
+            if (syncReplication_ == null) {
+              SyncReplication = new global::ImmudbProxy.NullableBool();
+            }
+            input.ReadMessage(SyncReplication);
+            break;
+          }
+          case 66: {
+            if (syncFollowers_ == null) {
+              SyncFollowers = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(SyncFollowers);
+            break;
+          }
+          case 74: {
+            if (prefetchTxBufferSize_ == null) {
+              PrefetchTxBufferSize = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(PrefetchTxBufferSize);
+            break;
+          }
+          case 82: {
+            if (replicationCommitConcurrency_ == null) {
+              ReplicationCommitConcurrency = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(ReplicationCommitConcurrency);
+            break;
+          }
+          case 90: {
+            if (allowTxDiscarding_ == null) {
+              AllowTxDiscarding = new global::ImmudbProxy.NullableBool();
+            }
+            input.ReadMessage(AllowTxDiscarding);
             break;
           }
         }
@@ -22215,6 +24434,41 @@ namespace ImmudbProxy {
             input.ReadMessage(FollowerPassword);
             break;
           }
+          case 58: {
+            if (syncReplication_ == null) {
+              SyncReplication = new global::ImmudbProxy.NullableBool();
+            }
+            input.ReadMessage(SyncReplication);
+            break;
+          }
+          case 66: {
+            if (syncFollowers_ == null) {
+              SyncFollowers = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(SyncFollowers);
+            break;
+          }
+          case 74: {
+            if (prefetchTxBufferSize_ == null) {
+              PrefetchTxBufferSize = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(PrefetchTxBufferSize);
+            break;
+          }
+          case 82: {
+            if (replicationCommitConcurrency_ == null) {
+              ReplicationCommitConcurrency = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(ReplicationCommitConcurrency);
+            break;
+          }
+          case 90: {
+            if (allowTxDiscarding_ == null) {
+              AllowTxDiscarding = new global::ImmudbProxy.NullableBool();
+            }
+            input.ReadMessage(AllowTxDiscarding);
+            break;
+          }
         }
       }
     }
@@ -22236,7 +24490,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[75]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[79]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -22281,6 +24535,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "flushThreshold" field.</summary>
     public const int FlushThresholdFieldNumber = 1;
     private global::ImmudbProxy.NullableUint32 flushThreshold_;
+    /// <summary>
+    /// Number of new index entries between disk flushes
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 FlushThreshold {
@@ -22293,6 +24550,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "syncThreshold" field.</summary>
     public const int SyncThresholdFieldNumber = 2;
     private global::ImmudbProxy.NullableUint32 syncThreshold_;
+    /// <summary>
+    /// Number of new index entries between disk flushes with file sync
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 SyncThreshold {
@@ -22305,6 +24565,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "cacheSize" field.</summary>
     public const int CacheSizeFieldNumber = 3;
     private global::ImmudbProxy.NullableUint32 cacheSize_;
+    /// <summary>
+    /// Size of the Btree node LRU cache
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 CacheSize {
@@ -22317,6 +24580,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxNodeSize" field.</summary>
     public const int MaxNodeSizeFieldNumber = 4;
     private global::ImmudbProxy.NullableUint32 maxNodeSize_;
+    /// <summary>
+    /// Max size of a single Btree node in bytes
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 MaxNodeSize {
@@ -22329,6 +24595,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "maxActiveSnapshots" field.</summary>
     public const int MaxActiveSnapshotsFieldNumber = 5;
     private global::ImmudbProxy.NullableUint32 maxActiveSnapshots_;
+    /// <summary>
+    /// Maximum number of active btree snapshots
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 MaxActiveSnapshots {
@@ -22341,6 +24610,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "renewSnapRootAfter" field.</summary>
     public const int RenewSnapRootAfterFieldNumber = 6;
     private global::ImmudbProxy.NullableUint64 renewSnapRootAfter_;
+    /// <summary>
+    /// Time in milliseconds between the most recent DB snapshot is automatically renewed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint64 RenewSnapRootAfter {
@@ -22353,6 +24625,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "compactionThld" field.</summary>
     public const int CompactionThldFieldNumber = 7;
     private global::ImmudbProxy.NullableUint32 compactionThld_;
+    /// <summary>
+    /// Minimum number of updates entries in the btree to allow for full compaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 CompactionThld {
@@ -22365,6 +24640,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "delayDuringCompaction" field.</summary>
     public const int DelayDuringCompactionFieldNumber = 8;
     private global::ImmudbProxy.NullableUint32 delayDuringCompaction_;
+    /// <summary>
+    /// Additional delay added during indexing when full compaction is in progress
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 DelayDuringCompaction {
@@ -22377,6 +24655,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "nodesLogMaxOpenedFiles" field.</summary>
     public const int NodesLogMaxOpenedFilesFieldNumber = 9;
     private global::ImmudbProxy.NullableUint32 nodesLogMaxOpenedFiles_;
+    /// <summary>
+    /// Maximum number of simultaneously opened nodes files
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 NodesLogMaxOpenedFiles {
@@ -22389,6 +24670,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "historyLogMaxOpenedFiles" field.</summary>
     public const int HistoryLogMaxOpenedFilesFieldNumber = 10;
     private global::ImmudbProxy.NullableUint32 historyLogMaxOpenedFiles_;
+    /// <summary>
+    /// Maximum number of simultaneously opened node history files
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 HistoryLogMaxOpenedFiles {
@@ -22401,6 +24685,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "commitLogMaxOpenedFiles" field.</summary>
     public const int CommitLogMaxOpenedFilesFieldNumber = 11;
     private global::ImmudbProxy.NullableUint32 commitLogMaxOpenedFiles_;
+    /// <summary>
+    /// Maximum number of simultaneously opened commit log files
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 CommitLogMaxOpenedFiles {
@@ -22413,6 +24700,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "flushBufferSize" field.</summary>
     public const int FlushBufferSizeFieldNumber = 12;
     private global::ImmudbProxy.NullableUint32 flushBufferSize_;
+    /// <summary>
+    /// Size of the in-memory flush buffer (in bytes)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableUint32 FlushBufferSize {
@@ -22425,6 +24715,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "cleanupPercentage" field.</summary>
     public const int CleanupPercentageFieldNumber = 13;
     private global::ImmudbProxy.NullableFloat cleanupPercentage_;
+    /// <summary>
+    /// Percentage of node files cleaned up during each flush
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.NullableFloat CleanupPercentage {
@@ -22972,6 +25265,259 @@ namespace ImmudbProxy {
 
   }
 
+  public sealed partial class AHTNullableSettings : pb::IMessage<AHTNullableSettings>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<AHTNullableSettings> _parser = new pb::MessageParser<AHTNullableSettings>(() => new AHTNullableSettings());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<AHTNullableSettings> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[80]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AHTNullableSettings() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AHTNullableSettings(AHTNullableSettings other) : this() {
+      syncThreshold_ = other.syncThreshold_ != null ? other.syncThreshold_.Clone() : null;
+      writeBufferSize_ = other.writeBufferSize_ != null ? other.writeBufferSize_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public AHTNullableSettings Clone() {
+      return new AHTNullableSettings(this);
+    }
+
+    /// <summary>Field number for the "syncThreshold" field.</summary>
+    public const int SyncThresholdFieldNumber = 1;
+    private global::ImmudbProxy.NullableUint32 syncThreshold_;
+    /// <summary>
+    /// Number of new leaves in the tree between synchronous flush to disk
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableUint32 SyncThreshold {
+      get { return syncThreshold_; }
+      set {
+        syncThreshold_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "writeBufferSize" field.</summary>
+    public const int WriteBufferSizeFieldNumber = 2;
+    private global::ImmudbProxy.NullableUint32 writeBufferSize_;
+    /// <summary>
+    /// Size of the in-memory write buffer
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ImmudbProxy.NullableUint32 WriteBufferSize {
+      get { return writeBufferSize_; }
+      set {
+        writeBufferSize_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as AHTNullableSettings);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(AHTNullableSettings other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(SyncThreshold, other.SyncThreshold)) return false;
+      if (!object.Equals(WriteBufferSize, other.WriteBufferSize)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (syncThreshold_ != null) hash ^= SyncThreshold.GetHashCode();
+      if (writeBufferSize_ != null) hash ^= WriteBufferSize.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (syncThreshold_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(SyncThreshold);
+      }
+      if (writeBufferSize_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(WriteBufferSize);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (syncThreshold_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(SyncThreshold);
+      }
+      if (writeBufferSize_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(WriteBufferSize);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (syncThreshold_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(SyncThreshold);
+      }
+      if (writeBufferSize_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(WriteBufferSize);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(AHTNullableSettings other) {
+      if (other == null) {
+        return;
+      }
+      if (other.syncThreshold_ != null) {
+        if (syncThreshold_ == null) {
+          SyncThreshold = new global::ImmudbProxy.NullableUint32();
+        }
+        SyncThreshold.MergeFrom(other.SyncThreshold);
+      }
+      if (other.writeBufferSize_ != null) {
+        if (writeBufferSize_ == null) {
+          WriteBufferSize = new global::ImmudbProxy.NullableUint32();
+        }
+        WriteBufferSize.MergeFrom(other.WriteBufferSize);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (syncThreshold_ == null) {
+              SyncThreshold = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(SyncThreshold);
+            break;
+          }
+          case 18: {
+            if (writeBufferSize_ == null) {
+              WriteBufferSize = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(WriteBufferSize);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (syncThreshold_ == null) {
+              SyncThreshold = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(SyncThreshold);
+            break;
+          }
+          case 18: {
+            if (writeBufferSize_ == null) {
+              WriteBufferSize = new global::ImmudbProxy.NullableUint32();
+            }
+            input.ReadMessage(WriteBufferSize);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  /// <summary>
+  /// Database name
+  /// </summary>
   public sealed partial class LoadDatabaseRequest : pb::IMessage<LoadDatabaseRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -22986,7 +25532,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[76]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[81]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23020,7 +25566,7 @@ namespace ImmudbProxy {
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
     /// <summary>
-    /// may add createIfNotExist
+    ///  may add createIfNotExist
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -23178,7 +25724,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[77]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[82]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23212,7 +25758,7 @@ namespace ImmudbProxy {
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
     /// <summary>
-    /// may add setttings
+    /// Database name
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -23370,7 +25916,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[78]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[83]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23403,6 +25949,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -23559,7 +26108,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[79]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[84]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23592,6 +26141,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -23748,7 +26300,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[80]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[85]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23781,6 +26333,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -23937,7 +26492,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[81]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[86]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -23970,6 +26525,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -24126,7 +26684,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[82]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[87]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24160,6 +26718,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "cleanupPercentage" field.</summary>
     public const int CleanupPercentageFieldNumber = 1;
     private float cleanupPercentage_;
+    /// <summary>
+    /// Percentage of nodes file to cleanup during flush
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public float CleanupPercentage {
@@ -24172,6 +26733,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "synced" field.</summary>
     public const int SyncedFieldNumber = 2;
     private bool synced_;
+    /// <summary>
+    /// If true, do a full disk sync after the flush
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Synced {
@@ -24352,7 +26916,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[83]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[88]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24385,6 +26949,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 1;
     private string database_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -24541,7 +27108,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[84]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[89]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24574,6 +27141,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "tableName" field.</summary>
     public const int TableNameFieldNumber = 1;
     private string tableName_ = "";
+    /// <summary>
+    /// Table name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string TableName {
@@ -24730,7 +27300,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[85]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[90]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -24766,6 +27336,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "table" field.</summary>
     public const int TableFieldNumber = 1;
     private string table_ = "";
+    /// <summary>
+    /// Table name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Table {
@@ -24780,6 +27353,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.SQLValue> _repeated_pkValues_codec
         = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.SQLValue.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.SQLValue> pkValues_ = new pbc::RepeatedField<global::ImmudbProxy.SQLValue>();
+    /// <summary>
+    /// Values of the primary key
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.SQLValue> PkValues {
@@ -24789,6 +27365,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "atTx" field.</summary>
     public const int AtTxFieldNumber = 3;
     private ulong atTx_;
+    /// <summary>
+    /// Id of the transaction at which the row was added / modified
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong AtTx {
@@ -24801,6 +27380,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sinceTx" field.</summary>
     public const int SinceTxFieldNumber = 4;
     private ulong sinceTx_;
+    /// <summary>
+    /// If > 0, do not wait for the indexer to index all entries, only require entries up to sinceTx to be indexed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong SinceTx {
@@ -25019,7 +27601,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[86]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[91]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -25053,6 +27635,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sqlGetRequest" field.</summary>
     public const int SqlGetRequestFieldNumber = 1;
     private global::ImmudbProxy.SQLGetRequest sqlGetRequest_;
+    /// <summary>
+    /// Data of row to query
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.SQLGetRequest SqlGetRequest {
@@ -25065,6 +27650,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "proveSinceTx" field.</summary>
     public const int ProveSinceTxFieldNumber = 2;
     private ulong proveSinceTx_;
+    /// <summary>
+    /// When generating the proof, generate consistency proof with state from this transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong ProveSinceTx {
@@ -25254,7 +27842,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[87]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[92]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -25290,6 +27878,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "tx" field.</summary>
     public const int TxFieldNumber = 1;
     private ulong tx_;
+    /// <summary>
+    /// Id of the transaction when the row was added / modified
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ulong Tx {
@@ -25302,6 +27893,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "key" field.</summary>
     public const int KeyFieldNumber = 2;
     private pb::ByteString key_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Raw key of the row
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Key {
@@ -25314,6 +27908,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 3;
     private pb::ByteString value_ = pb::ByteString.Empty;
+    /// <summary>
+    /// Raw value of the row
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pb::ByteString Value {
@@ -25326,6 +27923,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "metadata" field.</summary>
     public const int MetadataFieldNumber = 4;
     private global::ImmudbProxy.KVMetadata metadata_;
+    /// <summary>
+    /// Metadata of the raw value
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.KVMetadata Metadata {
@@ -25563,7 +28163,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[88]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[93]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -25605,6 +28205,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sqlEntry" field.</summary>
     public const int SqlEntryFieldNumber = 1;
     private global::ImmudbProxy.SQLEntry sqlEntry_;
+    /// <summary>
+    /// Raw row entry data
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.SQLEntry SqlEntry {
@@ -25617,6 +28220,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "verifiableTx" field.</summary>
     public const int VerifiableTxFieldNumber = 2;
     private global::ImmudbProxy.VerifiableTx verifiableTx_;
+    /// <summary>
+    /// Verifiable transaction of the row
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.VerifiableTx VerifiableTx {
@@ -25629,6 +28235,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "inclusionProof" field.</summary>
     public const int InclusionProofFieldNumber = 3;
     private global::ImmudbProxy.InclusionProof inclusionProof_;
+    /// <summary>
+    /// Inclusion proof of the row in the transaction
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.InclusionProof InclusionProof {
@@ -25641,6 +28250,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "DatabaseId" field.</summary>
     public const int DatabaseIdFieldNumber = 4;
     private uint databaseId_;
+    /// <summary>
+    /// Internal ID of the database (used to validate raw entry values)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint DatabaseId {
@@ -25653,6 +28265,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "TableId" field.</summary>
     public const int TableIdFieldNumber = 5;
     private uint tableId_;
+    /// <summary>
+    /// Internal ID of the table (used to validate raw entry values)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint TableId {
@@ -25667,6 +28282,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<uint> _repeated_pKIDs_codec
         = pb::FieldCodec.ForUInt32(130);
     private readonly pbc::RepeatedField<uint> pKIDs_ = new pbc::RepeatedField<uint>();
+    /// <summary>
+    /// Internal IDs of columns for the primary key (used to validate raw entry values)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<uint> PKIDs {
@@ -25678,6 +28296,9 @@ namespace ImmudbProxy {
     private static readonly pbc::MapField<uint, string>.Codec _map_colNamesById_codec
         = new pbc::MapField<uint, string>.Codec(pb::FieldCodec.ForUInt32(8, 0), pb::FieldCodec.ForString(18, ""), 66);
     private readonly pbc::MapField<uint, string> colNamesById_ = new pbc::MapField<uint, string>();
+    /// <summary>
+    /// Mapping of used column IDs to their names
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::MapField<uint, string> ColNamesById {
@@ -25689,6 +28310,9 @@ namespace ImmudbProxy {
     private static readonly pbc::MapField<string, uint>.Codec _map_colIdsByName_codec
         = new pbc::MapField<string, uint>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForUInt32(16, 0), 74);
     private readonly pbc::MapField<string, uint> colIdsByName_ = new pbc::MapField<string, uint>();
+    /// <summary>
+    /// Mapping of column names to their IDS
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::MapField<string, uint> ColIdsByName {
@@ -25700,6 +28324,9 @@ namespace ImmudbProxy {
     private static readonly pbc::MapField<uint, string>.Codec _map_colTypesById_codec
         = new pbc::MapField<uint, string>.Codec(pb::FieldCodec.ForUInt32(8, 0), pb::FieldCodec.ForString(18, ""), 82);
     private readonly pbc::MapField<uint, string> colTypesById_ = new pbc::MapField<uint, string>();
+    /// <summary>
+    /// Mapping of column IDs to their types
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::MapField<uint, string> ColTypesById {
@@ -25711,6 +28338,9 @@ namespace ImmudbProxy {
     private static readonly pbc::MapField<uint, int>.Codec _map_colLenById_codec
         = new pbc::MapField<uint, int>.Codec(pb::FieldCodec.ForUInt32(8, 0), pb::FieldCodec.ForInt32(16, 0), 90);
     private readonly pbc::MapField<uint, int> colLenById_ = new pbc::MapField<uint, int>();
+    /// <summary>
+    /// Mapping of column IDs to their length constraints
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::MapField<uint, int> ColLenById {
@@ -26059,7 +28689,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[89]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[94]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -26092,6 +28722,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "token" field.</summary>
     public const int TokenFieldNumber = 1;
     private string token_ = "";
+    /// <summary>
+    /// Deprecated: database access token
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Token {
@@ -26248,7 +28881,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[90]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[95]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -26284,6 +28917,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "action" field.</summary>
     public const int ActionFieldNumber = 1;
     private global::ImmudbProxy.PermissionAction action_ = global::ImmudbProxy.PermissionAction.Grant;
+    /// <summary>
+    /// Action to perform
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.PermissionAction Action {
@@ -26296,6 +28932,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "username" field.</summary>
     public const int UsernameFieldNumber = 2;
     private string username_ = "";
+    /// <summary>
+    /// Name of the user to update
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Username {
@@ -26308,6 +28947,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "database" field.</summary>
     public const int DatabaseFieldNumber = 3;
     private string database_ = "";
+    /// <summary>
+    /// Name of the database
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Database {
@@ -26320,6 +28962,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "permission" field.</summary>
     public const int PermissionFieldNumber = 4;
     private uint permission_;
+    /// <summary>
+    /// Permission to grant / revoke: 1 - read only, 2 - read/write, 254 - admin
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint Permission {
@@ -26548,7 +29193,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[91]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[96]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -26582,6 +29227,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "active" field.</summary>
     public const int ActiveFieldNumber = 1;
     private bool active_;
+    /// <summary>
+    /// If true, the user is active
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Active {
@@ -26594,6 +29242,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "username" field.</summary>
     public const int UsernameFieldNumber = 2;
     private string username_ = "";
+    /// <summary>
+    /// Name of the user to activate / deactivate
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Username {
@@ -26774,7 +29425,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[92]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[97]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -26809,6 +29460,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Database> _repeated_databases_codec
         = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Database.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Database> databases_ = new pbc::RepeatedField<global::ImmudbProxy.Database>();
+    /// <summary>
+    /// Database list
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Database> Databases {
@@ -26952,7 +29606,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[93]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[98]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27104,7 +29758,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[94]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[99]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27139,6 +29793,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.DatabaseWithSettings> _repeated_databases_codec
         = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.DatabaseWithSettings.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.DatabaseWithSettings> databases_ = new pbc::RepeatedField<global::ImmudbProxy.DatabaseWithSettings>();
+    /// <summary>
+    /// Database list with current database settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.DatabaseWithSettings> Databases {
@@ -27282,7 +29939,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[95]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[100]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27317,6 +29974,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 1;
     private string name_ = "";
+    /// <summary>
+    /// Database name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Name {
@@ -27329,6 +29989,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "settings" field.</summary>
     public const int SettingsFieldNumber = 2;
     private global::ImmudbProxy.DatabaseNullableSettings settings_;
+    /// <summary>
+    /// Current database settings
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.DatabaseNullableSettings Settings {
@@ -27341,6 +30004,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "loaded" field.</summary>
     public const int LoadedFieldNumber = 3;
     private bool loaded_;
+    /// <summary>
+    /// If true, this database is currently loaded into memory
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool Loaded {
@@ -27554,7 +30220,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[96]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[101]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27743,7 +30409,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[97]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[102]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -27969,7 +30635,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[98]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[103]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28004,6 +30670,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sql" field.</summary>
     public const int SqlFieldNumber = 1;
     private string sql_ = "";
+    /// <summary>
+    /// SQL query
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Sql {
@@ -28018,6 +30687,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.NamedParam> _repeated_params_codec
         = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.NamedParam.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.NamedParam> params_ = new pbc::RepeatedField<global::ImmudbProxy.NamedParam>();
+    /// <summary>
+    /// Named query parameters
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.NamedParam> Params {
@@ -28027,6 +30699,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "noWait" field.</summary>
     public const int NoWaitFieldNumber = 3;
     private bool noWait_;
+    /// <summary>
+    /// If true, do not wait for the indexer to index written changes
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool NoWait {
@@ -28221,7 +30896,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[99]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[104]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28256,6 +30931,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "sql" field.</summary>
     public const int SqlFieldNumber = 1;
     private string sql_ = "";
+    /// <summary>
+    /// SQL query
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Sql {
@@ -28270,6 +30948,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.NamedParam> _repeated_params_codec
         = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.NamedParam.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.NamedParam> params_ = new pbc::RepeatedField<global::ImmudbProxy.NamedParam>();
+    /// <summary>
+    /// Named query parameters
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.NamedParam> Params {
@@ -28279,6 +30960,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "reuseSnapshot" field.</summary>
     public const int ReuseSnapshotFieldNumber = 3;
     private bool reuseSnapshot_;
+    /// <summary>
+    /// If true, reuse previously opened snapshot
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool ReuseSnapshot {
@@ -28473,7 +31157,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[100]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[105]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28507,6 +31191,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 1;
     private string name_ = "";
+    /// <summary>
+    /// Parameter name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Name {
@@ -28519,6 +31206,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "value" field.</summary>
     public const int ValueFieldNumber = 2;
     private global::ImmudbProxy.SQLValue value_;
+    /// <summary>
+    /// Parameter value
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.SQLValue Value {
@@ -28708,7 +31398,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[101]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[106]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28744,6 +31434,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.CommittedSQLTx> _repeated_txs_codec
         = pb::FieldCodec.ForMessage(42, global::ImmudbProxy.CommittedSQLTx.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.CommittedSQLTx> txs_ = new pbc::RepeatedField<global::ImmudbProxy.CommittedSQLTx>();
+    /// <summary>
+    /// List of committed transactions as a result of the exec operation
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.CommittedSQLTx> Txs {
@@ -28753,6 +31446,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "ongoingTx" field.</summary>
     public const int OngoingTxFieldNumber = 6;
     private bool ongoingTx_;
+    /// <summary>
+    /// If true, there's an ongoing transaction after exec completes
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool OngoingTx {
@@ -28923,7 +31619,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[102]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[107]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -28959,6 +31655,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "header" field.</summary>
     public const int HeaderFieldNumber = 1;
     private global::ImmudbProxy.TxHeader header_;
+    /// <summary>
+    /// Transaction header
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.TxHeader Header {
@@ -28971,6 +31670,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "updatedRows" field.</summary>
     public const int UpdatedRowsFieldNumber = 2;
     private uint updatedRows_;
+    /// <summary>
+    /// Number of updated rows
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint UpdatedRows {
@@ -28985,6 +31687,9 @@ namespace ImmudbProxy {
     private static readonly pbc::MapField<string, global::ImmudbProxy.SQLValue>.Codec _map_lastInsertedPKs_codec
         = new pbc::MapField<string, global::ImmudbProxy.SQLValue>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForMessage(18, global::ImmudbProxy.SQLValue.Parser), 26);
     private readonly pbc::MapField<string, global::ImmudbProxy.SQLValue> lastInsertedPKs_ = new pbc::MapField<string, global::ImmudbProxy.SQLValue>();
+    /// <summary>
+    /// The value of last inserted auto_increment primary key (mapped by table name)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::MapField<string, global::ImmudbProxy.SQLValue> LastInsertedPKs {
@@ -28996,6 +31701,9 @@ namespace ImmudbProxy {
     private static readonly pbc::MapField<string, global::ImmudbProxy.SQLValue>.Codec _map_firstInsertedPKs_codec
         = new pbc::MapField<string, global::ImmudbProxy.SQLValue>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForMessage(18, global::ImmudbProxy.SQLValue.Parser), 34);
     private readonly pbc::MapField<string, global::ImmudbProxy.SQLValue> firstInsertedPKs_ = new pbc::MapField<string, global::ImmudbProxy.SQLValue>();
+    /// <summary>
+    /// The value of first inserted auto_increment primary key (mapped by table name)
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::MapField<string, global::ImmudbProxy.SQLValue> FirstInsertedPKs {
@@ -29210,7 +31918,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[103]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[108]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -29246,6 +31954,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Column> _repeated_columns_codec
         = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.Column.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Column> columns_ = new pbc::RepeatedField<global::ImmudbProxy.Column>();
+    /// <summary>
+    /// Result columns description
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Column> Columns {
@@ -29257,6 +31968,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.Row> _repeated_rows_codec
         = pb::FieldCodec.ForMessage(10, global::ImmudbProxy.Row.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.Row> rows_ = new pbc::RepeatedField<global::ImmudbProxy.Row>();
+    /// <summary>
+    /// Result rows
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.Row> Rows {
@@ -29414,7 +32128,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[104]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[109]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -29448,6 +32162,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 1;
     private string name_ = "";
+    /// <summary>
+    /// Column name
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Name {
@@ -29460,6 +32177,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 2;
     private string type_ = "";
+    /// <summary>
+    /// Column type
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Type {
@@ -29640,7 +32360,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[105]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[110]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -29676,6 +32396,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<string> _repeated_columns_codec
         = pb::FieldCodec.ForString(10);
     private readonly pbc::RepeatedField<string> columns_ = new pbc::RepeatedField<string>();
+    /// <summary>
+    /// Column names
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<string> Columns {
@@ -29687,6 +32410,9 @@ namespace ImmudbProxy {
     private static readonly pb::FieldCodec<global::ImmudbProxy.SQLValue> _repeated_values_codec
         = pb::FieldCodec.ForMessage(18, global::ImmudbProxy.SQLValue.Parser);
     private readonly pbc::RepeatedField<global::ImmudbProxy.SQLValue> values_ = new pbc::RepeatedField<global::ImmudbProxy.SQLValue>();
+    /// <summary>
+    /// Column values
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public pbc::RepeatedField<global::ImmudbProxy.SQLValue> Values {
@@ -29844,7 +32570,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[106]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[111]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30265,7 +32991,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[107]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[112]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30298,6 +33024,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "mode" field.</summary>
     public const int ModeFieldNumber = 1;
     private global::ImmudbProxy.TxMode mode_ = global::ImmudbProxy.TxMode.ReadOnly;
+    /// <summary>
+    /// Transaction mode
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::ImmudbProxy.TxMode Mode {
@@ -30454,7 +33183,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[108]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[113]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30487,6 +33216,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "transactionID" field.</summary>
     public const int TransactionIDFieldNumber = 1;
     private string transactionID_ = "";
+    /// <summary>
+    /// Internal transaction ID
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string TransactionID {
@@ -30643,7 +33375,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[109]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[114]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30677,6 +33409,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "code" field.</summary>
     public const int CodeFieldNumber = 1;
     private string code_ = "";
+    /// <summary>
+    /// Error code
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Code {
@@ -30689,6 +33424,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "cause" field.</summary>
     public const int CauseFieldNumber = 2;
     private string cause_ = "";
+    /// <summary>
+    /// Error Description
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Cause {
@@ -30869,7 +33607,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[110]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[115]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -30902,6 +33640,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "stack" field.</summary>
     public const int StackFieldNumber = 1;
     private string stack_ = "";
+    /// <summary>
+    /// Stack trace when the error was noticed
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Stack {
@@ -31058,7 +33799,7 @@ namespace ImmudbProxy {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[111]; }
+      get { return global::ImmudbProxy.SchemaReflection.Descriptor.MessageTypes[116]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -31091,6 +33832,9 @@ namespace ImmudbProxy {
     /// <summary>Field number for the "retry_delay" field.</summary>
     public const int RetryDelayFieldNumber = 1;
     private int retryDelay_;
+    /// <summary>
+    /// Number of milliseconds after which the request can be retried
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int RetryDelay {

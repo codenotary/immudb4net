@@ -18,7 +18,7 @@ limitations under the License.
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class SessionTests : BaseClientIntTests
+public class SessionTests : BaseClientIntegrationTests
 {
     [TestInitialize]
     public async Task SetUp()

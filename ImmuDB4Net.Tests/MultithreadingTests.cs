@@ -21,7 +21,7 @@ using ImmuDB.Exceptions;
 namespace ImmuDB.Tests;
 
 [TestClass]
-public class MultithreadingTests : BaseClientIntTests
+public class MultithreadingTests : BaseClientIntegrationTests
 {
 
 

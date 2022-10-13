@@ -143,6 +143,10 @@ namespace ImmudbProxy {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::ImmudbProxy.HistoryRequest> __Marshaller_immudb_schema_HistoryRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.HistoryRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::ImmudbProxy.ServerInfoRequest> __Marshaller_immudb_schema_ServerInfoRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ServerInfoRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::ImmudbProxy.ServerInfoResponse> __Marshaller_immudb_schema_ServerInfoResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.ServerInfoResponse.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::ImmudbProxy.HealthResponse> __Marshaller_immudb_schema_HealthResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.HealthResponse.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::ImmudbProxy.DatabaseHealthResponse> __Marshaller_immudb_schema_DatabaseHealthResponse = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::ImmudbProxy.DatabaseHealthResponse.Parser));
@@ -460,6 +464,14 @@ namespace ImmudbProxy {
         "History",
         __Marshaller_immudb_schema_HistoryRequest,
         __Marshaller_immudb_schema_Entries);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::ImmudbProxy.ServerInfoRequest, global::ImmudbProxy.ServerInfoResponse> __Method_ServerInfo = new grpc::Method<global::ImmudbProxy.ServerInfoRequest, global::ImmudbProxy.ServerInfoResponse>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ServerInfo",
+        __Marshaller_immudb_schema_ServerInfoRequest,
+        __Marshaller_immudb_schema_ServerInfoResponse);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.HealthResponse> __Method_Health = new grpc::Method<global::Google.Protobuf.WellKnownTypes.Empty, global::ImmudbProxy.HealthResponse>(
@@ -1474,21 +1486,101 @@ namespace ImmudbProxy {
       {
         return CallInvoker.AsyncUnaryCall(__Method_History, null, options, request);
       }
+      /// <summary>
+      /// ServerInfo returns information about the server instance.
+      /// ServerInfoRequest is defined for future extensions.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::ImmudbProxy.ServerInfoResponse ServerInfo(global::ImmudbProxy.ServerInfoRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ServerInfo(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// ServerInfo returns information about the server instance.
+      /// ServerInfoRequest is defined for future extensions.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::ImmudbProxy.ServerInfoResponse ServerInfo(global::ImmudbProxy.ServerInfoRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ServerInfo, null, options, request);
+      }
+      /// <summary>
+      /// ServerInfo returns information about the server instance.
+      /// ServerInfoRequest is defined for future extensions.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::ImmudbProxy.ServerInfoResponse> ServerInfoAsync(global::ImmudbProxy.ServerInfoRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ServerInfoAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// ServerInfo returns information about the server instance.
+      /// ServerInfoRequest is defined for future extensions.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::ImmudbProxy.ServerInfoResponse> ServerInfoAsync(global::ImmudbProxy.ServerInfoRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ServerInfo, null, options, request);
+      }
+      /// <summary>
+      /// DEPRECATED: Use ServerInfo
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::ImmudbProxy.HealthResponse Health(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return Health(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// DEPRECATED: Use ServerInfo
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::ImmudbProxy.HealthResponse Health(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_Health, null, options, request);
       }
+      /// <summary>
+      /// DEPRECATED: Use ServerInfo
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncUnaryCall<global::ImmudbProxy.HealthResponse> HealthAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return HealthAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// DEPRECATED: Use ServerInfo
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncUnaryCall<global::ImmudbProxy.HealthResponse> HealthAsync(global::Google.Protobuf.WellKnownTypes.Empty request, grpc::CallOptions options)
       {
