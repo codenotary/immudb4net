@@ -249,6 +249,7 @@ public partial class ImmuClient
                     var verifiableTx = Service.VerifiableTxById(new VerifiableTxRequest
                     {
                         SinceTx = localState.TxId,
+			ProveSinceTx = localState.TxId,
                         Tx = serverState.TxId,
                         EntriesSpec = new EntriesSpec
                         {
