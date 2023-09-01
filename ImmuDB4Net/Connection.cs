@@ -60,6 +60,7 @@ public class ConnectionParameters
     /// </summary>
     /// <value></value>
     public string Address { get; set; } = "";
+    public int MaxReceiveMessageSize { get; set; } = Int32.MaxValue;
     /// <summary>
     /// Gets or  sets the length of time the connection close operation is allowed to block before it completes.
     /// </summary>
@@ -79,7 +80,10 @@ internal class Connection : IConnection
     internal Connection(ConnectionParameters parameters)
     {
         Address = parameters.Address;
-        channel = GrpcChannel.ForAddress(Address);
+        channel = GrpcChannel.ForAddress(Address, new GrpcChannelOptions
+        {
+            MaxReceiveMessageSize = parameters.MaxReceiveMessageSize
+        });
         grpcClient = new ImmuService.ImmuServiceClient(channel);
         shutdownTimeout = parameters.ShutdownTimeout;
     }
