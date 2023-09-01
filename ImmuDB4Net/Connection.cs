@@ -60,7 +60,7 @@ public class ConnectionParameters
     /// </summary>
     /// <value></value>
     public string Address { get; set; } = "";
-	public int MaxReceiveMessageSize { get; set; } = Int32.MaxValue;
+    public int MaxReceiveMessageSize { get; set; } = Int32.MaxValue;
     /// <summary>
     /// Gets or  sets the length of time the connection close operation is allowed to block before it completes.
     /// </summary>
